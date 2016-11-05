@@ -1,5 +1,9 @@
 # pkgload 0.0.0.9000
 
+* `load_all()` now sets the `NOT_CRAN` environment variable when it
+  sources testthat helpers. It also sets `DEVTOOLS_LOAD` to "true" so
+  that you can check whether they are run during package loading.
+
 * `dev_topic_path()` now only returns the last path found, fixing an error
   when a package has both a package function level help with the same name.
   (#21)

@@ -51,8 +51,10 @@ for more details.
 \item Runs \code{.onAttach()}, \code{.onLoad()} and \code{.onUnload()}
 functions at the correct times.
 
-\item If you use \pkg{testthat}, will load all test helpers so you
-can access them interactively.
+\item If you use \pkg{testthat}, will load all test helpers so
+you can access them interactively. Devtools sets the
+\code{DEVTOOLS_LOAD} environment variable to \code{"true"} to
+let you check whether the helpers are run during package loading.
 
 }
 }
