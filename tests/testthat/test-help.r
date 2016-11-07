@@ -10,6 +10,7 @@ test_that("shim_help behaves the same as utils::help for non-devtools-loaded pac
   expect_identical(shim_help('lm')[1],          utils::help('lm')[1])
   expect_identical(shim_help('lm', stats)[1],   utils::help('lm', stats)[1])
   expect_identical(shim_help('lm', 'stats')[1], utils::help('lm', 'stats')[1])
+  expect_identical(shim_help(, "stats")[1],     utils::help(, "stats")[1])
 })
 
 test_that("shim_help behaves the same as utils::help for nonexistent objects", {
@@ -25,6 +26,10 @@ test_that("shim_question behaves the same as utils::? for non-devtools-loaded pa
   expect_identical(shim_question('lm')[1], utils::`?`('lm')[1])
 })
 
+test_that("shim_question behaves like util::? for searches", {
+  expect_identical(shim_question(?lm), utils::`?`(?lm))
+})
+
 test_that("shim_question behaves the same as utils::? for nonexistent objects", {
   expect_equal(length(shim_question(foofoo)), 0)
   expect_equal(length(shim_question(`foofoo`)), 0)
@@ -35,14 +40,15 @@ test_that("shim_question behaves the same as utils::? for nonexistent objects", 
   expect_error(shim_question(foofoo(123)))
 })
 
+test_that("show_help and shim_question files for devtools-loaded packages", {
+  load_all(test_path('testHelp'))
+  on.exit(unload(test_path('testHelp')))
 
-test_that("help and ? find files for devtools-loaded packages", {
-  load_all('testHelp')
+  h1 <- shim_help("foofoo")
+  expect_s3_class(h1, "dev_help")
+  expect_equal(h1$topic, "foofoo")
+  expect_equal(h1$pkg, "testHelp")
 
-  # We can't test dev_help or help directly, because instead of returning an
-  # object, they display the Rd file directly. But dev_help uses find_topic,
-  # and we can test that.
-  expect_true(!is.null(find_topic('foofoo')))
-  expect_null(find_topic('bad_value'))
-  unload('testHelp')
+  h2 <- shim_help(foofoo)
+  expect_identical(h1, h2)
 })

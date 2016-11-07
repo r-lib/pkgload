@@ -19,7 +19,6 @@
 #' dev_help("ggplot") # loads development documentation for ggplot
 #' }
 dev_help <- function(topic, stage = "render", type = getOption("help_type")) {
-  message("Using development documentation for ", topic)
   path <- find_topic(topic)
   if (is.null(path)) {
     dev <- paste(dev_packages(), collapse = ", ")
@@ -28,25 +27,36 @@ dev_help <- function(topic, stage = "render", type = getOption("help_type")) {
 
   pkg <- basename(names(path)[1])
   path <- normalizePath(path, winslash = "/")
-  if (rstudioapi::hasFun("previewRd")) {
-    rstudioapi::callFun("previewRd", path)
-  } else {
-    view_rd(path, pkg, stage = stage, type = type)
-  }
 
+  structure(
+    list(
+      topic = topic,
+      pkg = pkg,
+      path = path,
+      stage = stage,
+      type = type
+    ),
+    class = "dev_help"
+  )
 }
 
-view_rd <- function(path, package, stage = "render", type = getOption("help_type")) {
-  if (is.null(type)) type <- "text"
-  type <- match.arg(type, c("text", "html"))
+#' @export
+print.dev_help <- function(x, ...) {
+  message("Using development documentation for ", x$topic)
 
+  if (rstudioapi::hasFun("previewRd")) {
+    rstudioapi::callFun("previewRd", x$path)
+    return(invisible())
+  }
+
+  type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
 
   if (type == "text") {
-    tools::Rd2txt(path, out = out_path, package = package, stages = stage)
-    file.show(out_path, title = paste(package, basename(path), sep = ":"))
+    tools::Rd2txt(x$path, out = out_path, package = x$package, stages = x$stage)
+    file.show(out_path, title = paste(x$package, basename(x$path), sep = ":"))
   } else if (type == "html") {
-    tools::Rd2HTML(path, out = out_path, package = package, stages = stage,
+    tools::Rd2HTML(x$path, out = out_path, package = x$package, stages = x$stage,
       no_links = TRUE)
 
     css_path <- file.path(tempdir(), "R.css")
