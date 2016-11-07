@@ -1,11 +1,13 @@
 Package: pkgload
-Title: What the Package Does (one line, title case)
+Title: Simulate Package Installation and Attach
 Version: 0.0.0.9000
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = "cph")
   )
-Description: What the package does (one paragraph).
+Description: pkgload is simulates the process of installing a package
+    and then attaching it. This is a key part of devtools as it allows you
+    to rapidly iterate with a package.
 Imports:
     withr,
     methods,
