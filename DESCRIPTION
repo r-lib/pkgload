@@ -15,7 +15,6 @@ Imports:
     callr,
     roxygen2,
     evaluate,
-    httr,
     bitops
 Suggests:
     Rcpp,

@@ -147,19 +147,6 @@ first_upper <- function(x) {
   x
 }
 
-download <- function(path, url, ...) {
-  request <- httr::GET(url, ...)
-  httr::stop_for_status(request)
-  writeBin(httr::content(request, "raw"), path)
-  path
-}
-
-download_text <- function(url, ...) {
-  request <- httr::GET(url, ...)
-  httr::stop_for_status(request)
-  httr::content(request, "text")
-}
-
 last <- function(x) x[length(x)]
 
 # Modified version of utils::file_ext. Instead of always returning the text
