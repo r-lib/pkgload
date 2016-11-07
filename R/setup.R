@@ -59,7 +59,7 @@ build_description <- function(name, extra = list()) {
   ))
 
   # Override defaults with user supplied options
-  desc <- modifyList(defaults, extra)
+  desc <- utils::modifyList(defaults, extra)
   # Collapse all vector arguments to single strings
   desc <- lapply(desc, function(x) paste(x, collapse = ", "))
 

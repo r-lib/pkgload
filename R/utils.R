@@ -62,7 +62,7 @@ check_bioconductor <- function() {
     "This will source <https://bioconductor.org/biocLite.R>."
   )
 
-  if (menu(c("Yes", "No")) != 1) {
+  if (utils::menu(c("Yes", "No")) != 1) {
     stop("'BiocInstaller' not installed", call. = FALSE)
   }
 
@@ -92,8 +92,8 @@ check_suggested <- function(pkg, version = NULL, compare = NA) {
 
     if (interactive()) {
       message(msg, "\nWould you like to install it?")
-      if (menu(c("Yes", "No")) == 1) {
-        install.packages(pkg)
+      if (utils::menu(c("Yes", "No")) == 1) {
+        utils::install.packages(pkg)
       } else {
         stop(msg, call. = FALSE)
       }
