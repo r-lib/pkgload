@@ -19,8 +19,6 @@ Imports:
 Suggests:
     Rcpp,
     testthat
-Depends:
-    R (>= 3.3.1)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
