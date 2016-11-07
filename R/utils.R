@@ -99,13 +99,13 @@ check_suggested <- function(pkg, version = NULL, compare = NA) {
 
 suggests_dep <- function(pkg) {
 
-  suggests <- read_dcf(system.file("DESCRIPTION", package = "devtools"))$Suggests
+  suggests <- read_dcf(system.file("DESCRIPTION", package = "pkgload"))$Suggests
   deps <- parse_deps(suggests)
 
   found <- which(deps$name == pkg)[1L]
 
   if (!length(found)) {
-     stop(sQuote(pkg), " is not in Suggests: for devtools!", call. = FALSE)
+     stop(sQuote(pkg), " is not in Suggests: for pkgload!", call. = FALSE)
   }
   deps[found, ]
 }
