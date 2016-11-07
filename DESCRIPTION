@@ -12,8 +12,7 @@ Imports:
     rstudioapi,
     roxygen2,
     evaluate,
-    httr,
-    whisker
+    httr
 Suggests:
     Rcpp,
     testthat

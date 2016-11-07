@@ -11,11 +11,11 @@
 #'   (in interactive mode only)
 #' @export
 #' @keywords internal
-as.package <- function(x = NULL, create = NA) {
+as.package <- function(x = NULL) {
   if (is.package(x)) return(x)
 
   x <- package_file(path = x)
-  load_pkg_description(x, create = create)
+  load_pkg_description(x)
 }
 
 #' Find file in a package.
@@ -71,24 +71,11 @@ strip_slashes <- function(x) {
 }
 
 # Load package DESCRIPTION into convenient form.
-load_pkg_description <- function(path, create) {
+load_pkg_description <- function(path) {
   path_desc <- file.path(path, "DESCRIPTION")
 
   if (!file.exists(path_desc)) {
-    if (is.na(create)) {
-      if (interactive()) {
-        message("No package infrastructure found in ", path, ". Create it?")
-        create <- (utils::menu(c("Yes", "No")) == 1)
-      } else {
-        create <- FALSE
-      }
-    }
-
-    if (create) {
-      setup(path = path)
-    } else {
-      stop("No description at ", path_desc, call. = FALSE)
-    }
+    stop("No description at ", path_desc, call. = FALSE)
   }
 
   desc <- as.list(read.dcf(path_desc)[1, ])
