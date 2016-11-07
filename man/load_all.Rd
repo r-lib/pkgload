@@ -5,7 +5,7 @@
 \title{Load complete package.}
 \usage{
 load_all(pkg = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
-  quiet = FALSE, create = NA)
+  quiet = FALSE)
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
@@ -26,10 +26,6 @@ If \code{FALSE}, export only the objects that are listed as exports
 in the NAMESPACE file.}
 
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
-
-\item{create}{only relevant if a package structure does not exist yet: if
-\code{TRUE}, create a package structure; if \code{NA}, ask the user
-(in interactive mode only)}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens
