@@ -10,6 +10,7 @@ Imports:
     withr,
     methods,
     rstudioapi,
+    callr,
     roxygen2,
     evaluate,
     httr
