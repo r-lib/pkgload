@@ -9,14 +9,18 @@ install_min <- function(pkg = ".", dest, components = NULL, args = NULL, quiet =
   no <- setdiff(poss, components)
   no_args <- paste0("--no-", no)
 
-  RCMD("INSTALL", c(
-    shQuote(pkg$path),
-    paste("--library=", shQuote(dest), sep = ""),
-    no_args,
-    "--no-multiarch",
-    "--no-test-load",
-    args
-  ), quiet = quiet)
+  callr::rcmd(
+    "INSTALL",
+    c(
+      shQuote(pkg$path),
+      paste("--library=", shQuote(dest), sep = ""),
+      no_args,
+      "--no-multiarch",
+      "--no-test-load",
+      args
+    ),
+    show = !quiet
+  )
 
   invisible(file.path(dest, pkg$package))
 }
