@@ -14,7 +14,6 @@ Imports:
     rstudioapi,
     callr,
     roxygen2,
-    evaluate,
     bitops
 Suggests:
     Rcpp,
