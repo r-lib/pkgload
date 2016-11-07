@@ -1,0 +1,24 @@
+context("examples")
+
+test_that("default run_example ignores donttest and dontrun ", {
+  env <- run_example(test_path("test-examples.Rd"), quiet = TRUE)
+  expect_equal(env$a, 1)
+})
+
+test_that("run donttest when requested", {
+  env <- run_example(test_path("test-examples.Rd"), test = TRUE, quiet = TRUE)
+  expect_equal(env$a, 2)
+})
+
+test_that("run dontrun when requested", {
+  env <- run_example(test_path("test-examples.Rd"), run = TRUE, quiet = TRUE)
+  expect_equal(env$a, 3)
+})
+
+test_that("can run example package", {
+  load_all(test_path("testHelp"))
+  on.exit(unload(test_path("testHelp")))
+
+  env <- dev_example("foofoo", quiet = TRUE)
+  expect_equal(env$a, 101)
+})

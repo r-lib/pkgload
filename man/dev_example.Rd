@@ -4,10 +4,12 @@
 \alias{dev_example}
 \title{Run a examples for an in-development function.}
 \usage{
-dev_example(topic)
+dev_example(topic, quiet = FALSE)
 }
 \arguments{
 \item{topic}{Name or topic (or name of Rd) file to run examples for}
+
+\item{quiet}{If \code{TRUE}, runs example quietly.}
 }
 \description{
 Run a examples for an in-development function.
@@ -19,7 +21,6 @@ library("ggplot2")
 example("ggplot")
 
 # Runs develoment example:
-load_all("ggplot2")
 dev_example("ggplot")
 }
 }
