@@ -144,7 +144,7 @@ onload_assign("add_classes_to_exports",
 #'   \code{\link{as.package}} for more information
 #' @examples
 #' if (has_tests()) {
-#' parse_ns_file(devtest("testLoadHooks"))
+#' parse_ns_file(pkgtest("testLoadHooks"))
 #' }
 #' @keywords internal
 #' @export
