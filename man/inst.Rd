@@ -18,7 +18,7 @@ It searches for the package in \code{\link{.libPaths}()}. If multiple
 dirs are found, it will return the first one.
 }
 \examples{
-inst("devtools")
+inst("pkgload")
 inst("grid")
 \dontrun{
 # Can be passed to other devtools functions

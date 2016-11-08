@@ -9,7 +9,7 @@
 #' @param name the name of a package.
 #'
 #' @examples
-#' inst("devtools")
+#' inst("pkgload")
 #' inst("grid")
 #' \dontrun{
 #' # Can be passed to other devtools functions

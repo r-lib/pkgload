@@ -48,7 +48,7 @@ unload <- function(pkg = ".") {
   # resulting in "Error in unload(pkg) : internal error -3 in R_decompress1".
   # If we simply force them first, then they will remain available for use
   # later.
-  if (pkg$package == "devtools") {
+  if (pkg$package == "pkgload") {
     eapply(ns_env(pkg), force, all.names = TRUE)
   }
 
@@ -104,7 +104,7 @@ unload_dll <- function(pkg = ".") {
   # to access nsreg() in the DLL in order to run makeNamespace. This means
   # that changes to compiled code in devtools can't be reloaded with
   # load_all -- it requires a reinstallation.
-  if (pkg$package == "devtools") {
+  if (pkg$package == "pkgload") {
     return(invisible())
   }
 
