@@ -15,16 +15,10 @@
 #' dev_example("ggplot")
 #' }
 dev_example <- function(topic, quiet = FALSE) {
-  path <- find_topic(topic)
+  topic <- dev_help(topic)
 
-  if (is.null(path)) {
-    stop("Can't find development example for topic ", topic, call. = FALSE)
-  }
-
-  pkg <- as.package(names(path)[[1]])
-
-  load_all(pkg, quiet = quiet)
-  run_example(path, quiet = quiet)
+  load_all(topic$pkg, quiet = quiet)
+  run_example(topic$path, quiet = quiet)
 }
 
 run_example <- function(path, show = TRUE, test = FALSE, run = FALSE,
@@ -33,7 +27,7 @@ run_example <- function(path, show = TRUE, test = FALSE, run = FALSE,
 
   tmp <- tempfile(fileext = ".R")
   tools::Rd2ex(path, out = tmp, commentDontrun = !run, commentDonttest = !test)
-  source(tmp, echo = !quiet, local = env)
+  source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)
 
   invisible(env)
 }

@@ -1,9 +1,13 @@
-#' Read the in-development help for a package loaded with devtools.
+#' In-development help for package loaded with devtools
 #'
-#' Note that this only renders a single documentation file, so that links
-#' to other files within the package won't work.
+#' \code{dev_help} searches for source documentation provided in
+#' packages loaded by devtools. To improve performance, the \code{.Rd} files
+#' are parsed to create to index once, then cached. Use
+#' \code{dev_topic_index_reset} to clear that index.
 #'
 #' @param topic name of help to search for.
+#' @param dev_packages A character vector of package names to search within.
+#'   If \code{NULL}, defaults to all packages loaded by devtools.
 #' @param stage at which stage ("build", "install", or "render") should
 #'   \\Sexpr macros be executed? This is only important if you're using
 #'   \\Sexpr macro's in your Rd files.
@@ -18,31 +22,31 @@
 #' load_all("ggplot2")
 #' dev_help("ggplot") # loads development documentation for ggplot
 #' }
-dev_help <- function(topic, stage = "render", type = getOption("help_type")) {
-  path <- find_topic(topic)
-  if (is.null(path)) {
-    dev <- paste(dev_packages(), collapse = ", ")
-    stop("Could not find topic ", topic, " in: ", dev)
-  }
+dev_help <- function(topic,
+                     dev_packages = NULL,
+                     stage = "render",
+                     type = getOption("help_type")) {
+  loc <- dev_topic_find(topic, dev_packages)
 
-  pkg <- basename(names(path)[1])
-  path <- normalizePath(path, winslash = "/")
+  if (is.null(loc$path)) {
+    stop("Could not find development topic '", topic, "'", call. = FALSE)
+  }
 
   structure(
     list(
       topic = topic,
-      pkg = pkg,
-      path = path,
+      pkg = loc$pkg,
+      path = loc$path,
       stage = stage,
       type = type
     ),
-    class = "dev_help"
+    class = "dev_topic"
   )
 }
 
 #' @export
-print.dev_help <- function(x, ...) {
-  message("Using development documentation for ", x$topic)
+print.dev_topic <- function(x, ...) {
+  message("Rendering development documentation for '", x$topic, "'")
 
   if (rstudioapi::hasFun("previewRd")) {
     rstudioapi::callFun("previewRd", x$path)
@@ -155,9 +159,9 @@ shim_help <- function(topic, package = NULL, ...) {
   }
 
   use_dev <- (!is.null(package_str) && package_str %in% dev_packages()) ||
-    (is.null(package_str) && !is.null(find_topic(topic_str)))
+    (is.null(package_str) && !is.null(dev_topic_find(topic_str)))
   if (use_dev) {
-    dev_help(topic_str)
+    dev_help(topic_str, package_str)
   } else {
     # This is similar to list(), except that one of the args is a missing var,
     # it will replace it with an empty symbol instead of trying to evaluate it.
@@ -194,26 +198,33 @@ shim_question <- function(e1, e2) {
   e1_expr <- substitute(e1)
   if (is.name(e1_expr)) {
     # Called with a bare symbol, like ?foo
-    e1_str <- deparse(e1_expr)
-
+    topic <- as.character(e1_expr)
+    pkg <- NULL
   } else if (is.call(e1_expr)) {
-    if (e1_expr[[1]] == "?") {
-      # Double question mark, like ??foo
-      e1_str <- NULL
+    if (identical(e1_expr[[1]], quote(`?`))) {
+      # ??foo
+      topic <- NULL
+      pkg <- NULL
+    } else if (identical(e1_expr[[1]], quote(`::`))) {
+      # ?bar::foo
+      topic <- as.character(e1_expr[[3]])
+      pkg <- as.character(e1_expr[[2]])
     } else {
-      # Called with function arguments, like ?foo(12)
-      e1_str <- deparse(e1_expr[[1]])
+      # ?foo(12)
+      topic <- deparse(e1_expr[[1]])
+      pkg <- NULL
     }
-
+  } else if (is.character(e1_expr)) {
+    topic <- e1
+    pkg <- NULL
   } else {
-    # If we got here, it's probably a string
-    e1_str <- e1
+    stop("Unknown input", call. = FALSE)
   }
 
   # Search for the topic in devtools-loaded packages.
   # If not found, call utils::`?`.
-  if (!is.null(find_topic(e1_str))) {
-    dev_help(e1_str)
+  if (!is.null(topic) && !is.null(dev_topic_find(topic, pkg))) {
+    dev_help(topic, pkg)
   } else {
     eval(as.call(list(utils::`?`, substitute(e1), substitute(e2))))
   }
