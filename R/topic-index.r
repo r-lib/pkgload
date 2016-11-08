@@ -8,21 +8,30 @@ rd_files <- function(pkg) {
   sort_ci(files)
 }
 
-# @return path to rd file within package
-find_pkg_topic <- function(pkg = ".", topic) {
+
+#' Find help topic in devtools package
+#'
+#' @param topic name
+#' @return Name of rd file
+#' @keywords internal
+#' @export
+find_pkg_topic <- function(topic, pkg = ".") {
   pkg <- as.package(pkg)
 
   # First see if a man file of that name exists
   man <- file.path(pkg$path, "man", topic)
-  if (file.exists(man)) return(basename(man))
+  if (file.exists(man))
+    return(basename(man))
 
   # Next, look in index
   index <- topic_index(pkg)
-  if (topic %in% names(index)) return(index[[topic]])
+  if (topic %in% names(index))
+    return(index[[topic]])
 
   # Finally, try adding .Rd to name
   man_rd <- file.path(pkg$path, "man", paste0(topic, ".Rd"))
-  if (file.exists(man_rd)) return(basename(man_rd))
+  if (file.exists(man_rd))
+    return(basename(man_rd))
 
   NULL
 }
@@ -51,7 +60,7 @@ find_topic <- function(topic) {
 
   for (pkg in pkgs) {
     path <- getNamespaceInfo(pkg, "path")
-    rd <- find_pkg_topic(path, topic)
+    rd <- find_pkg_topic(topic, path)
     if (!is.null(rd)) return(stats::setNames(file.path(path, "man", rd), path))
   }
 
