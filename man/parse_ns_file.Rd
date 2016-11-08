@@ -15,7 +15,7 @@ Parses the NAMESPACE file for a package
 }
 \examples{
 if (has_tests()) {
-parse_ns_file(devtest("testLoadHooks"))
+parse_ns_file(pkgtest("testLoadHooks"))
 }
 }
 \keyword{internal}

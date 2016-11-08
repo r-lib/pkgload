@@ -9,14 +9,14 @@
 #'
 #' if (has_tests()) {
 #' # Load the test package in directory "testLoadHooks"
-#' load_all(devtest("testLoadHooks"))
+#' load_all(pkgtest("testLoadHooks"))
 #'
 #' # Get metdata for the package
 #' x <- dev_meta("testLoadHooks")
 #' as.list(x)
 #'
 #' # Clean up.
-#' unload(devtest("testLoadHooks"))
+#' unload(pkgtest("testLoadHooks"))
 #' }
 #' @export
 dev_meta <- function(name) {
