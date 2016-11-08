@@ -56,18 +56,3 @@ run_user_hook <- function(pkg, hook) {
   metadata[[hook_name]] <- TRUE
   invisible(TRUE)
 }
-
-hook_warning <- function(pkg) {
-  if (basename(pkg$path) == pkg$package) return()
-
-  metadata <- dev_meta(pkg$package)
-  if (isTRUE(metadata$hook_warning)) return()
-
-  metadata$hook_warning <- TRUE
-  warning(
-    'Package path "', basename(pkg$path),
-    '" does not match package name "', pkg$package, '". ',
-    'This can result in problems when calling package hooks. ',
-    'Please rename the directory to match the package name.',
-    call. = FALSE)
-}
