@@ -21,6 +21,7 @@ test_that("shim_help behaves the same as utils::help for nonexistent objects", {
 
 test_that("shim_question behaves the same as utils::? for non-devtools-loaded packages", {
   expect_identical(shim_question(lm)[1], utils::`?`(lm)[1])
+  expect_identical(shim_question(stats::lm)[1], utils::`?`(stats::lm)[1])
   expect_identical(shim_question(lm(123))[1], utils::`?`(lm(123))[1])
   expect_identical(shim_question(`lm`)[1], utils::`?`(`lm`)[1])
   expect_identical(shim_question('lm')[1], utils::`?`('lm')[1])
@@ -45,10 +46,11 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
   on.exit(unload(test_path('testHelp')))
 
   h1 <- shim_help("foofoo")
-  expect_s3_class(h1, "dev_help")
+  expect_s3_class(h1, "dev_topic")
   expect_equal(h1$topic, "foofoo")
-  expect_equal(h1$pkg, "testHelp")
+  expect_equal(h1$pkg$package, "testHelp")
 
-  h2 <- shim_help(foofoo)
-  expect_identical(h1, h2)
+  expect_identical(shim_help(foofoo), h1)
+  expect_identical(shim_help(foofoo, "testHelp"), h1)
+  expect_identical(shim_question(testHelp::foofoo), h1)
 })
