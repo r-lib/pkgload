@@ -10,13 +10,8 @@ NULL
 #' Devtools uses the following \code{\link{options}} to configure behaviour:
 #'
 #' \itemize{
-#'   \item \code{devtools.path}: path to use for \code{\link{dev_mode}}
-#'
 #'   \item \code{devtools.name}: your name, used when signing draft
 #'     emails.
-#'
-#'   \item \code{devtools.install.args}: a string giving extra arguments passed
-#'     to \code{R CMD install} by \code{\link{install}}.
 #'
 #'   \item \code{devtools.desc.author}: a string providing a default Authors@@R
 #'     string to be used in new \file{DESCRIPTION}s.  Should be a R code, and
@@ -33,9 +28,7 @@ NULL
 #'     extra options to add to \file{DESCRIPTION}
 #'
 #' }
-#' @docType package
-#' @name devtools
-NULL
+"_PACKAGE"
 
 #' Deprecated Functions
 #'

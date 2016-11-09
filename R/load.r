@@ -197,63 +197,23 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
 }
 
 
-#' Create a default DESCRIPTION file for a package.
-#'
-#' @details
-#' To set the default author and licenses, set \code{options}
-#' \code{devtools.desc.author} and \code{devtools.desc.license}.  I use
-#' \code{options(devtools.desc.author = '"Hadley Wickham <h.wickham@@gmail.com> [aut,cre]"',
-#'   devtools.desc.license = "GPL-3")}.
-#' @param path path to package root directory
-#' @param extra a named list of extra options to add to \file{DESCRIPTION}.
-#'   Arguments that take a list
-#' @param quiet if \code{TRUE}, suppresses output from this function.
-#' @export
-create_description <- function(path = ".", extra = getOption("devtools.desc"),
-                               quiet = FALSE) {
-  # Don't call check_dir(path) here (#803)
-  desc_path <- file.path(path, "DESCRIPTION")
+uses_testthat <- function(pkg = ".") {
+  pkg <- as.package(pkg)
 
-  if (file.exists(desc_path)) return(FALSE)
+  paths <- c(
+    file.path(pkg$path, "inst", "tests"),
+    file.path(pkg$path, "tests", "testthat")
+  )
 
-  subdir <- file.path(path, c("R", "src", "data"))
-  if (!any(file.exists(subdir))) {
-    stop("'", path, "' does not look like a package: no R/, src/ or data directories",
-      call. = FALSE)
-  }
-
-  desc <- build_description(extract_package_name(path), extra)
-
-  if (!quiet) {
-    message("No DESCRIPTION found. Creating with values:\n\n")
-    write_dcf("", desc)
-  }
-
-  write_dcf(desc_path, desc)
-
-  TRUE
+  any(dir.exists(paths))
 }
 
-build_description <- function(name, extra = list()) {
-  check_package_name(name)
+find_test_dir <- function(path) {
+  testthat <- file.path(path, "tests", "testthat")
+  if (dir.exists(testthat)) return(testthat)
 
-  defaults <- compact(list(
-    Package = name,
-    Title = "What the Package Does (one line, title case)",
-    Version = "0.0.0.9000",
-    "Authors@R" = getOption("devtools.desc.author"),
-    Description = "What the package does (one paragraph).",
-    Depends = paste0("R (>= ", as.character(getRversion()) ,")"),
-    License = getOption("devtools.desc.license"),
-    Suggests = getOption("devtools.desc.suggests"),
-    Encoding = "UTF-8",
-    LazyData = "true"
-  ))
+  inst <- file.path(path, "inst", "tests")
+  if (dir.exists(inst)) return(inst)
 
-  # Override defaults with user supplied options
-  desc <- modifyList(defaults, extra)
-  # Collapse all vector arguments to single strings
-  desc <- lapply(desc, function(x) paste(x, collapse = ", "))
-
-  desc
+  stop("No testthat directories found in ", path, call. = FALSE)
 }

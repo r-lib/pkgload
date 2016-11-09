@@ -272,3 +272,20 @@ comma <- function(x, at_most = 20) {
   }
   paste(x, collapse = ", ")
 }
+
+dev_packages <- function() {
+  packages <- vapply(loadedNamespaces(),
+    function(x) !is.null(dev_meta(x)), logical(1))
+
+  names(packages)[packages]
+}
+
+copy_env <- function(src, dest = new.env(parent = emptyenv()),
+  ignore = NULL) {
+
+  srclist <- as.list(src, all.names = TRUE)
+  srclist <- srclist[ !(names(srclist) %in% ignore) ]
+  list2env(srclist, envir = dest)
+
+  dest
+}

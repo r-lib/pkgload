@@ -1,6 +1,13 @@
 # Tools for indexing package documentation by alias, and for finding
 # the rd file for a given topic (alias).
 
+rd_files <- function(pkg) {
+  path_man <- file.path(pkg$path, "man")
+  files <- dir(path_man, pattern = "\\.[Rr]d$", full.names = TRUE)
+  names(files) <- basename(files)
+  sort_ci(files)
+}
+
 # @return path to rd file within package
 find_pkg_topic <- function(pkg = ".", topic) {
   pkg <- as.package(pkg)

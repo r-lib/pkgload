@@ -96,5 +96,5 @@ onload_assign("process_imports", {
 
         for3 = wrap_inner_loop(extract_lang(body(loadNamespace),
           comp_lang, y = quote(for(imp in nsInfo$importMethods) NULL), idx = 1:3))
-        )), asNamespace("devtools"))
+        )), asNamespace("pkgload"))
 })
