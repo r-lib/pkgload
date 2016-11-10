@@ -20,9 +20,9 @@ test_that("Error on missing dependencies", {
 
 test_that("Packages in depends are required", {
   load_all("testDependMissing")
-  expect_true("package:callr" %in% search())
+  expect_true("package:pkgbuild" %in% search())
   unload("testDependMissing")
-  detach("package:callr", unload = TRUE)
+  detach("package:pkgbuild", unload = TRUE)
 })
 
 test_that("Parse dependencies", {

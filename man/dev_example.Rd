@@ -39,7 +39,4 @@ example("ggplot")
 dev_example("ggplot")
 }
 }
-\seealso{
-Other res: \code{\link{compiler_flags}}
-}
 

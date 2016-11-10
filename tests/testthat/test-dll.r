@@ -33,13 +33,13 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
 
 
   # Clean out compiled objects
-  clean_dll("testDllLoad")
+  pkgbuild::clean_dll("testDllLoad")
 })
 
 
 test_that("load_all() compiles and loads DLLs", {
 
-  clean_dll("testDllLoad")
+  pkgbuild::clean_dll("testDllLoad")
 
   load_all("testDllLoad", reset = TRUE, quiet = TRUE)
 
@@ -74,7 +74,7 @@ test_that("load_all() compiles and loads DLLs", {
   unload("testDllLoad")
 
   # Clean out compiled objects
-  clean_dll("testDllLoad")
+  pkgbuild::clean_dll("testDllLoad")
 })
 
 
@@ -97,13 +97,13 @@ test_that("Specific functions from DLLs listed in NAMESPACE can be called", {
   unload("testDllLoad")
 
   # Clean out compiled objects
-  clean_dll("testDllLoad")
+  pkgbuild::clean_dll("testDllLoad")
 })
 
 
 test_that("load_all() can compile and load DLLs linked to Rcpp", {
 
-  clean_dll("testDllRcpp")
+  pkgbuild::clean_dll("testDllRcpp")
 
   load_all("testDllRcpp", reset = TRUE, quiet = TRUE)
 
@@ -117,5 +117,5 @@ test_that("load_all() can compile and load DLLs linked to Rcpp", {
 
   # Unload and clean out compiled objects
   unload("testDllRcpp")
-  clean_dll("testDllRcpp")
+  pkgbuild::clean_dll("testDllRcpp")
 })

@@ -2,9 +2,6 @@
 
 S3method(print,dev_topic)
 export(as.package)
-export(clean_dll)
-export(compile_dll)
-export(compiler_flags)
 export(dev_example)
 export(dev_help)
 export(dev_meta)

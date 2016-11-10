@@ -62,7 +62,7 @@
 #'   faster for large code bases, but is a significantly less accurate
 #'   approximation.
 #' @param recompile force a recompile of DLL from source code, if present.
-#'   This is equivalent to running \code{\link{clean_dll}} before
+#'   This is equivalent to running \code{\link[pkgbuild]{clean_dll}} before
 #'   \code{load_all}
 #' @param export_all If \code{TRUE} (the default), export all objects.
 #'   If \code{FALSE}, export only the objects that are listed as exports
@@ -138,10 +138,11 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     if (is_loaded(pkg)) unload(pkg)
   }
 
-  if (recompile) clean_dll(pkg)
+  if (recompile)
+    pkgbuild::clean_dll(pkg$path)
 
   # Compile dll if it exists
-  compile_dll(pkg, quiet = quiet)
+  pkgbuild::compile_dll(pkg$path, quiet = quiet)
 
 
   # Set up the namespace environment ----------------------------------

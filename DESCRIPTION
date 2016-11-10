@@ -12,13 +12,15 @@ Imports:
     withr,
     methods,
     rstudioapi,
-    callr,
+    pkgbuild,
     roxygen2,
     bitops
 Suggests:
     Rcpp,
     testthat,
     covr
+Remotes:
+    r-pkgs/pkgbuild
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
