@@ -127,7 +127,7 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
 
   # If installed version of package loaded, unload it
   if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
-    unload(pkg)
+    unload(pkg, quiet = quiet)
   }
 
   # Unload dlls
@@ -135,7 +135,7 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
 
   if (reset) {
     clear_cache()
-    if (is_loaded(pkg)) unload(pkg)
+    if (is_loaded(pkg)) unload(pkg, quiet = quiet)
   }
 
   if (recompile)
