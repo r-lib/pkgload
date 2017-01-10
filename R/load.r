@@ -146,6 +146,11 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
   # Compile dll if it exists
   pkgbuild::compile_dll(pkg$path, quiet = quiet)
 
+  # If installed version of package loaded, unload it, again
+  # (needed for dependencies of pkgbuild)
+  if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
+    unload(pkg, quiet = TRUE)
+  }
 
   # Set up the namespace environment ----------------------------------
   # This mimics the procedure in loadNamespace
