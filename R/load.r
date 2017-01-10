@@ -139,8 +139,9 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     if (is_loaded(pkg)) unload(pkg, quiet = quiet)
   }
 
-  if (recompile)
+  if (recompile) {
     pkgbuild::clean_dll(pkg$path)
+  }
 
   # Compile dll if it exists
   pkgbuild::compile_dll(pkg$path, quiet = quiet)
