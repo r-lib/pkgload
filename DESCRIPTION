@@ -9,17 +9,16 @@ Description: pkgload is simulates the process of installing a package
     and then attaching it. This is a key part of devtools as it allows you
     to rapidly iterate with a package.
 Imports:
-    bitops,
-    callr,
+    withr,
     methods,
-    pkgbuild,
     rstudioapi,
+    pkgbuild,
     roxygen2,
-    withr
+    bitops
 Suggests:
-    covr,
     Rcpp,
-    testthat
+    testthat,
+    covr
 Remotes:
     r-pkgs/pkgbuild
 License: GPL-3

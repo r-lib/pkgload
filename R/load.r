@@ -139,21 +139,18 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     if (is_loaded(pkg)) unload(pkg, quiet = quiet)
   }
 
-  # Compile in new R session to make sure this doesn't load any new packages
-  # (e.g., rprojroot)
-  callr::r_vanilla(
-    function(pkg_path, recompile, quiet) {
-      if (recompile) {
-        pkgbuild::clean_dll(pkg_path)
-      }
+  if (recompile) {
+    pkgbuild::clean_dll(pkg$path)
+  }
 
-      # Compile dll if it exists
-      pkgbuild::compile_dll(pkg_path, quiet = quiet)
-    },
-    libpath = .libPaths(),
-    repos = getOption("repos"),
-    args = list(pkg_path = pkg$path, recompile = recompile, quiet = quiet)
-  )
+  # Compile dll if it exists
+  pkgbuild::compile_dll(pkg$path, quiet = quiet)
+
+  # If installed version of package loaded, unload it, again
+  # (needed for dependencies of pkgbuild)
+  if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
+    unload(pkg, quiet = TRUE)
+  }
 
   # Set up the namespace environment ----------------------------------
   # This mimics the procedure in loadNamespace
