@@ -57,10 +57,10 @@ print.dev_topic <- function(x, ...) {
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
 
   if (type == "text") {
-    tools::Rd2txt(x$path, out = out_path, package = x$package, stages = x$stage)
+    tools::Rd2txt(x$path, out = out_path, package = x$pkg$package, stages = x$stage)
     file.show(out_path, title = paste(x$package, basename(x$path), sep = ":"))
   } else if (type == "html") {
-    tools::Rd2HTML(x$path, out = out_path, package = x$package, stages = x$stage,
+    tools::Rd2HTML(x$path, out = out_path, package = x$pkg$package, stages = x$stage,
       no_links = TRUE)
 
     css_path <- file.path(tempdir(), "R.css")
