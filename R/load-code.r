@@ -23,7 +23,7 @@ load_code <- function(pkg = ".") {
   }
   on.exit(cleanup())
 
-  withr_with_dir(file.path(pkg$path), source_many(paths, env))
+  withr_with_dir(file.path(pkg$path), source_many(paths, pkg$encoding %||% "ASCII", env))
   success <- TRUE
 
   invisible(r_files)
