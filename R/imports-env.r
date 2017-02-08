@@ -79,7 +79,7 @@ wrap_inner_loop <- function(x) {
 onload_assign("process_imports", {
   make_function(alist(pkg = "."),
     bquote({
-      package <- pkg$name
+      package <- pkg$package
       vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(pkg$path, "DESCRIPTION")))$Imports
       nsInfo <- parse_ns_file(pkg)
       ns <- ns_env(pkg)
