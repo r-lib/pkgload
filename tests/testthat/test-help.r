@@ -53,4 +53,12 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
   expect_identical(shim_help(foofoo), h1)
   expect_identical(shim_help(foofoo, "testHelp"), h1)
   expect_identical(shim_question(testHelp::foofoo), h1)
+
+  pager_fun <- function(files, header, title, delete.file) {
+    expect_equal(title, "testHelp:foofoo.Rd")
+  }
+
+  withr::with_options(
+    c(pager = pager_fun),
+    print(h1, type = 'text'))
 })

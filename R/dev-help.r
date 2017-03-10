@@ -48,18 +48,17 @@ dev_help <- function(topic,
 print.dev_topic <- function(x, ...) {
   message("Rendering development documentation for '", x$topic, "'")
 
-  if (rstudioapi::hasFun("previewRd")) {
-    rstudioapi::callFun("previewRd", x$path)
-    return(invisible())
-  }
-
   type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
 
   if (type == "text") {
-    tools::Rd2txt(x$path, out = out_path, package = x$package, stages = x$stage)
-    file.show(out_path, title = paste(x$package, basename(x$path), sep = ":"))
+    tools::Rd2txt(x$path, out = out_path, package = x$pkg$package, stages = x$stage)
+    file.show(out_path, title = paste(x$pkg$package, basename(x$path), sep = ":"))
   } else if (type == "html") {
+    if (rstudioapi::hasFun("previewRd")) {
+      rstudioapi::callFun("previewRd", x$path)
+      return(invisible())
+    }
     tools::Rd2HTML(x$path, out = out_path, package = x$package, stages = x$stage,
       no_links = TRUE)
 
