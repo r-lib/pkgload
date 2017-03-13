@@ -12,6 +12,7 @@
 #'
 #' @param pkg package description, can be path or package name.  See
 #'   \code{\link{as.package}} for more information
+#' @inheritParams load_all
 #'
 #' @examples
 #' \dontrun{
@@ -27,7 +28,7 @@
 #' unload(inst("ggplot2"))
 #' }
 #' @export
-unload <- function(pkg = ".") {
+unload <- function(pkg = ".", quiet = FALSE) {
 
   pkg <- as.package(pkg)
 
@@ -78,9 +79,11 @@ unload <- function(pkg = ".") {
   # loadedNamespaces() and unloadNamespace() often don't work here
   # because things can be in a weird state.
   if (!is.null(.getNamespace(pkg$package))) {
-    message("unloadNamespace(\"", pkg$package,
-      "\") not successful, probably because another loaded package depends on it.",
-      "Forcing unload. If you encounter problems, please restart R.")
+    if (!quiet) {
+      message("unloadNamespace(\"", pkg$package,
+        "\") not successful, probably because another loaded package depends on it. ",
+        "Forcing unload. If you encounter problems, please restart R.")
+    }
     unregister_namespace(pkg$package)
   }
 

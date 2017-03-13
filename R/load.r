@@ -125,25 +125,32 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     message("Invalid DESCRIPTION:\n", paste(msg, collapse = "\n"))
   }
 
-  # If installed version of package loaded, unload it
   if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
-    unload(pkg)
+    # If installed version of package loaded, unload it
+    # (and also the DLLs)
+    unload(pkg, quiet = quiet)
+  } else {
+    # Unload only DLLs
+    unload_dll(pkg)
   }
-
-  # Unload dlls
-  unload_dll(pkg)
 
   if (reset) {
     clear_cache()
-    if (is_loaded(pkg)) unload(pkg)
+    if (is_loaded(pkg)) unload(pkg, quiet = quiet)
   }
 
-  if (recompile)
+  if (recompile) {
     pkgbuild::clean_dll(pkg$path)
+  }
 
   # Compile dll if it exists
   pkgbuild::compile_dll(pkg$path, quiet = quiet)
 
+  # If installed version of package loaded, unload it, again
+  # (needed for dependencies of pkgbuild)
+  if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
+    unload(pkg, quiet = TRUE)
+  }
 
   # Set up the namespace environment ----------------------------------
   # This mimics the procedure in loadNamespace
