@@ -8,7 +8,7 @@ unload(pkg = ".")
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
-\code{\link{as.package}} for more information}
+\code{\link[=as.package]{as.package()}} for more information}
 }
 \description{
 This function attempts to cleanly unload a package, including unloading
@@ -35,4 +35,3 @@ library(ggplot2)
 unload(inst("ggplot2"))
 }
 }
-

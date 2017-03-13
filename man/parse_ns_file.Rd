@@ -8,7 +8,7 @@ parse_ns_file(pkg = ".")
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
-\code{\link{as.package}} for more information}
+\code{\link[=as.package]{as.package()}} for more information}
 }
 \description{
 Parses the NAMESPACE file for a package
@@ -19,4 +19,3 @@ parse_ns_file(pkgtest("testLoadHooks"))
 }
 }
 \keyword{internal}
-

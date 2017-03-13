@@ -1,7 +1,7 @@
 #' Load a compiled DLL
 #'
 #' @param pkg package description, can be path or package name.  See
-#'   \code{\link{as.package}} for more information
+#'   [as.package()] for more information
 #' @keywords programming
 #' @name load_dll
 #' @usage load_dll(pkg = ".")

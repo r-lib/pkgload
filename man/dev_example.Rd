@@ -39,4 +39,3 @@ example("ggplot")
 dev_example("ggplot")
 }
 }
-

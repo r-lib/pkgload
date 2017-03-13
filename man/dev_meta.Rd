@@ -28,4 +28,3 @@ unload(pkgtest("testLoadHooks"))
 }
 }
 \keyword{internal}
-

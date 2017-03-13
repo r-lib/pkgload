@@ -8,7 +8,7 @@ ns_env(pkg = ".")
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
-\code{\link{as.package}} for more information}
+\code{\link[=as.package]{as.package()}} for more information}
 }
 \description{
 Contains all (exported and non-exported) objects, and is a descendent of
@@ -20,11 +20,10 @@ Contains all (exported and non-exported) objects, and is a descendent of
 If the package is not loaded, this function returns \code{NULL}.
 }
 \seealso{
-\code{\link{pkg_env}} for the attached environment that
-  contains the exported objects.
+\code{\link[=pkg_env]{pkg_env()}} for the attached environment that
+contains the exported objects.
 
-\code{\link{imports_env}} for the environment that contains
-  imported objects for the package.
+\code{\link[=imports_env]{imports_env()}} for the environment that contains
+imported objects for the package.
 }
 \keyword{internal}
-

@@ -2,7 +2,7 @@
 #'
 #'
 #' @param pkg package description, can be path or package name.  See
-#'   \code{\link{as.package}} for more information
+#'   [as.package()] for more information
 #' @param hook hook name: one of "load", "unload", "attach", or "detach"
 #' @keywords internal
 run_pkg_hook <- function(pkg, hook) {

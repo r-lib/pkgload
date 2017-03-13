@@ -1,6 +1,6 @@
 #' Return devtools metadata environment
 #'
-#' If the package was not loaded with devtools, returns \code{NULL}.
+#' If the package was not loaded with devtools, returns `NULL`.
 #'
 #' @param name The name of a loaded package
 #' @keywords internal

@@ -5,10 +5,10 @@
 #' which is a child of R_GlobalEnv.
 #' @keywords internal
 #' @param pkg package description, can be path or package name.  See
-#'   \code{\link{as.package}} for more information.
-#' @seealso \code{\link{ns_env}} for the namespace environment that
+#'   [as.package()] for more information.
+#' @seealso [ns_env()] for the namespace environment that
 #'   all the objects (exported and not exported).
-#' @seealso \code{\link{pkg_env}} for the attached environment that contains
+#' @seealso [pkg_env()] for the attached environment that contains
 #'   the exported objects.
 #' @export
 imports_env <- function(pkg = ".") {

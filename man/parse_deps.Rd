@@ -11,8 +11,8 @@ parse_deps(string)
 }
 \value{
 list of two character vectors: \code{name} package names,
-  and \code{version} package versions. If version is not specified,
-  it will be stored as NA.
+and \code{version} package versions. If version is not specified,
+it will be stored as NA.
 }
 \description{
 Parse package dependency strings.
@@ -23,4 +23,3 @@ parse_deps("httr (< 2.1),\\nRCurl (>= 3)")
 parse_deps("utils (== 2.12.1),\\ntools,\\nR (>= 2.10),\\nmemoise")
 }
 \keyword{internal}
-

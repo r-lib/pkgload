@@ -3,7 +3,7 @@
 #' Given the name of a package, this returns a path to the installed
 #' copy of the package, which can be passed to other devtools functions.
 #'
-#' It searches for the package in \code{\link{.libPaths}()}. If multiple
+#' It searches for the package in [.libPaths()]. If multiple
 #' dirs are found, it will return the first one.
 #'
 #' @param name the name of a package.

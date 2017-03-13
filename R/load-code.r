@@ -1,10 +1,10 @@
 #' Load R code.
 #'
-#' Load all R code in the \code{R} directory. The first time the code is
-#' loaded, \code{.onLoad} will be run if it exists.
+#' Load all R code in the `R` directory. The first time the code is
+#' loaded, `.onLoad` will be run if it exists.
 #'
 #' @param pkg package description, can be path or package name.  See
-#'   \code{\link{as.package}} for more information
+#'   [as.package()] for more information
 #' @keywords programming
 #' @export
 load_code <- function(pkg = ".") {

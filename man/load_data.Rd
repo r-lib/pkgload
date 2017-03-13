@@ -8,10 +8,9 @@ load_data(pkg = ".")
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
-\code{\link{as.package}} for more information}
+\code{\link[=as.package]{as.package()}} for more information}
 }
 \description{
 Loads all \code{.RData} files in the data subdirectory.
 }
 \keyword{programming}
-

@@ -19,4 +19,3 @@ pkgtest("testData")
 }
 }
 \keyword{internal}
-

@@ -1,17 +1,17 @@
 #' In-development help for package loaded with devtools
 #'
-#' \code{dev_help} searches for source documentation provided in
-#' packages loaded by devtools. To improve performance, the \code{.Rd} files
+#' `dev_help` searches for source documentation provided in
+#' packages loaded by devtools. To improve performance, the `.Rd` files
 #' are parsed to create to index once, then cached. Use
-#' \code{dev_topic_index_reset} to clear that index.
+#' `dev_topic_index_reset` to clear that index.
 #'
 #' @param topic name of help to search for.
 #' @param dev_packages A character vector of package names to search within.
-#'   If \code{NULL}, defaults to all packages loaded by devtools.
+#'   If `NULL`, defaults to all packages loaded by devtools.
 #' @param stage at which stage ("build", "install", or "render") should
-#'   \\Sexpr macros be executed? This is only important if you're using
-#'   \\Sexpr macro's in your Rd files.
-#' @param type of html to produce: \code{"html"} or \code{"text"}. Defaults to
+#'   \\\\Sexpr macros be executed? This is only important if you're using
+#'   \\\\Sexpr macro's in your Rd files.
+#' @param type of html to produce: `"html"` or `"text"`. Defaults to
 #'   your default documentation type.
 #' @export
 #' @examples
@@ -74,27 +74,27 @@ print.dev_topic <- function(x, ...) {
 
 #' Drop-in replacements for help and ? functions
 #'
-#' The \code{?} and \code{help} functions are replacements for functions of the
+#' The `?` and `help` functions are replacements for functions of the
 #' same name in the utils package. They are made available when a package is
-#' loaded with \code{\link{load_all}}.
+#' loaded with [load_all()].
 #'
-#' The \code{?} function is a replacement for \code{\link[utils]{?}} from the
+#' The `?` function is a replacement for [utils::?()] from the
 #' utils package. It will search for help in devtools-loaded packages first,
 #' then in regular packages.
 #'
-#' The \code{help} function is a replacement for \code{\link[utils]{help}} from
-#' the utils package. If \code{package} is not specified, it will search for
+#' The `help` function is a replacement for [utils::help()] from
+#' the utils package. If `package` is not specified, it will search for
 #' help in devtools-loaded packages first, then in regular packages. If
-#' \code{package} is specified, then it will search for help in devtools-loaded
+#' `package` is specified, then it will search for help in devtools-loaded
 #' packages or regular packages, as appropriate.
 #'
 #' @inheritParams utils::help utils::`?`
 #' @param topic A name or character string specifying the help topic.
 #' @param package A name or character string specifying the package in which
 #'   to search for the help topic. If NULL, seach all packages.
-#' @param e1 First argument to pass along to \code{utils::`?`}.
-#' @param e2 Second argument to pass along to \code{utils::`?`}.
-#' @param ... Additional arguments to pass to \code{\link[utils]{help}}.
+#' @param e1 First argument to pass along to `utils::`?``.
+#' @param e2 Second argument to pass along to `utils::`?``.
+#' @param ... Additional arguments to pass to [utils::help()].
 #'
 #' @rdname help
 #' @name help

@@ -1,8 +1,8 @@
 #' Parse package dependency strings.
 #'
-#' @param string to parse. Should look like \code{"R (>= 3.0), ggplot2"} etc.
-#' @return list of two character vectors: \code{name} package names,
-#'   and \code{version} package versions. If version is not specified,
+#' @param string to parse. Should look like `"R (>= 3.0), ggplot2"` etc.
+#' @return list of two character vectors: `name` package names,
+#'   and `version` package versions. If version is not specified,
 #'   it will be stored as NA.
 #' @keywords internal
 #' @export

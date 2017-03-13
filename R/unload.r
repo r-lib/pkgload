@@ -6,12 +6,12 @@
 #' unloaded, and so we have to manually modify the class dependency graph in
 #' order for it to work - this works on the cases for which we have tested
 #' but there may be others.  Similarly, automated DLL unloading is best tested
-#' for simple scenarios (particularly with \code{useDynLib(pkgname)} and may
+#' for simple scenarios (particularly with `useDynLib(pkgname)` and may
 #' fail in other cases. If you do encounter a failure, please file a bug report
 #' at \url{http://github.com/hadley/devtools/issues}.
 #'
 #' @param pkg package description, can be path or package name.  See
-#'   \code{\link{as.package}} for more information
+#'   [as.package()] for more information
 #'
 #' @examples
 #' \dontrun{

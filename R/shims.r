@@ -26,21 +26,21 @@ insert_global_shims <- function() {
 
 #' Replacement version of system.file
 #'
-#' This function is meant to intercept calls to \code{\link[base]{system.file}},
+#' This function is meant to intercept calls to [base::system.file()],
 #' so that it behaves well with packages loaded by devtools. It is made
-#' available when a package is loaded with \code{\link{load_all}}.
+#' available when a package is loaded with [load_all()].
 #'
-#' When \code{system.file} is called from the R console (the global
+#' When `system.file` is called from the R console (the global
 #' envrironment), this function detects if the target package was loaded with
-#' \code{\link{load_all}}, and if so, it uses a customized method of searching
+#' [load_all()], and if so, it uses a customized method of searching
 #' for the file. This is necessary because the directory structure of a source
 #' package is different from the directory structure of an installed package.
 #'
-#' When a package is loaded with \code{load_all}, this function is also inserted
-#' into the package's imports environment, so that calls to \code{system.file}
+#' When a package is loaded with `load_all`, this function is also inserted
+#' into the package's imports environment, so that calls to `system.file`
 #' from within the package namespace will use this modified version. If this
 #' function were not inserted into the imports environment, then the package
-#' would end up calling \code{base::system.file} instead.
+#' would end up calling `base::system.file` instead.
 #' @inheritParams base::system.file
 #'
 #' @usage # system.file(..., package = "base", lib.loc = NULL, mustWork = FALSE)

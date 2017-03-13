@@ -9,16 +9,16 @@ load_all(pkg = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
 }
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
-\code{\link{as.package}} for more information.}
+\code{\link[=as.package]{as.package()}} for more information.}
 
 \item{reset}{clear package environment and reset file cache before loading
 any pieces of the package. This is equivalent to running
-\code{\link{unload}} and is the default. Use \code{reset = FALSE} may be
+\code{\link[=unload]{unload()}} and is the default. Use \code{reset = FALSE} may be
 faster for large code bases, but is a significantly less accurate
 approximation.}
 
 \item{recompile}{force a recompile of DLL from source code, if present.
-This is equivalent to running \code{\link{clean_dll}} before
+This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
 \code{load_all}}
 
 \item{export_all}{If \code{TRUE} (the default), export all objects.
@@ -29,28 +29,28 @@ in the NAMESPACE file.}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens
-when a package is installed and loaded with \code{\link{library}}.
+when a package is installed and loaded with \code{\link[=library]{library()}}.
 }
 \details{
 Currently \code{load_all}:
 
 \itemize{
-  \item Loads all data files in \code{data/}.  See \code{\link{load_data}}
-    for more details.
+\item Loads all data files in \code{data/}.  See \code{\link[=load_data]{load_data()}}
+for more details.
 
 \item Sources all R files in the R directory, storing results in
-    environment that behaves like a regular package namespace. See
-    below and \code{\link{load_code}} for more details.
+environment that behaves like a regular package namespace. See
+below and \code{\link[=load_code]{load_code()}} for more details.
 
 \item Compiles any C, C++, or Fortran code in the \code{src/} directory
-    and connects the generated DLL into R. See \code{\link{compile_dll}}
-    for more details.
+and connects the generated DLL into R. See \code{\link[=compile_dll]{compile_dll()}}
+for more details.
 
 \item Runs \code{.onAttach()}, \code{.onLoad()} and \code{.onUnload()}
-    functions at the correct times.
+functions at the correct times.
 
 \item If you use \pkg{testthat}, will load all test helpers so you
-    can access them interactively.
+can access them interactively.
 
 }
 }
@@ -73,7 +73,7 @@ objects easy to access.
 
 To export only the objects listed as exports, use
 \code{export_all=FALSE}. This more closely simulates behavior when
-loading an installed package with \code{\link{library}}, and can be
+loading an installed package with \code{\link[=library]{library()}}, and can be
 useful for checking for missing exports.
 }
 
@@ -86,6 +86,7 @@ of the laded package. It presently adds a replacement version of
 package sources have different directory structures. Note that this is not
 a perfect replacement for \code{base::system.file}.
 }
+
 \examples{
 \dontrun{
 # Load the package in the current directory
@@ -103,4 +104,3 @@ load_all("./", export_all = FALSE)
 }
 }
 \keyword{programming}
-
