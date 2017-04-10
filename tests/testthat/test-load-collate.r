@@ -38,7 +38,7 @@ test_that("DESCRIPTION Collate field, with latest @includes, is recognised by lo
   on.exit(unlink(test_pkg, recursive = TRUE))
 
   expect_output(
-    expect_message(load_all(test_pkg), "Loading testCollateOrder"),
+    expect_message(load_all(test_pkg, recollate = TRUE), "Loading testCollateOrder"),
     "Updating collate directive"
   )
 

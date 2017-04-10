@@ -68,6 +68,7 @@
 #'   If `FALSE`, export only the objects that are listed as exports
 #'   in the NAMESPACE file.
 #' @param quiet if `TRUE` suppresses output from this function.
+#' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
 #' @inheritParams as.package
 #' @keywords programming
 #' @examples
@@ -87,7 +88,7 @@
 #' }
 #' @export
 load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
-                     export_all = TRUE, quiet = FALSE) {
+                     export_all = TRUE, recollate = FALSE, quiet = FALSE) {
   pkg <- as.package(pkg)
 
   if (!quiet) message("Loading ", pkg$package)
@@ -101,9 +102,12 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  roxygen2::update_collate(pkg$path)
-  # Refresh the pkg structure with any updates to the Collate entry
-  # in the DESCRIPTION file
+  if (isTRUE(recollate)) {
+    check_suggested("roxygen2")
+    roxygen2::update_collate(pkg$path)
+    # Refresh the pkg structure with any updates to the Collate entry
+    # in the DESCRIPTION file
+  }
   pkg$collate <- as.package(pkg$path)$collate
 
   # Forcing all of the promises for the loaded namespace now will avoid lazy-load

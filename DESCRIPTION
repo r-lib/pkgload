@@ -13,11 +13,11 @@ Imports:
     methods,
     rstudioapi,
     pkgbuild,
-    roxygen2,
     bitops
 Suggests:
     Rcpp,
     testthat,
+    roxygen2,
     covr
 Remotes:
     r-pkgs/pkgbuild
