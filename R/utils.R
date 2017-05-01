@@ -159,3 +159,5 @@ copy_env <- function(src, dest = new.env(parent = emptyenv()),
 
   dest
 }
+
+last <- function(x) tail(x, n = 1L)

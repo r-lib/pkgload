@@ -1,5 +1,9 @@
 # pkgload 0.0.0.9000
 
+* `dev_topic_path()` now only returns the last path found, fixing an error
+  when a package has both a package function level help with the same name.
+  (#21)
+
 * `load_all()` gains a `recollate` argument and roxygen2 is now a Suggested
   rather than required dependency. (#4)
 
