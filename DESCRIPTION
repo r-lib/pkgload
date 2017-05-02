@@ -21,7 +21,8 @@ Suggests:
     roxygen2,
     covr
 Remotes:
-    r-pkgs/pkgbuild
+    r-pkgs/pkgbuild,
+    hadley/rlang
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
