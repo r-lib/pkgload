@@ -77,24 +77,34 @@ wrap_inner_loop <- function(x) {
 }
 
 onload_assign("process_imports", {
-  make_function(alist(pkg = "."),
-    bquote({
-      package <- pkg$package
-      vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(pkg$path, "DESCRIPTION")))$Imports
-      nsInfo <- parse_ns_file(pkg)
-      ns <- ns_env(pkg)
-      lib.loc <- NULL
-      .(for1)
-      .(for2)
-      .(for3)
-    }, list(
-        for1 = wrap_inner_loop(
-          extract_lang(body(loadNamespace), comp_lang, y = quote(for(i in nsInfo$imports) NULL), idx = 1:3)),
+  for1 <- wrap_inner_loop(
+    extract_lang(body(loadNamespace), comp_lang, y = quote(for(i in nsInfo$imports) NULL), idx = 1:3)
+  )
+  for2 <- wrap_inner_loop(
+    extract_lang(body(loadNamespace), comp_lang,
+      y = quote(for(imp in nsInfo$importClasses) NULL),
+      idx = 1:3)
+  )
+  for3 <- wrap_inner_loop(
+    extract_lang(body(loadNamespace), comp_lang,
+      y = quote(for(imp in nsInfo$importMethods) NULL),
+      idx = 1:3)
+  )
 
-        for2 = wrap_inner_loop(extract_lang(body(loadNamespace),
-          comp_lang, y = quote(for(imp in nsInfo$importClasses) NULL), idx = 1:3)),
+  process_imports <- function(pkg = ".") {
+    package <- pkg$name
+    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(pkg$path, "DESCRIPTION")))$Imports
+    nsInfo <- parse_ns_file(pkg)
+    ns <- ns_env(pkg)
+    lib.loc <- NULL
 
-        for3 = wrap_inner_loop(extract_lang(body(loadNamespace),
-          comp_lang, y = quote(for(imp in nsInfo$importMethods) NULL), idx = 1:3))
-        )), asNamespace("pkgload"))
+    !! for1
+    !! for2
+    !! for3
+  }
+
+  process_imports <- rlang::tidy_interp(process_imports)
+  rlang::fn_env(process_imports) <- rlang::ns_env("pkgload")
+
+  process_imports
 })

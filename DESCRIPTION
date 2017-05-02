@@ -13,7 +13,8 @@ Imports:
     methods,
     rstudioapi,
     pkgbuild,
-    bitops
+    bitops,
+    rlang
 Suggests:
     Rcpp,
     testthat,
