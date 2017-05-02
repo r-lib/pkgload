@@ -98,7 +98,7 @@ interactive <- function() .Primitive("interactive")()
 #' Is the package currently under development?
 #'
 #' Returns `TRUE` or `FALSE` depending on if the package has been loaded by
-#' [pkgload].
+#' **pkgload**.
 #'
 #' @param name the name of a package.
 #' @export
