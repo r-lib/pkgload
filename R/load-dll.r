@@ -37,7 +37,7 @@ onload_assign("load_dll", {
     invisible(dlls)
   }
 
-  load_dll <- rlang::tidy_interp(load_dll)
+  load_dll <- rlang::expr_interp(load_dll)
   rlang::fn_env(load_dll) <- rlang::ns_env("pkgload")
 
   load_dll

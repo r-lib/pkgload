@@ -103,7 +103,7 @@ onload_assign("process_imports", {
     !! for3
   }
 
-  process_imports <- rlang::tidy_interp(process_imports)
+  process_imports <- rlang::expr_interp(process_imports)
   rlang::fn_env(process_imports) <- rlang::ns_env("pkgload")
 
   process_imports
