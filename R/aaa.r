@@ -1,3 +1,6 @@
+#' @import rlang
+NULL
+
 onload_assign <-
   local({
     names <- character()
