@@ -4,6 +4,9 @@
   when a package has both a package function level help with the same name.
   (#21)
 
+* New function `is_dev_package()` to determine if a given package has been loaded
+  by `pkgload::load_all()` (#2).
+
 * `load_all()` gains a `recollate` argument and roxygen2 is now a Suggested
   rather than required dependency. (#4)
 

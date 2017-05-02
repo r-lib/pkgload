@@ -9,6 +9,8 @@ unload(pkg = ".", quiet = FALSE)
 \arguments{
 \item{pkg}{package description, can be path or package name.  See
 \code{\link[=as.package]{as.package()}} for more information}
+
+\item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
 \description{
 This function attempts to cleanly unload a package, including unloading

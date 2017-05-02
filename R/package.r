@@ -94,3 +94,12 @@ is.package <- function(x) inherits(x, "package")
 
 # Mockable variant of interactive
 interactive <- function() .Primitive("interactive")()
+
+#' Is the package currently under development?
+#'
+#' Returns `TRUE` or `FALSE` depending on if the package has been loaded by
+#' **pkgload**.
+#'
+#' @param name the name of a package.
+#' @export
+is_dev_package <- function(name) name %in% dev_packages()
