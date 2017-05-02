@@ -10,8 +10,8 @@ r:
  - release
  - devel
 
-before_install:
-  - test $TRAVIS_R_VERSION_STRING = '3.1' && Rscript -e 'devtools::install_github("devtools")'
+r_github_packages:
+  - hadley/devtools
 
 after_success:
   - Rscript -e 'covr::codecov()'
