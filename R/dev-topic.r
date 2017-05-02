@@ -60,7 +60,7 @@ dev_topic_path <- function(topic, pkg = ".") {
   # Next, look in index
   index <- dev_topic_index(pkg)
   if (topic %in% names(index))
-    return(file.path(pkg$path, "man", index[[topic]]))
+    return(file.path(pkg$path, "man", last(index[[topic]])))
 
   # Finally, try adding .Rd to name
   man_rd <- file.path(pkg$path, "man", paste0(topic, ".Rd"))

@@ -2,6 +2,9 @@ Package: testHelp
 Title: Tools to make developing R code easier
 License: GPL-2
 Description: Test package for devtools help.
-Author: Hadley <h.wickham@gmail.com>
-Maintainer: Hadley <h.wickham@gmail.com>
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
+    person("RStudio", role = "cph")
+  )
 Version: 0.1
+RoxygenNote: 6.0.1

@@ -4,4 +4,15 @@
 #' devtools.
 #'
 #' @export
+#' @examples
+#' a <- 101
 foofoo <- function() "You called foofoo."
+
+#' testHelp: some title
+#' Some description
+"_PACKAGE"
+
+#' Function level help for testHelp
+#'
+#' @export
+testHelp <- function() "You called testHelp"
