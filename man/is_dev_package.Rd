@@ -11,5 +11,5 @@ is_dev_package(name)
 }
 \description{
 Returns \code{TRUE} or \code{FALSE} depending on if the package has been loaded by
-\link{pkgload}.
+\strong{pkgload}.
 }
