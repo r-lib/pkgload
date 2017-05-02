@@ -12,6 +12,7 @@
 #'
 #' @param pkg package description, can be path or package name.  See
 #'   [as.package()] for more information
+#' @param quiet if `TRUE` suppresses output from this function.
 #'
 #' @examples
 #' \dontrun{
