@@ -100,9 +100,9 @@ setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
     exports <- nsInfo$exports
     for (p in nsInfo$exportPatterns)
       exports <- c(ls(nsenv, pattern = p, all.names = TRUE), exports)
-    exports <- add_classes_to_exports(ns = nsenv, package = pkg$package,
-      exports = exports, nsInfo = nsInfo)
   }
+  exports <- add_classes_to_exports(ns = nsenv, package = pkg$package,
+    exports = exports, nsInfo = nsInfo)
 
   # Don't try to export objects that are missing from the namespace and imports
   ns_and_imports <- c(ls(nsenv, all.names = TRUE),
