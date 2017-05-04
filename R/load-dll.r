@@ -6,37 +6,42 @@
 #' @name load_dll
 #' @usage load_dll(pkg = ".")
 #' @export
-onload_assign("load_dll",
-  make_function(alist(pkg = "."),
-    bquote({
-      pkg <- as.package(pkg)
-      env <- ns_env(pkg)
-      nsInfo <- parse_ns_file(pkg)
+onload_assign("load_dll", {
+  for_loop <-
+    modify_lang(
+      f = function(x)
+        if (comp_lang(x, quote(library.dynam()), 1)) {
+          quote(library.dynam2(pkg, lib))
+        } else {
+          x
+        },
+        extract_lang(body(loadNamespace),
+          comp_lang, y = quote(for (i in seq_along(dynLibs)) NULL), idx = 1:3))
 
-      dlls <- list()
-      dynLibs <- nsInfo$dynlibs
+  ## The code below taken directly from base::loadNamespace
+  ## https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L466-L485
+  ## except for the call to library.dynam2, which is a special version of
+  ## library.dynam
 
-      ## The code below taken directly from base::loadNamespace
-      ## https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L466-L485
-      ## except for the call to library.dynam2, which is a special version of
-      ## library.dynam
-      .(for_loop)
-      addNamespaceDynLibs(env, nsInfo$dynlibs)
+  load_dll <- function(pkg = ".") {
+    pkg <- as.package(pkg)
+    env <- ns_env(pkg)
+    nsInfo <- parse_ns_file(pkg)
 
-      invisible(dlls)
-    },
-    list(for_loop =
-      modify_lang(
-        f = function(x)
-          if (comp_lang(x, quote(library.dynam()), 1)) {
-            quote(library.dynam2(pkg, lib))
-          } else {
-            x
-          },
+    dlls <- list()
+    dynLibs <- nsInfo$dynlibs
 
-          extract_lang(body(loadNamespace),
-            comp_lang, y = quote(for (i in seq_along(dynLibs)) NULL), idx = 1:3)
-      )))))
+    !! for_loop
+    addNamespaceDynLibs(env, nsInfo$dynlibs)
+
+    invisible(dlls)
+  }
+
+  load_dll <- expr_interp(load_dll)
+  fn_env(load_dll) <- rlang::ns_env("pkgload")
+
+  load_dll
+})
 
 # Return a list of currently loaded DLLs from the package
 loaded_dlls <- function(pkg = ".") {
