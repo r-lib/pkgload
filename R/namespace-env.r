@@ -101,9 +101,6 @@ setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
     for (p in nsInfo$exportPatterns)
       exports <- c(ls(nsenv, pattern = p, all.names = TRUE), exports)
   }
-  exports <- add_classes_to_exports(ns = nsenv, package = pkg$package,
-    exports = exports, nsInfo = nsInfo)
-
   # Don't try to export objects that are missing from the namespace and imports
   ns_and_imports <- c(ls(nsenv, all.names = TRUE),
                       ls(imports_env(pkg), all.names = TRUE))
@@ -114,6 +111,13 @@ setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
             paste(extra_exports, collapse = ", "))
     exports <- intersect(ns_and_imports, exports)
   }
+
+  # Add any S4 methods or classes, this needs to be done after checking for
+  # missing exports as S4 methods with generics imported from other packages
+  # are not defined in the namespace.
+  exports <- add_classes_to_exports(ns = nsenv, package = pkg$package,
+    exports = exports, nsInfo = nsInfo)
+
   # Update the exports metadata for the namespace with base::namespaceExport
   # It will throw warnings if objects are already listed in the exports
   # metadata, so catch those warnings and ignore them.
