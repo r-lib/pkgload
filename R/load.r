@@ -129,6 +129,14 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
     message("Invalid DESCRIPTION:\n", paste(msg, collapse = "\n"))
   }
 
+  ## The unload() has to come before unload_dll(), for packages with
+  ## compiled code, becauase they might crash of objects still use the
+  ## DLL's memory.
+  if (reset) {
+    clear_cache()
+    if (is_loaded(pkg)) unload(pkg, quiet = quiet)
+  }
+
   if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
     # If installed version of package loaded, unload it
     # (and also the DLLs)
@@ -136,11 +144,6 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
   } else {
     # Unload only DLLs
     unload_dll(pkg)
-  }
-
-  if (reset) {
-    clear_cache()
-    if (is_loaded(pkg)) unload(pkg, quiet = quiet)
   }
 
   if (recompile) {
