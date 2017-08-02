@@ -1,7 +1,7 @@
 # pkgload
 
-[![Travis-CI Build Status](https://travis-ci.org/r-pkgs/pkgload.svg?branch=master)](https://travis-ci.org/r-pkgs/pkgload)
-[![Coverage Status](https://img.shields.io/codecov/c/github/r-pkgs/pkgload/master.svg)](https://codecov.io/github/r-pkgs/pkgload?branch=master)
+[![Travis-CI Build Status](https://travis-ci.org/r-lib/pkgload.svg?branch=master)](https://travis-ci.org/r-lib/pkgload)
+[![codecov](https://codecov.io/gh/r-lib/pkgload/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/pkgload)
 
 The goal of pkgload is to simulate the process of installing and loading a package, without actually doing the complete process, and hence making package iteration much faster. This was previously part of devtools (it was in fact the original motivation) but has been moved into its own package as part of the devtools diaspora into smaller, more focussed packages.
 
