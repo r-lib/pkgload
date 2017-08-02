@@ -1,1 +1,3 @@
 RcppExports.cpp
+*.o
+*.so
