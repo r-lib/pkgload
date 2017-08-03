@@ -22,7 +22,7 @@ Suggests:
     covr
 Remotes:
     r-lib/pkgbuild,
-    hadley/rlang
+    tidyverse/rlang
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
