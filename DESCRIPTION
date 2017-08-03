@@ -13,13 +13,13 @@ Imports:
     methods,
     rstudioapi,
     pkgbuild,
-    bitops,
     rlang
 Suggests:
     Rcpp,
     testthat,
     roxygen2,
-    covr
+    covr,
+    bitops
 Remotes:
     r-lib/pkgbuild,
     tidyverse/rlang
