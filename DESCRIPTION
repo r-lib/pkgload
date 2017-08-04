@@ -13,16 +13,16 @@ Imports:
     methods,
     rstudioapi,
     pkgbuild,
-    bitops,
     rlang
 Suggests:
     Rcpp,
     testthat,
     roxygen2,
-    covr
+    covr,
+    bitops
 Remotes:
     r-lib/pkgbuild,
-    hadley/rlang
+    tidyverse/rlang
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
