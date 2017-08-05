@@ -1,8 +1,8 @@
 context("DESCRIPTION checks")
 
 test_that("Parse DESCRIPTION file", {
-  pkg <- as.package("testNamespace")
+  pkg <- pkg_desc("testNamespace")
 
-  expect_identical("0.1", pkg$version)
-  expect_identical("testNamespace", pkg$package)
+  expect_identical(package_version("0.1"), pkg$get_version())
+  expect_identical("testNamespace", pkg_name("testNamespace"))
 })

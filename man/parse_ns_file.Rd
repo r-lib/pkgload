@@ -4,11 +4,10 @@
 \alias{parse_ns_file}
 \title{Parses the NAMESPACE file for a package}
 \usage{
-parse_ns_file(pkg = ".")
+parse_ns_file(path = ".")
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{path}{Path to a package, or within a package.}
 }
 \description{
 Parses the NAMESPACE file for a package

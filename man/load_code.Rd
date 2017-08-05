@@ -4,11 +4,10 @@
 \alias{load_code}
 \title{Load R code.}
 \usage{
-load_code(pkg = ".")
+load_code(path = ".")
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{path}{Path to a package, or within a package.}
 }
 \description{
 Load all R code in the \code{R} directory. The first time the code is

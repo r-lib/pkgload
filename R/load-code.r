@@ -3,15 +3,17 @@
 #' Load all R code in the `R` directory. The first time the code is
 #' loaded, `.onLoad` will be run if it exists.
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information
+#' @inheritParams load_all
 #' @keywords programming
 #' @export
-load_code <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  env <- ns_env(pkg)
+load_code <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+  encoding <- pkg_desc(path)$get("Encoding")
 
-  r_files <- find_code(pkg)
+  env <- ns_env(package)
+
+  r_files <- find_code(path)
   paths <- changed_files(r_files)
   if (length(paths) == 0L) return()
 
@@ -19,35 +21,27 @@ load_code <- function(pkg = ".") {
   cleanup <- function() {
     if (success) return()
     clear_cache()
-    unload(pkg)
+    unload(package)
   }
   on.exit(cleanup())
 
-  withr_with_dir(file.path(pkg$path), source_many(paths, pkg$encoding %||% "ASCII", env))
+  withr_with_dir(path, source_many(paths, encoding %||% "ASCII", env))
   success <- TRUE
 
   invisible(r_files)
 }
 
-# Parse collate string into vector of function names.
-parse_collate <- function(string) {
-  con <- textConnection(string)
-  on.exit(close(con))
-  scan(con, "character", sep = " ", quiet = TRUE)
-}
-
 # Find all R files in given directory.
-find_code <- function(pkg = ".") {
-  path_r <- file.path(pkg$path, "R")
+find_code <- function(path = ".") {
+  path_r <- package_file(path, "R")
 
   r_files <- withr_with_collate(
     "C",
     tools::list_files_with_type(path_r, "code", full.names = TRUE)
   )
 
-  if (!is.null(pkg$collate)) {
-    collate <- file.path(path_r, parse_collate(pkg$collate))
-
+  collate <- package_file(path, "R", pkg_desc(path)$get_collate())
+  if (!is.null(collate)) {
     missing <- setdiff(collate, r_files)
     files <- function(x) paste(basename(x), collapse = ", ")
     if (length(missing) > 0) {

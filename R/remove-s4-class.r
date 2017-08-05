@@ -2,24 +2,22 @@
 # This is only necessary if the package was loaded with devtools. If the
 # package was NOT loaded by devtools, it's not necessary to remove the
 # classes this way, and attempting to do so will result in errors.
-remove_s4_classes <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  nsenv <- ns_env(pkg)
+remove_s4_classes <- function(package) {
+  nsenv <- ns_env(package)
   if (is.null(nsenv)) {
     return()
   }
 
   classes <- methods::getClasses(nsenv)
-  lapply(sort_s4classes(classes, pkg), remove_s4_class, pkg)
+  lapply(sort_s4classes(classes, package), remove_s4_class, package)
 }
 
 # Sort S4 classes for hierarchical removal
 # Derived classes must be removed **after** their parents.
 # This reduces to a topological sorting on the S4 dependency class
 # https://en.wikipedia.org/wiki/Topological_sorting
-sort_s4classes <- function(classes, pkg) {
-  pkg <- as.package(pkg)
-  nsenv <- ns_env(pkg)
+sort_s4classes <- function(classes, package) {
+  nsenv <- ns_env(package)
 
   sorted_classes <- vector(mode = 'character', length = 0)
 
@@ -64,8 +62,8 @@ sort_s4classes <- function(classes, pkg) {
     idx <- !classes %in% sorted_classes
     sorted_classes <- c(sorted_classes, classes[idx])
   }
-  return(sorted_classes)
 
+  sorted_classes
 }
 
 # Remove an s4 class from a package loaded by devtools
@@ -89,17 +87,16 @@ sort_s4classes <- function(classes, pkg) {
 # R's S4 implementation.
 #
 # @param classname The name of the class.
-# @param pkg The package object which contains the class.
-remove_s4_class <- function(classname, pkg) {
-  pkg <- as.package(pkg)
-  nsenv <- ns_env(pkg)
+# @param package The package object which contains the class.
+remove_s4_class <- function(classname, package) {
+  nsenv <- ns_env(package)
 
   # Make a copy of the class
-  class <- methods::getClassDef(classname, package = pkg$package, inherits = FALSE)
+  class <- methods::getClassDef(classname, package = package, inherits = FALSE)
 
   # Find all the references to classes that (this one contains/extends AND
   # have backreferences to this class) so that R doesn't try to modify them.
-  keep_idx <- contains_backrefs(classname, pkg$package, class@contains)
+  keep_idx <- contains_backrefs(classname, package, class@contains)
   class@contains <- class@contains[keep_idx]
 
   # Assign the modified class back into the package

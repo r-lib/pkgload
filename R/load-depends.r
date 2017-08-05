@@ -1,12 +1,16 @@
-load_depends <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+load_depends <- function(path = ".") {
+  path <- pkg_path(path)
+
+  description <- pkg_desc(path)
+
 
   # Get data frame of dependency names and versions
-  deps <- parse_deps(pkg$depends)
-  if (is.null(deps) || nrow(deps) == 0) return(invisible())
+  deps <- description$get_deps()
+  depends <- deps[deps$type == "Depends" & deps$package != "R", ]
+  if (length(depends) == 0) return(invisible())
 
-  mapply(check_dep_version, deps$name, deps$version, deps$compare)
-  lapply(deps$name, require, character.only = TRUE)
+  mapply(check_dep_version, depends$package, depends$version)
+  lapply(depends$package, require, character.only = TRUE)
 
-  invisible(deps)
+  invisible(depends)
 }

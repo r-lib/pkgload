@@ -51,25 +51,31 @@ parse_deps <- function(string) {
 #' @param dep_ver The version of the package
 #' @param dep_compare The comparison operator to use to check the version
 #' @keywords internal
-check_dep_version <- function(dep_name, dep_ver = NA, dep_compare = NA) {
+check_dep_version <- function(dep_name, dep_ver = "*") {
+  if (dep_name == "R") {
+    return(TRUE)
+  }
+
   if (!requireNamespace(dep_name, quietly = TRUE)) {
     stop("Dependency package ", dep_name, " not available.")
   }
+  if (dep_ver == "*") {
+    return(TRUE)
+  }
 
-  if (xor(is.na(dep_ver), is.na(dep_compare))) {
-    stop("dep_ver and dep_compare must be both NA or both non-NA")
+  pieces <- strsplit(dep_ver, "[[:space:]]+")[[1]]
+  dep_compare <- pieces[[1]]
+  dep_ver <- pieces[[2]]
 
-  } else if(!is.na(dep_ver) && !is.na(dep_compare)) {
-
-    compare <- match.fun(dep_compare)
-    if (!compare(
+  compare <- match.fun(dep_compare)
+  if (!compare(
       as.numeric_version(getNamespaceVersion(dep_name)),
       as.numeric_version(dep_ver))) {
 
-      warning("Need ", dep_name, " ", dep_compare,
-        " ", dep_ver,
-        " but loaded version is ", getNamespaceVersion(dep_name))
-    }
+    warning("Need ", dep_name, " ", dep_compare,
+      " ", dep_ver,
+      " but loaded version is ", getNamespaceVersion(dep_name))
   }
+
   return(TRUE)
 }

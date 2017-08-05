@@ -21,8 +21,8 @@ test_that("Imported objects are copied to package environment", {
   expect_false(exists("bitFlip", imp_env))
 
   unload("testNamespace")
-  unload(inst("compiler"))
-  unload(inst("bitops"))
+  unload("compiler")
+  unload("bitops")
 })
 
 
@@ -33,14 +33,14 @@ test_that("Imported objects are be re-exported", {
   # bitOr is imported but not re-exported
   expect_false(exists("bitOr", .GlobalEnv))
   unload("testNamespace")
-  unload(inst("compiler"))
-  unload(inst("bitops"))
+  unload("compiler")
+  unload("bitops")
 
   # Same as previous, but with export_all = FALSE
   load_all("testNamespace", export_all = FALSE)
   expect_identical(bitAnd, bitops::bitAnd)
   expect_false(exists("bitOr", .GlobalEnv))
   unload("testNamespace")
-  unload(inst("compiler"))
-  unload(inst("bitops"))
+  unload("compiler")
+  unload("bitops")
 })

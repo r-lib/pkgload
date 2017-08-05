@@ -4,11 +4,10 @@
 \alias{load_data}
 \title{Load data.}
 \usage{
-load_data(pkg = ".")
+load_data(path = ".")
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{path}{Path to a package, or within a package.}
 }
 \description{
 Loads all \code{.RData} files in the data subdirectory.

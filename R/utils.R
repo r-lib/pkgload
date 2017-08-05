@@ -10,18 +10,18 @@ compact <- function(x) {
   x[!is_empty]
 }
 
-"%||%" <- function(a, b) if (!is.null(a)) a else b
+"%||%" <- function(a, b) if (!is.null(a) && !(length(a) == 1 && is.na(a))) a else b
 
 "%:::%" <- function(p, f) {
   get(f, envir = asNamespace(p))
 }
 
-is_installed <- function(pkg, version = 0) {
-  installed_version <- tryCatch(utils::packageVersion(pkg), error = function(e) NA)
+is_installed <- function(package, version = 0) {
+  installed_version <- tryCatch(utils::packageVersion(package), error = function(e) NA)
   !is.na(installed_version) && installed_version >= version
 }
 
-check_suggested <- function(pkg, version = NULL, compare = NA) {
+check_suggested <- function(package, version = NULL, compare = NA) {
 
   if (is.null(version)) {
     if (!is.na(compare)) {
@@ -29,21 +29,18 @@ check_suggested <- function(pkg, version = NULL, compare = NA) {
            sQuote(version), call. = FALSE)
     }
 
-    dep <- suggests_dep(pkg)
-
-    version <- dep$version
-    compare <- dep$compare
+    version <- suggests_dep(package)
   }
 
-  if (!is_installed(pkg) || !check_dep_version(pkg, version, compare)) {
-    msg <- paste0(sQuote(pkg),
+  if (!is_installed(package) || !check_dep_version(package, version)) {
+    msg <- paste0(sQuote(package),
       if (is.na(version)) "" else paste0(" >= ", version),
       " must be installed for this functionality.")
 
     if (interactive()) {
       message(msg, "\nWould you like to install it?")
       if (utils::menu(c("Yes", "No")) == 1) {
-        utils::install.packages(pkg)
+        utils::install.packages(package)
       } else {
         stop(msg, call. = FALSE)
       }
@@ -53,17 +50,15 @@ check_suggested <- function(pkg, version = NULL, compare = NA) {
   }
 }
 
-suggests_dep <- function(pkg) {
+suggests_dep <- function(package) {
 
-  suggests <- read_dcf(system.file("DESCRIPTION", package = "pkgload"))$Suggests
-  deps <- parse_deps(suggests)
-
-  found <- which(deps$name == pkg)[1L]
+  desc <- pkg_desc(inst("pkgload"))$get_deps()
+  found <- desc[desc$type == "Suggests" & desc$package == package, "version"]
 
   if (!length(found)) {
-     stop(sQuote(pkg), " is not in Suggests: for pkgload!", call. = FALSE)
+     stop(sQuote(package), " is not in Suggests: for pkgload!", call. = FALSE)
   }
-  deps[found, ]
+  found
 }
 
 read_dcf <- function(path) {

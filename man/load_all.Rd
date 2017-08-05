@@ -4,12 +4,11 @@
 \alias{load_all}
 \title{Load complete package.}
 \usage{
-load_all(pkg = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
+load_all(path = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
   helpers = TRUE, recollate = FALSE, quiet = FALSE)
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information.}
+\item{path}{Path to a package, or within a package.}
 
 \item{reset}{clear package environment and reset file cache before loading
 any pieces of the package. This is equivalent to running

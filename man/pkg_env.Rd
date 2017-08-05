@@ -4,11 +4,10 @@
 \alias{pkg_env}
 \title{Return package environment}
 \usage{
-pkg_env(pkg = ".")
+pkg_env(package)
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{package}{package name.}
 }
 \description{
 This is an environment like \code{<package:pkg>}. The package

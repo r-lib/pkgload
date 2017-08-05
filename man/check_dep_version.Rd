@@ -4,7 +4,7 @@
 \alias{check_dep_version}
 \title{Check that the version of an imported package satisfies the requirements}
 \usage{
-check_dep_version(dep_name, dep_ver = NA, dep_compare = NA)
+check_dep_version(dep_name, dep_ver = "*")
 }
 \arguments{
 \item{dep_name}{The name of the package with objects to import}
