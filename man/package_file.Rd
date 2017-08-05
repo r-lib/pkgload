@@ -4,12 +4,12 @@
 \alias{package_file}
 \title{Find file in a package.}
 \usage{
-package_file(..., path = ".")
+package_file(path = ".", ...)
 }
 \arguments{
-\item{...}{Components of the path.}
-
 \item{path}{Place to start search for package directory.}
+
+\item{...}{Components of the path.}
 }
 \description{
 It always starts by finding by walking up the path until it finds the

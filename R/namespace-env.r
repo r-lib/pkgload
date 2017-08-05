@@ -7,38 +7,40 @@
 #'
 #' If the package is not loaded, this function returns `NULL`.
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information
+#' @param package package name.
 #' @keywords internal
 #' @seealso [pkg_env()] for the attached environment that
 #'   contains the exported objects.
 #' @seealso [imports_env()] for the environment that contains
 #'   imported objects for the package.
 #' @export
-ns_env <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+ns_env <- function(package) {
+  if (!is_loaded(package)) return(NULL)
 
-  if (!is_loaded(pkg)) return(NULL)
-
-  asNamespace(pkg$package)
+  asNamespace(package)
 }
 
+ns_path <- function(package) {
+  getNamespaceInfo(asNamespace(package), "path")
+}
 
 # Create the namespace environment for a package
-create_ns_env <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+create_ns_env <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+  version <- pkg_version(path)
 
-  if (is_loaded(pkg)) {
-    stop("Namespace for ", pkg$package, " already exists.")
+  if (is_loaded(package)) {
+    stop("Namespace for ", package, " already exists.")
   }
 
-  env <- makeNamespace(pkg$package, pkg$version)
-  methods::setPackageName(pkg$package, env)
+  env <- makeNamespace(package, version)
+  methods::setPackageName(package, env)
   # Create devtools metadata in namespace
-  create_dev_meta(pkg$package)
+  create_dev_meta(package)
 
-  setNamespaceInfo(env, "path", pkg$path)
-  setup_ns_imports(pkg)
+  setNamespaceInfo(env, "path", path)
+  setup_ns_imports(path)
 
   env
 }
@@ -66,20 +68,24 @@ onload_assign("makeNamespace",
 
 # Read the NAMESPACE file and set up the imports metdata.
 # (which is stored in .__NAMESPACE__.)
-setup_ns_imports <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  nsInfo <- parse_ns_file(pkg)
-  setNamespaceInfo(pkg$package, "imports", nsInfo$imports)
+setup_ns_imports <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+
+  nsInfo <- parse_ns_file(path)
+  setNamespaceInfo(package, "imports", nsInfo$imports)
 }
 
 
 # Read the NAMESPACE file and set up the exports metdata. This must be
 # run after all the objects are loaded into the namespace because
 # namespaceExport throw errors if the objects are not present.
-setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
-  pkg <- as.package(pkg)
-  nsInfo <- parse_ns_file(pkg)
-  nsenv <- ns_env(pkg)
+setup_ns_exports <- function(path = ".", export_all = FALSE) {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+
+  nsInfo <- parse_ns_file(path)
+  nsenv <- ns_env(package)
 
   if (export_all) {
     exports <- ls(nsenv, all.names = TRUE)
@@ -103,7 +109,7 @@ setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
   }
   # Don't try to export objects that are missing from the namespace and imports
   ns_and_imports <- c(ls(nsenv, all.names = TRUE),
-                      ls(imports_env(pkg), all.names = TRUE))
+                      ls(imports_env(package), all.names = TRUE))
   extra_exports <- setdiff(exports, ns_and_imports)
 
   if (length(extra_exports) > 0) {
@@ -115,7 +121,7 @@ setup_ns_exports <- function(pkg = ".", export_all = FALSE) {
   # Add any S4 methods or classes, this needs to be done after checking for
   # missing exports as S4 methods with generics imported from other packages
   # are not defined in the namespace.
-  exports <- add_classes_to_exports(ns = nsenv, package = pkg$package,
+  exports <- add_classes_to_exports(ns = nsenv, package = package,
     exports = exports, nsInfo = nsInfo)
 
   # Update the exports metadata for the namespace with base::namespaceExport
@@ -144,37 +150,37 @@ onload_assign("add_classes_to_exports",
 
 #' Parses the NAMESPACE file for a package
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information
+#' @inheritParams load_all
 #' @examples
 #' if (has_tests()) {
 #' parse_ns_file(pkgtest("testLoadHooks"))
 #' }
 #' @keywords internal
 #' @export
-parse_ns_file <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+parse_ns_file <- function(path = ".") {
+  path <- pkg_path(path)
 
-  parseNamespaceFile(basename(pkg$path), dirname(pkg$path),
+  parseNamespaceFile(basename(path), dirname(path),
     mustExist = FALSE)
 }
 
 
 # Register the S3 methods for this package
-register_s3 <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  nsInfo <- parse_ns_file(pkg)
+register_s3 <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+
+  nsInfo <- parse_ns_file(path)
 
   # Adapted from loadNamespace
-  registerS3methods(nsInfo$S3methods, pkg$package, ns_env(pkg))
+  registerS3methods(nsInfo$S3methods, package, ns_env(package))
 }
 
 
 # Reports whether a package is loaded into a namespace. It may be
 # attached or not attached.
-is_loaded <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  pkg$package %in% loadedNamespaces()
+is_loaded <- function(package) {
+  package %in% loadedNamespaces()
 }
 
 

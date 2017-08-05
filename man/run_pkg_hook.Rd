@@ -5,13 +5,12 @@
 \alias{run_user_hook}
 \title{Run user and package hooks.}
 \usage{
-run_pkg_hook(pkg, hook)
+run_pkg_hook(package, hook)
 
-run_user_hook(pkg, hook)
+run_user_hook(package, hook)
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{package}{package name.}
 
 \item{hook}{hook name: one of "load", "unload", "attach", or "detach"}
 }

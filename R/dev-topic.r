@@ -1,8 +1,9 @@
 # Tools for indexing package documentation by alias, and for finding
 # the rd file for a given topic (alias).
 
-rd_files <- function(pkg) {
-  path_man <- file.path(pkg$path, "man")
+rd_files <- function(path) {
+  path <- pkg_path(path)
+  path_man <- package_file(path, "man")
   files <- dir(path_man, pattern = "\\.[Rr]d$", full.names = TRUE)
   names(files) <- basename(files)
   sort_ci(files)
@@ -14,12 +15,12 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
   path <- NULL
   pkg <- NULL
   for (pkg_name in topic$pkg_names) {
-    pkg <- as.package(getNamespaceInfo(pkg_name, "path"))
-    path <- dev_topic_path(topic$topic, pkg = pkg)
+    path <- dev_topic_path(topic$topic,
+                           path = ns_path(pkg_name))
     if (!is.null(path)) {
       return(list(
         path = path,
-        pkg = pkg
+        pkg = pkg_name
       ))
     }
   }
@@ -49,21 +50,21 @@ dev_topic_parse <- function(topic, dev_packages = NULL) {
 }
 
 
-dev_topic_path <- function(topic, pkg = ".") {
-  pkg <- as.package(pkg)
+dev_topic_path <- function(topic, path = ".") {
+  path <- pkg_path(path)
 
   # First see if a man file of that name exists
-  man <- file.path(pkg$path, "man", topic)
+  man <- file.path(path, "man", topic)
   if (file.exists(man))
     return(man)
 
   # Next, look in index
-  index <- dev_topic_index(pkg)
+  index <- dev_topic_index(path)
   if (topic %in% names(index))
-    return(file.path(pkg$path, "man", last(index[[topic]])))
+    return(file.path(path, "man", last(index[[topic]])))
 
   # Finally, try adding .Rd to name
-  man_rd <- file.path(pkg$path, "man", paste0(topic, ".Rd"))
+  man_rd <- file.path(path, "man", paste0(topic, ".Rd"))
   if (file.exists(man_rd))
     return(man_rd)
 
@@ -74,13 +75,14 @@ dev_topic_path <- function(topic, pkg = ".") {
 # Cache -------------------------------------------------------------------
 
 dev_topic_indices <- new.env(parent = emptyenv())
-dev_topic_index <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+dev_topic_index <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
 
-  if (!exists(pkg$package, dev_topic_indices)) {
-    dev_topic_indices[[pkg$package]] <- build_topic_index(pkg)
+  if (!exists(pkg_name(path), dev_topic_indices)) {
+    dev_topic_indices[[package]] <- build_topic_index(path)
   }
-  dev_topic_indices[[pkg$package]]
+  dev_topic_indices[[package]]
 }
 
 #' @export
@@ -96,9 +98,10 @@ dev_topic_index_reset <- function(pkg_name) {
 
 # Topic index -------------------------------------------------------------
 
-build_topic_index <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  rds <- rd_files(pkg)
+build_topic_index <- function(path = ".") {
+  path <- pkg_path(path)
+
+  rds <- rd_files(path)
 
   aliases <- function(path) {
     parsed <- tools::parse_Rd(path)

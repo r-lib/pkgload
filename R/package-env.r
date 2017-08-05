@@ -1,42 +1,45 @@
 # Create the package environment where exported objects will be copied to
-attach_ns <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  nsenv <- ns_env(pkg)
+attach_ns <- function(package) {
+  nsenv <- ns_env(package)
 
-  if (is_attached(pkg)) {
-    stop("Package ", pkg$package, " is already attached.")
+  if (is_attached(package)) {
+    stop("Package ", package, " is already attached.")
   }
 
   # This should be similar to attachNamespace
-  pkgenv <- base::attach(NULL, name = pkg_env_name(pkg))
+  pkgenv <- base::attach(NULL, name = pkg_env_name(package))
   attr(pkgenv, "path") <- getNamespaceInfo(nsenv, "path")
+
+  invisible(pkgenv)
 }
 
 # Invoke namespace load actions. According to the documentation for setLoadActions
 # these actions should be called at the end of processing of S4 metadata, after
 # dynamically linking any libraries, the call to .onLoad(), if any, and caching
 # method and class definitions, but before the namespace is sealed
-run_ns_load_actions <- function(pkg = ".") {
-  nsenv <- ns_env(pkg)
+run_ns_load_actions <- function(package) {
+  nsenv <- ns_env(package)
   actions <- methods::getLoadActions(nsenv)
   for (action in actions)
     action(nsenv)
 }
 
 # Copy over the objects from the namespace env to the package env
-export_ns <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  nsenv <- ns_env(pkg)
-  pkgenv <- pkg_env(pkg)
-  nsInfo <- parse_ns_file(pkg)
+export_ns <- function(package) {
+  nsenv <- ns_env(package)
+  pkgenv <- pkg_env(package)
+  nsInfo <- parse_ns_file(package)
 
   exports <- getNamespaceExports(nsenv)
   importIntoEnv(pkgenv, exports, nsenv, exports)
 
+  desc <- pkg_desc(ns_path(package))
+
   # If lazydata is true, manually copy data objects in $lazydata to package
   # environment
-  if (!is.null(pkg$lazydata) &&
-      tolower(pkg$lazydata) %in% c("true", "yes")) {
+  lazydata <- desc$get("LazyData")
+  if (!is.na(lazydata) &&
+      tolower(lazydata) %in% c("true", "yes")) {
     copy_env(src = nsenv$.__NAMESPACE__.$lazydata, dest = pkgenv)
   }
 }
@@ -56,19 +59,17 @@ export_ns <- function(pkg = ".") {
 #'
 #' If the package is not attached, this function returns `NULL`.
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information
+#' @inheritParams ns_env
 #' @keywords internal
 #' @seealso [ns_env()] for the namespace environment that
 #'   all the objects (exported and not exported).
 #' @seealso [imports_env()] for the environment that contains
 #'   imported objects for the package.
 #' @export
-pkg_env <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  name <- pkg_env_name(pkg)
+pkg_env <- function(package) {
+  name <- pkg_env_name(package)
 
-  if (!is_attached(pkg)) return(NULL)
+  if (!is_attached(package)) return(NULL)
 
   as.environment(name)
 }
@@ -76,13 +77,12 @@ pkg_env <- function(pkg = ".") {
 
 # Generate name of package environment
 # Contains exported objects
-pkg_env_name <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  paste("package:", pkg$package, sep = "")
+pkg_env_name <- function(package) {
+  paste("package:", package, sep = "")
 }
 
 
 # Reports whether a package is loaded and attached
-is_attached <- function(pkg = ".") {
-  pkg_env_name(pkg) %in% search()
+is_attached <- function(package) {
+  pkg_env_name(package) %in% search()
 }

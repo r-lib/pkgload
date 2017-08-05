@@ -1,17 +1,16 @@
 #' Load a compiled DLL
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information
+#' @param path Path to a package, or within a package.
 #' @keywords programming
 #' @name load_dll
-#' @usage load_dll(pkg = ".")
+#' @usage load_dll(path = ".")
 #' @export
 onload_assign("load_dll", {
   for_loop <-
     modify_lang(
       f = function(x)
         if (comp_lang(x, quote(library.dynam()), 1)) {
-          quote(library.dynam2(pkg, lib))
+          quote(library.dynam2(package, lib))
         } else {
           x
         },
@@ -23,10 +22,11 @@ onload_assign("load_dll", {
   ## except for the call to library.dynam2, which is a special version of
   ## library.dynam
 
-  load_dll <- function(pkg = ".") {
-    pkg <- as.package(pkg)
-    env <- ns_env(pkg)
-    nsInfo <- parse_ns_file(pkg)
+  load_dll <- function(path = ".") {
+    package <- pkg_name(path)
+
+    env <- ns_env(package)
+    nsInfo <- parse_ns_file(path)
 
     dlls <- list()
     dynLibs <- nsInfo$dynlibs
@@ -44,10 +44,9 @@ onload_assign("load_dll", {
 })
 
 # Return a list of currently loaded DLLs from the package
-loaded_dlls <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+loaded_dlls <- function(package) {
   libs <- .dynLibs()
-  matchidx <- vapply(libs, "[[", character(1), "name") == pkg$package
+  matchidx <- vapply(libs, "[[", character(1), "name") == package
   libs[matchidx]
 }
 
@@ -56,11 +55,11 @@ loaded_dlls <- function(pkg = ".") {
 # same as the directory name, which isn't always the case when loading with
 # devtools. This version allows them to be different, and also searches in
 # the src/ directory for the DLLs, instead of the libs/$R_ARCH/ directory.
-library.dynam2 <- function(pkg = ".", lib = "") {
-  pkg <- as.package(pkg)
+library.dynam2 <- function(path = ".", lib = "") {
+  path <- pkg_path(path)
 
   dllname <- paste(lib, .Platform$dynlib.ext, sep = "")
-  dllfile <- file.path(pkg$path, "src", dllname)
+  dllfile <- file.path(path, "src", dllname)
 
   if (!file.exists(dllfile))
     return(invisible())

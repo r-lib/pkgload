@@ -56,8 +56,7 @@
 #' package sources have different directory structures. Note that this is not
 #' a perfect replacement for `base::system.file`.
 #'
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information.
+#' @param path Path to a package, or within a package.
 #' @param reset clear package environment and reset file cache before loading
 #'   any pieces of the package. This is equivalent to running
 #'   [unload()] and is the default. Use `reset = FALSE` may be
@@ -72,7 +71,6 @@
 #' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
 #' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
-#' @inheritParams as.package
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -90,13 +88,15 @@
 #' load_all("./", export_all = FALSE)
 #' }
 #' @export
-load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
+load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
                      export_all = TRUE, helpers = TRUE, recollate = FALSE, quiet = FALSE) {
-  pkg <- as.package(pkg)
+  path <- pkg_path(path)
+  package <- pkg_name(path)
+  description <- pkg_desc(path)
 
-  if (!quiet) message("Loading ", pkg$package)
+  if (!quiet) message("Loading ", package)
 
-  if (pkg$package == "compiler") {
+  if (package == "compiler") {
     # Disable JIT while loading the compiler package to avoid interference
     # (otherwise the compiler package would be loaded as a side effect of
     # JIT compilation and it would be locked before we can insert shims into
@@ -107,11 +107,10 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
 
   if (isTRUE(recollate)) {
     check_suggested("roxygen2")
-    roxygen2::update_collate(pkg$path)
+    roxygen2::update_collate(path)
     # Refresh the pkg structure with any updates to the Collate entry
     # in the DESCRIPTION file
   }
-  pkg$collate <- as.package(pkg$path)$collate
 
   # Forcing all of the promises for the loaded namespace now will avoid lazy-load
   # errors when the new package is loaded overtop the old one.
@@ -120,13 +119,13 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
   # namespace become inaccessible if the namespace is unloaded before the
   # object has been accessed. Instead we force the object so they will still be
   # accessible.
-  if (is_loaded(pkg)) {
-    eapply(ns_env(pkg), force, all.names = TRUE)
+  if (is_loaded(package)) {
+    eapply(ns_env(package), force, all.names = TRUE)
   }
 
   # Check description file is ok
   check <- ("tools" %:::% ".check_package_description")(
-    file.path(pkg$path, "DESCRIPTION"))
+    file.path(path, "DESCRIPTION"))
   if (length(check) > 0) {
     msg <- utils::capture.output(("tools" %:::% "print.check_package_description")(check))
     message("Invalid DESCRIPTION:\n", paste(msg, collapse = "\n"))
@@ -137,74 +136,74 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
   ## DLL's memory.
   if (reset) {
     clear_cache()
-    if (is_loaded(pkg)) unload(pkg, quiet = quiet)
+    if (is_loaded(package)) unload(package, quiet = quiet)
   }
 
-  if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
+  if (is_loaded(package) && is.null(dev_meta(package))) {
     # If installed version of package loaded, unload it
     # (and also the DLLs)
-    unload(pkg, quiet = quiet)
+    unload(package, quiet = quiet)
   } else {
     # Unload only DLLs
-    unload_dll(pkg)
+    unload_dll(package)
   }
 
   if (recompile) {
-    pkgbuild::clean_dll(pkg$path)
+    pkgbuild::clean_dll(path)
   }
 
   # Compile dll if it exists
-  pkgbuild::compile_dll(pkg$path, quiet = quiet)
+  pkgbuild::compile_dll(path, quiet = quiet)
 
   # If installed version of package loaded, unload it, again
   # (needed for dependencies of pkgbuild)
-  if (is_loaded(pkg) && is.null(dev_meta(pkg$package))) {
-    unload(pkg, quiet = TRUE)
+  if (is_loaded(package) && is.null(dev_meta(package))) {
+    unload(package, quiet = TRUE)
   }
 
   # Set up the namespace environment ----------------------------------
   # This mimics the procedure in loadNamespace
 
-  if (!is_loaded(pkg)) create_ns_env(pkg)
+  if (!is_loaded(package)) create_ns_env(package)
 
-  out <- list(env = ns_env(pkg))
+  out <- list(env = ns_env(package))
 
   # Load dependencies
-  load_depends(pkg)
-  load_imports(pkg)
+  load_depends(path)
+  load_imports(path)
   # Add shim objects to imports environment
-  insert_imports_shims(pkg)
+  insert_imports_shims(package)
 
-  out$data <- load_data(pkg)
+  out$data <- load_data(path)
 
-  out$code <- load_code(pkg)
-  register_s3(pkg)
-  out$dll <- load_dll(pkg)
+  out$code <- load_code(path)
+  register_s3(package)
+  out$dll <- load_dll(path)
 
   # Run namespace load hooks
-  run_pkg_hook(pkg, "load")
-  run_ns_load_actions(pkg)
-  run_user_hook(pkg, "load")
+  run_pkg_hook(package, "load")
+  run_ns_load_actions(package)
+  run_user_hook(package, "load")
 
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
-  setup_ns_exports(pkg, export_all)
+  setup_ns_exports(package, export_all)
 
   # Set up the package environment ------------------------------------
   # Create the package environment if needed
-  if (!is_attached(pkg)) attach_ns(pkg)
+  if (!is_attached(package)) attach_ns(package)
 
   # Copy over objects from the namespace environment
-  export_ns(pkg)
+  export_ns(package)
 
   # Run hooks
-  run_pkg_hook(pkg, "attach")
-  run_user_hook(pkg, "attach")
+  run_pkg_hook(package, "attach")
+  run_user_hook(package, "attach")
 
   # Source test helpers into package environment
-  if (uses_testthat(pkg) && helpers) {
+  if (uses_testthat(package) && helpers) {
     withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
-      testthat::source_test_helpers(find_test_dir(pkg$path), env = ns_env(pkg))
+      testthat::source_test_helpers(find_test_dir(path), env = ns_env(package))
     )
   }
 
@@ -216,22 +215,20 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
 }
 
 
-uses_testthat <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-
+uses_testthat <- function(path = ".") {
   paths <- c(
-    file.path(pkg$path, "inst", "tests"),
-    file.path(pkg$path, "tests", "testthat")
+    package_file(path, "inst", "tests"),
+    package_file(path, "tests", "testthat")
   )
 
   any(dir.exists(paths))
 }
 
 find_test_dir <- function(path) {
-  testthat <- file.path(path, "tests", "testthat")
+  testthat <- package_file(path, "tests", "testthat")
   if (dir.exists(testthat)) return(testthat)
 
-  inst <- file.path(path, "inst", "tests")
+  inst <- package_file(path, "inst", "tests")
   if (dir.exists(inst)) return(inst)
 
   stop("No testthat directories found in ", path, call. = FALSE)

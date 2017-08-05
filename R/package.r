@@ -1,23 +1,3 @@
-#' Coerce input to a package.
-#'
-#' Possible specifications of package:
-#' \itemize{
-#'   \item path
-#'   \item package object
-#' }
-#' @param x object to coerce to a package
-#' @param create only relevant if a package structure does not exist yet: if
-#'   `TRUE`, create a package structure; if `NA`, ask the user
-#'   (in interactive mode only)
-#' @export
-#' @keywords internal
-as.package <- function(x = NULL) {
-  if (is.package(x)) return(x)
-
-  x <- package_file(path = x)
-  load_pkg_description(x)
-}
-
 #' Find file in a package.
 #'
 #' It always starts by finding by walking up the path until it finds the
@@ -32,65 +12,9 @@ as.package <- function(x = NULL) {
 #' \dontrun{
 #' package_file("figures", "figure_1")
 #' }
-package_file <- function(..., path = ".") {
-  if (!is.character(path) || length(path) != 1) {
-    stop("`path` must be a string.", call. = FALSE)
-  }
-  path <- strip_slashes(normalizePath(path, mustWork = FALSE))
-
-  if (!file.exists(path)) {
-    stop("Can't find '", path, "'.", call. = FALSE)
-  }
-  if (!file.info(path)$isdir) {
-    stop("'", path, "' is not a directory.", call. = FALSE)
-  }
-
-  # Walk up to root directory
-  while (!has_description(path)) {
-    path <- dirname(path)
-
-    if (is_root(path)) {
-      stop("Could not find package root.", call. = FALSE)
-    }
-  }
-
-  file.path(path, ...)
+package_file <- function(path = ".", ...) {
+  file.path(pkg_path(path), ...)
 }
-
-has_description <- function(path) {
-  file.exists(file.path(path, 'DESCRIPTION'))
-}
-
-is_root <- function(path) {
-  identical(path, dirname(path))
-}
-
-strip_slashes <- function(x) {
-  x <- sub("/*$", "", x)
-  x
-}
-
-# Load package DESCRIPTION into convenient form.
-load_pkg_description <- function(path) {
-  path_desc <- file.path(path, "DESCRIPTION")
-
-  if (!file.exists(path_desc)) {
-    stop("No description at ", path_desc, call. = FALSE)
-  }
-
-  desc <- as.list(read.dcf(path_desc)[1, ])
-  names(desc) <- tolower(names(desc))
-  desc$path <- path
-
-  structure(desc, class = "package")
-}
-
-
-#' Is the object a package?
-#'
-#' @keywords internal
-#' @export
-is.package <- function(x) inherits(x, "package")
 
 # Mockable variant of interactive
 interactive <- function() .Primitive("interactive")()
@@ -103,3 +27,19 @@ interactive <- function() .Primitive("interactive")()
 #' @param name the name of a package.
 #' @export
 is_dev_package <- function(name) name %in% dev_packages()
+
+pkg_path <- function(path = ".") {
+  rprojroot::find_root("DESCRIPTION", path)
+}
+
+pkg_name <- function(path = ".") {
+  desc::desc_get("Package", pkg_path(path))[[1]]
+}
+
+pkg_desc <- function(path = ".") {
+  desc::desc(pkg_path(path))
+}
+
+pkg_version <- function(path = ".") {
+  desc::desc_get_version(pkg_path(path))
+}

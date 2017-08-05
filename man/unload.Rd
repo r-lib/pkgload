@@ -4,11 +4,10 @@
 \alias{unload}
 \title{Unload a package}
 \usage{
-unload(pkg = ".", quiet = FALSE)
+unload(package, quiet = FALSE)
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{package}{package name.}
 
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
 }

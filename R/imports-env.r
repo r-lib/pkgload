@@ -4,25 +4,25 @@
 #' package namespace environment, and is a child of <namespace:base>,
 #' which is a child of R_GlobalEnv.
 #' @keywords internal
-#' @param pkg package description, can be path or package name.  See
-#'   [as.package()] for more information.
+#' @param path TODO: fix doc
 #' @seealso [ns_env()] for the namespace environment that
 #'   all the objects (exported and not exported).
 #' @seealso [pkg_env()] for the attached environment that contains
 #'   the exported objects.
 #' @export
-imports_env <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+imports_env <- function(path = ".") {
+  path <- pkg_path(path)
+  package <- pkg_name(path)
 
-  if (!is_loaded(pkg)) {
+  if (!is_loaded(package)) {
     stop("Namespace environment must be created before accessing imports environment.")
   }
 
-  env <- parent.env(ns_env(pkg))
+  env <- parent.env(ns_env(package))
 
-  if (attr(env, 'name') != imports_env_name(pkg)) {
+  if (attr(env, 'name') != imports_env_name(package)) {
     stop("Imports environment does not have attribute 'name' with value ",
-      imports_env_name(pkg),
+      imports_env_name(package),
       ". This probably means that the namespace environment was not created correctly.")
   }
 
@@ -32,9 +32,8 @@ imports_env <- function(pkg = ".") {
 
 # Generate name of package imports environment
 # Contains exported objects
-imports_env_name <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-  paste("imports:", pkg$package, sep = "")
+imports_env_name <- function(package) {
+  paste("imports:", package, sep = "")
 }
 
 
@@ -45,21 +44,24 @@ imports_env_name <- function(pkg = ".") {
 #' the dependency packages.
 #'
 #' @keywords internal
-load_imports <- function(pkg = ".") {
-  pkg <- as.package(pkg)
+load_imports <- function(path = ".") {
+  package <- pkg_name(path)
+  description <- pkg_desc(path)
 
   # Get data frame of dependency names and versions
-  deps <- parse_deps(pkg$imports)
-  if (is.null(deps) || nrow(deps) == 0) return(invisible())
+  deps <- description$get_deps()
+  imports <- deps[deps$type == "Imports", ]
+
+  if (length(imports) == 0) return(invisible())
 
   # If we've already loaded imports, don't load again (until load_all
   # is run with reset=TRUE). This is to avoid warnings when running
   # process_imports()
-  if (length(ls(imports_env(pkg))) > 0) return(invisible(deps))
+  if (length(ls(imports_env(package))) > 0) return(invisible(imports))
 
-  mapply(check_dep_version, deps$name, deps$version, deps$compare)
+  mapply(check_dep_version, imports$package, imports$version)
 
-  process_imports(pkg)
+  process_imports(package)
 
   invisible(deps)
 }
@@ -91,11 +93,12 @@ onload_assign("process_imports", {
       idx = 1:3)
   )
 
-  process_imports <- function(pkg = ".") {
-    package <- pkg$package
-    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(pkg$path, "DESCRIPTION")))$Imports
-    nsInfo <- parse_ns_file(pkg)
-    ns <- ns_env(pkg)
+  process_imports <- function(path = ".") {
+    path <- pkg_path(path)
+    package <- pkg_name(path)
+    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(path, "DESCRIPTION")))$Imports
+    nsInfo <- parse_ns_file(package)
+    ns <- ns_env(package)
     lib.loc <- NULL
 
     !! for1

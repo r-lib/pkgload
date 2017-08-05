@@ -13,7 +13,9 @@ Imports:
     methods,
     rstudioapi,
     pkgbuild,
-    rlang
+    rlang,
+    rprojroot,
+    desc
 Suggests:
     Rcpp,
     testthat,

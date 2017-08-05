@@ -4,11 +4,10 @@
 \alias{imports_env}
 \title{Return imports environment for a package}
 \usage{
-imports_env(pkg = ".")
+imports_env(path = ".")
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information.}
+\item{path}{TODO: fix doc}
 }
 \description{
 Contains objects imported from other packages. Is the parent of the

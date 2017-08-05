@@ -4,11 +4,10 @@
 \alias{load_dll}
 \title{Load a compiled DLL}
 \usage{
-load_dll(pkg = ".")
+load_dll(path = ".")
 }
 \arguments{
-\item{pkg}{package description, can be path or package name.  See
-\code{\link[=as.package]{as.package()}} for more information}
+\item{path}{Path to a package, or within a package.}
 }
 \description{
 Load a compiled DLL

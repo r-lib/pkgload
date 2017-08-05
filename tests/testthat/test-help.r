@@ -48,7 +48,7 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
   h1 <- shim_help("foofoo")
   expect_s3_class(h1, "dev_topic")
   expect_equal(h1$topic, "foofoo")
-  expect_equal(h1$pkg$package, "testHelp")
+  expect_equal(h1$pkg, "testHelp")
 
   expect_identical(shim_help(foofoo), h1)
   expect_identical(shim_help(foofoo, "testHelp"), h1)

@@ -1,10 +1,8 @@
 # Insert shim objects into a package's imports environment
 #
 # @param pkg A path or package object
-insert_imports_shims <- function(pkg = ".") {
-  pkg <- as.package(pkg)
-
-  imp_env <- imports_env(pkg)
+insert_imports_shims <- function(package) {
+  imp_env <- imports_env(package)
   imp_env$system.file <- shim_system.file
   imp_env$library.dynam.unload <- shim_library.dynam.unload
 }
@@ -107,8 +105,7 @@ shim_library.dynam.unload <- function(chname, libpath,
   # because libpath works differently from installed packages.
   if (!is.null(dev_meta(chname))) {
     try({
-      pkg <- as.package(libpath)
-      unload_dll(pkg)
+      unload_dll(pkg_name(libpath))
     })
     return()
   }
