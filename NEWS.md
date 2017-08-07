@@ -1,5 +1,12 @@
 # pkgload 0.0.0.9000
 
+* `imports_env()`, `load_code()`, `load_data()`, `load_dll()`,
+`load_all()`, `parse_ns_file()` all now take an explicit path
+rather than a path or a `package` object.
+
+* `ns_env()`, `pkg_env()` and `unload()` now take a package name
+rather than a path or a `package` object.
+
 * `run_example()` now works on R 3.1.
 
 * `unload()` now unloads S4 classes for packages loaded with `library()` as
