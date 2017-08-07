@@ -125,7 +125,8 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
   # Check description file is ok
   check <- ("tools" %:::% ".check_package_description")(
-    file.path(path, "DESCRIPTION"))
+    package_file("DESCRIPTION", path = path))
+
   if (length(check) > 0) {
     msg <- utils::capture.output(("tools" %:::% "print.check_package_description")(check))
     message("Invalid DESCRIPTION:\n", paste(msg, collapse = "\n"))

@@ -96,7 +96,8 @@ onload_assign("process_imports", {
   process_imports <- function(path = ".") {
     path <- pkg_path(path)
     package <- pkg_name(path)
-    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(file.path(path, "DESCRIPTION")))$Imports
+    desc_path <- package_file("DESCRIPTION", path = path)
+    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(desc_path))$Imports
     nsInfo <- parse_ns_file(package)
     ns <- ns_env(package)
     lib.loc <- NULL
