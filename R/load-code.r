@@ -40,8 +40,14 @@ find_code <- function(path = ".") {
     tools::list_files_with_type(path_r, "code", full.names = TRUE)
   )
 
-  collate <- package_file(path, "R", pkg_desc(path)$get_collate())
-  if (!is.null(collate)) {
+  collate <- pkg_desc(path)$get_collate()
+
+  if (length(collate) > 0) {
+
+    # `r_files` have full paths, so add the package path to the collated files as
+    # well.
+    collate <- file.path(path_r, collate)
+
     missing <- setdiff(collate, r_files)
     files <- function(x) paste(basename(x), collapse = ", ")
     if (length(missing) > 0) {
