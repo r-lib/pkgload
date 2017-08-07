@@ -16,12 +16,12 @@ load_data <- function(path = ".") {
   lazydata_env <- nsenv$.__NAMESPACE__.$lazydata
   objs <- character()
 
-  sysdata <- package_file(path, "R", "sysdata.rda")
+  sysdata <- package_file("R", "sysdata.rda", path = path)
   if (file.exists(sysdata)) {
     objs <- c(objs, load(sysdata, envir = nsenv))
   }
 
-  path_data <- package_file(path, "data")
+  path_data <- package_file("data", path = path)
   if (file.exists(path_data)) {
     paths <- dir(path_data, "\\.[rR][dD]a(ta)?$", full.names = TRUE)
     paths <- changed_files(paths)

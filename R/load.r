@@ -217,18 +217,18 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
 uses_testthat <- function(path = ".") {
   paths <- c(
-    package_file(path, "inst", "tests"),
-    package_file(path, "tests", "testthat")
+    package_file("inst", "tests", path = path),
+    package_file("tests", "testthat", path = path)
   )
 
   any(dir.exists(paths))
 }
 
 find_test_dir <- function(path) {
-  testthat <- package_file(path, "tests", "testthat")
+  testthat <- package_file("tests", "testthat", path = path)
   if (dir.exists(testthat)) return(testthat)
 
-  inst <- package_file(path, "inst", "tests")
+  inst <- package_file("inst", "tests", path = path)
   if (dir.exists(inst)) return(inst)
 
   stop("No testthat directories found in ", path, call. = FALSE)

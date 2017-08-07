@@ -12,7 +12,7 @@
 #' \dontrun{
 #' package_file("figures", "figure_1")
 #' }
-package_file <- function(path = ".", ...) {
+package_file <- function(..., path = ".") {
   file.path(pkg_path(path), ...)
 }
 
