@@ -1,5 +1,7 @@
 # pkgload 0.0.0.9000
 
+* The `as.package()` and `is.package()` functions have been removed.
+
 * `imports_env()`, `load_code()`, `load_data()`, `load_dll()`,
 `load_all()`, `parse_ns_file()` all now take an explicit path
 rather than a path or a `package` object.
