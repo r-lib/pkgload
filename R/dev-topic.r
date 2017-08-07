@@ -54,17 +54,17 @@ dev_topic_path <- function(topic, path = ".") {
   path <- pkg_path(path)
 
   # First see if a man file of that name exists
-  man <- file.path(path, "man", topic)
+  man <- package_file("man", topic, path = path)
   if (file.exists(man))
     return(man)
 
   # Next, look in index
   index <- dev_topic_index(path)
   if (topic %in% names(index))
-    return(file.path(path, "man", last(index[[topic]])))
+    return(package_file("man", last(index[[topic]]), path = path))
 
   # Finally, try adding .Rd to name
-  man_rd <- file.path(path, "man", paste0(topic, ".Rd"))
+  man_rd <- package_file("man", paste0(topic, ".Rd"), path = path)
   if (file.exists(man_rd))
     return(man_rd)
 

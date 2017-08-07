@@ -59,7 +59,7 @@ library.dynam2 <- function(path = ".", lib = "") {
   path <- pkg_path(path)
 
   dllname <- paste(lib, .Platform$dynlib.ext, sep = "")
-  dllfile <- file.path(path, "src", dllname)
+  dllfile <- package_file("src", dllname, path = path)
 
   if (!file.exists(dllfile))
     return(invisible())
