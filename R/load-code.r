@@ -38,7 +38,7 @@ load_code <- function(path = ".") {
 
 # Find all R files in given directory.
 find_code <- function(path = ".") {
-  path_r <- package_file(path, "R")
+  path_r <- package_file("R", path = path)
 
   r_files <- withr_with_collate(
     "C",

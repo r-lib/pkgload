@@ -3,7 +3,7 @@
 
 rd_files <- function(path) {
   path <- pkg_path(path)
-  path_man <- package_file(path, "man")
+  path_man <- package_file("man", path = path)
   files <- dir(path_man, pattern = "\\.[Rr]d$", full.names = TRUE)
   names(files) <- basename(files)
   sort_ci(files)
