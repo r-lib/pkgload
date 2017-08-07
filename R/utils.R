@@ -10,7 +10,7 @@ compact <- function(x) {
   x[!is_empty]
 }
 
-"%||%" <- function(a, b) if (!is.null(a) && !(length(a) == 1 && is.na(a))) a else b
+"%||%" <- function(a, b) if (!is.null(a)) a else b
 
 "%:::%" <- function(p, f) {
   get(f, envir = asNamespace(p))

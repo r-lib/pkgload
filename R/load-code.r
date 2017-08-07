@@ -11,6 +11,11 @@ load_code <- function(path = ".") {
   package <- pkg_name(path)
   encoding <- pkg_desc(path)$get("Encoding")
 
+  # Set encoding to ASCII if it is not explicitly defined
+  if (is.na(encoding)) {
+    encoding <- "ASCII"
+  }
+
   env <- ns_env(package)
 
   r_files <- find_code(path)
@@ -25,7 +30,7 @@ load_code <- function(path = ".") {
   }
   on.exit(cleanup())
 
-  withr_with_dir(path, source_many(paths, encoding %||% "ASCII", env))
+  withr_with_dir(path, source_many(paths, encoding, env))
   success <- TRUE
 
   invisible(r_files)
