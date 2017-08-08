@@ -3,6 +3,9 @@
 * `load_all()` gains a `helpers` option to specify whether or not to
   source testthat helpers. (@pitakakariki devtools #1202)
 
+* `load_all()` now sources the testthat helpers in the namespace environment
+  rather than the package environment (#40).
+
 * `load_all()` now sets the `NOT_CRAN` environment variable when it
   sources testthat helpers. It also sets `DEVTOOLS_LOAD` to "true" so
   that you can check whether they are run during package loading.
