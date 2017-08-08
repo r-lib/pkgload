@@ -1,5 +1,8 @@
 # pkgload 0.0.0.9000
 
+* `load_all()` gains a `helpers` option to specify whether or not to
+  source testthat helpers. (@pitakakariki devtools #1202)
+
 * `load_all()` now sources the testthat helpers in the namespace environment
   rather than the package environment (#40).
 

@@ -69,6 +69,7 @@
 #' @param export_all If `TRUE` (the default), export all objects.
 #'   If `FALSE`, export only the objects that are listed as exports
 #'   in the NAMESPACE file.
+#' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
 #' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
 #' @inheritParams as.package
@@ -90,7 +91,7 @@
 #' }
 #' @export
 load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
-                     export_all = TRUE, recollate = FALSE, quiet = FALSE) {
+                     export_all = TRUE, helpers = TRUE, recollate = FALSE, quiet = FALSE) {
   pkg <- as.package(pkg)
 
   if (!quiet) message("Loading ", pkg$package)
@@ -201,7 +202,7 @@ load_all <- function(pkg = ".", reset = TRUE, recompile = FALSE,
   run_user_hook(pkg, "attach")
 
   # Source test helpers into package environment
-  if (uses_testthat(pkg)) {
+  if (uses_testthat(pkg) && helpers) {
     withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
       testthat::source_test_helpers(find_test_dir(pkg$path), env = ns_env(pkg))
     )
