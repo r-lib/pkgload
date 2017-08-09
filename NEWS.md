@@ -1,5 +1,8 @@
 # pkgload 0.0.0.9000
 
+* `unload()` now unloads S4 classes for packages loaded with `library()` as
+  well as `load_all()` (#46).
+
 * `load_all()` gains a `helpers` option to specify whether or not to
   source testthat helpers. (@pitakakariki devtools #1202)
 

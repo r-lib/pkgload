@@ -53,11 +53,8 @@ unload <- function(pkg = ".", quiet = FALSE) {
     eapply(ns_env(pkg), force, all.names = TRUE)
   }
 
-  # If the package was loaded with devtools, any s4 classes that were created
-  # by the package need to be removed in a special way.
-  if (!is.null(dev_meta(pkg$package))) {
-    remove_s4_classes(pkg)
-  }
+  # S4 classes that were created by the package need to be removed in a special way.
+  remove_s4_classes(pkg)
 
 
   if (pkg$package %in% loadedNamespaces()) {

@@ -4,8 +4,12 @@
 # classes this way, and attempting to do so will result in errors.
 remove_s4_classes <- function(pkg = ".") {
   pkg <- as.package(pkg)
+  nsenv <- ns_env(pkg)
+  if (is.null(nsenv)) {
+    return()
+  }
 
-  classes <- methods::getClasses(ns_env(pkg))
+  classes <- methods::getClasses(nsenv)
   lapply(sort_s4classes(classes, pkg), remove_s4_class, pkg)
 }
 
@@ -99,10 +103,10 @@ remove_s4_class <- function(classname, pkg) {
   class@contains <- class@contains[keep_idx]
 
   # Assign the modified class back into the package
-  methods::assignClassDef(classname, class, where = nsenv)
+  methods::assignClassDef(classname, class, where = nsenv, force = TRUE)
 
-  # Remove the class.
-  methods::removeClass(classname, where = nsenv)
+  # Remove the class, ignoring failures due to potentially locked environments.
+  tryCatch(methods::removeClass(classname, where = nsenv), error = function(e) NULL)
 }
 
 
