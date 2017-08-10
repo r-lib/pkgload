@@ -1,5 +1,7 @@
 # pkgload 0.0.0.9000
 
+* `run_example()` now works on R 3.1.
+
 * `unload()` now unloads S4 classes for packages loaded with `library()` as
   well as `load_all()` (#46).
 
