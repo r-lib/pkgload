@@ -28,7 +28,8 @@ dev_example <- function(topic, quiet = FALSE) {
 #' @export
 #' @param path Path to `.Rd` file
 #' @param test if `TRUE`, code in \code{\\donttest{}} will be commented
-#'   out. If `FALSE`, code in \code{\\testonly{}} will be commented out.
+#'   out. If `FALSE`, code in \code{\\testonly{}} will be commented out. This
+#'   parameter is only used in R 3.2 and greater.
 #' @param run if `TRUE`, code in \code{\\dontrun{}} will be commented
 #'   out.
 #' @param env Environment in which code will be run.
@@ -41,7 +42,13 @@ run_example <- function(path, test = FALSE, run = FALSE,
   }
 
   tmp <- tempfile(fileext = ".R")
-  tools::Rd2ex(path, out = tmp, commentDontrun = !run, commentDonttest = !test)
+
+  if (getRversion() < "3.2") {
+    # R 3.1 and earlier did not have commentDonttest
+    tools::Rd2ex(path, out = tmp, commentDontrun = !run)
+  } else {
+    tools::Rd2ex(path, out = tmp, commentDontrun = !run, commentDonttest = !test)
+  }
   source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)
 
   invisible(env)

@@ -18,7 +18,8 @@ run_example(path, test = FALSE, run = FALSE, env = new.env(parent =
 \item{path}{Path to \code{.Rd} file}
 
 \item{test}{if \code{TRUE}, code in \code{\\donttest{}} will be commented
-out. If \code{FALSE}, code in \code{\\testonly{}} will be commented out.}
+out. If \code{FALSE}, code in \code{\\testonly{}} will be commented out. This
+parameter is only used in R 3.2 and greater.}
 
 \item{run}{if \code{TRUE}, code in \code{\\dontrun{}} will be commented
 out.}
