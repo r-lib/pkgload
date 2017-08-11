@@ -20,8 +20,4 @@ dirs are found, it will return the first one.
 \examples{
 inst("pkgload")
 inst("grid")
-\dontrun{
-# Can be passed to other devtools functions
-unload(inst("ggplot2"))
-}
 }

@@ -10,7 +10,7 @@ onload_assign("load_dll", {
     modify_lang(
       f = function(x)
         if (comp_lang(x, quote(library.dynam()), 1)) {
-          quote(library.dynam2(package, lib))
+          quote(library.dynam2(path, lib))
         } else {
           x
         },

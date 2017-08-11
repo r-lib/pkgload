@@ -28,18 +28,40 @@ interactive <- function() .Primitive("interactive")()
 #' @export
 is_dev_package <- function(name) name %in% dev_packages()
 
+#' Helper functions for working with development packages.
+#'
+#' All functions search recursively up the directory tree from the input path
+#' until they find a DESCRIPTION file.
+#' @inheritParams load_all
+#' @name packages
+NULL
+
+#' @describeIn packages Return the normalized package path.
+#' @export
 pkg_path <- function(path = ".") {
   rprojroot::find_root("DESCRIPTION", path)
 }
 
+#' @describeIn packages Return the package name.
+#' @export
 pkg_name <- function(path = ".") {
   desc::desc_get("Package", pkg_path(path))[[1]]
 }
 
+#' @describeIn packages Return the package DESCRIPTION as a [desc::desc()] object.
+#' @export
 pkg_desc <- function(path = ".") {
   desc::desc(pkg_path(path))
 }
 
+#' @describeIn packages Return the package version.
+#' @export
 pkg_version <- function(path = ".") {
   desc::desc_get_version(pkg_path(path))
+}
+
+#' @describeIn packages Return the package namespace.
+#' @export
+pkg_ns <- function(path = ".") {
+  ns_env(pkg_name(path))
 }

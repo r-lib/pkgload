@@ -20,19 +20,21 @@ order for it to work - this works on the cases for which we have tested
 but there may be others.  Similarly, automated DLL unloading is best tested
 for simple scenarios (particularly with \code{useDynLib(pkgname)} and may
 fail in other cases. If you do encounter a failure, please file a bug report
-at \url{http://github.com/hadley/devtools/issues}.
+at \url{http://github.com/r-lib/pkgload/issues}.
 }
 \examples{
 \dontrun{
-# Unload package that is in current directory
-unload(".")
-
-# Unload package that is in ./ggplot2/
-unload("ggplot2/")
-
 # Can use inst() to find the path of an installed package
 # This will load and unload the installed ggplot2 package
+
+# Unload package that is in current directory
+unload(pkg_name("."))
+
+# Unload package that is in ./ggplot2/
+unload(pkg_name("ggplot2/"))
+
 library(ggplot2)
-unload(inst("ggplot2"))
+# unload the ggplot2 package directly by name
+unload("ggplot2")
 }
 }

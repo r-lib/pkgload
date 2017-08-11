@@ -11,10 +11,6 @@
 #' @examples
 #' inst("pkgload")
 #' inst("grid")
-#' \dontrun{
-#' # Can be passed to other devtools functions
-#' unload(inst("ggplot2"))
-#' }
 #' @export
 inst <- function(name) {
   # It would be nice to use find.package or system.file, but they

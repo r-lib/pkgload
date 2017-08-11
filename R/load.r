@@ -159,13 +159,13 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   # If installed version of package loaded, unload it, again
   # (needed for dependencies of pkgbuild)
   if (is_loaded(package) && is.null(dev_meta(package))) {
-    unload(package, quiet = TRUE)
+    unload(package, quiet = quiet)
   }
 
   # Set up the namespace environment ----------------------------------
   # This mimics the procedure in loadNamespace
 
-  if (!is_loaded(package)) create_ns_env(package)
+  if (!is_loaded(package)) create_ns_env(path)
 
   out <- list(env = ns_env(package))
 
@@ -178,7 +178,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   out$data <- load_data(path)
 
   out$code <- load_code(path)
-  register_s3(package)
+  register_s3(path)
   out$dll <- load_dll(path)
 
   # Run namespace load hooks
@@ -188,7 +188,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
-  setup_ns_exports(package, export_all)
+  setup_ns_exports(path, export_all)
 
   # Set up the package environment ------------------------------------
   # Create the package environment if needed
@@ -202,7 +202,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   run_user_hook(package, "attach")
 
   # Source test helpers into package environment
-  if (uses_testthat(package) && helpers) {
+  if (uses_testthat(path) && helpers) {
     withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
       testthat::source_test_helpers(find_test_dir(path), env = ns_env(package))
     )

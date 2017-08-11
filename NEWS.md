@@ -2,12 +2,11 @@
 
 * The `as.package()` and `is.package()` functions have been removed.
 
-* `imports_env()`, `load_code()`, `load_data()`, `load_dll()`,
-`load_all()`, `parse_ns_file()` all now take an explicit path
-rather than a path or a `package` object.
+* `load_code()`, `load_data()`, `load_dll()`, `load_all()`, `parse_ns_file()`
+  all now take an explicit path rather than a path or a `package` object.
 
-* `ns_env()`, `pkg_env()` and `unload()` now take a package name
-rather than a path or a `package` object.
+* `imports_env()`, `ns_env()`, `pkg_env()` and `unload()` now take a package
+  name rather than a path or a `package` object.
 
 * `run_example()` now works on R 3.1.
 

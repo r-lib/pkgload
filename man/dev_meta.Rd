@@ -24,7 +24,7 @@ x <- dev_meta("testLoadHooks")
 as.list(x)
 
 # Clean up.
-unload(pkgtest("testLoadHooks"))
+unload("testLoadHooks")
 }
 }
 \keyword{internal}

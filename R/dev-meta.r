@@ -16,7 +16,7 @@
 #' as.list(x)
 #'
 #' # Clean up.
-#' unload(pkgtest("testLoadHooks"))
+#' unload("testLoadHooks")
 #' }
 #' @export
 dev_meta <- function(name) {
