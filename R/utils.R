@@ -61,11 +61,6 @@ suggests_dep <- function(package) {
   found
 }
 
-read_dcf <- function(path) {
-  fields <- colnames(read.dcf(path))
-  as.list(read.dcf(path, keep.white = fields)[1, ])
-}
-
 all_named <- function (x) {
   if (length(x) == 0) return(TRUE)
   !is.null(names(x)) && all(names(x) != "")

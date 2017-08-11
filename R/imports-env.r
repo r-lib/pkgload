@@ -10,10 +10,7 @@
 #' @seealso [pkg_env()] for the attached environment that contains
 #'   the exported objects.
 #' @export
-imports_env <- function(path = ".") {
-  path <- pkg_path(path)
-  package <- pkg_name(path)
-
+imports_env <- function(package) {
   if (!is_loaded(package)) {
     stop("Namespace environment must be created before accessing imports environment.")
   }
@@ -61,7 +58,7 @@ load_imports <- function(path = ".") {
 
   mapply(check_dep_version, imports$package, imports$version)
 
-  process_imports(package)
+  process_imports(path)
 
   invisible(deps)
 }
@@ -98,7 +95,7 @@ onload_assign("process_imports", {
     package <- pkg_name(path)
     desc_path <- package_file("DESCRIPTION", path = path)
     vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(desc_path))$Imports
-    nsInfo <- parse_ns_file(package)
+    nsInfo <- parse_ns_file(path)
     ns <- ns_env(package)
     lib.loc <- NULL
 

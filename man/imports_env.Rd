@@ -4,7 +4,7 @@
 \alias{imports_env}
 \title{Return imports environment for a package}
 \usage{
-imports_env(path = ".")
+imports_env(package)
 }
 \arguments{
 \item{path}{TODO: fix doc}

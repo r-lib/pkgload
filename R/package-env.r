@@ -28,7 +28,8 @@ run_ns_load_actions <- function(package) {
 export_ns <- function(package) {
   nsenv <- ns_env(package)
   pkgenv <- pkg_env(package)
-  nsInfo <- parse_ns_file(package)
+  ns_path <- ns_path(nsenv)
+  nsInfo <- parse_ns_file(ns_path)
 
   exports <- getNamespaceExports(nsenv)
   importIntoEnv(pkgenv, exports, nsenv, exports)
