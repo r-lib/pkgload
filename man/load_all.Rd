@@ -5,7 +5,8 @@
 \title{Load complete package.}
 \usage{
 load_all(path = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
-  helpers = TRUE, recollate = FALSE, quiet = FALSE)
+  export_imports = export_all, helpers = TRUE, recollate = FALSE,
+  quiet = FALSE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -23,6 +24,10 @@ This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dl
 \item{export_all}{If \code{TRUE} (the default), export all objects.
 If \code{FALSE}, export only the objects that are listed as exports
 in the NAMESPACE file.}
+
+\item{export_imports}{If \code{TRUE} (the default), export all objects that are
+imported by the package. If \code{FALSE} export only objects defined in the
+package.}
 
 \item{helpers}{if \code{TRUE} loads \pkg{testthat} test helpers.}
 

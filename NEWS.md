@@ -1,5 +1,8 @@
 # pkgload 0.0.0.9000
 
+* Package imports are now exported when using `load_all()`. This behavior can
+  be disabled by using `load_all(export_imports = FALSE)`.
+
 * The `as.package()` and `is.package()` functions have been removed.
 
 * `load_code()`, `load_data()`, `load_dll()`, `load_all()`, `parse_ns_file()`

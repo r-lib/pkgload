@@ -68,6 +68,9 @@
 #' @param export_all If `TRUE` (the default), export all objects.
 #'   If `FALSE`, export only the objects that are listed as exports
 #'   in the NAMESPACE file.
+#' @param export_imports If `TRUE` (the default), export all objects that are
+#'   imported by the package. If `FALSE` export only objects defined in the
+#'   package.
 #' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
 #' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
@@ -89,7 +92,8 @@
 #' }
 #' @export
 load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
-                     export_all = TRUE, helpers = TRUE, recollate = FALSE, quiet = FALSE) {
+                     export_all = TRUE, export_imports = export_all,
+                     helpers = TRUE, recollate = FALSE, quiet = FALSE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
@@ -188,7 +192,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
-  setup_ns_exports(path, export_all)
+  setup_ns_exports(path, export_all, export_imports)
 
   # Set up the package environment ------------------------------------
   # Create the package environment if needed

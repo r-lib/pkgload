@@ -80,7 +80,7 @@ setup_ns_imports <- function(path = ".") {
 # Read the NAMESPACE file and set up the exports metdata. This must be
 # run after all the objects are loaded into the namespace because
 # namespaceExport throw errors if the objects are not present.
-setup_ns_exports <- function(path = ".", export_all = FALSE) {
+setup_ns_exports <- function(path = ".", export_all = FALSE, export_imports = export_all) {
   path <- pkg_path(path)
   package <- pkg_name(path)
 
@@ -92,6 +92,11 @@ setup_ns_exports <- function(path = ".", export_all = FALSE) {
     # Make sure to re-export objects that are imported from other packages but
     # not copied.
     exports <- union(exports, nsInfo$exports)
+
+    # if export_imports export all imports as well
+    if (export_imports) {
+      exports <- c(exports, ls(imports_env(package), all.names = TRUE))
+    }
 
     # List of things to ignore is from loadNamespace. There are also a
     # couple things to ignore from devtools.
