@@ -1,5 +1,8 @@
 # pkgload 0.0.0.9000
 
+* `check_dep_version()` now emits a warning and returns `FALSE` rather than
+  aborting. (#47)
+
 * Package imports are now exported when using `load_all()`. This behavior can
   be disabled by using `load_all(export_imports = FALSE)`.
 
