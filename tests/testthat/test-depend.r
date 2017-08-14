@@ -12,7 +12,9 @@ test_that("Warned about dependency versions", {
 
 test_that("Error on missing dependencies", {
   # Should give a warning about missing package
-  expect_error(load_all("testImportMissing"), "missingpackage not available")
+  expect_error(regexp =  "Dependency package[(]s[)] 'missingpackage' not available",
+    expect_warning(regexp = "missingpackage not available",
+      load_all("testImportMissing")))
 
   # Loading process will be partially done; unload it
   unload("testImportMissing")

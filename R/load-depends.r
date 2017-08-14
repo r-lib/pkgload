@@ -9,7 +9,9 @@ load_depends <- function(path = ".") {
   depends <- deps[deps$type == "Depends" & deps$package != "R", ]
   if (length(depends) == 0) return(invisible())
 
-  mapply(check_dep_version, depends$package, depends$version)
+  res <- mapply(check_dep_version, depends$package, depends$version)
+  abort_for_missing_packages(res, imports$package)
+
   lapply(depends$package, require, character.only = TRUE)
 
   invisible(depends)
