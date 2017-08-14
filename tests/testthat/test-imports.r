@@ -27,7 +27,7 @@ test_that("Imported objects are copied to package environment", {
 
 
 test_that("Imported objects are be re-exported", {
-  load_all("testNamespace")
+  load_all("testNamespace", export_imports = FALSE)
   # bitAnd is imported and re-exported
   expect_identical(bitAnd, bitops::bitAnd)
   # bitOr is imported but not re-exported
@@ -43,4 +43,11 @@ test_that("Imported objects are be re-exported", {
   unload("testNamespace")
   unload("compiler")
   unload("bitops")
+
+  # If exports_imports = TRUE all imports are exported
+  load_all("testNamespace", export_imports = TRUE)
+  expect_true(exists("bitOr", .GlobalEnv))
+
+  # This is from the import(compiler)
+  expect_true(exists("compile", .GlobalEnv))
 })
