@@ -49,7 +49,9 @@ run_example <- function(path, test = FALSE, run = FALSE,
   } else {
     tools::Rd2ex(path, out = tmp, commentDontrun = !run, commentDonttest = !test)
   }
-  source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)
+  if (file.exists(tmp)) {
+    source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)
+  }
 
   invisible(env)
 }
