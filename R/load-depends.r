@@ -10,7 +10,7 @@ load_depends <- function(path = ".") {
   if (length(depends) == 0) return(invisible())
 
   res <- mapply(check_dep_version, depends$package, depends$version)
-  abort_for_missing_packages(res, imports$package)
+  abort_for_missing_packages(res, depends$package)
 
   lapply(depends$package, require, character.only = TRUE)
 
