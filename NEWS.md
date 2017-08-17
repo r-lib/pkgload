@@ -1,5 +1,7 @@
 # pkgload 0.0.0.9000
 
+* `check_dep_version()` and `check_suggested()` are now exported.
+
 * `check_dep_version()` now emits a warning and returns `FALSE` rather than
   aborting. (#47)
 

@@ -9,9 +9,8 @@ check_dep_version(dep_name, dep_ver = "*")
 \arguments{
 \item{dep_name}{The name of the package with objects to import}
 
-\item{dep_ver}{The version of the package}
-
-\item{dep_compare}{The comparison operator to use to check the version}
+\item{dep_ver}{The version of the package, this includes the specified
+comparison operator.}
 }
 \description{
 Check that the version of an imported package satisfies the requirements

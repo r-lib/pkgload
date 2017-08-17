@@ -21,6 +21,14 @@ is_installed <- function(package, version = 0) {
   !is.na(installed_version) && installed_version >= version
 }
 
+#' Check that the version of an suggested package satisfies the requirements
+#'
+#' @param package The name of the suggested package
+#' @param version The version of the package
+#' @param compare The comparison operator to use to check the version
+#' @keywords internal
+#' @export
+#' @keywords internal
 check_suggested <- function(package, version = NULL, compare = NA) {
 
   if (is.null(version)) {
@@ -151,3 +159,7 @@ copy_env <- function(src, dest = new.env(parent = emptyenv()),
 }
 
 last <- function(x) utils::tail(x, n = 1L)
+
+single_quote <- function(x) {
+  encodeString(x, quote = "'")
+}
