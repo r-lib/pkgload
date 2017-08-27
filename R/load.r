@@ -190,6 +190,13 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   run_ns_load_actions(package)
   run_user_hook(package, "load")
 
+  # Source test helpers into package environment
+  if (uses_testthat(path) && helpers) {
+    withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
+      testthat::source_test_helpers(find_test_dir(path), env = ns_env(package))
+    )
+  }
+
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
   setup_ns_exports(path, export_all, export_imports)
@@ -204,14 +211,6 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   # Run hooks
   run_pkg_hook(package, "attach")
   run_user_hook(package, "attach")
-
-  # Source test helpers into package environment
-  if (uses_testthat(path) && helpers) {
-    withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
-      testthat::source_test_helpers(find_test_dir(path), env = ns_env(package))
-    )
-  }
-
 
   # Replace help and ? in utils package environment
   insert_global_shims()
