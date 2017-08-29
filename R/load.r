@@ -71,6 +71,8 @@
 #' @param export_imports If `TRUE` (the default), export all objects that are
 #'   imported by the package. If `FALSE` export only objects defined in the
 #'   package.
+#' @param attach_testthat If `TRUE`, attach \pkg{testthat} to the search path,
+#'   which more closely mimics the environment within test files.
 #' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
 #' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
@@ -93,7 +95,8 @@
 #' @export
 load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
                      export_all = TRUE, export_imports = export_all,
-                     helpers = TRUE, recollate = FALSE, quiet = FALSE) {
+                     helpers = TRUE, attach_testthat = uses_testthat(path),
+                     recollate = FALSE, quiet = FALSE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
@@ -184,6 +187,11 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   out$code <- load_code(path)
   register_s3(path)
   out$dll <- load_dll(path)
+
+  # attach testthat to the search path
+  if (isTRUE(attach_testthat)) {
+    library("testthat")
+  }
 
   # Run namespace load hooks
   run_pkg_hook(package, "load")

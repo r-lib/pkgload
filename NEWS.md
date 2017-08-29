@@ -1,5 +1,9 @@
 # pkgload 0.0.0.9000
 
+* `load_all()` now attaches `testthat` if the `attach_testthat` option is
+  `TRUE`. This allows `load_all()` to more closely mimics the testing
+  environment. (#56)
+
 * `check_dep_version()` and `check_suggested()` are now exported.
 
 * `check_dep_version()` now emits a warning and returns `FALSE` rather than
