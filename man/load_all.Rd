@@ -5,8 +5,8 @@
 \title{Load complete package.}
 \usage{
 load_all(path = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
-  export_imports = export_all, helpers = TRUE, recollate = FALSE,
-  quiet = FALSE)
+  export_imports = export_all, helpers = TRUE,
+  attach_testthat = uses_testthat(path), recollate = FALSE, quiet = FALSE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -30,6 +30,9 @@ imported by the package. If \code{FALSE} export only objects defined in the
 package.}
 
 \item{helpers}{if \code{TRUE} loads \pkg{testthat} test helpers.}
+
+\item{attach_testthat}{If \code{TRUE}, attach \pkg{testthat} to the search path,
+which more closely mimics the environment within test files.}
 
 \item{recollate}{if \code{TRUE}, run \code{\link[roxygen2:update_collate]{roxygen2::update_collate()}} before loading.}
 
