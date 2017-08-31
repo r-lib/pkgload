@@ -192,7 +192,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
   # Source test helpers into package environment
   if (uses_testthat(path) && helpers) {
-    withr::with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
+    withr_with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
       testthat::source_test_helpers(find_test_dir(path), env = ns_env(package))
     )
   }
