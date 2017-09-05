@@ -29,7 +29,7 @@ is_installed <- function(package, version = 0) {
 #' @keywords internal
 #' @export
 #' @keywords internal
-check_suggested <- function(package, version = NULL, compare = NA) {
+check_suggested <- function(package, version = NULL, compare = NA, path = inst("pkgload")) {
 
   if (is.null(version)) {
     if (!is.na(compare)) {
@@ -37,7 +37,7 @@ check_suggested <- function(package, version = NULL, compare = NA) {
            sQuote(version), call. = FALSE)
     }
 
-    version <- suggests_dep(package)
+    version <- suggests_dep(package, path = path)
   }
 
   if (!is_installed(package) || !check_dep_version(package, version)) {
@@ -58,13 +58,13 @@ check_suggested <- function(package, version = NULL, compare = NA) {
   }
 }
 
-suggests_dep <- function(package) {
+suggests_dep <- function(package, path = inst("pkgload")) {
 
-  desc <- pkg_desc(inst("pkgload"))$get_deps()
+  desc <- pkg_desc(path)$get_deps()
   found <- desc[desc$type == "Suggests" & desc$package == package, "version"]
 
   if (!length(found)) {
-     stop(sQuote(package), " is not in Suggests: for pkgload!", call. = FALSE)
+     stop("'", package, "' is not in Suggests: for '", pkg_name(path), "'", call. = FALSE)
   }
   found
 }
