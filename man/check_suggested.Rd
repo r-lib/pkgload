@@ -4,7 +4,8 @@
 \alias{check_suggested}
 \title{Check that the version of an suggested package satisfies the requirements}
 \usage{
-check_suggested(package, version = NULL, compare = NA)
+check_suggested(package, version = NULL, compare = NA,
+  path = inst("pkgload"))
 }
 \arguments{
 \item{package}{The name of the suggested package}
