@@ -9,6 +9,7 @@
   assign("desc_desc", desc::desc, envir = env)
   assign("desc_desc_get", desc::desc_get, envir = env)
   assign("desc_desc_get_version", desc::desc_get_version, envir = env)
+  assign("testthat_source_test_helpers", testthat::source_test_helpers, envir = env)
 
   nms <- environment(onload_assign)$names
   funs <- environment(onload_assign)$funs
