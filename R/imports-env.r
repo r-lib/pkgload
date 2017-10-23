@@ -85,20 +85,21 @@ wrap_inner_loop <- function(x) {
   x
 }
 
+load_namespace_for1 <- function() wrap_inner_loop(
+  extract_lang(body(loadNamespace), comp_lang, y = quote(for(i in nsInfo$imports) NULL), idx = 1:3)
+  )
+load_namespace_for2 <- function() wrap_inner_loop(
+  extract_lang(body(loadNamespace), comp_lang,
+    y = quote(for(imp in nsInfo$importClasses) NULL),
+    idx = 1:3)
+  )
+load_namespace_for3 <- function() wrap_inner_loop(
+  extract_lang(body(loadNamespace), comp_lang,
+    y = quote(for(imp in nsInfo$importMethods) NULL),
+    idx = 1:3)
+  )
+
 onload_assign("process_imports", {
-  for1 <- wrap_inner_loop(
-    extract_lang(body(loadNamespace), comp_lang, y = quote(for(i in nsInfo$imports) NULL), idx = 1:3)
-  )
-  for2 <- wrap_inner_loop(
-    extract_lang(body(loadNamespace), comp_lang,
-      y = quote(for(imp in nsInfo$importClasses) NULL),
-      idx = 1:3)
-  )
-  for3 <- wrap_inner_loop(
-    extract_lang(body(loadNamespace), comp_lang,
-      y = quote(for(imp in nsInfo$importMethods) NULL),
-      idx = 1:3)
-  )
 
   process_imports <- function(path = ".") {
     path <- pkg_path(path)
@@ -109,9 +110,9 @@ onload_assign("process_imports", {
     ns <- ns_env(package)
     lib.loc <- NULL
 
-    !! for1
-    !! for2
-    !! for3
+    !! load_namespace_for1()
+    !! load_namespace_for2()
+    !! load_namespace_for3()
   }
 
   process_imports <- expr_interp(process_imports)
@@ -119,3 +120,26 @@ onload_assign("process_imports", {
 
   process_imports
 })
+
+onload_assign("update_imports", {
+  update_imports <- function(package) {
+    vI <- ("tools" %:::% ".split_dependencies")(packageDescription(package)[["Imports"]])
+    nsInfo <- parse_ns_file(system.file("NAMESPACE", package = package))
+    ns <- ns_env(package)
+    lib.loc <- NULL
+
+    suppressWarnings({
+      !! load_namespace_for1()
+      !! load_namespace_for2()
+      !! load_namespace_for3()
+    })
+  }
+
+  update_imports <- expr_interp(update_imports)
+  fn_env(update_imports) <- rlang::ns_env("pkgload")
+
+  update_imports
+})
+
+#' @useDynLib pkgload, .registration = TRUE
+NULL

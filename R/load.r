@@ -218,6 +218,9 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   # Replace help and ? in utils package environment
   insert_global_shims()
 
+  # Propagate new definitions to namespace imports of loaded packages.
+  propagate_ns(package)
+
   invisible(out)
 }
 
@@ -239,4 +242,23 @@ find_test_dir <- function(path) {
   if (dir.exists(inst)) return(inst)
 
   stop("No testthat directories found in ", path, call. = FALSE)
+}
+
+propagate_ns <- function(package) {
+  for (ns in loadedNamespaces()) {
+    imports <- getNamespaceImports(ns)
+    if (package %in% names(imports)) {
+      env <- ns_env(ns)
+      lapply(ls(env, all.names = TRUE), unlockBinding, env)
+
+      imp <- imports_env(ns)
+      lapply(ls(imp, all.names = TRUE), unlockBinding, imp)
+
+      unlock_environment(env)
+      unlock_environment(imp)
+      update_imports(ns)
+      lockEnvironment(env)
+      lockEnvironment(imp)
+    }
+  }
 }

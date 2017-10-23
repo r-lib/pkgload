@@ -163,3 +163,7 @@ last <- function(x) utils::tail(x, n = 1L)
 single_quote <- function(x) {
   encodeString(x, quote = "'")
 }
+
+unlock_environment <- function(x) {
+  .Call(unlock_environment_, x)
+}

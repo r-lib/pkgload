@@ -8,14 +8,14 @@ Authors@R: c(
 Description: pkgload is simulates the process of installing a package
     and then attaching it. This is a key part of devtools as it allows you
     to rapidly iterate with a package.
-Imports:
+Imports: 
     withr,
     methods,
     rstudioapi,
     pkgbuild,
     rlang,
     rprojroot,
-    desc
+    desc,
 Suggests:
     Rcpp,
     testthat,

@@ -1,5 +1,8 @@
 # pkgload 0.0.0.9000
 
+* `load_all()` now updates imports of dependent packages when a package is
+  reloaded (#59).
+
 * `load_all()` now assigns `DESCRIPTION/Depends` to `.Depends` object of 
   package environment. (@yiufung pkgload#61)
 
