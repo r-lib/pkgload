@@ -42,8 +42,8 @@
 * New function `is_dev_package()` to determine if a given package has been loaded
   by `pkgload::load_all()` (#2).
 
-* `load_all()` gains a `recollate` argument and roxygen2 is now a Suggested
-  rather than required dependency. (#4)
+* `load_all()` no longer updates the collate directive. Instead this
+  functionality has been moved to `devtools::document()`.
 
 * `dev_help()` now optionally takes a character vector of packages to
   search within.  This replaces `find_topic()`.

@@ -75,7 +75,6 @@
 #'   which more closely mimics the environment within test files.
 #' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
-#' @param recollate if `TRUE`, run [roxygen2::update_collate()] before loading.
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -96,7 +95,7 @@
 load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
                      export_all = TRUE, export_imports = export_all,
                      helpers = TRUE, attach_testthat = uses_testthat(path),
-                     recollate = FALSE, quiet = FALSE) {
+                     quiet = FALSE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
@@ -110,13 +109,6 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
     # it).
     oldEnabled <- compiler::enableJIT(0)
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
-  }
-
-  if (isTRUE(recollate)) {
-    check_suggested("roxygen2")
-    roxygen2::update_collate(path)
-    # Refresh the pkg structure with any updates to the Collate entry
-    # in the DESCRIPTION file
   }
 
   # Forcing all of the promises for the loaded namespace now will avoid lazy-load
@@ -190,7 +182,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
 
   # attach testthat to the search path
   if (isTRUE(attach_testthat)) {
-    library("testthat")
+    ("base" %:::% "library")("testthat")
   }
 
   # Run namespace load hooks

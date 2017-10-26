@@ -6,7 +6,7 @@
 \usage{
 load_all(path = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
   export_imports = export_all, helpers = TRUE,
-  attach_testthat = uses_testthat(path), recollate = FALSE, quiet = FALSE)
+  attach_testthat = uses_testthat(path), quiet = FALSE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -33,8 +33,6 @@ package.}
 
 \item{attach_testthat}{If \code{TRUE}, attach \pkg{testthat} to the search path,
 which more closely mimics the environment within test files.}
-
-\item{recollate}{if \code{TRUE}, run \code{\link[roxygen2:update_collate]{roxygen2::update_collate()}} before loading.}
 
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
