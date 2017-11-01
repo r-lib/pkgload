@@ -181,7 +181,7 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   out$dll <- load_dll(path)
 
   # attach testthat to the search path
-  if (isTRUE(attach_testthat)) {
+  if (isTRUE(attach_testthat) && package != "testthat") {
     ("base" %:::% "library")("testthat")
   }
 
