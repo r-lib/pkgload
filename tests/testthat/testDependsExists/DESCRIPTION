@@ -5,4 +5,4 @@ Description:
 Author: Yiufung <cheongyiufung@gmail.com>
 Maintainer: Yiufung <cheongyiufung@gmail.com>
 Version: 0.1
-Depends: R, data.table
+Depends: R, httr
