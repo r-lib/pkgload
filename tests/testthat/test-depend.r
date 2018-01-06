@@ -52,6 +52,6 @@ test_that("Parse dependencies", {
 test_that("Declared dependencies are added to .Depends object", {
   load_all("testDependsExists")
   expect_equal(get(".Depends", "package:testDependsExists", inherits = FALSE),
-                "data.table")
+                "httr")
   unload("testDependsExists")
 })
