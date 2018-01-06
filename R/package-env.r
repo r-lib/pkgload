@@ -51,7 +51,8 @@ assign_depends <- function(package) {
 
   desc <- pkg_desc(ns_path(package))
   deps <- desc$get_deps()
-  depends <- unique(deps[deps$type == "Depends",]$package)
+  depends <- unique(deps[deps$type == "Depends"
+                         & deps$package != "R",]$package)
   if (length(depends) > 0L) pkgenv$.Depends <- depends
 }
 
