@@ -48,3 +48,10 @@ test_that("Parse dependencies", {
   expect_equal(deps$compare, c("<", "=="))
   expect_equal(deps$version, c("2.1", "3.0.1"))
 })
+
+test_that("Declared dependencies are added to .Depends object", {
+  load_all("testDependsExists")
+  expect_equal(get(".Depends", "package:testDependsExists", inherits = FALSE),
+                "data.table")
+  unload("testDependsExists")
+})
