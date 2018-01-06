@@ -1,0 +1,8 @@
+Package: testDependsExists
+Title: Packages in Depends are assigned to .Depends object of package environment
+License: GPL-2
+Description:
+Author: Yiufung <cheongyiufung@gmail.com>
+Maintainer: Yiufung <cheongyiufung@gmail.com>
+Version: 0.1
+Depends: R, data.table
