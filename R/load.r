@@ -208,6 +208,9 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   # Copy over objects from the namespace environment
   export_ns(package)
 
+  # Assign .Depends, if any, to package environment from namespace
+  assign_depends(package)
+
   # Run hooks
   run_pkg_hook(package, "attach")
   run_user_hook(package, "attach")

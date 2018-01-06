@@ -45,6 +45,15 @@ export_ns <- function(package) {
   }
 }
 
+# Assign `.Depends` from namespace
+assign_depends <- function(package) {
+  pkgenv <- pkg_env(package)
+
+  desc <- pkg_desc(ns_path(package))
+  deps <- desc$get_deps()
+  depends <- unique(deps[deps$type == "Depends",]$package)
+  if (length(depends) > 0L) pkgenv$.Depends <- depends
+}
 
 #' Return package environment
 #'
