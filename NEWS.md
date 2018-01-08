@@ -1,6 +1,7 @@
 # pkgload 0.0.0.9000
 
-* `load_all()` now assigns `DESCRIPTION/Depends` to `.Depends` object of package environment. (@yiufung pkgload#61)
+* `load_all()` now assigns `DESCRIPTION/Depends` to `.Depends` object of 
+  package environment. (@yiufung pkgload#61)
 
 * `load_all()` now attaches `testthat` if the `attach_testthat` option is
   `TRUE`. This allows `load_all()` to more closely mimics the testing
