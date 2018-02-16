@@ -1,4 +1,7 @@
+#include <R.h>
+#include <R_ext/Rdynload.h>
 #include <Rinternals.h>
+#include <stdlib.h>  // for NULL
 
 extern SEXP unlock_environment_(SEXP);
 
