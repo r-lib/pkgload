@@ -4,7 +4,7 @@
 \alias{unload}
 \title{Unload a package}
 \usage{
-unload(package, quiet = FALSE)
+unload(package = pkg_name(), quiet = FALSE)
 }
 \arguments{
 \item{package}{package name.}
@@ -24,11 +24,8 @@ at \url{http://github.com/r-lib/pkgload/issues}.
 }
 \examples{
 \dontrun{
-# Can use inst() to find the path of an installed package
-# This will load and unload the installed ggplot2 package
-
 # Unload package that is in current directory
-unload(pkg_name("."))
+unload()
 
 # Unload package that is in ./ggplot2/
 unload(pkg_name("ggplot2/"))

@@ -15,11 +15,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Can use inst() to find the path of an installed package
-#' # This will load and unload the installed ggplot2 package
-#'
 #' # Unload package that is in current directory
-#' unload(pkg_name("."))
+#' unload()
 #'
 #' # Unload package that is in ./ggplot2/
 #' unload(pkg_name("ggplot2/"))
@@ -29,7 +26,7 @@
 #' unload("ggplot2")
 #' }
 #' @export
-unload <- function(package, quiet = FALSE) {
+unload <- function(package = pkg_name(), quiet = FALSE) {
 
   if (package == "compiler") {
     # Disable JIT compilation as it could interfere with the compiler
