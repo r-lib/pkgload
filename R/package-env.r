@@ -24,6 +24,12 @@ run_ns_load_actions <- function(package) {
     action(nsenv)
 }
 
+maybe_unlock <- function(x, env) {
+  if (exists(x, envir = env, inherits = FALSE)) {
+    unlockBinding(x, env)
+  }
+}
+
 # Copy over the objects from the namespace env to the package env
 export_ns <- function(package) {
   nsenv <- ns_env(package)
@@ -31,7 +37,10 @@ export_ns <- function(package) {
   ns_path <- ns_path(nsenv)
   nsInfo <- parse_ns_file(ns_path)
 
+  unlock_environment(pkgenv)
   exports <- getNamespaceExports(nsenv)
+  lapply(exports, maybe_unlock, env = pkgenv)
+
   importIntoEnv(pkgenv, exports, nsenv, exports)
 
   desc <- pkg_desc(ns_path(package))
