@@ -132,6 +132,7 @@ setup_ns_exports <- function(path = ".", export_all = FALSE, export_imports = ex
   # Update the exports metadata for the namespace with base::namespaceExport
   # It will throw warnings if objects are already listed in the exports
   # metadata, so catch those warnings and ignore them.
+  unlock_environment(nsenv)
   suppressWarnings(namespaceExport(nsenv, exports))
 
   invisible()
