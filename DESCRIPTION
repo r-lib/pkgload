@@ -1,10 +1,14 @@
 Package: pkgload
 Title: Simulate Package Installation and Attach
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: c(
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
-    person("RStudio", role = "cph")
-  )
+    person("Hadley", "Wickham", role = "aut"),
+    person("Jim", "Hester", , "james.hester@rstudio.com", role = c("aut", "cre")),
+    person("Winston", "Chang", role = "aut"),
+    person("RStudio", role = "cph"),
+    person("R Core team", role = "ctb",
+      comment = "Some namespace and vignette code extracted from base R")
+    )
 Description: pkgload is simulates the process of installing a package
     and then attaching it. This is a key part of devtools as it allows you
     to rapidly iterate with a package.
@@ -22,8 +26,7 @@ Suggests:
     covr,
     bitops
 Remotes:
-    r-lib/pkgbuild,
-    tidyverse/rlang
+    r-lib/pkgbuild
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -1,4 +1,6 @@
-# pkgload 0.0.0.9000
+# pkgload 1.0.0
+
+* Initial release from code spun off from devtools
 
 * `load_all()` now updates imports of dependent packages when a package is
   reloaded (#59).
