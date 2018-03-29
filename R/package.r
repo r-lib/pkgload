@@ -39,7 +39,7 @@ NULL
 #' @describeIn packages Return the normalized package path.
 #' @export
 pkg_path <- function(path = ".") {
-  rprojroot::find_root("DESCRIPTION", path)
+  rprojroot_find_root("DESCRIPTION", path)
 }
 
 #' @describeIn packages Return the package name.
