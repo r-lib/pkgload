@@ -153,7 +153,7 @@ test_that("Environments have the correct attributes", {
   expect_identical(attr(pkgenv, "name"), "package:testNamespace")
 
   # Check path attribute of package environment
-  wd <- normalizePath("testNamespace")
+  wd <- normalizePath("testNamespace", winslash = "/")
   expect_identical(wd, attr(pkgenv, "path"))
 
   # Check name attribute of imports environment

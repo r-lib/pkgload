@@ -21,7 +21,10 @@ test_that("Imported objects are copied to package environment", {
   expect_false(exists("bitFlip", imp_env))
 
   unload("testNamespace")
-  unload("compiler")
+
+  expect_warning(unload("compiler"),
+    "JIT automatically disabled")
+
   unload("bitops")
 })
 
