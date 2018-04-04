@@ -3,3 +3,4 @@
 ^\.travis\.yml$
 ^codecov\.yml$
 ^NEWS\.html$
+^appveyor\.yml$
