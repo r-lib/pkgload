@@ -22,8 +22,8 @@ test_that("Imported objects are copied to package environment", {
 
   unload("testNamespace")
 
-  expect_warning(unload("compiler"),
-    "JIT automatically disabled")
+  # Suppress warning from compiler for R 3.4 and above
+  suppressWarnings(unload("compiler"))
 
   unload("bitops")
 })
