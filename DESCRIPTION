@@ -20,7 +20,8 @@ Imports:
     rlang,
     rprojroot,
     desc,
-Suggests:
+    utils
+Suggests: 
     Rcpp,
     testthat,
     covr,

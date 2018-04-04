@@ -123,7 +123,7 @@ onload_assign("process_imports", {
 
 onload_assign("update_imports", {
   update_imports <- function(package) {
-    vI <- ("tools" %:::% ".split_dependencies")(packageDescription(package)[["Imports"]])
+    vI <- ("tools" %:::% ".split_dependencies")(utils::packageDescription(package)[["Imports"]])
     nsInfo <- parse_ns_file(system.file("NAMESPACE", package = package))
     ns <- ns_env(package)
     lib.loc <- NULL
