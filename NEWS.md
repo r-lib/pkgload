@@ -2,6 +2,9 @@
 
 * Initial release from code spun off from devtools
 
+* testthat helpers are now loaded as the final action after the namespace is fully created,
+  which allows you to reference things like lazy loaded data in your helpers (#66, @pitakakariki).
+
 * `load_all()` now updates imports of dependent packages when a package is
   reloaded (#59).
 
