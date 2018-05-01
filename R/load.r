@@ -190,6 +190,13 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   run_ns_load_actions(package)
   run_user_hook(package, "load")
 
+  # Set up the package environment ------------------------------------
+  # Create the package environment if needed
+  if (!is_attached(package)) attach_ns(package)
+
+  # Copy over lazy data objects from the namespace environment
+  export_lazydata(package)
+
   # Source test helpers into package environment
   if (uses_testthat(path) && helpers) {
     withr_with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
@@ -200,10 +207,6 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
   setup_ns_exports(path, export_all, export_imports)
-
-  # Set up the package environment ------------------------------------
-  # Create the package environment if needed
-  if (!is_attached(package)) attach_ns(package)
 
   # Copy over objects from the namespace environment
   export_ns(package)
