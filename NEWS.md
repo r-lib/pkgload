@@ -1,7 +1,5 @@
 # pkgload 1.0.0
 
-* Initial release from code spun off from devtools
-
 * `load_all()` now updates imports of dependent packages when a package is
   reloaded (#59).
 
@@ -9,7 +7,7 @@
   package environment. (@yiufung pkgload#61)
 
 * `load_all()` now attaches `testthat` if the `attach_testthat` option is
-  `TRUE`. This allows `load_all()` to more closely mimics the testing
+  `TRUE`. This allows `load_all()` to more closely mimic the testing
   environment. (#56)
 
 * `check_dep_version()` and `check_suggested()` are now exported.
@@ -60,3 +58,5 @@
   the topic index associated with a given package.
 
 * Added a `NEWS.md` file to track changes to the package.
+
+* Initial release from code spun off from devtools
