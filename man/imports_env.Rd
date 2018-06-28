@@ -11,8 +11,8 @@ imports_env(package)
 }
 \description{
 Contains objects imported from other packages. Is the parent of the
-package namespace environment, and is a child of \url{namespace:base},
-which is a child of R_GlobalEnv.
+package namespace environment, and is a child of \code{<namespace:base>},
+which is a child of \code{R_GlobalEnv}.
 }
 \seealso{
 \code{\link[=ns_env]{ns_env()}} for the namespace environment that

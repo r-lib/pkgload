@@ -9,9 +9,9 @@ Authors@R: c(
     person("R Core team", role = "ctb",
       comment = "Some namespace and vignette code extracted from base R")
     )
-Description: pkgload is simulates the process of installing a package
-    and then attaching it. This is a key part of devtools as it allows you
-    to rapidly iterate with a package.
+Description: This package simulates the process of installing a package
+    and then attaching it. This is a key part of the 'devtools' package as it
+    allows you to rapidly iterate while developing a package.
 License: GPL-3
 URL: https://github.com/r-lib/pkgload
 BugReports: https://github.com/r-lib/pkgload/issues

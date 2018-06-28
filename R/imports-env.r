@@ -1,8 +1,8 @@
 #' Return imports environment for a package
 #'
 #' Contains objects imported from other packages. Is the parent of the
-#' package namespace environment, and is a child of <namespace:base>,
-#' which is a child of R_GlobalEnv.
+#' package namespace environment, and is a child of `<namespace:base>`,
+#' which is a child of `R_GlobalEnv`.
 #' @keywords internal
 #' @param path TODO: fix doc
 #' @seealso [ns_env()] for the namespace environment that

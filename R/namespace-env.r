@@ -1,7 +1,7 @@
 #' Return the namespace environment for a package.
 #'
 #' Contains all (exported and non-exported) objects, and is a descendent of
-#' `R_GlobalEnv`. The hieararchy is `<namespace:pkg>`,
+#' `R_GlobalEnv`. The hierarchy is `<namespace:pkg>`,
 #' `<imports:pkg>`, `<namespace:base>`, and then
 #' `R_GlobalEnv`.
 #'
