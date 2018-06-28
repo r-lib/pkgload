@@ -29,8 +29,6 @@ Suggests:
     covr,
     Rcpp,
     testthat
-Remotes: 
-    r-lib/pkgbuild
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
