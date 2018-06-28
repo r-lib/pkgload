@@ -58,7 +58,7 @@ check_dep_version <- function(dep_name, dep_ver = "*") {
   }
 
   if (!requireNamespace(dep_name, quietly = TRUE)) {
-    warning("Dependency package ", dep_name, " not available.")
+    warning("Dependency package '", dep_name, "' not available.")
     return(FALSE)
   }
   if (dep_ver == "*") {
