@@ -4,3 +4,4 @@
 ^codecov\.yml$
 ^NEWS\.html$
 ^appveyor\.yml$
+^script\.R$
