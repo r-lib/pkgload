@@ -9,7 +9,7 @@ Authors@R: c(
     person("R Core team", role = "ctb",
       comment = "Some namespace and vignette code extracted from base R")
     )
-Description: This package simulates the process of installing a package
+Description: Simulates the process of installing a package
     and then attaching it. This is a key part of the 'devtools' package as it
     allows you to rapidly iterate while developing a package.
 License: GPL-3
