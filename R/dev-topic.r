@@ -31,7 +31,7 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
 dev_topic_parse <- function(topic, dev_packages = NULL) {
   stopifnot(is.character(topic), length(topic) == 1)
 
-  pieces <- strsplit(topic, "::")[[1]]
+  pieces <- strsplit(topic, ":::?")[[1]]
   if (length(pieces) == 1) {
     if (is.null(dev_packages)) {
       pkgs <- dev_packages()

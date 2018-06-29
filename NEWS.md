@@ -1,3 +1,5 @@
+* The help shim's now work for `:::` inputs (#72).
+
 # pkgload 1.0.0
 
 * `load_all()` now updates imports of dependent packages when a package is

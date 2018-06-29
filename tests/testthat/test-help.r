@@ -11,6 +11,10 @@ test_that("shim_help behaves the same as utils::help for non-devtools-loaded pac
   expect_identical(shim_help('lm', stats)[1],   utils::help('lm', stats)[1])
   expect_identical(shim_help('lm', 'stats')[1], utils::help('lm', 'stats')[1])
   expect_identical(shim_help(, "stats")[1],     utils::help(, "stats")[1])
+
+  # Works for :: and ::: as well (#72)
+  expect_identical(shim_help("::")[1],          utils::help("::")[1])
+  expect_identical(shim_help(":::")[1],         utils::help(":::")[1])
 })
 
 test_that("shim_help behaves the same as utils::help for nonexistent objects", {
