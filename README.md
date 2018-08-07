@@ -8,7 +8,7 @@ The goal of pkgload is to simulate the process of installing and loading a
 package, without actually doing the complete process, and hence making package
 iteration much faster. This was previously part of devtools (it was in fact the
 original motivation) but has been moved into its own package as part of the
-devtools diaspora into smaller, more focussed packages.
+devtools [conscious uncoupling](https://github.com/r-lib/devtools#conscious-uncoupling).
 
 ## Usage
 
