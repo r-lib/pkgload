@@ -30,6 +30,7 @@ onload_assign("load_dll", {
 
     dlls <- list()
     dynLibs <- nsInfo$dynlibs
+    nativeRoutines <- list()
 
     !! for_loop
     addNamespaceDynLibs(env, nsInfo$dynlibs)

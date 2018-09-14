@@ -1,3 +1,7 @@
+# Development
+
+* `load_dll()` now fixed in R-devel (#77)
+
 * The help shim's now work for `:::` inputs (#72).
 
 # pkgload 1.0.0
