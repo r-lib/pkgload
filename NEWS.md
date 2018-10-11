@@ -1,6 +1,8 @@
 # Development
 
-* `load_dll()` now fixed in R-devel (#77)
+* Trailing slashes now removed from all paths, which fixes issues on Windows (#73).
+
+* `load_dll()` now fixed in R-devel (#77).
 
 * The help shim's now work for `:::` inputs (#72).
 

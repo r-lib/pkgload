@@ -39,7 +39,10 @@ NULL
 #' @describeIn packages Return the normalized package path.
 #' @export
 pkg_path <- function(path = ".") {
-  rprojroot_find_root("DESCRIPTION", path)
+  path <- rprojroot_find_root("DESCRIPTION", path)
+
+  # Strip trailing slashes, which can cause errors on Windows (#73)
+  sub("[/\\]$", "", path)
 }
 
 #' @describeIn packages Return the package name.
