@@ -1,5 +1,8 @@
 # Development
 
+* `unload()` now only removes S4 classes which were generated in the package
+  being unloaded (#75)
+
 * `help()` will no longer error when trying to load package level help (#67).
 
 * Trailing slashes now removed from all paths, which fixes issues on Windows (#73).

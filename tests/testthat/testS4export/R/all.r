@@ -1,1 +1,2 @@
-setClass('class_to_export', representation='character')
+setClass("foo")
+setClass('class_to_export', contains = "foo")

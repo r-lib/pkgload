@@ -8,8 +8,9 @@ remove_s4_classes <- function(package) {
     return()
   }
 
-  classes <- methods::getClasses(nsenv)
-  lapply(sort_s4classes(classes, package), remove_s4_class, package)
+  classes <- methods::getClasses(nsenv, FALSE)
+  classes <- sort_s4classes(classes, package)
+  lapply(classes, remove_s4_class, package)
 }
 
 # Sort S4 classes for hierarchical removal
@@ -93,6 +94,11 @@ remove_s4_class <- function(classname, package) {
 
   # Make a copy of the class
   class <- methods::getClassDef(classname, package = package, inherits = FALSE)
+
+  # If the class is not defined in this package do not try to remove it
+  if (!identical(class@package, package)) {
+    return()
+  }
 
   # Find all the references to classes that (this one contains/extends AND
   # have backreferences to this class) so that R doesn't try to modify them.

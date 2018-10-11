@@ -3,12 +3,23 @@ context("s4-export")
 
 test_that("importing an S4 exported by another pkg with export_all = FALSE", {
   load_all("testS4export", export_all = FALSE)
-  
+
   # this used to crash with error: 
   # class "class_to_export" is not exported by 'namespace:testS4export'
   load_all("testS4import", export_all = FALSE)
-  expect_true(isClassDef(getClass('derived')))
-  
+  expect_true(isClassDef(getClass("derived")))
+
+  load_all("testS4import", export_all = FALSE)
+
+  cl <- getClass("derived")
+  expect_true(isClassDef(cl))
+
+  expect_is(cl@contains$class_to_export, "SClassExtension")
+  expect_equal(cl@contains$class_to_export@distance, 1)
+
+  expect_is(cl@contains$foo, "SClassExtension")
+  expect_equal(cl@contains$foo@distance, 2)
+
   # cleanup
   unload('testS4import')
   unload('testS4export')
