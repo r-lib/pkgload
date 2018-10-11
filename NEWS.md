@@ -1,5 +1,7 @@
 # Development
 
+* `help()` will no longer error when trying to load package level help (#67).
+
 * Trailing slashes now removed from all paths, which fixes issues on Windows (#73).
 
 * `load_dll()` now fixed in R-devel (#77).

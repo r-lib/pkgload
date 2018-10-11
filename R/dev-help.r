@@ -157,8 +157,8 @@ shim_help <- function(topic, package = NULL, ...) {
     package_name <- as.name(package)
   }
 
-  use_dev <- (!is.null(package_str) && package_str %in% dev_packages()) ||
-    (is.null(package_str) && !is.null(dev_topic_find(topic_str)))
+  use_dev <- (!missing(topic) && !is.null(package_str) && package_str %in% dev_packages()) ||
+    (!missing(topic) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
   if (use_dev) {
     dev_help(topic_str, package_str)
   } else {
