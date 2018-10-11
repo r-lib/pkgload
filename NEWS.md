@@ -1,3 +1,5 @@
+# pkgload 1.0.1.9000
+
 # pkgload 1.0.1
 
 * `unload()` now only removes S4 classes which were generated in the package
