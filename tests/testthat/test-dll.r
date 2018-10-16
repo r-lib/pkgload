@@ -91,7 +91,7 @@ test_that("Specific functions from DLLs listed in NAMESPACE can be called", {
   # .Call(null_test2)
   expect_true(is.null(nulltest2()))
   nt2 <- ns_env("testDllLoad")$null_test2
-  expect_equal(class(nt2), "NativeSymbolInfo")
+  expect_s3_class(nt2, "NativeSymbolInfo")
   expect_equal(nt2$name, "null_test2")
 
   unload("testDllLoad")
