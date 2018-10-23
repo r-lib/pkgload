@@ -40,3 +40,4 @@ example("ggplot")
 dev_example("ggplot")
 }
 }
+\concept{example functions}
