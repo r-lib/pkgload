@@ -4,8 +4,8 @@
 \alias{load_all}
 \title{Load complete package.}
 \usage{
-load_all(path = ".", reset = TRUE, recompile = FALSE, export_all = TRUE,
-  export_imports = export_all, helpers = TRUE,
+load_all(path = ".", reset = TRUE, recompile = FALSE,
+  export_all = TRUE, export_imports = export_all, helpers = TRUE,
   attach_testthat = uses_testthat(path), quiet = FALSE)
 }
 \arguments{
