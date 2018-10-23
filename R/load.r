@@ -62,9 +62,9 @@
 #'   [unload()] and is the default. Use `reset = FALSE` may be
 #'   faster for large code bases, but is a significantly less accurate
 #'   approximation.
-#' @param recompile force a recompile of DLL from source code, if present.
-#'   This is equivalent to running [pkgbuild::clean_dll()] before
-#'   `load_all`
+#' @param compile If `TRUE` always recompiles the package; if `NA`
+#'   recompiles if needed (as determined by `pkgbuild::needs_compile()`);
+#'   if `FALSE`, never recompiles.
 #' @param export_all If `TRUE` (the default), export all objects.
 #'   If `FALSE`, export only the objects that are listed as exports
 #'   in the NAMESPACE file.
@@ -75,6 +75,9 @@
 #'   which more closely mimics the environment within test files.
 #' @param helpers if \code{TRUE} loads \pkg{testthat} test helpers.
 #' @param quiet if `TRUE` suppresses output from this function.
+#' @param recompile DEPRECATED. force a recompile of DLL from source code, if
+#'   present. This is equivalent to running [pkgbuild::clean_dll()] before
+#'   `load_all`
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -92,10 +95,10 @@
 #' load_all("./", export_all = FALSE)
 #' }
 #' @export
-load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
+load_all <- function(path = ".", reset = TRUE, compile = NA,
                      export_all = TRUE, export_imports = export_all,
                      helpers = TRUE, attach_testthat = uses_testthat(path),
-                     quiet = FALSE) {
+                     quiet = FALSE, recompile = FALSE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
@@ -148,12 +151,20 @@ load_all <- function(path = ".", reset = TRUE, recompile = FALSE,
     unload_dll(package)
   }
 
-  if (recompile) {
-    pkgbuild::clean_dll(path)
+  # Compile dll if requested
+  if (!missing(recompile) && missing(compile)) {
+    compile <- if (isTRUE(recompile)) TRUE else NA
   }
 
-  # Compile dll if it exists
-  pkgbuild::compile_dll(path, quiet = quiet)
+  if (isTRUE(compile)) {
+    pkgbuild::compile_dll(path, force = TRUE, quiet = quiet)
+  } else if (identical(compile, NA)) {
+    pkgbuild::compile_dll(path, quiet = quiet)
+  } else if (isFALSE(compile)) {
+    # don't compile
+  } else {
+    stop("`compile` must be a logical vector of length 1", call. = FALSE)
+  }
 
   # If installed version of package loaded, unload it, again
   # (needed for dependencies of pkgbuild)
