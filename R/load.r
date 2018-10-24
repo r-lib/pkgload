@@ -152,7 +152,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   }
 
   # Compile dll if requested
-  if (!missing(recompile) && missing(compile)) {
+  if (missing(compile) && !missing(recompile)) {
     compile <- if (isTRUE(recompile)) TRUE else NA
   }
 
