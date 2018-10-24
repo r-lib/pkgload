@@ -63,7 +63,7 @@
 #'   faster for large code bases, but is a significantly less accurate
 #'   approximation.
 #' @param compile If `TRUE` always recompiles the package; if `NA`
-#'   recompiles if needed (as determined by `pkgbuild::needs_compile()`);
+#'   recompiles if needed (as determined by [pkgbuild::needs_compile()]);
 #'   if `FALSE`, never recompiles.
 #' @param export_all If `TRUE` (the default), export all objects.
 #'   If `FALSE`, export only the objects that are listed as exports

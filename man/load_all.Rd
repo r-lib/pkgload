@@ -19,7 +19,7 @@ faster for large code bases, but is a significantly less accurate
 approximation.}
 
 \item{compile}{If \code{TRUE} always recompiles the package; if \code{NA}
-recompiles if needed (as determined by \code{pkgbuild::needs_compile()});
+recompiles if needed (as determined by \code{\link[pkgbuild:needs_compile]{pkgbuild::needs_compile()}});
 if \code{FALSE}, never recompiles.}
 
 \item{export_all}{If \code{TRUE} (the default), export all objects.
