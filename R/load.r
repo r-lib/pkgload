@@ -160,7 +160,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     pkgbuild::compile_dll(path, force = TRUE, quiet = quiet)
   } else if (identical(compile, NA)) {
     pkgbuild::compile_dll(path, quiet = quiet)
-  } else if (isFALSE(compile)) {
+  } else if (identical(compile, FALSE)) {
     # don't compile
   } else {
     stop("`compile` must be a logical vector of length 1", call. = FALSE)
