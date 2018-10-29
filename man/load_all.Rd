@@ -4,9 +4,10 @@
 \alias{load_all}
 \title{Load complete package.}
 \usage{
-load_all(path = ".", reset = TRUE, recompile = FALSE,
-  export_all = TRUE, export_imports = export_all, helpers = TRUE,
-  attach_testthat = uses_testthat(path), quiet = FALSE)
+load_all(path = ".", reset = TRUE, compile = NA, export_all = TRUE,
+  export_imports = export_all, helpers = TRUE,
+  attach_testthat = uses_testthat(path), quiet = FALSE,
+  recompile = FALSE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -17,9 +18,9 @@ any pieces of the package. This is equivalent to running
 faster for large code bases, but is a significantly less accurate
 approximation.}
 
-\item{recompile}{force a recompile of DLL from source code, if present.
-This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
-\code{load_all}}
+\item{compile}{If \code{TRUE} always recompiles the package; if \code{NA}
+recompiles if needed (as determined by \code{\link[pkgbuild:needs_compile]{pkgbuild::needs_compile()}});
+if \code{FALSE}, never recompiles.}
 
 \item{export_all}{If \code{TRUE} (the default), export all objects.
 If \code{FALSE}, export only the objects that are listed as exports
@@ -35,6 +36,10 @@ package.}
 which more closely mimics the environment within test files.}
 
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
+
+\item{recompile}{DEPRECATED. force a recompile of DLL from source code, if
+present. This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
+\code{load_all}}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens

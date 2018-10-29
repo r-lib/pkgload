@@ -1,5 +1,9 @@
 # pkgload 1.0.1.9000
 
+* `load_all()` gains a `compile` argument which controls more finely whether to
+  compile the code or not. The `recompile` argument is now deprecated and will
+  be removed in a future version of pkgload.
+
 # pkgload 1.0.1
 
 * `unload()` now only removes S4 classes which were generated in the package
