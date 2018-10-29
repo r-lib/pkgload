@@ -9,8 +9,8 @@
 #' @param dev_packages A character vector of package names to search within.
 #'   If `NULL`, defaults to all packages loaded by devtools.
 #' @param stage at which stage ("build", "install", or "render") should
-#'   \\\\Sexpr macros be executed? This is only important if you're using
-#'   \\\\Sexpr macro's in your Rd files.
+#'   `\\Sexpr` macros be executed? This is only important if you're using
+#'   `\\Sexpr` macro's in your Rd files.
 #' @param type of html to produce: `"html"` or `"text"`. Defaults to
 #'   your default documentation type.
 #' @export
@@ -158,7 +158,7 @@ shim_help <- function(topic, package = NULL, ...) {
   }
 
   use_dev <- (!missing(topic) && !is.null(package_str) && package_str %in% dev_packages()) ||
-    (!missing(topic) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
+    (!missing(topic_name) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
   if (use_dev) {
     dev_help(topic_str, package_str)
   } else {

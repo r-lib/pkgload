@@ -10,7 +10,7 @@ pkgtest(package)
 \item{package}{Name of the test package.}
 }
 \description{
-Devtools comes with some simple packages for testing. This function
+devtools comes with some simple packages for testing. This function
 returns the path to them.
 }
 \examples{

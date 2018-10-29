@@ -8,7 +8,7 @@ has_tests <- function() {
 
 #' Return the path to one of the packages in the devtools test dir
 #'
-#' Devtools comes with some simple packages for testing. This function
+#' devtools comes with some simple packages for testing. This function
 #' returns the path to them.
 #'
 #' @param package Name of the test package.
