@@ -189,7 +189,11 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
   out$code <- load_code(path)
   register_s3(path)
-  out$dll <- load_dll(path)
+  if (identical(compile, FALSE)) {
+    out$dll <- try_load_dll(path)
+  } else {
+    out$dll <- load_dll(path)
+  }
 
   # attach testthat to the search path
   if (isTRUE(attach_testthat) && package != "testthat") {
