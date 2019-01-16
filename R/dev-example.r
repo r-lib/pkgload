@@ -20,7 +20,6 @@
 dev_example <- function(topic, quiet = FALSE) {
   topic <- dev_help(topic)
 
-  load_all(topic$pkg, quiet = quiet)
   run_example(topic$path, quiet = quiet)
 }
 
