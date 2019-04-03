@@ -17,5 +17,8 @@ test_that("helpers are available after load_all", {
   # object definde in helper, referencing lazy data object mtcars2
   expect_equal(head_mtcars, head(mtcars2))
 
+  # object defined in helper using explicitly qualified package name
+  expect_equal(helper_baz, baz)
+
   unload("testLoadHelpers")
 })
