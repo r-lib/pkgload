@@ -42,7 +42,7 @@ check_suggested <- function(package, version = NULL, compare = NA, path = inst("
 
   if (!is_installed(package) || !check_dep_version(package, version)) {
     msg <- paste0(sQuote(package),
-      if (is.na(version)) "" else paste0(" >= ", version),
+      if (is.na(version)) "" else paste0(" ", version),
       " must be installed for this functionality.")
 
     if (interactive()) {
