@@ -76,7 +76,10 @@ check_dep_version <- function(dep_name, dep_ver = "*") {
 
     warning("Need ", dep_name, " ", dep_compare,
       " ", dep_ver,
-      " but loaded version is ", getNamespaceVersion(dep_name))
+      " but loaded version is ", getNamespaceVersion(dep_name),
+      call. = FALSE
+    )
+
   }
 
   return(TRUE)
