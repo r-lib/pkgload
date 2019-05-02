@@ -1,5 +1,8 @@
 # pkgload 1.0.1.9000
 
+* `load_all()` now allows using explicitly qualified, exported names in test
+  helpers (@klmr, #95).
+
 * `load_all()` gains a `compile` argument which controls more finely whether to
   compile the code or not. The `recompile` argument is now deprecated and will
   be removed in a future version of pkgload.
