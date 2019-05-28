@@ -1,5 +1,7 @@
 # pkgload 1.0.1.9000
 
+* `shim_question()` now works for topics from the R base package that are passed with the double colon operator (e.g. `base::min`) (@mdequeljoe, #99).
+
 * `load_all()` now allows using explicitly qualified, exported names in test
   helpers (@klmr, #95).
 
