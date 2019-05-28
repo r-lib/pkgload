@@ -21,7 +21,10 @@ ns_env <- function(package) {
 }
 
 ns_path <- function(package) {
-  getNamespaceInfo(asNamespace(package), "path")
+  ns <- asNamespace(package)
+  if (isBaseNamespace(ns))
+    return(path.package(package))
+  getNamespaceInfo(ns, "path")
 }
 
 # Create the namespace environment for a package

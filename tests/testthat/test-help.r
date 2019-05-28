@@ -29,6 +29,7 @@ test_that("shim_question behaves the same as utils::? for non-devtools-loaded pa
   expect_identical(shim_question(lm(123))[1], utils::`?`(lm(123))[1])
   expect_identical(shim_question(`lm`)[1], utils::`?`(`lm`)[1])
   expect_identical(shim_question('lm')[1], utils::`?`('lm')[1])
+  expect_identical(shim_question(base::min)[1], utils::`?`(base::min)[1])
 })
 
 test_that("shim_question behaves like util::? for searches", {
