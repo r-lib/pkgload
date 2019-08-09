@@ -1,4 +1,6 @@
-# pkgload 1.0.1.9000
+# pkgload (development version)
+
+# pkgload 1.0.2
 
 * `shim_question()` now works for topics from the R base package that are passed with the double colon operator (e.g. `base::min`) (@mdequeljoe, #99).
 
