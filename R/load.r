@@ -253,55 +253,55 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
 warn_if_conflicts <- function(package, nms1, nms2) {
   both <- sort(intersect(nms1, nms2))
-  if (length(both) > 0) {
-    # Show at most three bullets because they are repetitive
-    # and because the output size is limited
-    MAX_BULLETS <- 3
-    header <- cli::rule(
-      left = crayon::bold("Conflicts"),
-      right = paste0(package, " ", "conflicts"),
-      width = cli::console_width() - 9L
-    )
-    both_short <- utils::head(both, MAX_BULLETS)
-    bullets <- paste0(collapse = "\n",
-      sprintf(
-        "%s %s masks %s::%s()",
-        crayon::red(cli::symbol$cross),
-        format(crayon::green(paste0(both_short, "()"))),
-        crayon::blue(package),
-        both_short
-      )
-    )
+  if (is_empty(both)) return()
 
-    if (length(both) > MAX_BULLETS) {
-      more <- paste0(
-        cli::symbol$ellipsis, " and ",
-        length(both) - MAX_BULLETS, " more\n"
-      )
-    } else {
-      more <- ""
-    }
-
-    # Show all conflicts in the directions
-    directions <- crayon::silver(
-      paste0(
-        "Did you accidentally source a file from `R/` rather than using `load_all()`?\n",
-        "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
-        "))` to remove the conflicts."
-      )
+  # Show at most three bullets because they are repetitive
+  # and because the output size is limited
+  MAX_BULLETS <- 3
+  header <- cli::rule(
+    left = crayon::bold("Conflicts"),
+    right = paste0(package, " ", "conflicts"),
+    width = cli::console_width() - 9L
+  )
+  both_short <- utils::head(both, MAX_BULLETS)
+  bullets <- paste0(collapse = "\n",
+    sprintf(
+      "%s %s masks %s::%s()",
+      crayon::red(cli::symbol$cross),
+      format(crayon::green(paste0(both_short, "()"))),
+      crayon::blue(package),
+      both_short
     )
+  )
 
-    rlang::warn(
-      sprintf(
-        "%s\n%s\n%s\n%s",
-        header,
-        bullets,
-        more,
-        directions
-      ),
-      .subclass = "pkgload::conflict"
+  if (length(both) > MAX_BULLETS) {
+    more <- paste0(
+      cli::symbol$ellipsis, " and ",
+      length(both) - MAX_BULLETS, " more\n"
     )
+  } else {
+    more <- ""
   }
+
+  # Show all conflicts in the directions
+  directions <- crayon::silver(
+    paste0(
+      "Did you accidentally source a file from `R/` rather than using `load_all()`?\n",
+      "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
+      "))` to remove the conflicts."
+    )
+  )
+
+  rlang::warn(
+    sprintf(
+      "%s\n%s\n%s\n%s",
+      header,
+      bullets,
+      more,
+      directions
+    ),
+    .subclass = "pkgload::conflict"
+  )
 }
 
 uses_testthat <- function(path = ".") {
