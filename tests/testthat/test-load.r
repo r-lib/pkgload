@@ -22,3 +22,14 @@ test_that("helpers are available after load_all", {
 
   unload("testLoadHelpers")
 })
+
+test_that("warn_if_conflicts works", {
+  # no warning if no intersection
+  expect_warning(warn_if_conflicts("pkg", c("foo"), c("bar")), NA)
+
+  # warning if an intersection
+
+  withr::with_options(c(crayon.enabled = FALSE),
+    expect_warning(warn_if_conflicts("pkg", c("foo"), c("foo", "bar")), "foo().*masks.*pkg::foo()")
+  )
+})

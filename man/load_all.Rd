@@ -7,7 +7,7 @@
 load_all(path = ".", reset = TRUE, compile = NA, export_all = TRUE,
   export_imports = export_all, helpers = TRUE,
   attach_testthat = uses_testthat(path), quiet = FALSE,
-  recompile = FALSE)
+  recompile = FALSE, warn_conflicts = TRUE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -40,6 +40,12 @@ which more closely mimics the environment within test files.}
 \item{recompile}{DEPRECATED. force a recompile of DLL from source code, if
 present. This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
 \code{load_all}}
+
+\item{warn_conflicts}{If \code{TRUE}, issue a warning if there are conflicts
+between the exported functions and functions in the global namespace. This
+most commonly happens when you accidently source a R file rather than using
+\code{load_all()}, or define a function directly in the R console, and can be
+frustrating to debug.}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens
