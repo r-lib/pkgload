@@ -252,7 +252,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 }
 
 warn_if_conflicts <- function(package, nms1, nms2) {
-  both <- intersect(nms1, nms2)
+  both <- sort(intersect(nms1, nms2))
   if (length(both) == 0) {
     return(invisible())
   }
