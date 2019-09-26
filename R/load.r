@@ -259,8 +259,9 @@ warn_if_conflicts <- function(package, nms1, nms2) {
 
   header <- cli::rule(
     left = crayon::bold("Conflicts"),
-    right = paste0(package, " ", "conflicts"),
-    width = cli::console_width() - 9L)
+    right = paste0(package, " ", "conflicts")
+  )
+
   bullets <- paste0(collapse = "\n",
     sprintf(
       "%s %s masks %s::%s()",
@@ -280,7 +281,7 @@ warn_if_conflicts <- function(package, nms1, nms2) {
 
   rlang::warn(
     sprintf(
-      "%s\n%s\n\n%s",
+      "\n%s\n%s\n\n%s",
       header,
       bullets,
       directions
