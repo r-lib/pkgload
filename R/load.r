@@ -80,7 +80,7 @@
 #'   `load_all`
 #' @param warn_conflicts If `TRUE`, issue a warning if there are conflicts
 #'   between the exported functions and functions in the global namespace. This
-#'   most commonly happens when you accidently source a R file rather than using
+#'   most commonly happens when you accidently source an R file rather than using
 #'   `load_all()`, or define a function directly in the R console, and can be
 #'   frustrating to debug.
 #' @keywords programming
