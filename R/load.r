@@ -253,38 +253,40 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
 warn_if_conflicts <- function(package, nms1, nms2) {
   both <- intersect(nms1, nms2)
-  if (length(both) > 0) {
-    header <- cli::rule(
-      left = crayon::bold("Conflicts"),
-      right = paste0(package, " ", "conflicts"),
-    width = cli::console_width() - 9L)
-    bullets <- paste0(collapse = "\n",
-      sprintf(
-        "%s %s masks %s::%s()",
-        crayon::red(cli::symbol$cross),
-        format(crayon::green(paste0(both, "()"))),
-        crayon::blue(package),
-        both
-      )
-    )
-    directions <- crayon::silver(
-      paste0(
-        "Did you accidentally source a file rather than using `load_all()`?\n",
-        "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
-        "))` to remove the conflicts."
-      )
-    )
-
-    rlang::warn(
-      sprintf(
-        "%s\n%s\n\n%s",
-        header,
-        bullets,
-        directions
-      ),
-      .subclass = "pkgload::conflict"
-    )
+  if (length(both) == 0) {
+    return(invisible())
   }
+
+  header <- cli::rule(
+    left = crayon::bold("Conflicts"),
+    right = paste0(package, " ", "conflicts"),
+    width = cli::console_width() - 9L)
+  bullets <- paste0(collapse = "\n",
+    sprintf(
+      "%s %s masks %s::%s()",
+      crayon::red(cli::symbol$cross),
+      format(crayon::green(paste0(both, "()"))),
+      crayon::blue(package),
+      both
+    )
+  )
+  directions <- crayon::silver(
+    paste0(
+      "Did you accidentally source a file rather than using `load_all()`?\n",
+      "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
+      "))` to remove the conflicts."
+    )
+  )
+
+  rlang::warn(
+    sprintf(
+      "%s\n%s\n\n%s",
+      header,
+      bullets,
+      directions
+      ),
+    .subclass = "pkgload::conflict"
+  )
 }
 
 uses_testthat <- function(path = ".") {
