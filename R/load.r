@@ -262,15 +262,30 @@ warn_if_conflicts <- function(package, nms1, nms2) {
     right = paste0(package, " ", "conflicts")
   )
 
+  # Show at most three bullets because they are repetitive
+  # and because the output size is limited
+  MAX_BULLETS <- 3
+  both_short <- utils::head(both, MAX_BULLETS)
   bullets <- paste0(collapse = "\n",
     sprintf(
       "%s %s masks %s::%s()",
       crayon::red(cli::symbol$cross),
-      format(crayon::green(paste0(both, "()"))),
+      format(crayon::green(paste0(both_short, "()"))),
       crayon::blue(package),
-      both
+      both_short
     )
   )
+
+  if (length(both) > MAX_BULLETS) {
+    more <- paste0(
+      "\n", cli::symbol$ellipsis, " and ",
+      length(both) - MAX_BULLETS, " more"
+    )
+  } else {
+    more <- ""
+  }
+
+  # Show all conflicts in the directions
   directions <- crayon::silver(
     paste0(
       "Did you accidentally source a file rather than using `load_all()`?\n",
@@ -281,11 +296,12 @@ warn_if_conflicts <- function(package, nms1, nms2) {
 
   rlang::warn(
     sprintf(
-      "\n%s\n%s\n\n%s",
+      "\n%s\n%s%s\n\n%s",
       header,
       bullets,
+      more,
       directions
-      ),
+    ),
     .subclass = "pkgload::conflict"
   )
 }
