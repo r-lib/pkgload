@@ -33,9 +33,12 @@ dev_example <- function(topic, quiet = FALSE) {
 #' @param run if `TRUE`, code in \code{\\dontrun{}} will be commented
 #'   out.
 #' @param env Environment in which code will be run.
+#' @param macros Custom macros to use to parse the `.Rd` file. See the
+#'   `macros` argument of [tools::parse_Rd()]. If `NULL`, then the
+#'   [tools::Rd2ex()] (and [tools::parse_Rd()]) default is used.
 run_example <- function(path, test = FALSE, run = FALSE,
                         env = new.env(parent = globalenv()),
-                        quiet = FALSE) {
+                        quiet = FALSE, macros = NULL) {
 
   if (!file.exists(path)) {
     stop("'", path, "' does not exist", call. = FALSE)
@@ -43,14 +46,22 @@ run_example <- function(path, test = FALSE, run = FALSE,
 
   tmp <- tempfile(fileext = ".R")
 
-  args <- list(path, out = tmp, commentDontrun = !run)
-
-  # R 3.1 and earlier did not have commentDonttest
-  if (getRversion() >= "3.2") {
-    args <- c(args, list(commentDonttest = !test))
+  if (is.null(macros)) {
+    tools::Rd2ex(
+      path,
+      out = tmp,
+      commentDontrun = !run,
+      commentDonttest = !test
+    )
+  } else {
+    tools::Rd2ex(
+      path,
+      out = tmp,
+      commentDontrun = !run,
+      commentDonttest = !test,
+      macros = macros
+    )
   }
-
-  do.call(tools::Rd2ex, args)
 
   if (file.exists(tmp)) {
     source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)

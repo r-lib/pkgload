@@ -101,10 +101,11 @@ dev_topic_index_reset <- function(pkg_name) {
 build_topic_index <- function(path = ".") {
   path <- pkg_path(path)
 
+  macros <- load_rd_macros(path)
   rds <- rd_files(path)
 
   aliases <- function(path) {
-    parsed <- tools::parse_Rd(path)
+    parsed <- tools::parse_Rd(path, macros = macros)
     tags <- vapply(parsed, function(x) attr(x, "Rd_tag")[[1]], character(1))
     unlist(parsed[tags == "\\alias"])
   }

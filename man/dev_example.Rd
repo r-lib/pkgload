@@ -8,7 +8,7 @@
 dev_example(topic, quiet = FALSE)
 
 run_example(path, test = FALSE, run = FALSE, env = new.env(parent =
-  globalenv()), quiet = FALSE)
+  globalenv()), quiet = FALSE, macros = NULL)
 }
 \arguments{
 \item{topic}{Name or topic (or name of Rd) file to run examples for}
@@ -25,6 +25,10 @@ parameter is only used in R 3.2 and greater.}
 out.}
 
 \item{env}{Environment in which code will be run.}
+
+\item{macros}{Custom macros to use to parse the \code{.Rd} file. See the
+\code{macros} argument of \code{\link[tools:parse_Rd]{tools::parse_Rd()}}. If \code{NULL}, then the
+\code{\link[tools:Rd2ex]{tools::Rd2ex()}} (and \code{\link[tools:parse_Rd]{tools::parse_Rd()}}) default is used.}
 }
 \description{
 \code{dev_example} is a replacement for \code{example}. \code{run_example}
