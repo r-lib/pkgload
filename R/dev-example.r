@@ -43,12 +43,15 @@ run_example <- function(path, test = FALSE, run = FALSE,
 
   tmp <- tempfile(fileext = ".R")
 
-  if (getRversion() < "3.2") {
-    # R 3.1 and earlier did not have commentDonttest
-    tools::Rd2ex(path, out = tmp, commentDontrun = !run)
-  } else {
-    tools::Rd2ex(path, out = tmp, commentDontrun = !run, commentDonttest = !test)
+  args <- list(path, out = tmp, commentDontrun = !run)
+
+  # R 3.1 and earlier did not have commentDonttest
+  if (getRversion() >= "3.2") {
+    args <- c(args, list(commentDonttest = !test))
   }
+
+  do.call(tools::Rd2ex, args)
+
   if (file.exists(tmp)) {
     source(tmp, echo = !quiet, local = env, max.deparse.length = Inf)
   }
