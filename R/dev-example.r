@@ -30,7 +30,7 @@ dev_example <- function(topic, quiet = FALSE) {
 #' @param test if `TRUE`, code in \code{\\donttest{}} will be commented
 #'   out. If `FALSE`, code in \code{\\testonly{}} will be commented out. This
 #'   parameter is only used in R 3.2 and greater.
-#' @param run if `TRUE`, code in \code{\\dontrun{}} will be commented
+#' @param run if `FALSE`, code in \code{\\dontrun{}} will be commented
 #'   out.
 #' @param env Environment in which code will be run.
 #' @param macros Custom macros to use to parse the `.Rd` file. See the

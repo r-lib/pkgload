@@ -21,7 +21,7 @@ run_example(path, test = FALSE, run = FALSE, env = new.env(parent =
 out. If \code{FALSE}, code in \code{\\testonly{}} will be commented out. This
 parameter is only used in R 3.2 and greater.}
 
-\item{run}{if \code{TRUE}, code in \code{\\dontrun{}} will be commented
+\item{run}{if \code{FALSE}, code in \code{\\dontrun{}} will be commented
 out.}
 
 \item{env}{Environment in which code will be run.}
