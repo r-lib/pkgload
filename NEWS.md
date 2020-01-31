@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
+
 # pkgload 1.0.2
 
 * `shim_question()` now works for topics from the R base package that are passed with the double colon operator (e.g. `base::min`) (@mdequeljoe, #99).
