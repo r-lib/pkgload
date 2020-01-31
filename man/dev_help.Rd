@@ -17,8 +17,8 @@ dev_topic_index_reset(pkg_name)
 If \code{NULL}, defaults to all packages loaded by devtools.}
 
 \item{stage}{at which stage ("build", "install", or "render") should
-\\Sexpr macros be executed? This is only important if you're using
-\\Sexpr macro's in your Rd files.}
+\code{\\Sexpr} macros be executed? This is only important if you're using
+\code{\\Sexpr} macro's in your Rd files.}
 
 \item{type}{of html to produce: \code{"html"} or \code{"text"}. Defaults to
 your default documentation type.}

@@ -9,8 +9,8 @@
 #' @param dev_packages A character vector of package names to search within.
 #'   If `NULL`, defaults to all packages loaded by devtools.
 #' @param stage at which stage ("build", "install", or "render") should
-#'   \\\\Sexpr macros be executed? This is only important if you're using
-#'   \\\\Sexpr macro's in your Rd files.
+#'   `\\Sexpr` macros be executed? This is only important if you're using
+#'   `\\Sexpr` macro's in your Rd files.
 #' @param type of html to produce: `"html"` or `"text"`. Defaults to
 #'   your default documentation type.
 #' @export
@@ -44,6 +44,14 @@ dev_help <- function(topic,
   )
 }
 
+load_rd_macros <- function(dir) {
+  macros <- tools::loadPkgRdMacros(dir)
+  macros <- tools::loadRdMacros(
+    file.path(R.home("share"), "Rd", "macros", "system.Rd"),
+    macros = macros
+  )
+}
+
 #' @export
 print.dev_topic <- function(x, ...) {
   message("Rendering development documentation for '", x$topic, "'")
@@ -51,8 +59,10 @@ print.dev_topic <- function(x, ...) {
   type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
 
+  macros <- load_rd_macros(dirname(dirname(x$path)))
+
   if (type == "text") {
-    tools::Rd2txt(x$path, out = out_path, package = x$pkg, stages = x$stage)
+    tools::Rd2txt(x$path, out = out_path, package = x$pkg, stages = x$stage, macros = macros)
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
     if (rstudioapi::hasFun("previewRd")) {
@@ -60,7 +70,7 @@ print.dev_topic <- function(x, ...) {
       return(invisible())
     }
     tools::Rd2HTML(x$path, out = out_path, package = x$pkg, stages = x$stage,
-      no_links = TRUE)
+      no_links = TRUE, macros = macros)
 
     css_path <- file.path(tempdir(), "R.css")
     if (!file.exists(css_path)) {
@@ -158,7 +168,7 @@ shim_help <- function(topic, package = NULL, ...) {
   }
 
   use_dev <- (!missing(topic) && !is.null(package_str) && package_str %in% dev_packages()) ||
-    (!missing(topic) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
+    (!missing(topic_name) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
   if (use_dev) {
     dev_help(topic_str, package_str)
   } else {

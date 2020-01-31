@@ -29,7 +29,7 @@ insert_global_shims <- function() {
 #' available when a package is loaded with [load_all()].
 #'
 #' When `system.file` is called from the R console (the global
-#' envrironment), this function detects if the target package was loaded with
+#' environment), this function detects if the target package was loaded with
 #' [load_all()], and if so, it uses a customized method of searching
 #' for the file. This is necessary because the directory structure of a source
 #' package is different from the directory structure of an installed package.

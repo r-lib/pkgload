@@ -37,7 +37,7 @@ imports_env_name <- function(package) {
 #' Load all of the imports for a package
 #'
 #' The imported objects are copied to the imports environment, and are not
-#' visible from R_GlobalEnv. This will automatically load (but not attach)
+#' visible from `R_GlobalEnv`. This will automatically load (but not attach)
 #' the dependency packages.
 #'
 #' @keywords internal

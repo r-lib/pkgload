@@ -32,7 +32,7 @@ onload_assign("load_dll", {
     dynLibs <- nsInfo$dynlibs
     nativeRoutines <- list()
 
-    !! for_loop
+    !!for_loop
     addNamespaceDynLibs(env, nsInfo$dynlibs)
 
     invisible(dlls)
@@ -94,3 +94,13 @@ onload_assign("assignNativeRoutines", {
       quote(package <- methods::getPackageName(env))))
   f
 })
+
+try_load_dll <- function(path = ".") {
+  tryCatch(
+    load_dll(path = path),
+    error = function(e) {
+      warn(paste0("Failed to load at least one DLL: ", e$message))
+      list()
+    }
+  )
+}

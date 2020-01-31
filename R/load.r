@@ -21,7 +21,7 @@
 #'     functions at the correct times.
 #'
 #'   \item If you use \pkg{testthat}, will load all test helpers so
-#'     you can access them interactively. Devtools sets the
+#'     you can access them interactively. devtools sets the
 #'     \code{DEVTOOLS_LOAD} environment variable to \code{"true"} to
 #'     let you check whether the helpers are run during package loading.
 #'
@@ -189,7 +189,11 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
   out$code <- load_code(path)
   register_s3(path)
-  out$dll <- load_dll(path)
+  if (identical(compile, FALSE)) {
+    out$dll <- try_load_dll(path)
+  } else {
+    out$dll <- load_dll(path)
+  }
 
   # attach testthat to the search path
   if (isTRUE(attach_testthat) && package != "testthat") {
@@ -208,13 +212,6 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   # Copy over lazy data objects from the namespace environment
   export_lazydata(package)
 
-  # Source test helpers into package environment
-  if (uses_testthat(path) && helpers) {
-    withr_with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
-      testthat_source_test_helpers(find_test_dir(path), env = ns_env(package))
-    )
-  }
-
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
   setup_ns_exports(path, export_all, export_imports)
@@ -228,6 +225,13 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   # Run hooks
   run_pkg_hook(package, "attach")
   run_user_hook(package, "attach")
+
+  # Source test helpers into package environment
+  if (uses_testthat(path) && helpers) {
+    withr_with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
+      testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
+    )
+  }
 
   # Replace help and ? in utils package environment
   insert_global_shims()

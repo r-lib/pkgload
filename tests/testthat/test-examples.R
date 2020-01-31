@@ -22,3 +22,25 @@ test_that("can run example package", {
   env <- dev_example("foofoo", quiet = TRUE)
   expect_equal(env$a, 101)
 })
+
+test_that("can use system macros", {
+  load_all(test_path("testHelp"))
+  on.exit(unload(test_path("testHelp")))
+
+  expect_silent(
+    run_example(
+      test_path("testHelp", "man", "testSysMacro.Rd"),
+      quiet = TRUE
+    )
+  )
+})
+
+test_that("can use extra Rd macros", {
+  macros <- load_rd_macros("testHelp")
+  expect_silent(
+    run_example(
+      test_path("testHelp", "man", "testCustomMacro.Rd"),
+      quiet = TRUE, macros = macros
+    )
+  )
+})
