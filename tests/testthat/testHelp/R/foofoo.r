@@ -16,3 +16,17 @@ foofoo <- function() "You called foofoo."
 #'
 #' @export
 testHelp <- function() "You called testHelp"
+
+#' Function that has a system macro
+#'
+#' This is \CRANpkg{pkgload}.
+#'
+#' @export
+testSysMacro <- function() "It is all good"
+
+#' Function that has a system and a custom macro
+#'
+#' This is \CRANpkg{pkgload}. \foobar{Yeah!}
+#'
+#' @export
+testCustomMacro <- function() "It is still all good"
