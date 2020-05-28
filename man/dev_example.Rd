@@ -13,7 +13,9 @@ run_example(
   run_dontrun = FALSE,
   env = new.env(parent = globalenv()),
   quiet = FALSE,
-  macros = NULL
+  macros = NULL,
+  run,
+  test
 )
 }
 \arguments{
@@ -33,6 +35,8 @@ out.}
 \item{macros}{Custom macros to use to parse the \code{.Rd} file. See the
 \code{macros} argument of \code{\link[tools:parse_Rd]{tools::parse_Rd()}}. If \code{NULL}, then the
 \code{\link[tools:Rd2ex]{tools::Rd2ex()}} (and \code{\link[tools:parse_Rd]{tools::parse_Rd()}}) default is used.}
+
+\item{run, test}{Deprecated, see \code{run_dontrun} and \code{run_donttest} above.}
 }
 \description{
 \code{dev_example} is a replacement for \code{example}. \code{run_example}

@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `run_example()` arguments `run` and `test` are deprecated in favor of the (hopefully) more clear `run_dontrun` and `run_donttest` (#107).
+
 * `load_all()` now issues a warning if exported objects conflict with objects defined in the global environment (#112)
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
