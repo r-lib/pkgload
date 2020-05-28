@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.1.0
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
 
