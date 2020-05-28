@@ -1,8 +1,9 @@
 # pkgload
 
-[![Travis-CI Build Status](https://travis-ci.org/r-lib/pkgload.svg?branch=master)](https://travis-ci.org/r-lib/pkgload)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/r-lib/pkgload?branch=master&svg=true)](https://ci.appveyor.com/project/r-lib/pkgload)
-[![codecov](https://codecov.io/gh/r-lib/pkgload/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/pkgload)
+<!-- badges: start -->
+[![R build status](https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/pkgload/actions)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/pkgload/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/pkgload?branch=master)
+<!-- badges: end -->
 
 The goal of pkgload is to simulate the process of installing and loading a
 package, without actually doing the complete process, and hence making package

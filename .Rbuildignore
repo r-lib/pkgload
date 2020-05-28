@@ -8,3 +8,4 @@
 ^NEWS\.html$
 ^appveyor\.yml$
 ^script\.R$
+^\.github$
