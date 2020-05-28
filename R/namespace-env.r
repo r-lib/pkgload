@@ -153,15 +153,19 @@ onload_assign("add_classes_to_exports",
       quote(if (.isMethodsDispatchOn() && .hasS4MetaData(ns) && !identical(package, "methods"))  NULL)
     }
     make_function(alist(ns =, package =, exports =, nsInfo =),
-    call("{",
-      extract_lang(
-        f = comp_lang,
-        y = pattern,
-        idx = c(1, 2),
-        modify_lang(body(base::loadNamespace), strip_internal_calls, "methods")),
-      quote(exports)),
-    asNamespace("methods"))
-  })
+      call("{",
+        quote(hasS4m <- .hasS4MetaData(ns)),
+        extract_lang(
+          f = comp_lang,
+          y = pattern,
+          idx = c(1, 2),
+          modify_lang(body(base::loadNamespace), strip_internal_calls, "methods")
+        ),
+        quote(exports)
+      ), asNamespace("methods")
+    )
+  }
+)
 
 #' Parses the NAMESPACE file for a package
 #'
