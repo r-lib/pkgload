@@ -78,6 +78,11 @@
 #' @param recompile DEPRECATED. force a recompile of DLL from source code, if
 #'   present. This is equivalent to running [pkgbuild::clean_dll()] before
 #'   `load_all`
+#' @param warn_conflicts If `TRUE`, issue a warning if there are conflicts
+#'   between the exported functions and functions in the global namespace. This
+#'   most commonly happens when you accidently source an R file rather than using
+#'   `load_all()`, or define a function directly in the R console, and can be
+#'   frustrating to debug.
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -98,7 +103,7 @@
 load_all <- function(path = ".", reset = TRUE, compile = NA,
                      export_all = TRUE, export_imports = export_all,
                      helpers = TRUE, attach_testthat = uses_testthat(path),
-                     quiet = FALSE, recompile = FALSE) {
+                     quiet = FALSE, recompile = FALSE, warn_conflicts = TRUE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
@@ -239,9 +244,72 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   # Propagate new definitions to namespace imports of loaded packages.
   propagate_ns(package)
 
+  if (isTRUE(warn_conflicts)) {
+    warn_if_conflicts(package, getNamespaceExports(out$env), names(globalenv()))
+  }
+
   invisible(out)
 }
 
+warn_if_conflicts <- function(package, nms1, nms2) {
+  both <- sort(intersect(nms1, nms2))
+  if (length(both) == 0) {
+    return(invisible())
+  }
+
+  header <- cli::rule(
+    left = crayon::bold("Conflicts"),
+    right = paste0(package, " ", "conflicts")
+  )
+
+  bullets <- conflict_bullets(package, both)
+
+  directions <- crayon::silver(
+    paste0(
+      "Did you accidentally source a file rather than using `load_all()`?\n",
+      "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
+      "))` to remove the conflicts."
+    )
+  )
+
+  rlang::warn(
+    sprintf(
+      "\n%s\n%s\n\n%s",
+      header,
+      bullets,
+      directions
+    ),
+    .subclass = "pkgload::conflict"
+  )
+}
+
+conflict_bullets <- function(package, both) {
+  # Show three bullets plus ellipsis if more than four bullets.
+  # The output size is limited, also the bullets are vers repetitive.
+  MAX_BULLETS <- 3
+
+  if (length(both) > MAX_BULLETS + 1) {
+    more <- paste0(
+      "\n", cli::symbol$ellipsis, " and ",
+      length(both) - MAX_BULLETS, " more"
+    )
+    both <- utils::head(both, MAX_BULLETS)
+  } else {
+    more <- ""
+  }
+
+  bullets <- paste0(collapse = "\n",
+    sprintf(
+      "%s %s masks %s::%s()",
+      crayon::red(cli::symbol$cross),
+      format(crayon::green(paste0(both, "()"))),
+      crayon::blue(package),
+      both
+    )
+  )
+
+  paste0(bullets, more)
+}
 
 uses_testthat <- function(path = ".") {
   paths <- c(
