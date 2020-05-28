@@ -103,7 +103,7 @@ extract_lang <- function(x, f, ...) {
     res <- recurse(x)[[1]]
     if (top_level_call <- identical(sys.call()[[1]], as.symbol("extract_lang"))
         && is.null(res)) {
-      warning("pkgload is incompatible with the current version of R. `load_all()` may function incorrectly.")
+      warning("pkgload is incompatible with the current version of R. `load_all()` may function incorrectly.", call. = FALSE)
     }
     return(res)
   }
