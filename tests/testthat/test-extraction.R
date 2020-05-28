@@ -10,7 +10,7 @@ f <- function(x) {
 test_that("extract_lang issues warning if nothing found", {
 
   expect_warning(extract_lang(body(f), comp_lang, quote(j)),
-    "devtools is incompatible")
+    "pkgload is incompatible")
 })
 
 test_that("extract_lang and comp_lang finds full statements", {

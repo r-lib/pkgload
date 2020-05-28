@@ -6,12 +6,12 @@ test_that("default run_example ignores donttest and dontrun ", {
 })
 
 test_that("run donttest when requested", {
-  env <- run_example(test_path("test-examples.Rd"), test = TRUE, quiet = TRUE)
+  env <- run_example(test_path("test-examples.Rd"), run_donttest = TRUE, quiet = TRUE)
   expect_equal(env$a, 2)
 })
 
 test_that("run dontrun when requested", {
-  env <- run_example(test_path("test-examples.Rd"), run = TRUE, quiet = TRUE)
+  env <- run_example(test_path("test-examples.Rd"), run_dontrun = TRUE, quiet = TRUE)
   expect_equal(env$a, 3)
 })
 
