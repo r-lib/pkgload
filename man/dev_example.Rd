@@ -9,8 +9,8 @@ dev_example(topic, quiet = FALSE)
 
 run_example(
   path,
-  test = FALSE,
-  run = FALSE,
+  run_donttest = FALSE,
+  run_dontrun = FALSE,
   env = new.env(parent = globalenv()),
   quiet = FALSE,
   macros = NULL
@@ -23,12 +23,10 @@ run_example(
 
 \item{path}{Path to \code{.Rd} file}
 
-\item{test}{if \code{TRUE}, code in \code{\\donttest{}} will be commented
-out. If \code{FALSE}, code in \code{\\testonly{}} will be commented out. This
-parameter is only used in R 3.2 and greater.}
-
-\item{run}{if \code{TRUE}, code in \code{\\dontrun{}} will be commented
+\item{run_donttest}{if \code{TRUE}, do run \verb{\donttest} sections in the Rd files.
 out.}
+
+\item{run_dontrun}{if \code{TRUE}, do run \verb{\dontrun} sections in the Rd files.}
 
 \item{env}{Environment in which code will be run.}
 

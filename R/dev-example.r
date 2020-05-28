@@ -25,16 +25,14 @@ dev_example <- function(topic, quiet = FALSE) {
 #' @rdname dev_example
 #' @export
 #' @param path Path to `.Rd` file
-#' @param test if `TRUE`, code in \code{\\donttest{}} will be commented
-#'   out. If `FALSE`, code in \code{\\testonly{}} will be commented out. This
-#'   parameter is only used in R 3.2 and greater.
-#' @param run if `TRUE`, code in \code{\\dontrun{}} will be commented
+#' @param run_dontrun if `TRUE`, do run `\dontrun` sections in the Rd files.
+#' @param run_donttest if `TRUE`, do run `\donttest` sections in the Rd files.
 #'   out.
 #' @param env Environment in which code will be run.
 #' @param macros Custom macros to use to parse the `.Rd` file. See the
 #'   `macros` argument of [tools::parse_Rd()]. If `NULL`, then the
 #'   [tools::Rd2ex()] (and [tools::parse_Rd()]) default is used.
-run_example <- function(path, test = FALSE, run = FALSE,
+run_example <- function(path, run_donttest = FALSE, run_dontrun = FALSE,
                         env = new.env(parent = globalenv()),
                         quiet = FALSE, macros = NULL) {
 
@@ -48,15 +46,15 @@ run_example <- function(path, test = FALSE, run = FALSE,
     tools::Rd2ex(
       path,
       out = tmp,
-      commentDontrun = !run,
-      commentDonttest = !test
+      commentDontrun = !run_dontrun,
+      commentDonttest = !run_donttest
     )
   } else {
     tools::Rd2ex(
       path,
       out = tmp,
-      commentDontrun = !run,
-      commentDonttest = !test,
+      commentDontrun = !run_dontrun,
+      commentDonttest = !run_donttest,
       macros = macros
     )
   }
