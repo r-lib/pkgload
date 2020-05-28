@@ -146,15 +146,22 @@ setup_ns_exports <- function(path = ".", export_all = FALSE, export_imports = ex
 # copied directly, now it is dynamically looked up instead, to prevent drift as
 # base::loadNamespace changes.
 onload_assign("add_classes_to_exports",
-  make_function(alist(ns =, package =, exports =, nsInfo =),
+  {
+    pattern <- if (getRversion() >= "4.1.0") {
+      quote(if (.isMethodsDispatchOn() && hasS4m && !identical(package, "methods"))  NULL)
+    } else {
+      quote(if (.isMethodsDispatchOn() && .hasS4MetaData(ns) && !identical(package, "methods"))  NULL)
+    }
+    make_function(alist(ns =, package =, exports =, nsInfo =),
     call("{",
       extract_lang(
         f = comp_lang,
-        y = quote(if (.isMethodsDispatchOn() && .hasS4MetaData(ns) && !identical(package, "methods")) NULL),
-        idx = 1:2,
+        y = pattern,
+        idx = c(1, 2),
         modify_lang(body(base::loadNamespace), strip_internal_calls, "methods")),
       quote(exports)),
-    asNamespace("methods")))
+    asNamespace("methods"))
+  })
 
 #' Parses the NAMESPACE file for a package
 #'
