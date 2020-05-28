@@ -41,10 +41,8 @@ insert_global_shims <- function() {
 #' would end up calling `base::system.file` instead.
 #' @inheritParams base::system.file
 #'
-#' @usage # system.file(..., package = "base", lib.loc = NULL, mustWork = FALSE)
 #' @rdname system.file
 #' @name system.file
-#' @usage system.file(..., package = "base", lib.loc = NULL, mustWork = FALSE)
 shim_system.file <- function(..., package = "base", lib.loc = NULL,
                              mustWork = FALSE) {
 
