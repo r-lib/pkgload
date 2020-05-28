@@ -7,8 +7,14 @@
 \usage{
 dev_example(topic, quiet = FALSE)
 
-run_example(path, test = FALSE, run = FALSE, env = new.env(parent =
-  globalenv()), quiet = FALSE, macros = NULL)
+run_example(
+  path,
+  test = FALSE,
+  run = FALSE,
+  env = new.env(parent = globalenv()),
+  quiet = FALSE,
+  macros = NULL
+)
 }
 \arguments{
 \item{topic}{Name or topic (or name of Rd) file to run examples for}

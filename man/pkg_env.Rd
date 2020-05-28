@@ -10,7 +10,7 @@ pkg_env(package)
 \item{package}{package name.}
 }
 \description{
-This is an environment like \code{<package:pkg>}. The package
+This is an environment like \verb{<package:pkg>}. The package
 environment contains the exported objects from a package. It is
 attached, so it is an ancestor of \code{R_GlobalEnv}.
 }

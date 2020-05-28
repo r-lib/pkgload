@@ -5,8 +5,12 @@
 \alias{dev_topic_index_reset}
 \title{In-development help for package loaded with devtools}
 \usage{
-dev_help(topic, dev_packages = NULL, stage = "render",
-  type = getOption("help_type"))
+dev_help(
+  topic,
+  dev_packages = NULL,
+  stage = "render",
+  type = getOption("help_type")
+)
 
 dev_topic_index_reset(pkg_name)
 }
@@ -17,8 +21,8 @@ dev_topic_index_reset(pkg_name)
 If \code{NULL}, defaults to all packages loaded by devtools.}
 
 \item{stage}{at which stage ("build", "install", or "render") should
-\code{\\Sexpr} macros be executed? This is only important if you're using
-\code{\\Sexpr} macro's in your Rd files.}
+\verb{\\\\Sexpr} macros be executed? This is only important if you're using
+\verb{\\\\Sexpr} macro's in your Rd files.}
 
 \item{type}{of html to produce: \code{"html"} or \code{"text"}. Defaults to
 your default documentation type.}

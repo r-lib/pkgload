@@ -11,7 +11,7 @@ imports_env(package)
 }
 \description{
 Contains objects imported from other packages. Is the parent of the
-package namespace environment, and is a child of \code{<namespace:base>},
+package namespace environment, and is a child of \verb{<namespace:base>},
 which is a child of \code{R_GlobalEnv}.
 }
 \seealso{

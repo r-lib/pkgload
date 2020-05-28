@@ -4,10 +4,18 @@
 \alias{load_all}
 \title{Load complete package.}
 \usage{
-load_all(path = ".", reset = TRUE, compile = NA, export_all = TRUE,
-  export_imports = export_all, helpers = TRUE,
-  attach_testthat = uses_testthat(path), quiet = FALSE,
-  recompile = FALSE, warn_conflicts = TRUE)
+load_all(
+  path = ".",
+  reset = TRUE,
+  compile = NA,
+  export_all = TRUE,
+  export_imports = export_all,
+  helpers = TRUE,
+  attach_testthat = uses_testthat(path),
+  quiet = FALSE,
+  recompile = FALSE,
+  warn_conflicts = TRUE
+)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -43,7 +51,7 @@ present. This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild:
 
 \item{warn_conflicts}{If \code{TRUE}, issue a warning if there are conflicts
 between the exported functions and functions in the global namespace. This
-most commonly happens when you accidently source a R file rather than using
+most commonly happens when you accidently source an R file rather than using
 \code{load_all()}, or define a function directly in the R console, and can be
 frustrating to debug.}
 }
@@ -55,14 +63,14 @@ when a package is installed and loaded with \code{\link[=library]{library()}}.
 Currently \code{load_all}:
 
 \itemize{
-\item Loads all data files in \code{data/}.  See \code{\link[=load_data]{load_data()}}
+\item Loads all data files in \verb{data/}.  See \code{\link[=load_data]{load_data()}}
 for more details.
 
 \item Sources all R files in the R directory, storing results in
 environment that behaves like a regular package namespace. See
 below and \code{\link[=load_code]{load_code()}} for more details.
 
-\item Compiles any C, C++, or Fortran code in the \code{src/} directory
+\item Compiles any C, C++, or Fortran code in the \verb{src/} directory
 and connects the generated DLL into R. See \code{\link[=compile_dll]{compile_dll()}}
 for more details.
 
@@ -78,14 +86,14 @@ let you check whether the helpers are run during package loading.
 }
 \section{Namespaces}{
 
-The namespace environment \code{<namespace:pkgname>}, is a child of
+The namespace environment \verb{<namespace:pkgname>}, is a child of
 the imports environment, which has the name attribute
 \code{imports:pkgname}. It is in turn is a child of
-\code{<namespace:base>}, which is a child of the global environment.
+\verb{<namespace:base>}, which is a child of the global environment.
 (There is also a copy of the base namespace that is a child of the empty
 environment.)
 
-The package environment \code{<package:pkgname>} is an ancestor of the
+The package environment \verb{<package:pkgname>} is an ancestor of the
 global environment. Normally when loading a package, the objects
 listed as exports in the NAMESPACE file are copied from the namespace
 to the package environment. However, \code{load_all} by default will

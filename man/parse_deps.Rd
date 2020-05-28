@@ -18,8 +18,8 @@ it will be stored as NA.
 Parse package dependency strings.
 }
 \examples{
-parse_deps("httr (< 2.1),\\nRCurl (>= 3)")
+parse_deps("httr (< 2.1),\nRCurl (>= 3)")
 # only package dependencies are returned
-parse_deps("utils (== 2.12.1),\\ntools,\\nR (>= 2.10),\\nmemoise")
+parse_deps("utils (== 2.12.1),\ntools,\nR (>= 2.10),\nmemoise")
 }
 \keyword{internal}

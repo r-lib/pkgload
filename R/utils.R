@@ -25,10 +25,9 @@ is_installed <- function(package, version = 0) {
 #'
 #' @param package The name of the suggested package
 #' @param version The version of the package
-#' @param compare The comparison operator to use to check the version
+#' @param compare The comparison operator used to check the version
 #' @keywords internal
 #' @export
-#' @keywords internal
 check_suggested <- function(package, version = NULL, compare = NA, path = inst("pkgload")) {
 
   if (is.null(version)) {

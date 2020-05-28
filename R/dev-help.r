@@ -98,7 +98,6 @@ print.dev_topic <- function(x, ...) {
 #' `package` is specified, then it will search for help in devtools-loaded
 #' packages or regular packages, as appropriate.
 #'
-#' @inheritParams utils::help utils::`?`
 #' @param topic A name or character string specifying the help topic.
 #' @param package A name or character string specifying the package in which
 #'   to search for the help topic. If NULL, search all packages.

@@ -6,6 +6,8 @@
 \title{Replacement version of system.file}
 \usage{
 # system.file(..., package = "base", lib.loc = NULL, mustWork = FALSE)
+
+system.file(..., package = "base", lib.loc = NULL, mustWork = FALSE)
 }
 \arguments{
 \item{...}{character vectors, specifying subdirectory and file(s)

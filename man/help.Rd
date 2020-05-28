@@ -20,17 +20,17 @@ to search for the help topic. If NULL, search all packages.}
 
 \item{...}{Additional arguments to pass to \code{\link[utils:help]{utils::help()}}.}
 
-\item{e1}{First argument to pass along to \code{utils::}?``.}
+\item{e1}{First argument to pass along to \verb{utils::}?``.}
 
-\item{e2}{Second argument to pass along to \code{utils::}?``.}
+\item{e2}{Second argument to pass along to \verb{utils::}?``.}
 }
 \description{
-The \code{?} and \code{help} functions are replacements for functions of the
+The \verb{?} and \code{help} functions are replacements for functions of the
 same name in the utils package. They are made available when a package is
 loaded with \code{\link[=load_all]{load_all()}}.
 }
 \details{
-The \code{?} function is a replacement for \code{\link[utils:?]{utils::?()}} from the
+The \verb{?} function is a replacement for \code{\link[utils:?]{utils::?()}} from the
 utils package. It will search for help in devtools-loaded packages first,
 then in regular packages.
 

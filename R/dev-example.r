@@ -3,7 +3,6 @@
 #' `dev_example` is a replacement for `example`. `run_example`
 #' is a low-level function that takes a path to an Rd file.
 #'
-#' @inheritParams run_examples
 #' @param topic Name or topic (or name of Rd) file to run examples for
 #' @param quiet If `TRUE`, does not echo code to console.
 #' @export
