@@ -108,7 +108,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   package <- pkg_name(path)
   description <- pkg_desc(path)
 
-  if (!quiet) message("Loading ", package)
+  if (!quiet) cli::cli_alert_info("Loading {.pkg {package}}")
 
   if (package == "compiler") {
     # Disable JIT while loading the compiler package to avoid interference
@@ -136,7 +136,8 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
   if (length(check) > 0) {
     msg <- utils::capture.output(("tools" %:::% "print.check_package_description")(check))
-    message("Invalid DESCRIPTION:\n", paste(msg, collapse = "\n"))
+    cli::cli_alert_danger("Invalid DESCRIPTION")
+    cli::cli_code(msg)
   }
 
   ## The unload() has to come before unload_dll(), for packages with

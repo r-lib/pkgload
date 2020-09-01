@@ -54,7 +54,7 @@ load_rd_macros <- function(dir) {
 
 #' @export
 print.dev_topic <- function(x, ...) {
-  message("Rendering development documentation for '", x$topic, "'")
+  cli::cli_alert_info("Rendering development documentation for {.val {x$topic}}")
 
   type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
