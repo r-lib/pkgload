@@ -167,11 +167,11 @@ help in devtools-loaded packages first, then in regular packages. If
 packages or regular packages, as appropriate.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># This would load devtools and look at the help for load_all, if currently</span>
 <span class='co'># in the devtools source directory.</span>
 <span class='fu'><a href='load_all.html'>load_all</a></span>()
-?<span class='no'>load_all</span>
+<span class='op'>?</span><span class='kw'>load_all</span>
 <span class='fu'>help</span>(<span class='st'>"load_all"</span>)
 }
 
@@ -179,22 +179,23 @@ packages or regular packages, as appropriate.</p>
 <span class='fu'>help</span>(<span class='st'>"help"</span>, <span class='st'>"utils"</span>)
 <span class='fu'>help</span>(<span class='st'>"?"</span>, <span class='st'>"utils"</span>)
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Examples demonstrating the multiple ways of supplying arguments</span>
 <span class='co'># NB: you can't do pkg &lt;- "ggplot2"; help("ggplot2", pkg)</span>
-<span class='fu'>help</span>(<span class='no'>lm</span>)
-<span class='fu'>help</span>(<span class='no'>lm</span>, <span class='no'>stats</span>)
-<span class='fu'>help</span>(<span class='no'>lm</span>, <span class='st'>'stats'</span>)
+<span class='fu'>help</span>(<span class='kw'>lm</span>)
+<span class='fu'>help</span>(<span class='kw'>lm</span>, <span class='kw'>stats</span>)
+<span class='fu'>help</span>(<span class='kw'>lm</span>, <span class='st'>'stats'</span>)
 <span class='fu'>help</span>(<span class='st'>'lm'</span>)
-<span class='fu'>help</span>(<span class='st'>'lm'</span>, <span class='no'>stats</span>)
+<span class='fu'>help</span>(<span class='st'>'lm'</span>, <span class='kw'>stats</span>)
 <span class='fu'>help</span>(<span class='st'>'lm'</span>, <span class='st'>'stats'</span>)
-<span class='fu'>help</span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='no'>stats</span>)
-<span class='fu'>help</span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'stats'</span>)
-<span class='no'>topic</span> <span class='kw'>&lt;-</span> <span class='st'>"lm"</span>
-<span class='fu'>help</span>(<span class='no'>topic</span>)
-<span class='fu'>help</span>(<span class='no'>topic</span>, <span class='no'>stats</span>)
-<span class='fu'>help</span>(<span class='no'>topic</span>, <span class='st'>'stats'</span>)
-}</div></pre>
+<span class='fu'>help</span>(package = <span class='kw'>stats</span>)
+<span class='fu'>help</span>(package = <span class='st'>'stats'</span>)
+<span class='kw'>topic</span> <span class='op'>&lt;-</span> <span class='st'>"lm"</span>
+<span class='fu'>help</span>(<span class='kw'>topic</span>)
+<span class='fu'>help</span>(<span class='kw'>topic</span>, <span class='kw'>stats</span>)
+<span class='fu'>help</span>(<span class='kw'>topic</span>, <span class='st'>'stats'</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

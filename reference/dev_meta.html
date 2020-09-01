@@ -120,7 +120,7 @@
     <p>If the package was not loaded with devtools, returns <code>NULL</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dev_meta</span>(<span class='no'>name</span>)</pre>
+    <pre class="usage"><span class='fu'>dev_meta</span>(<span class='kw'>name</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -133,18 +133,20 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dev_meta</span>(<span class='st'>"stats"</span>) <span class='co'># NULL</span></div><div class='output co'>#&gt; NULL</div><div class='input'>
-<span class='kw'>if</span> (<span class='fu'><a href='has_tests.html'>has_tests</a></span>()) {
+    <pre class="examples"><div class='input'><span class='fu'>dev_meta</span>(<span class='st'>"stats"</span>) <span class='co'># NULL</span>
+</div><div class='output co'>#&gt; NULL</div><div class='input'>
+<span class='co'>if</span> (<span class='fu'><a href='has_tests.html'>has_tests</a></span>()) {
 <span class='co'># Load the test package in directory "testLoadHooks"</span>
 <span class='fu'><a href='load_all.html'>load_all</a></span>(<span class='fu'><a href='pkgtest.html'>pkgtest</a></span>(<span class='st'>"testLoadHooks"</span>))
 
 <span class='co'># Get metdata for the package</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>dev_meta</span>(<span class='st'>"testLoadHooks"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>(<span class='no'>x</span>)
+<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>dev_meta</span>(<span class='st'>"testLoadHooks"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span>(<span class='kw'>x</span>)
 
 <span class='co'># Clean up.</span>
 <span class='fu'><a href='unload.html'>unload</a></span>(<span class='st'>"testLoadHooks"</span>)
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

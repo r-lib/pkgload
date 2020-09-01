@@ -136,7 +136,7 @@ fail in other cases. If you do encounter a failure, please file a bug report
 at <a href='http://github.com/r-lib/pkgload/issues'>http://github.com/r-lib/pkgload/issues</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>unload</span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='fu'><a href='packages.html'>pkg_name</a></span>(), <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>unload</span>(package = <span class='fu'><a href='packages.html'>pkg_name</a></span>(), quiet = <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -153,17 +153,18 @@ at <a href='http://github.com/r-lib/pkgload/issues'>http://github.com/r-lib/pkgl
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Unload package that is in current directory</span>
 <span class='fu'>unload</span>()
 
 <span class='co'># Unload package that is in ./ggplot2/</span>
 <span class='fu'>unload</span>(<span class='fu'><a href='packages.html'>pkg_name</a></span>(<span class='st'>"ggplot2/"</span>))
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>ggplot2</span>)
 <span class='co'># unload the ggplot2 package directly by name</span>
 <span class='fu'>unload</span>(<span class='st'>"ggplot2"</span>)
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

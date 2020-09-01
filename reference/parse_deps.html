@@ -120,7 +120,7 @@
     <p>Parse package dependency strings.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>parse_deps</span>(<span class='no'>string</span>)</pre>
+    <pre class="usage"><span class='fu'>parse_deps</span>(<span class='kw'>string</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,10 +138,12 @@ and <code>version</code> package versions. If version is not specified,
 it will be stored as NA.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>parse_deps</span>(<span class='st'>"httr (&lt; 2.1),\nRCurl (&gt;= 3)"</span>)</div><div class='output co'>#&gt;    name compare version
+    <pre class="examples"><div class='input'><span class='fu'>parse_deps</span>(<span class='st'>"httr (&lt; 2.1),\nRCurl (&gt;= 3)"</span>)
+</div><div class='output co'>#&gt;    name compare version
 #&gt; 1  httr       &lt;     2.1
 #&gt; 2 RCurl      &gt;=       3</div><div class='input'><span class='co'># only package dependencies are returned</span>
-<span class='fu'>parse_deps</span>(<span class='st'>"utils (== 2.12.1),\ntools,\nR (&gt;= 2.10),\nmemoise"</span>)</div><div class='output co'>#&gt;      name compare version
+<span class='fu'>parse_deps</span>(<span class='st'>"utils (== 2.12.1),\ntools,\nR (&gt;= 2.10),\nmemoise"</span>)
+</div><div class='output co'>#&gt;      name compare version
 #&gt; 1   utils      ==  2.12.1
 #&gt; 2   tools    &lt;NA&gt;    &lt;NA&gt;
 #&gt; 4 memoise    &lt;NA&gt;    &lt;NA&gt;</div></pre>

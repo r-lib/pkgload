@@ -127,13 +127,13 @@ are parsed to create to index once, then cached. Use
     </div>
 
     <pre class="usage"><span class='fu'>dev_help</span>(
-  <span class='no'>topic</span>,
-  <span class='kw'>dev_packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>stage</span> <span class='kw'>=</span> <span class='st'>"render"</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"help_type"</span>)
+  <span class='kw'>topic</span>,
+  dev_packages = <span class='kw'>NULL</span>,
+  stage = <span class='st'>"render"</span>,
+  type = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"help_type"</span>)
 )
 
-<span class='fu'>dev_topic_index_reset</span>(<span class='no'>pkg_name</span>)</pre>
+<span class='fu'>dev_topic_index_reset</span>(<span class='kw'>pkg_name</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,13 +166,14 @@ your default documentation type.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ggplot2"</span>)
 <span class='fu'><a href='help.html'>help</a></span>(<span class='st'>"ggplot"</span>) <span class='co'># loads installed documentation for ggplot</span>
 
 <span class='fu'><a href='load_all.html'>load_all</a></span>(<span class='st'>"ggplot2"</span>)
 <span class='fu'>dev_help</span>(<span class='st'>"ggplot"</span>) <span class='co'># loads development documentation for ggplot</span>
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
