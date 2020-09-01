@@ -72,9 +72,8 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   # because things can be in a weird state.
   if (!is.null(.getNamespace(package))) {
     if (!quiet) {
-      message("unloadNamespace(\"", package,
-        "\") not successful, probably because another loaded package depends on it. ",
-        "Forcing unload. If you encounter problems, please restart R.")
+      cli::cli_alert_danger("unloadNamespace(\"{package}\") unsuccessful, probably because another loaded package depends on it")
+      cli::cli_alert_info("Forcing unload. If you encounter problems, please restart R.")
     }
     unregister_namespace(package)
   }

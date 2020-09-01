@@ -54,15 +54,14 @@ find_code <- function(path = ".") {
     collate <- file.path(path_r, collate)
 
     missing <- setdiff(collate, r_files)
-    files <- function(x) paste(basename(x), collapse = ", ")
     if (length(missing) > 0) {
-      message("Skipping missing files: ", files(missing))
+      cli::cli_alert_warning("Skipping missing files: {.file {missing}}")
     }
     collate <- setdiff(collate, missing)
 
     extra <- setdiff(r_files, collate)
     if (length(extra) > 0) {
-      message("Adding files missing in collate: ", files(extra))
+      cli::cli_alert_warning("Adding files missing in collate: {.file {extra}}")
     }
 
     r_files <- union(collate, r_files)
