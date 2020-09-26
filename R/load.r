@@ -341,8 +341,8 @@ propagate_ns <- function(package) {
       imp <- imports_env(ns)
       lapply(ls(imp, all.names = TRUE), unlockBinding, imp)
 
-      unlock_environment(env)
-      unlock_environment(imp)
+      env_unlock(env)
+      env_unlock(imp)
       update_imports(ns)
       lockEnvironment(env)
       lockEnvironment(imp)
