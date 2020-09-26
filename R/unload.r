@@ -52,29 +52,33 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   # S4 classes that were created by the package need to be removed in a special way.
   remove_s4_classes(package)
 
-  if (package %in% loadedNamespaces()) {
-    # unloadNamespace will throw an error if it has trouble unloading.
-    # This can happen when there's another package that depends on the
-    # namespace.
-    # unloadNamespace will also detach the package if it's attached.
-    #
-    # unloadNamespace calls onUnload hook and .onUnload
-    try(unloadNamespace(package), silent = TRUE)
-
-  } else {
+  if (!package %in% loadedNamespaces()) {
     stop("Package ", package, " not found in loaded packages or namespaces")
   }
 
-  # Sometimes the namespace won't unload with detach(), like when there's
-  # another package that depends on it. If it's still around, force it
-  # to go away.
-  # loadedNamespaces() and unloadNamespace() often don't work here
-  # because things can be in a weird state.
-  if (!is.null(.getNamespace(package))) {
+  # unloadNamespace calls onUnload hook and .onUnload, and detaches the
+  # package if it's attached. It will fail if a loaded package needs it.
+  unloaded <- tryCatch({
+    unloadNamespace(package)
+    TRUE
+  }, error = function(e) FALSE)
+
+  if (!unloaded) {
     if (!quiet) {
-      cli::cli_alert_danger("unloadNamespace(\"{package}\") unsuccessful, probably because another loaded package depends on it")
+      cli::cli_alert_danger("unloadNamespace(\"{package}\") failed because another loaded package needs it")
       cli::cli_alert_info("Forcing unload. If you encounter problems, please restart R.")
     }
+
+    # unloadNamespace() failed before we get to the detach, so need to
+    # manually detach
+    pkgenv <- pkg_env(package)
+    if (is_attached(package)) {
+      pos <- which(pkg_env_name(package) == search())
+      suppressWarnings(detach(pos = pos, force = TRUE))
+    }
+
+    # Can't use loadedNamespaces() and unloadNamespace() here because
+    # things can be in a weird state.
     unregister_namespace(package)
   }
 
