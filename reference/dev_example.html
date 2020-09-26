@@ -80,12 +80,6 @@ is a low-level function that takes a path to an Rd file." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -122,18 +116,18 @@ is a low-level function that takes a path to an Rd file." />
 is a low-level function that takes a path to an Rd file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dev_example</span>(<span class='kw'>topic</span>, quiet = <span class='fl'>FALSE</span>)
+    <pre class="usage"><span class='fu'>dev_example</span><span class='op'>(</span><span class='va'>topic</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>run_example</span>(
-  <span class='kw'>path</span>,
-  run_donttest = <span class='fl'>FALSE</span>,
-  run_dontrun = <span class='fl'>FALSE</span>,
-  env = <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span>(parent = <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span>()),
-  quiet = <span class='fl'>FALSE</span>,
-  macros = <span class='kw'>NULL</span>,
-  <span class='kw'>run</span>,
-  <span class='kw'>test</span>
-)</pre>
+<span class='fu'>run_example</span><span class='op'>(</span>
+  <span class='va'>path</span>,
+  run_donttest <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  run_dontrun <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  env <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>new.env</a></span><span class='op'>(</span>parent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>globalenv</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  macros <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>run</span>,
+  <span class='va'>test</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,14 +171,14 @@ out.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Runs installed example:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ggplot2"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span>(<span class='st'>"ggplot"</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"ggplot2"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='st'>"ggplot"</span><span class='op'>)</span>
 
 <span class='co'># Runs develoment example:</span>
-<span class='fu'>dev_example</span>(<span class='st'>"ggplot"</span>)
-}
+<span class='fu'>dev_example</span><span class='op'>(</span><span class='st'>"ggplot"</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -201,7 +195,7 @@ out.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

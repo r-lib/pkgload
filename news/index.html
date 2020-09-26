@@ -78,12 +78,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -167,7 +161,7 @@
 <li><p><code><a href="../reference/load_code.html">load_code()</a></code>, <code><a href="../reference/load_data.html">load_data()</a></code>, <code><a href="../reference/load_dll.html">load_dll()</a></code>, <code><a href="../reference/load_all.html">load_all()</a></code>, <code><a href="../reference/parse_ns_file.html">parse_ns_file()</a></code> all now take an explicit path rather than a path or a <code>package</code> object.</p></li>
 <li><p><code><a href="../reference/imports_env.html">imports_env()</a></code>, <code><a href="../reference/ns_env.html">ns_env()</a></code>, <code><a href="../reference/pkg_env.html">pkg_env()</a></code> and <code><a href="../reference/unload.html">unload()</a></code> now take a package name rather than a path or a <code>package</code> object.</p></li>
 <li><p><code><a href="../reference/dev_example.html">run_example()</a></code> now works on R 3.1.</p></li>
-<li><p><code><a href="../reference/unload.html">unload()</a></code> now unloads S4 classes for packages loaded with <code>library()</code> as well as <code><a href="../reference/load_all.html">load_all()</a></code> (<a href='https://github.com/r-lib/pkgload/issues/46'>#46</a>).</p></li>
+<li><p><code><a href="../reference/unload.html">unload()</a></code> now unloads S4 classes for packages loaded with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> as well as <code><a href="../reference/load_all.html">load_all()</a></code> (<a href='https://github.com/r-lib/pkgload/issues/46'>#46</a>).</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> gains a <code>helpers</code> option to specify whether or not to source testthat helpers. (<a href='https://github.com/pitakakariki'>@pitakakariki</a> devtools <a href='https://github.com/r-lib/pkgload/issues/1202'>#1202</a>)</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> now sources the testthat helpers in the namespace environment rather than the package environment (<a href='https://github.com/r-lib/pkgload/issues/40'>#40</a>).</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> now sets the <code>NOT_CRAN</code> environment variable when it sources testthat helpers. It also sets <code>DEVTOOLS_LOAD</code> to “true” so that you can check whether they are run during package loading.</p></li>
@@ -197,7 +191,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

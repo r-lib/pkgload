@@ -82,12 +82,6 @@ dev_topic_index_reset to clear that index." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -126,14 +120,14 @@ are parsed to create to index once, then cached. Use
 <code>dev_topic_index_reset</code> to clear that index.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dev_help</span>(
-  <span class='kw'>topic</span>,
-  dev_packages = <span class='kw'>NULL</span>,
-  stage = <span class='st'>"render"</span>,
-  type = <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"help_type"</span>)
-)
+    <pre class="usage"><span class='fu'>dev_help</span><span class='op'>(</span>
+  <span class='va'>topic</span>,
+  dev_packages <span class='op'>=</span> <span class='cn'>NULL</span>,
+  stage <span class='op'>=</span> <span class='st'>"render"</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"help_type"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>dev_topic_index_reset</span>(<span class='kw'>pkg_name</span>)</pre>
+<span class='fu'>dev_topic_index_reset</span><span class='op'>(</span><span class='va'>pkg_name</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,13 +160,13 @@ your default documentation type.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>"ggplot2"</span>)
-<span class='fu'><a href='help.html'>help</a></span>(<span class='st'>"ggplot"</span>) <span class='co'># loads installed documentation for ggplot</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'>"ggplot2"</span><span class='op'>)</span>
+<span class='fu'><a href='help.html'>help</a></span><span class='op'>(</span><span class='st'>"ggplot"</span><span class='op'>)</span> <span class='co'># loads installed documentation for ggplot</span>
 
-<span class='fu'><a href='load_all.html'>load_all</a></span>(<span class='st'>"ggplot2"</span>)
-<span class='fu'>dev_help</span>(<span class='st'>"ggplot"</span>) <span class='co'># loads development documentation for ggplot</span>
-}
+<span class='fu'><a href='load_all.html'>load_all</a></span><span class='op'>(</span><span class='st'>"ggplot2"</span><span class='op'>)</span>
+<span class='fu'>dev_help</span><span class='op'>(</span><span class='st'>"ggplot"</span><span class='op'>)</span> <span class='co'># loads development documentation for ggplot</span>
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -189,7 +183,7 @@ your default documentation type.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
