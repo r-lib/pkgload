@@ -192,7 +192,7 @@ register_s3 <- function(path = ".") {
   nsInfo <- parse_ns_file(path)
 
   # Adapted from loadNamespace
-  registerS3methods(nsInfo$S3methods, package, ns_env(package))
+  try(registerS3methods(nsInfo$S3methods, package, ns_env(package))
 }
 
 
