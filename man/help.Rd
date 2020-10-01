@@ -30,7 +30,7 @@ same name in the utils package. They are made available when a package is
 loaded with \code{\link[=load_all]{load_all()}}.
 }
 \details{
-The \verb{?} function is a replacement for \code{\link[utils:?]{utils::?()}} from the
+The \verb{?} function is a replacement for \code{\link[utils:Question]{utils::?()}} from the
 utils package. It will search for help in devtools-loaded packages first,
 then in regular packages.
 

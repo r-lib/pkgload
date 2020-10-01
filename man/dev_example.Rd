@@ -34,7 +34,7 @@ out.}
 
 \item{macros}{Custom macros to use to parse the \code{.Rd} file. See the
 \code{macros} argument of \code{\link[tools:parse_Rd]{tools::parse_Rd()}}. If \code{NULL}, then the
-\code{\link[tools:Rd2ex]{tools::Rd2ex()}} (and \code{\link[tools:parse_Rd]{tools::parse_Rd()}}) default is used.}
+\code{\link[tools:Rd2HTML]{tools::Rd2ex()}} (and \code{\link[tools:parse_Rd]{tools::parse_Rd()}}) default is used.}
 
 \item{run, test}{Deprecated, see \code{run_dontrun} and \code{run_donttest} above.}
 }
