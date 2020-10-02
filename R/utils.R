@@ -182,5 +182,5 @@ single_quote <- function(x) {
 }
 
 unlock_environment <- function(x) {
-  .Call(unlock_environment_, x)
+  get(".Call")("rlang_env_unlock", x, PACKAGE = "rlang")
 }

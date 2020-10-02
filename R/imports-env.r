@@ -140,6 +140,3 @@ onload_assign("update_imports", {
 
   update_imports
 })
-
-#' @useDynLib pkgload, .registration = TRUE
-NULL
