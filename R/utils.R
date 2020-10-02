@@ -182,6 +182,5 @@ single_quote <- function(x) {
 }
 
 unlock_environment <- function(x) {
-  call <- .Call # confuse R CMD check
-  call("rlang_env_unlock", x, PACKAGE = "rlang")
+  get(".Call")("rlang_env_unlock", x, PACKAGE = "rlang")
 }
