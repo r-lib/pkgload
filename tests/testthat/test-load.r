@@ -33,3 +33,27 @@ test_that("warn_if_conflicts works", {
     expect_warning(warn_if_conflicts("pkg", c("foo"), c("foo", "bar")), "foo().*masks.*pkg::foo()")
   )
 })
+
+test_that("loading multiple times doesn't force bindings", {
+  forced <- FALSE
+
+  withCallingHandlers(
+    forced = function(...) forced <<- TRUE, {
+      load_all("testLoadLazy")
+      expect_false(forced)
+
+      load_all("testLoadLazy")
+      expect_false(forced)
+    }
+  )
+})
+
+test_that("reloading a package unloads deleted S3 methods", {
+  x <- structure(list(), class = "pkgload_foobar")
+
+  load_all("testS3removed")
+  expect_equal(as.character(x), "registered")
+
+  load_all("testS3removed2")
+  expect_equal(as.character(x), character())
+})

@@ -1,5 +1,16 @@
 # pkgload (development version)
 
+* `load_all()` no longer forces all bindings of a namespace to avoid
+  lazy-load errors. Instead, it removes exported S3 methods from the
+  relevant tables.
+
+  - This improves the loading behaviour with packages that define
+    objects in their namespaces lazily (e.g. with `delayedAssign()`).
+
+  - This also makes `load_all()` more predictable after a method has
+    been removed from the package. It is now actually removed from the
+    generic table. It would previously linger until R was restarted.
+
 # pkgload 1.1.0
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
