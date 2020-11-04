@@ -1,0 +1,7 @@
+Package: testS3removed
+Title: Test package with S3 method removed (after)
+License: MIT
+Author: Lionel Henry <lionel@rstudio.com>
+Maintainer: Lionel Henry <lionel@rstudio.com>
+Version: 1.0
+RoxygenNote: 7.1.1

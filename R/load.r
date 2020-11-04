@@ -119,15 +119,10 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  # Forcing all of the promises for the loaded namespace now will avoid lazy-load
-  # errors when the new package is loaded overtop the old one.
-  #
-  # Reloading devtools is a special case. Normally, objects in the
-  # namespace become inaccessible if the namespace is unloaded before the
-  # object has been accessed. Instead we force the object so they will still be
-  # accessible.
+  # Unloading S3 methods manually will avoid lazy-load
+  # errors when the new package is loaded overtop the old one
   if (is_loaded(package)) {
-    eapply(ns_env(package), force, all.names = TRUE)
+    s3_unload(package)
   }
 
   # Check description file is ok

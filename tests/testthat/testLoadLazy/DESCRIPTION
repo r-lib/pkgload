@@ -1,0 +1,6 @@
+Package: testLoadLazy
+Title: Test package with delayed bindings
+License: MIT
+Author: Lionel Henry <lionel@rstudio.com>
+Maintainer: Lionel Henry <lionel@rstudio.com>
+Version: 1.0

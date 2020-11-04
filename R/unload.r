@@ -40,8 +40,8 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
     }
   }
 
-  # This is a hack to work around unloading devtools itself. The unloading
-  # process normally makes other devtools functions inaccessible,
+  # This is a hack to work around unloading pkgload itself. The unloading
+  # process normally makes other pkgload functions inaccessible,
   # resulting in "Error in unload(pkg) : internal error -3 in R_decompress1".
   # If we simply force them first, then they will remain available for use
   # later.
@@ -115,4 +115,31 @@ unload_dll <- function(package) {
   .dynLibs(libs[!(libs %in% pkglibs)])
 
   invisible()
+}
+
+s3_unload <- function(package) {
+  ns <- ns_env(package)
+  ns_defs <- parse_ns_file(system.file(package = package))
+  methods <- ns_defs$S3methods[, 1:2, drop = FALSE]
+
+  for (i in seq_len(nrow(methods))) {
+    method <- methods[i, , drop = FALSE]
+
+    generic <- env_get(ns, method[[1]], inherit = TRUE, default = NULL)
+    if (is_null(generic)) {
+      next
+    }
+
+    generic_ns <- topenv(fn_env(generic))
+    if (!is_namespace(generic_ns)) {
+      next
+    }
+
+    table <- generic_ns$.__S3MethodsTable__.
+    if (!is_environment(table)) {
+      next
+    }
+
+    table[[paste0(method, collapse = ".")]] <- NULL
+  }
 }
