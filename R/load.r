@@ -129,23 +129,6 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     cli::cli_code(msg)
   }
 
-  ## The unload() has to come before unload_dll(), for packages with
-  ## compiled code, becauase they might crash of objects still use the
-  ## DLL's memory.
-  if (reset) {
-    clear_cache()
-    if (is_loaded(package)) unload(package, quiet = quiet)
-  }
-
-  if (is_loaded(package) && is.null(dev_meta(package))) {
-    # If installed version of package loaded, unload it
-    # (and also the DLLs)
-    unload(package, quiet = quiet)
-  } else {
-    # Unload only DLLs
-    unload_dll(package)
-  }
-
   # Compile dll if requested
   if (missing(compile) && !missing(recompile)) {
     compile <- if (isTRUE(recompile)) TRUE else NA
@@ -161,16 +144,16 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     stop("`compile` must be a logical vector of length 1", call. = FALSE)
   }
 
-  # If installed version of package loaded, unload it, again
-  # (needed for dependencies of pkgbuild)
-  if (is_loaded(package) && is.null(dev_meta(package))) {
-    unload(package, quiet = quiet)
+  if (reset) {
+    clear_cache()
+
+    # Remove package from known namespaces. We don't unload it to allow
+    # safe usage of dangling references.
+    if (is_loaded(package)) {
+      unregister_namespace(package)
+    }
+    create_ns_env(path)
   }
-
-  # Set up the namespace environment ----------------------------------
-  # This mimics the procedure in loadNamespace
-
-  if (!is_loaded(package)) create_ns_env(path)
 
   out <- list(env = ns_env(package))
 
