@@ -35,6 +35,10 @@ onload_assign("load_dll", {
     !!for_loop
     addNamespaceDynLibs(env, nsInfo$dynlibs)
 
+    # Delete the temporary SO when the namespace gets garbage collected
+    dll_path <- dlls[[package]][["path"]]
+    new_weakref(env, finalizer = ns_finalizer(dll_path))
+
     invisible(dlls)
   }
 
@@ -43,6 +47,19 @@ onload_assign("load_dll", {
 
   load_dll
 })
+
+ns_finalizer <- function(path) {
+  force(path)
+  function(...) {
+    # Clean up the temporary .so file.
+    unlink(path)
+
+    # Remove the .so from the cached list of loaded modules
+    loaded <- .dynLibs()
+    loaded <- Filter(function(x) !is_string(x[["path"]], path), loaded)
+    .dynLibs(loaded)
+  }
+}
 
 # Return a list of currently loaded DLLs from the package
 loaded_dlls <- function(package) {
@@ -59,15 +76,33 @@ loaded_dlls <- function(package) {
 library.dynam2 <- function(path = ".", lib = "") {
   path <- pkg_path(path)
 
-  dllname <- paste(lib, .Platform$dynlib.ext, sep = "")
+  dyn_ext <- .Platform$dynlib.ext
+  dllname <- paste(lib, dyn_ext, sep = "")
   dllfile <- package_file("src", dllname, path = path)
 
-  if (!file.exists(dllfile))
+  if (!file.exists(dllfile)) {
     return(invisible())
+  }
+
+  pkg_name <- pkg_name(path)
+
+  # Copy the .so to a temporary file with a unique name. This way we
+  # may have different versions of the .so loaded, in case references
+  # to the previously loaded .so linger in the session.
+  dll_copy_file <- tempfile(pkg_name, fileext = dyn_ext)
+  file.copy(dllfile, dll_copy_file)
 
   # # The loading and registering of the dll is similar to how it's done
   # # in library.dynam.
-  dllinfo <- dyn.load(dllfile)
+  dllinfo <- dyn.load(dll_copy_file)
+
+  # Because we have loaded a .so with a randomly generated name,
+  # `dyn.load()` was not able to find the init function. We have to
+  # manually invoke it.
+  ptr <- c_find_fn_pointer(dllinfo[["name"]], paste0("R_init_", pkg_name))
+  if (!is_null(ptr)) {
+    c_exec(ptr, list(dllinfo[["info"]]))
+  }
 
   # Register dll info so it can be unloaded with library.dynam.unload
   .dynLibs(c(.dynLibs(), list(dllinfo)))
