@@ -160,8 +160,6 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   # Load dependencies
   load_depends(path)
   load_imports(path)
-  # Add shim objects to imports environment
-  insert_imports_shims(package)
 
   out$data <- load_data(path)
 
@@ -172,6 +170,10 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   } else {
     out$dll <- load_dll(path)
   }
+
+  # Add shim objects to imports environment
+  so_name <- out$dll[[package]][["name"]]
+  insert_imports_shims(package, so_name = so_name)
 
   # attach testthat to the search path
   if (isTRUE(attach_testthat) && package != "testthat") {
