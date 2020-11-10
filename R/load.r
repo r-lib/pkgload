@@ -153,6 +153,9 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
       unload_pkg_env(package)
       unregister_namespace(package)
     }
+  }
+
+  if (!is_loaded(package)) {
     create_ns_env(path)
   }
 
