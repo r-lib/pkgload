@@ -84,25 +84,19 @@ library.dynam2 <- function(path = ".", lib = "") {
     return(invisible())
   }
 
-  pkg_name <- pkg_name(path)
-
-  # Copy the .so to a temporary file with a unique name. This way we
-  # may have different versions of the .so loaded, in case references
-  # to the previously loaded .so linger in the session.
-  dll_copy_file <- tempfile(pkg_name, fileext = dyn_ext)
+  # Copy the .so to a temporary directory with a unique name. This way
+  # we may have different versions of the .so loaded, in case
+  # references to the previously loaded .so linger in the session.
+  # The .so should have the package name so that R can find the
+  # `R_init_` function by itself.
+  dll_copy_dir <- tempfile("pkgload")
+  dll_copy_file <- file.path(dll_copy_dir, paste0(pkg_name(path), dyn_ext))
+  dir.create(dll_copy_dir)
   file.copy(dllfile, dll_copy_file)
 
   # # The loading and registering of the dll is similar to how it's done
   # # in library.dynam.
   dllinfo <- dyn.load(dll_copy_file)
-
-  # Because we have loaded a .so with a randomly generated name,
-  # `dyn.load()` was not able to find the init function. We have to
-  # manually invoke it.
-  ptr <- c_find_fn_pointer(dllinfo[["name"]], paste0("R_init_", pkg_name))
-  if (!is_null(ptr)) {
-    c_exec(ptr, list(dllinfo[["info"]]))
-  }
 
   # Register dll info so it can be unloaded with library.dynam.unload
   .dynLibs(c(.dynLibs(), list(dllinfo)))

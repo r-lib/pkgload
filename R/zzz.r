@@ -1,12 +1,3 @@
-
-# These functions are copied from rlang into the pkgload namespace at
-# load time because they are used during the dll loading routine.
-# Copying them here makes sure we are not using a partially loaded
-# rlang while loading rlang with pkgload.
-c_find_fn_pointer <- function(...) NULL
-c_exec <- function(...) NULL
-new_weakref <- function(...) NULL
-
 .onLoad <- function(libname, pkgname) {
   # These withr functions are used in load_all() so need to exist in the
   # devtools namespace so the withr namespace is not prematurely loaded by `::`
@@ -31,10 +22,6 @@ new_weakref <- function(...) NULL
   for (i in seq_along(nms)) {
     assign(nms[[i]], eval(funs[[i]], envir = env), envir = env)
   }
-
-  c_find_fn_pointer <<- rlang:::c_find_fn_pointer
-  c_exec <<- rlang:::c_exec
-  new_weakref <<- rlang:::new_weakref
 
   invisible()
 }
