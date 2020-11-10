@@ -67,11 +67,7 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
 
     # unloadNamespace() failed before we get to the detach, so need to
     # manually detach
-    pkgenv <- pkg_env(package)
-    if (is_attached(package)) {
-      pos <- which(pkg_env_name(package) == search())
-      suppressWarnings(detach(pos = pos, force = TRUE))
-    }
+    unload_pkg_env(package)
 
     # Can't use loadedNamespaces() and unloadNamespace() here because
     # things can be in a weird state.
@@ -84,6 +80,13 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   # Do this after detach, so that packages that have an .onUnload function
   # which unloads DLLs (like MASS) won't try to unload the DLL twice.
   unload_dll(package)
+}
+
+unload_pkg_env <- function(package) {
+  if (is_attached(package)) {
+    pos <- which(pkg_env_name(package) == search())
+    suppressWarnings(detach(pos = pos, force = TRUE))
+  }
 }
 
 # This unloads dlls loaded by either library() or load_all()
