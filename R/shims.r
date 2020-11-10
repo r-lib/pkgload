@@ -1,11 +1,10 @@
 # Insert shim objects into a package's imports environment
 #
 # @param pkg A path or package object
-insert_imports_shims <- function(package, so_name) {
+insert_imports_shims <- function(package) {
   imp_env <- imports_env(package)
   imp_env$system.file <- shim_system.file
   imp_env$library.dynam.unload <- shim_library.dynam.unload
-  imp_env$.Call <- new_shim_dot_call(package, so_name)
 }
 
 # Create a new environment as the parent of global, with devtools versions of
@@ -112,25 +111,4 @@ shim_library.dynam.unload <- function(chname, libpath,
   # Should only reach this in the rare case that the devtools-loaded package is
   # trying to unload a different package's DLL.
   base::library.dynam.unload(chname, libpath, verbose, file.ext)
-}
-
-new_shim_dot_call <- function(pkg, so_name) {
-  force(pkg)
-  force(so_name)
-
-  # This shim changes the structure of the call stack. It is
-  # problematic with native routines that assume being called from
-  # their `.Call()` wrapper. We could make it a native routine and
-  # directly .Call() into it to avoid this.
-  function(.NAME, ..., PACKAGE = NULL) {
-    # Protect symbolic argument from early evaluation
-    args <- lapply(list(...), enquote)
-
-    # If `PACKAGE` is NULL it won't be assigned in the call, which is
-    # intended
-    call <- as.call(c(list(base::.Call, .NAME), args))
-    call$PACKAGE <- PACKAGE
-
-    eval_bare(call, env = caller_env())
-  }
 }
