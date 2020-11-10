@@ -49,12 +49,16 @@ load_imports <- function(path = ".") {
   deps <- description$get_deps()
   imports <- deps[deps$type == "Imports", ]
 
-  if (length(imports) == 0) return(invisible())
+  if (length(imports) == 0) {
+    return(invisible())
+  }
 
   # If we've already loaded imports, don't load again (until load_all
   # is run with reset=TRUE). This is to avoid warnings when running
   # process_imports()
-  if (length(ls(imports_env(package))) > 0) return(invisible(imports))
+  if (length(ls(envir = imports_env(package))) > 0) {
+    return(invisible(imports))
+  }
 
   res <- mapply(check_dep_version, imports$package, imports$version)
   abort_for_missing_packages(res, imports$package)
