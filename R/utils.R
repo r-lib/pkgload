@@ -180,7 +180,3 @@ last <- function(x) utils::tail(x, n = 1L)
 single_quote <- function(x) {
   encodeString(x, quote = "'")
 }
-
-unlock_environment <- function(x) {
-  get(".Call")("rlang_env_unlock", x, PACKAGE = "rlang")
-}
