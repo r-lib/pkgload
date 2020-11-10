@@ -1,5 +1,23 @@
 # pkgload (development version)
 
+* `load_all()` now preserves existing namespaces in working order. In
+  particular, it doesn't unload the package's shared library and keeps
+  it loaded instead. When reloading, a copy of the SO for the new
+  namespace is loaded from a temporary location. These temporary SOs
+  are only unloaded on GC and deleted from their temporary location
+  via a weak reference attached to the namespace.
+
+  This mechanism ensures that lingering references to the namespace
+  keep working as expected. Consequently the namespace
+  propagation routine that was added to pkgload as a workaround has
+  been removed.
+
+  Note that `.Call()` invokations that pass a string symbol rather
+  than a structured symbol may keep crashing, because R will look into
+  the most recently loaded SO of a given name. Since symbol
+  registration is now the norm, we don't expect this to cause much
+  trouble.
+
 * `load_all()` no longer forces all bindings of a namespace to avoid
   lazy-load errors. Instead, it removes exported S3 methods from the
   relevant tables.
