@@ -120,23 +120,3 @@ onload_assign("process_imports", {
 
   process_imports
 })
-
-onload_assign("update_imports", {
-  update_imports <- function(package) {
-    vI <- ("tools" %:::% ".split_dependencies")(utils::packageDescription(package)[["Imports"]])
-    nsInfo <- parse_ns_file(system.file("NAMESPACE", package = package))
-    ns <- ns_env(package)
-    lib.loc <- NULL
-
-    suppressWarnings({
-      !! load_namespace_for1()
-      !! load_namespace_for2()
-      !! load_namespace_for3()
-    })
-  }
-
-  update_imports <- expr_interp(update_imports)
-  fn_env(update_imports) <- rlang::ns_env("pkgload")
-
-  update_imports
-})
