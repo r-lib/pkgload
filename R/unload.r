@@ -40,15 +40,6 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
     }
   }
 
-  # This is a hack to work around unloading pkgload itself. The unloading
-  # process normally makes other pkgload functions inaccessible,
-  # resulting in "Error in unload(pkg) : internal error -3 in R_decompress1".
-  # If we simply force them first, then they will remain available for use
-  # later.
-  if (package == "pkgload") {
-    eapply(ns_env(package), force, all.names = TRUE)
-  }
-
   # Unloading S3 methods manually avoids lazy-load errors when the new
   # package is loaded overtop the old one. It also prevents removed
   # methods from staying registered.

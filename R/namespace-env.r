@@ -240,6 +240,15 @@ unregister_namespace <- function(name = NULL) {
   if (!(name %in% loadedNamespaces()))
     stop(name, " is not a registered namespace.")
 
+  # This is a hack to work around unloading pkgload itself. The unloading
+  # process normally makes other pkgload functions inaccessible,
+  # resulting in "Error in unload(pkg) : internal error -3 in R_decompress1".
+  # If we simply force them first, then they will remain available for use
+  # later. This also makes it possible to use `load_all()` on pkgload itself.
+  if (name == "pkgload") {
+    eapply(ns_env(name), force, all.names = TRUE)
+  }
+
   # Remove the item from the registry
   do.call(rm, args = list(name, envir = ns_registry()))
   invisible()
