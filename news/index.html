@@ -112,6 +112,15 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#pkgload-development-version" class="anchor"></a>pkgload (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>
+<p><code><a href="../reference/load_all.html">load_all()</a></code> no longer forces all bindings of a namespace to avoid lazy-load errors. Instead, it removes exported S3 methods from the relevant tables.</p>
+<ul>
+<li><p>This improves the loading behaviour with packages that define objects in their namespaces lazily (e.g. with <code><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign()</a></code>).</p></li>
+<li><p>This also makes <code><a href="../reference/load_all.html">load_all()</a></code> more predictable after a method has been removed from the package. It is now actually removed from the generic table. It would previously linger until R was restarted.</p></li>
+</ul>
+</li>
+</ul>
 </div>
     <div id="pkgload-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
