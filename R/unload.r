@@ -49,6 +49,11 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
     eapply(ns_env(package), force, all.names = TRUE)
   }
 
+  # Unloading S3 methods manually avoids lazy-load errors when the new
+  # package is loaded overtop the old one. It also prevents removed
+  # methods from staying registered.
+  s3_unregister(package)
+
   # S4 classes that were created by the package need to be removed in a special way.
   remove_s4_classes(package)
 
