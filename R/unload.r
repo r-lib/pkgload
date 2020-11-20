@@ -117,7 +117,7 @@ unload_dll <- function(package) {
   invisible()
 }
 
-s3_unload <- function(package) {
+s3_unregister <- function(package) {
   ns <- ns_env(package)
   ns_defs <- parse_ns_file(system.file(package = package))
   methods <- ns_defs$S3methods[, 1:2, drop = FALSE]
