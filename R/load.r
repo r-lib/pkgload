@@ -122,7 +122,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   # Unloading S3 methods manually will avoid lazy-load
   # errors when the new package is loaded overtop the old one
   if (is_loaded(package)) {
-    s3_unload(package)
+    s3_unregister(package)
   }
 
   # Check description file is ok
