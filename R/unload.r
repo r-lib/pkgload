@@ -140,6 +140,7 @@ s3_unload <- function(package) {
       next
     }
 
-    table[[paste0(method, collapse = ".")]] <- NULL
+    nm <- paste0(method, collapse = ".")
+    env_unbind(table, nm)
   }
 }
