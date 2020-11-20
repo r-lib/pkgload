@@ -119,12 +119,6 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  # Unloading S3 methods manually will avoid lazy-load
-  # errors when the new package is loaded overtop the old one
-  if (is_loaded(package)) {
-    s3_unregister(package)
-  }
-
   # Check description file is ok
   check <- ("tools" %:::% ".check_package_description")(
     package_file("DESCRIPTION", path = path))
