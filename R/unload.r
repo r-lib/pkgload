@@ -40,17 +40,11 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
     }
   }
 
-  # Unloading S3 methods manually avoids lazy-load errors when the new
-  # package is loaded overtop the old one. It also prevents removed
-  # methods from staying registered.
-  s3_unregister(package)
-
-  # S4 classes that were created by the package need to be removed in a special way.
-  remove_s4_classes(package)
-
   if (!package %in% loadedNamespaces()) {
     stop("Package ", package, " not found in loaded packages or namespaces")
   }
+
+  unregister_methods(package)
 
   # unloadNamespace calls onUnload hook and .onUnload, and detaches the
   # package if it's attached. It will fail if a loaded package needs it.

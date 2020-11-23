@@ -253,3 +253,13 @@ unregister_namespace <- function(name = NULL) {
   do.call(rm, args = list(name, envir = ns_registry()))
   invisible()
 }
+
+unregister_methods <- function(package) {
+  # Unloading S3 methods manually avoids lazy-load errors when the new
+  # package is loaded overtop the old one. It also prevents removed
+  # methods from staying registered.
+  s3_unregister(package)
+
+  # S4 classes that were created by the package need to be removed in a special way.
+  remove_s4_classes(package)
+}
