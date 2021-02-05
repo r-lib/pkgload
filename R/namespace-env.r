@@ -154,6 +154,7 @@ onload_assign("add_classes_to_exports",
     }
     make_function(alist(ns =, package =, exports =, nsInfo =),
       call("{",
+        quote(lev <- 0L),
         quote(hasS4m <- .hasS4MetaData(ns)),
         extract_lang(
           f = comp_lang,

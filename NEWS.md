@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* Fix test failure in R 4.1 with regards to S4 method registration
+
 * `load_all()` now preserves existing namespaces in working order. In
   particular, it doesn't unload the package's shared library and keeps
   it loaded instead. When reloading, a copy of the SO for the new
