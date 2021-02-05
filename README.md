@@ -1,7 +1,7 @@
 # pkgload
 
 <!-- badges: start -->
-[![R build status](https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/pkgload/actions)
+[![R-CMD-check](https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/pkgload/actions)
 [![Codecov test coverage](https://codecov.io/gh/r-lib/pkgload/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/pkgload?branch=master)
 <!-- badges: end -->
 
