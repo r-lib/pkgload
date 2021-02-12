@@ -8,7 +8,7 @@
 #' but there may be others.  Similarly, automated DLL unloading is best tested
 #' for simple scenarios (particularly with `useDynLib(pkgname)` and may
 #' fail in other cases. If you do encounter a failure, please file a bug report
-#' at \url{http://github.com/r-lib/pkgload/issues}.
+#' at \url{https://github.com/r-lib/pkgload/issues}.
 #'
 #' @inheritParams ns_env
 #' @param quiet if `TRUE` suppresses output from this function.
@@ -112,7 +112,12 @@ unload_dll <- function(package) {
 
 s3_unregister <- function(package) {
   ns <- ns_env(package)
-  ns_defs <- parse_ns_file(system.file(package = package))
+
+  # If the package is loaded, but not installed this will fail, so we bail out in that case.
+  ns_defs <- suppressWarnings(try(parse_ns_file(system.file(package = package)), silent = TRUE))
+  if (inherits(ns_defs, "try-error")) {
+    return()
+  }
   methods <- ns_defs$S3methods[, 1:2, drop = FALSE]
 
   for (i in seq_len(nrow(methods))) {
