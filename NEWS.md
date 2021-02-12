@@ -14,7 +14,7 @@
   propagation routine that was added to pkgload as a workaround has
   been removed.
 
-  Note that `.Call()` invokations that pass a string symbol rather
+  Note that `.Call()` invocations that pass a string symbol rather
   than a structured symbol may keep crashing, because R will look into
   the most recently loaded SO of a given name. Since symbol
   registration is now the norm, we don't expect this to cause much
