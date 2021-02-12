@@ -1,7 +1,7 @@
 ## Test environments
-* local OS X install, R 4.0.0, R-devel (on GitHub Actions)
-* ubuntu 16.04 (on GitHub Actions), R 4.0, 3.6, 3.5, 3.4, 3.3 (on GitHub Actions)
-* Windows 10 (on GitHub Actions), R 4.0
+* local OS X install
+* ubuntu 16.04 (on GitHub Actions)
+* Windows 10 (on GitHub Actions)
 
 ## R CMD check results
 
