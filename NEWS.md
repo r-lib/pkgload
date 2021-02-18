@@ -31,7 +31,7 @@
     been removed from the package. It is now actually removed from the
     generic table. It would previously linger until R was restarted.
 
-* If `load_all()` attaches testthat, it automatically suppress conflicts.
+* If `load_all()` attaches testthat, it automatically suppresses conflicts.
 
 # pkgload 1.1.0
 
