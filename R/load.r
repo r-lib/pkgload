@@ -180,7 +180,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
 
   # attach testthat to the search path
   if (isTRUE(attach_testthat) && package != "testthat") {
-    ("base" %:::% "library")("testthat")
+    ("base" %:::% "library")("testthat", warn.conflicts = FALSE)
   }
 
   # Run namespace load hooks

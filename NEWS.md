@@ -31,6 +31,8 @@
     been removed from the package. It is now actually removed from the
     generic table. It would previously linger until R was restarted.
 
+* If `load_all()` attaches testthat, it automatically suppress conflicts.
+
 # pkgload 1.1.0
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
