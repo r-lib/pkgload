@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgload</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0</span>
       </span>
     </div>
 
@@ -114,16 +114,16 @@
       <small>Source: <a href='https://github.com/r-lib/pkgload/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pkgload-development-version" class="section level1">
-<h1 class="page-header" data-toc-text="development version">
-<a href="#pkgload-development-version" class="anchor"></a>pkgload (development version)<small> Unreleased </small>
+    <div id="pkgload-120" class="section level1">
+<h1 class="page-header" data-toc-text="1.2.0">
+<a href="#pkgload-120" class="anchor"></a>pkgload 1.2.0<small> 2021-02-23 </small>
 </h1>
 <ul>
 <li><p>Fix test failure in R 4.1 with regards to S4 method registration</p></li>
 <li>
 <p><code><a href="../reference/load_all.html">load_all()</a></code> now preserves existing namespaces in working order. In particular, it doesn’t unload the package’s shared library and keeps it loaded instead. When reloading, a copy of the SO for the new namespace is loaded from a temporary location. These temporary SOs are only unloaded on GC and deleted from their temporary location via a weak reference attached to the namespace.</p>
 <p>This mechanism ensures that lingering references to the namespace keep working as expected. Consequently the namespace propagation routine that was added to pkgload as a workaround has been removed.</p>
-<p>Note that <code><a href="https://rdrr.io/r/base/CallExternal.html">.Call()</a></code> invokations that pass a string symbol rather than a structured symbol may keep crashing, because R will look into the most recently loaded SO of a given name. Since symbol registration is now the norm, we don’t expect this to cause much trouble.</p>
+<p>Note that <code><a href="https://rdrr.io/r/base/CallExternal.html">.Call()</a></code> invocations that pass a string symbol rather than a structured symbol may keep crashing, because R will look into the most recently loaded SO of a given name. Since symbol registration is now the norm, we don’t expect this to cause much trouble.</p>
 </li>
 <li>
 <p><code><a href="../reference/load_all.html">load_all()</a></code> no longer forces all bindings of a namespace to avoid lazy-load errors. Instead, it removes exported S3 methods from the relevant tables.</p>
