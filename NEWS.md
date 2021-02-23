@@ -1,3 +1,5 @@
+# pkgload (development version)
+
 # pkgload 1.2.0
 
 * Fix test failure in R 4.1 with regards to S4 method registration
