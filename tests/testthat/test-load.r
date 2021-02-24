@@ -30,19 +30,19 @@ test_that("warn_if_conflicts works", {
   expect_warning(warn_if_conflicts("pkg", getNamespace("pkgload"), e), NA)
 
   # no warning if function collides with non-function
-  e$all_named <- TRUE
+  e$pkg_name <- "foo"
   withr::with_options(
     c(crayon.enabled = FALSE),
     expect_warning(warn_if_conflicts("pkg", getNamespace("pkgload"), e), NA)
   )
 
   # warning when two functions collide
-  e$all_named <- function() TRUE
+  e$pkg_name <- function() "foo"
   withr::with_options(
     c(crayon.enabled = FALSE),
     expect_warning(
       warn_if_conflicts("pkg", getNamespace("pkgload"), e),
-      "all_named().*masks.*pkg::all_named()"
+      "pkg_name().*masks.*pkg::pkg_name()"
     )
   )
 })
