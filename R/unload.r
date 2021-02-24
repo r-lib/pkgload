@@ -54,11 +54,6 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   }, error = function(e) FALSE)
 
   if (!unloaded) {
-    if (!quiet) {
-      cli::cli_alert_danger("unloadNamespace(\"{package}\") failed because another loaded package needs it")
-      cli::cli_alert_info("Forcing unload. If you encounter problems, please restart R.")
-    }
-
     # unloadNamespace() failed before we get to the detach, so need to
     # manually detach
     unload_pkg_env(package)
