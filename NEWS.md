@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `unload()` no longer warns when it can't unload a namespace.
+
 # pkgload 1.2.0
 
 * Fix test failure in R 4.1 with regards to S4 method registration
