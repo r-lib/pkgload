@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load complete package. — load_all • pkgload</title>
+<title>Load complete package — load_all • pkgload</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Load complete package. — load_all" />
+<meta property="og:title" content="Load complete package — load_all" />
 <meta property="og:description" content="load_all loads a package. It roughly simulates what happens
 when a package is installed and loaded with library()." />
 
@@ -112,7 +112,7 @@ when a package is installed and loaded with library()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load complete package.</h1>
+    <h1>Load complete package</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/pkgload/blob/master/R/load.r'><code>R/load.r</code></a></small>
     <div class="hidden name"><code>load_all.Rd</code></div>
     </div>
@@ -189,11 +189,12 @@ present. This is equivalent to running <code><a href='https://rdrr.io/pkg/pkgbui
     </tr>
     <tr>
       <th>warn_conflicts</th>
-      <td><p>If <code>TRUE</code>, issue a warning if there are conflicts
-between the exported functions and functions in the global namespace. This
-most commonly happens when you accidently source an R file rather than using
-<code>load_all()</code>, or define a function directly in the R console, and can be
-frustrating to debug.</p></td>
+      <td><p>If <code>TRUE</code>, issues a warning if a function in the global
+environment masks a function in the package. This can happen when you
+accidentally source a <code>.R</code> file, rather than using <code>load_all()</code>, or if you
+define a function directly in the R console. This is frustrating to debug,
+as it feels like the changes you make to the package source aren't having
+the expected effect.</p></td>
     </tr>
     </table>
 
