@@ -23,24 +23,35 @@ test_that("helpers are available after load_all", {
   unload("testLoadHelpers")
 })
 
-test_that("warn_if_conflicts works", {
+test_that("warn_if_conflicts warns for conflicts and both objects are functions", {
+  e1 <- new.env(parent = emptyenv())
+  e2 <- new.env(parent = emptyenv())
+
+  e1$foo <- function() "foo"
+  e2$bar <- function() "bar"
+
   # no warning if no conflicts
-  expect_warning(warn_if_conflicts("pkg", c("foo"), c("bar")), NA)
+  expect_warning(warn_if_conflicts("pkg", e1, e2), NA)
+
+  e2$foo <- function() "foo2"
 
   # warning for a conflict
   withr::with_options(c(crayon.enabled = FALSE),
     expect_warning(
-      warn_if_conflicts("pkg", c("foo"), c("foo", "bar")),
+      warn_if_conflicts("pkg", e1, e2),
       "foo().*masks.*pkg::foo()"
     )
   )
 })
 
-test_that("get_function_exports() works", {
-  e <- new.env(parent = emptyenv())
-  e$not_a_function <- "no"
-  e$a_function <- function() "yes"
-  expect_equal(get_function_exports(e), "a_function")
+test_that("warn_if_conflicts does not warn for conflicts when one of the objects is not a function", {
+  e1 <- new.env(parent = emptyenv())
+  e2 <- new.env(parent = emptyenv())
+
+  e1$foo <- function() "foo"
+  e2$foo <- "foo"
+
+  expect_warning(warn_if_conflicts("pkg", e1, e2), NA)
 })
 
 test_that("loading multiple times doesn't force bindings", {

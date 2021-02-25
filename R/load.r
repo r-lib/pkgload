@@ -223,16 +223,30 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   if (isTRUE(warn_conflicts)) {
     warn_if_conflicts(
       package,
-      get_function_exports(out$env),
-      get_function_exports(globalenv())
+      out$env,
+      globalenv()
     )
   }
 
   invisible(out)
 }
 
-warn_if_conflicts <- function(package, nms1, nms2) {
+is_function_in_environment <- function(name, env) {
+  vapply(name, exists, logical(1), where = env, mode = "function", inherits = FALSE)
+}
+
+warn_if_conflicts <- function(package, env1, env2) {
+  nms1 <- get_exports(env1)
+  nms2 <- get_exports(env2)
+
   both <- sort(intersect(nms1, nms2))
+
+  # Verify are functions in both environments
+  both <- both[
+    is_function_in_environment(both, env1) &
+    is_function_in_environment(both, env2)
+  ]
+
   if (length(both) == 0) {
     return(invisible())
   }
@@ -263,20 +277,13 @@ warn_if_conflicts <- function(package, nms1, nms2) {
   )
 }
 
-get_function_exports <- function(ns) {
+get_exports <- function(ns) {
   if (isNamespace(ns)) {
     nms <- getNamespaceExports(ns)
   } else {
     nms <- names(ns)
   }
-
-  if (length(nms) == 0) {
-    character()
-  } else {
-    is_fn <- vapply(nms, FUN.VALUE = logical(1), FUN = exists,
-                    envir = ns, mode = "function", inherits = FALSE)
-    nms[is_fn]
-  }
+  nms
 }
 
 conflict_bullets <- function(package, both) {
