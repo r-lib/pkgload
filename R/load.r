@@ -273,7 +273,9 @@ get_function_exports <- function(ns) {
   if (length(nms) == 0) {
     character()
   } else {
-    nms[exists(nms, ns, mode = "function")]
+    is_fn <- vapply(nms, FUN.VALUE = logical(1), FUN = exists,
+                    envir = ns, mode = "function", inherits = FALSE)
+    nms[is_fn]
   }
 }
 

@@ -36,6 +36,13 @@ test_that("warn_if_conflicts works", {
   )
 })
 
+test_that("get_function_exports() works", {
+  e <- new.env(parent = emptyenv())
+  e$not_a_function <- "no"
+  e$a_function <- function() "yes"
+  expect_equal(get_function_exports(e), "a_function")
+})
+
 test_that("loading multiple times doesn't force bindings", {
   forced <- FALSE
 
