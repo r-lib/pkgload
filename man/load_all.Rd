@@ -2,7 +2,7 @@
 % Please edit documentation in R/load.r
 \name{load_all}
 \alias{load_all}
-\title{Load complete package.}
+\title{Load complete package}
 \usage{
 load_all(
   path = ".",
@@ -49,11 +49,12 @@ which more closely mimics the environment within test files.}
 present. This is equivalent to running \code{\link[pkgbuild:clean_dll]{pkgbuild::clean_dll()}} before
 \code{load_all}}
 
-\item{warn_conflicts}{If \code{TRUE}, issue a warning if there are conflicts
-between the exported functions and functions in the global namespace. This
-most commonly happens when you accidently source an R file rather than using
-\code{load_all()}, or define a function directly in the R console, and can be
-frustrating to debug.}
+\item{warn_conflicts}{If \code{TRUE}, issues a warning if a function in the global
+environment masks a function in the package. This can happen when you
+accidentally source a \code{.R} file, rather than using \code{load_all()}, or if you
+define a function directly in the R console. This is frustrating to debug,
+as it feels like the changes you make to the package source aren't having
+the expected effect.}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens

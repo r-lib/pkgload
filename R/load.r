@@ -1,4 +1,4 @@
-#' Load complete package.
+#' Load complete package
 #'
 #' `load_all` loads a package. It roughly simulates what happens
 #' when a package is installed and loaded with [library()].
@@ -78,11 +78,12 @@
 #' @param recompile DEPRECATED. force a recompile of DLL from source code, if
 #'   present. This is equivalent to running [pkgbuild::clean_dll()] before
 #'   `load_all`
-#' @param warn_conflicts If `TRUE`, issue a warning if there are conflicts
-#'   between the exported functions and functions in the global namespace. This
-#'   most commonly happens when you accidently source an R file rather than using
-#'   `load_all()`, or define a function directly in the R console, and can be
-#'   frustrating to debug.
+#' @param warn_conflicts If `TRUE`, issues a warning if a function in the global
+#'   environment masks a function in the package. This can happen when you
+#'   accidentally source a `.R` file, rather than using `load_all()`, or if you
+#'   define a function directly in the R console. This is frustrating to debug,
+#'   as it feels like the changes you make to the package source aren't having
+#'   the expected effect.
 #' @keywords programming
 #' @examples
 #' \dontrun{
