@@ -220,22 +220,18 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   insert_global_shims()
 
   if (isTRUE(warn_conflicts)) {
-    warn_if_conflicts(package, out$env)
+    warn_if_conflicts(
+      package,
+      get_function_exports(out$env),
+      get_function_exports(globalenv())
+    )
   }
 
   invisible(out)
 }
 
-warn_if_conflicts <- function(package, ns, e = globalenv()) {
-  ns_nms <- getNamespaceExports(ns)
-  e_nms <- names(e)
-
-  both <- sort(intersect(ns_nms, e_nms))
-  if (length(both) == 0) {
-    return(invisible())
-  }
-
-  both <- remove_false_positives(both, ns, e)
+warn_if_conflicts <- function(package, nms1, nms2) {
+  both <- sort(intersect(nms1, nms2))
   if (length(both) == 0) {
     return(invisible())
   }
@@ -266,17 +262,18 @@ warn_if_conflicts <- function(package, ns, e = globalenv()) {
   )
 }
 
-# conflict between a function and non-function does not cause problems
-remove_false_positives <- function(nms, e1, e2) {
-  is_func <- function(nm, envir) {
-    is_function(get(nm, envir = envir, inherits = FALSE))
+get_function_exports <- function(ns) {
+  if (isNamespace(ns)) {
+    nms <- getNamespaceExports(ns)
+  } else {
+    nms <- names(ns)
   }
-  func_vs_not_func <- vapply(
-    nms,
-    FUN.VALUE = logical(1),
-    FUN = function(x) xor(is_func(x, e1), is_func(x, e2))
-  )
-  nms[!func_vs_not_func]
+
+  if (length(nms) == 0) {
+    character()
+  } else {
+    nms[exists(nms, ns, mode = "function")]
+  }
 }
 
 conflict_bullets <- function(package, both) {

@@ -24,25 +24,14 @@ test_that("helpers are available after load_all", {
 })
 
 test_that("warn_if_conflicts works", {
-  # no warning if no intersection
-  e <- new.env()
-  e$foo <- "foo"
-  expect_warning(warn_if_conflicts("pkg", getNamespace("pkgload"), e), NA)
+  # no warning if no conflicts
+  expect_warning(warn_if_conflicts("pkg", c("foo"), c("bar")), NA)
 
-  # no warning if function collides with non-function
-  e$pkg_name <- "foo"
-  withr::with_options(
-    c(crayon.enabled = FALSE),
-    expect_warning(warn_if_conflicts("pkg", getNamespace("pkgload"), e), NA)
-  )
-
-  # warning when two functions collide
-  e$pkg_name <- function() "foo"
-  withr::with_options(
-    c(crayon.enabled = FALSE),
+  # warning for a conflict
+  withr::with_options(c(crayon.enabled = FALSE),
     expect_warning(
-      warn_if_conflicts("pkg", getNamespace("pkgload"), e),
-      "pkg_name().*masks.*pkg::pkg_name()"
+      warn_if_conflicts("pkg", c("foo"), c("foo", "bar")),
+      "foo().*masks.*pkg::foo()"
     )
   )
 })
