@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_all(warn_conflicts = TRUE)` becomes more narrow and only warns when a *function* in the global environment masks a *function* in the package, consistent with the docs (#125, #143 @jennybc).
+
 # pkgload 1.2.0
 
 * Fix test failure in R 4.1 with regards to S4 method registration
