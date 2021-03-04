@@ -21,10 +21,10 @@ load_all(
 \item{path}{Path to a package, or within a package.}
 
 \item{reset}{clear package environment and reset file cache before loading
-any pieces of the package. This is equivalent to running
-\code{\link[=unload]{unload()}} and is the default. Use \code{reset = FALSE} may be
-faster for large code bases, but is a significantly less accurate
-approximation.}
+any pieces of the package. This largely equivalent to running
+\code{\link[=unload]{unload()}}, however the old namespaces are not completely removed and no
+\code{.onUnload()} hooks are called. Use \code{reset = FALSE} may be faster for
+large code bases, but is a significantly less accurate approximation.}
 
 \item{compile}{If \code{TRUE} always recompiles the package; if \code{NA}
 recompiles if needed (as determined by \code{\link[pkgbuild:needs_compile]{pkgbuild::needs_compile()}});

@@ -58,10 +58,10 @@
 #'
 #' @param path Path to a package, or within a package.
 #' @param reset clear package environment and reset file cache before loading
-#'   any pieces of the package. This is equivalent to running
-#'   [unload()] and is the default. Use `reset = FALSE` may be
-#'   faster for large code bases, but is a significantly less accurate
-#'   approximation.
+#'   any pieces of the package. This largely equivalent to running
+#'   [unload()], however the old namespaces are not completely removed and no
+#'   `.onUnload()` hooks are called. Use `reset = FALSE` may be faster for
+#'   large code bases, but is a significantly less accurate approximation.
 #' @param compile If `TRUE` always recompiles the package; if `NA`
 #'   recompiles if needed (as determined by [pkgbuild::needs_compile()]);
 #'   if `FALSE`, never recompiles.
