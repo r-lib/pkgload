@@ -120,16 +120,6 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  # Check description file is ok
-  check <- ("tools" %:::% ".check_package_description")(
-    package_file("DESCRIPTION", path = path))
-
-  if (length(check) > 0) {
-    msg <- utils::capture.output(("tools" %:::% "print.check_package_description")(check))
-    cli::cli_alert_danger("Invalid DESCRIPTION")
-    cli::cli_code(msg)
-  }
-
   # Compile dll if requested
   if (missing(compile) && !missing(recompile)) {
     compile <- if (isTRUE(recompile)) TRUE else NA

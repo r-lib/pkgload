@@ -77,3 +77,10 @@ test_that("reloading a package unloads deleted S3 methods", {
   load_all("testS3removed2")
   expect_equal(as.character(x), character())
 })
+
+test_that("load_all() errors when no DESCRIPTION found", {
+  withr::with_tempdir({
+    expect_error(load_all(), class = "pkgload_no_desc")
+  })
+})
+
