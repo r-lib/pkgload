@@ -123,6 +123,8 @@
 <code><a href="../reference/load_all.html">load_all(warn_conflicts = TRUE)</a></code> becomes more narrow and only warns when a <em>function</em> in the global environment masks a <em>function</em> in the package, consistent with the docs (<a href='https://github.com/r-lib/pkgload/issues/125'>#125</a>, <a href='https://github.com/r-lib/pkgload/issues/143'>#143</a> <a href='https://github.com/jennybc'>@jennybc</a>).</li>
 <li>
 <code><a href="../reference/unload.html">unload()</a></code> no longer warns when it can’t unload a namespace.</li>
+<li>
+<code><a href="../reference/load_all.html">load_all()</a></code> no longer does a comprehensive check on the <code>DESCRIPTION</code> file when loading, instead just checking that it exists and starts with Package (<a href='https://github.com/r-lib/pkgload/issues/149'>#149</a>, <a href='https://github.com/malcolmbarrett'>@malcolmbarrett</a>)</li>
 </ul>
 </div>
     <div id="pkgload-120" class="section level1">
