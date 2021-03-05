@@ -48,7 +48,7 @@ pkg_path <- function(path = ".") {
       paste0("'", normalizePath(path), "'."),
       "Are you in your project directory,",
       "and does your project have a 'DESCRIPTION' file?"
-    ))
+    ), class = "pkgload_no_desc")
   })
 
   # Strip trailing slashes, which can cause errors on Windows (#73)
