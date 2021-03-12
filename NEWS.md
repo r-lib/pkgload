@@ -1,5 +1,6 @@
 # pkgload (development version)
 
+* The `pkgbuild` dependency has been moved to `Suggests`, as it is only needed for packages with compiled code.
 * `load_all(warn_conflicts = TRUE)` becomes more narrow and only warns when a *function* in the global environment masks a *function* in the package, consistent with the docs (#125, #143 @jennybc).
 * `unload()` no longer warns when it can't unload a namespace.
 * `load_all()` no longer does a comprehensive check on the `DESCRIPTION` file when loading, instead just checking that it exists and starts with Package (#149, @malcolmbarrett)
