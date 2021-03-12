@@ -20,7 +20,6 @@ Imports:
     crayon,
     desc,
     methods,
-    pkgbuild,
     rlang,
     rprojroot,
     rstudioapi,
@@ -29,6 +28,7 @@ Imports:
 Suggests: 
     bitops,
     covr,
+    pkgbuild,
     Rcpp,
     testthat
 Encoding: UTF-8

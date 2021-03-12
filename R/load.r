@@ -14,7 +14,7 @@
 #'     below and [load_code()] for more details.
 #'
 #'   \item Compiles any C, C++, or Fortran code in the `src/` directory
-#'     and connects the generated DLL into R. See [compile_dll()]
+#'     and connects the generated DLL into R. See `pkgload::compile_dll()`
 #'     for more details.
 #'
 #'   \item Runs `.onAttach()`, `.onLoad()` and `.onUnload()`
@@ -120,14 +120,19 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  # Compile dll if requested
-  if (missing(compile) && !missing(recompile)) {
+  # Compile dll if requested, we don't ever need to do this if a package doesn't
+  # have a src/ directory
+  if (!dir.exists(file.path(path, "src"))) {
+    compile <- FALSE
+  } else if (missing(compile) && !missing(recompile)) {
     compile <- if (isTRUE(recompile)) TRUE else NA
   }
 
   if (isTRUE(compile)) {
+    rlang::check_installed("pkgbuild", reason = "to compile packages with a `src/` directory.")
     pkgbuild::compile_dll(path, force = TRUE, quiet = quiet)
   } else if (identical(compile, NA)) {
+    rlang::check_installed("pkgbuild", reason = "to compile packages with a `src/` directory.")
     pkgbuild::compile_dll(path, quiet = quiet)
   } else if (identical(compile, FALSE)) {
     # don't compile

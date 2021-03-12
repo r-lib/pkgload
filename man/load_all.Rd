@@ -72,7 +72,7 @@ environment that behaves like a regular package namespace. See
 below and \code{\link[=load_code]{load_code()}} for more details.
 
 \item Compiles any C, C++, or Fortran code in the \verb{src/} directory
-and connects the generated DLL into R. See \code{\link[=compile_dll]{compile_dll()}}
+and connects the generated DLL into R. See \code{pkgload::compile_dll()}
 for more details.
 
 \item Runs \code{.onAttach()}, \code{.onLoad()} and \code{.onUnload()}
