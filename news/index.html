@@ -120,6 +120,9 @@
 </h1>
 <ul>
 <li>
+<code><a href="../reference/load_all.html">load_all()</a></code> will now work for packages that have testthat tests but do not have testthat installed (<a href='https://github.com/r-lib/pkgload/issues/151'>#151</a>)</li>
+<li>The <code>pkgbuild</code> dependency has been moved to <code>Suggests</code>, as it is only needed for packages with compiled code.</li>
+<li>
 <code><a href="../reference/load_all.html">load_all(warn_conflicts = TRUE)</a></code> becomes more narrow and only warns when a <em>function</em> in the global environment masks a <em>function</em> in the package, consistent with the docs (<a href='https://github.com/r-lib/pkgload/issues/125'>#125</a>, <a href='https://github.com/r-lib/pkgload/issues/143'>#143</a> <a href='https://github.com/jennybc'>@jennybc</a>).</li>
 <li>
 <code><a href="../reference/unload.html">unload()</a></code> no longer warns when it can’t unload a namespace.</li>
