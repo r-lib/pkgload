@@ -315,7 +315,7 @@ uses_testthat <- function(path = ".") {
     package_file("tests", "testthat", path = path)
   )
 
-  any(dir.exists(paths))
+  any(dir.exists(paths)) && requireNamespace("testthat", quietly = TRUE)
 }
 
 find_test_dir <- function(path) {
