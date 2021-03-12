@@ -145,10 +145,10 @@ when a package is installed and loaded with <code><a href='https://rdrr.io/r/bas
     <tr>
       <th>reset</th>
       <td><p>clear package environment and reset file cache before loading
-any pieces of the package. This is equivalent to running
-<code><a href='unload.html'>unload()</a></code> and is the default. Use <code>reset = FALSE</code> may be
-faster for large code bases, but is a significantly less accurate
-approximation.</p></td>
+any pieces of the package. This largely equivalent to running
+<code><a href='unload.html'>unload()</a></code>, however the old namespaces are not completely removed and no
+<code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onUnload()</a></code> hooks are called. Use <code>reset = FALSE</code> may be faster for
+large code bases, but is a significantly less accurate approximation.</p></td>
     </tr>
     <tr>
       <th>compile</th>
@@ -208,7 +208,7 @@ for more details.</p></li>
 environment that behaves like a regular package namespace. See
 below and <code><a href='load_code.html'>load_code()</a></code> for more details.</p></li>
 <li><p>Compiles any C, C++, or Fortran code in the <code>src/</code> directory
-and connects the generated DLL into R. See <code>compile_dll()</code>
+and connects the generated DLL into R. See <code>pkgload::compile_dll()</code>
 for more details.</p></li>
 <li><p>Runs <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onAttach()</a></code>, <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onLoad()</a></code> and <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onUnload()</a></code>
 functions at the correct times.</p></li>
