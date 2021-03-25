@@ -74,8 +74,15 @@ test_that("reloading a package unloads deleted S3 methods", {
   load_all("testS3removed")
   expect_equal(as.character(x), "registered")
 
+  # Hold a reference to the generic in the currently loaded namespace
+  stale_generic <- testS3removed::my_generic
+
   load_all("testS3removed2")
   expect_equal(as.character(x), character())
+
+  # Still works because we don't unregister methods for the package
+  # being unloaded (r-lib/vctrs#1341)
+  expect_equal(stale_generic(x), "registered")
 })
 
 test_that("load_all() errors when no DESCRIPTION found", {

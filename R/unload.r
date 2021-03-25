@@ -128,6 +128,13 @@ s3_unregister <- function(package) {
       next
     }
 
+    # Don't remove methods for generics defined in the namespace being
+    # unloaded. The stale namespace should still work as much as
+    # possible.
+    if (is_string(ns_env_name(generic_ns), package)) {
+      next
+    }
+
     table <- generic_ns$.__S3MethodsTable__.
     if (!is_environment(table)) {
       next
