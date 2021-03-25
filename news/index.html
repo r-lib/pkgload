@@ -120,6 +120,8 @@
 </h1>
 <ul>
 <li>
+<code><a href="../reference/unload.html">unload()</a></code> no longer unregisters methods for generics of the package being unloaded. This way dangling references to generics defined in the stale namespace still work as expected (r-lib/vctrs<a href='https://github.com/r-lib/pkgload/issues/1341'>#1341</a>).</li>
+<li>
 <code><a href="../reference/load_all.html">load_all()</a></code> will now work for packages that have testthat tests but do not have testthat installed (<a href='https://github.com/r-lib/pkgload/issues/151'>#151</a>)</li>
 <li>The <code>pkgbuild</code> dependency has been moved to <code>Suggests</code>, as it is only needed for packages with compiled code.</li>
 <li>
