@@ -3,9 +3,14 @@
 * `unload()` no longer unregisters methods for generics of the package being unloaded. This way dangling references to generics defined in the stale namespace still work as expected (r-lib/vctrs#1341).
 * `load_all()` will now work for packages that have testthat tests but do not have testthat installed (#151)
 * The `pkgbuild` dependency has been moved to `Suggests`, as it is only needed for packages with compiled code.
+
+* `load_all()` will now work for packages that have testthat tests but do not have testthat installed (#151)
+
 * `load_all(warn_conflicts = TRUE)` becomes more narrow and only warns when a *function* in the global environment masks a *function* in the package, consistent with the docs (#125, #143 @jennybc).
-* `unload()` no longer warns when it can't unload a namespace.
+
 * `load_all()` no longer does a comprehensive check on the `DESCRIPTION` file when loading, instead just checking that it exists and starts with Package (#149, @malcolmbarrett)
+
+* `unload()` no longer warns when it can't unload a namespace.
 
 # pkgload 1.2.0
 
