@@ -2,9 +2,12 @@
 % Please edit documentation in R/unload.r
 \name{unload}
 \alias{unload}
+\alias{unregister}
 \title{Unload a package}
 \usage{
 unload(package = pkg_name(), quiet = FALSE)
+
+unregister(package = pkg_name())
 }
 \arguments{
 \item{package}{package name.}
@@ -12,7 +15,7 @@ unload(package = pkg_name(), quiet = FALSE)
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
 \description{
-This function attempts to cleanly unload a package, including unloading
+\code{unload()} attempts to cleanly unload a package, including unloading
 its namespace, deleting S4 class definitions and unloading any loaded
 DLLs. Unfortunately S4 classes are not really designed to be cleanly
 unloaded, and so we have to manually modify the class dependency graph in
@@ -21,6 +24,11 @@ but there may be others.  Similarly, automated DLL unloading is best tested
 for simple scenarios (particularly with \code{useDynLib(pkgname)} and may
 fail in other cases. If you do encounter a failure, please file a bug report
 at \url{https://github.com/r-lib/pkgload/issues}.
+
+\code{unregister()} is a gentler version of \code{unload()} which removes the
+package from the search path, unregisters methods, and unregisters
+the namespace. It doesn't unload the namespace or its DLL to keep
+it in working order in case of dangling references.
 }
 \examples{
 \dontrun{

@@ -1,5 +1,11 @@
 # pkgload (development version)
 
+* `unregister()` is now exported. This is a gentler version of
+  `unload()` which removes the package from the search path,
+  unregisters methods, and unregisters the namespace. However it
+  doesn't try to unload the namespace or its DLL so that dangling
+  references keep working.
+
 * `.dynLibs()` is no longer emptied when package with no DLL is
   unloaded (#176).
 

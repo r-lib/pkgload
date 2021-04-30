@@ -161,16 +161,12 @@ load_all <- function(path = ".",
     # safe usage of dangling references.
     if (is_loaded(package)) {
       methods_env <- ns_s3_methods(package)
-
-      unload_pkg_env(package)
-      unregister_methods(package)
-      unregister_namespace(package)
+      unregister(package)
 
       # Save foreign methods after unregistering the package's own
       # methods. We'll restore the foreign methods but let the package
       # register its own methods again.
       old_methods <- as.list(methods_env)
-
       old_methods <- Filter(function(x) is_foreign_method(x, package), old_methods)
     }
   }

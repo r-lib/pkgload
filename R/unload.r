@@ -1,6 +1,8 @@
 #' Unload a package
 #'
-#' This function attempts to cleanly unload a package, including unloading
+#' @description
+#'
+#' `unload()` attempts to cleanly unload a package, including unloading
 #' its namespace, deleting S4 class definitions and unloading any loaded
 #' DLLs. Unfortunately S4 classes are not really designed to be cleanly
 #' unloaded, and so we have to manually modify the class dependency graph in
@@ -9,6 +11,11 @@
 #' for simple scenarios (particularly with `useDynLib(pkgname)` and may
 #' fail in other cases. If you do encounter a failure, please file a bug report
 #' at \url{https://github.com/r-lib/pkgload/issues}.
+#'
+#' `unregister()` is a gentler version of `unload()` which removes the
+#' package from the search path, unregisters methods, and unregisters
+#' the namespace. It doesn't unload the namespace or its DLL to keep
+#' it in working order in case of dangling references.
 #'
 #' @inheritParams ns_env
 #' @param quiet if `TRUE` suppresses output from this function.
@@ -69,6 +76,14 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   # Do this after detach, so that packages that have an .onUnload function
   # which unloads DLLs (like MASS) won't try to unload the DLL twice.
   unload_dll(package)
+}
+
+#' @rdname unload
+#' @export
+unregister <- function(package = pkg_name()) {
+  unload_pkg_env(package)
+  unregister_methods(package)
+  unregister_namespace(package)
 }
 
 unload_pkg_env <- function(package) {
