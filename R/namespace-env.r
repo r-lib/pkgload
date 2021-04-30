@@ -246,7 +246,12 @@ unregister_namespace <- function(name = NULL) {
   # resulting in "Error in unload(pkg) : internal error -3 in R_decompress1".
   # If we simply force them first, then they will remain available for use
   # later. This also makes it possible to use `load_all()` on pkgload itself.
-  if (name == "pkgload") {
+  #
+  # Since we use rlang itself to create new namespaces we also need to
+  # force all its bindings. Forcing prevents the lazy bindings to be
+  # resolved in the new partially created namespace which can lead to
+  # various issues.
+  if (name %in% c("pkgload", "rlang")) {
     eapply(ns_env(name), force, all.names = TRUE)
   }
 
