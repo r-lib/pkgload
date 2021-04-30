@@ -1,6 +1,6 @@
 # pkgload (development version)
 
-* Fixed issues when using `load_all()` on rlang.
+* pkgload now forces all bindings on unload. This fixes errors and inconsistencies when dangling references force lazy bindings after unload or reload.
 
 * `load_all()` now restores S3 methods registered by third party packages (#163).
 

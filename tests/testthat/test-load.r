@@ -54,16 +54,19 @@ test_that("warn_if_conflicts does not warn for conflicts when one of the objects
   expect_warning(warn_if_conflicts("pkg", e1, e2), NA)
 })
 
-test_that("loading multiple times doesn't force bindings", {
+test_that("unloading or reloading forces bindings", {
   forced <- FALSE
 
   withCallingHandlers(
     forced = function(...) forced <<- TRUE, {
+      # Allow running test interactively
+      on.exit(unload("testLoadLazy"))
+
       load_all("testLoadLazy")
       expect_false(forced)
 
       load_all("testLoadLazy")
-      expect_false(forced)
+      expect_true(forced)
     }
   )
 })
