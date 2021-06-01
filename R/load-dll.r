@@ -90,7 +90,7 @@ library.dynam2 <- function(path = ".", lib = "") {
   # The .so should have the package name so that R can find the
   # `R_init_` function by itself.
   dll_copy_dir <- tempfile("pkgload")
-  dll_copy_file <- file.path(dll_copy_dir, paste0(pkg_name(path), dyn_ext))
+  dll_copy_file <- file.path(dll_copy_dir, dllname)
   dir.create(dll_copy_dir)
   file.copy(dllfile, dll_copy_file)
 
