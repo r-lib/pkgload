@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_dll()` will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL's with different names (#162, @dfalbel).
+
 # pkgload 1.2.1
 
 * `unload()` no longer unregisters methods for generics of the package being unloaded. This way dangling references to generics defined in the stale namespace still work as expected (r-lib/vctrs#1341).
