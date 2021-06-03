@@ -118,10 +118,14 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#pkgload-development-version" class="anchor"></a>pkgload (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>
+<code><a href="../reference/load_dll.html">load_dll()</a></code> will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL’s with different names (<a href='https://github.com/r-lib/pkgload/issues/162'>#162</a>, <a href='https://github.com/dfalbel'>@dfalbel</a>).</li>
+</ul>
 </div>
     <div id="pkgload-121" class="section level1">
 <h1 class="page-header" data-toc-text="1.2.1">
-<a href="#pkgload-121" class="anchor"></a>pkgload 1.2.1<small> Unreleased </small>
+<a href="#pkgload-121" class="anchor"></a>pkgload 1.2.1<small> 2021-04-06 </small>
 </h1>
 <ul>
 <li><p><code><a href="../reference/unload.html">unload()</a></code> no longer unregisters methods for generics of the package being unloaded. This way dangling references to generics defined in the stale namespace still work as expected (r-lib/vctrs<a href='https://github.com/r-lib/pkgload/issues/1341'>#1341</a>).</p></li>
