@@ -180,3 +180,7 @@ last <- function(x) utils::tail(x, n = 1L)
 single_quote <- function(x) {
   encodeString(x, quote = "'")
 }
+
+ns_s3_methods <- function(pkg) {
+ ns_env(pkg)$.__S3MethodsTable__. 
+}
