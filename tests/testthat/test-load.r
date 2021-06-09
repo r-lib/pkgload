@@ -85,6 +85,23 @@ test_that("reloading a package unloads deleted S3 methods", {
   expect_equal(stale_generic(x), "registered")
 })
 
+test_that("reloading a package reloads foreign methods (#163)", {
+  x <- structure(list(), class = "foreign_foobar")
+
+  load_all("testS3removed")
+
+  registerS3method(
+    "my_generic",
+    "foreign_foobar",
+    function(...) "OK",
+    envir = ns_env("testS3removed")
+  )
+  expect_equal(my_generic(x), "OK")
+
+  load_all("testS3removed")
+  expect_equal(my_generic(x), "OK")
+})
+
 test_that("load_all() errors when no DESCRIPTION found", {
   withr::with_tempdir({
     expect_error(load_all(), class = "pkgload_no_desc")
