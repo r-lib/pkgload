@@ -1,8 +1,11 @@
 # pkgload (development version)
 
+* pkgload now forces all bindings on unload. This fixes errors and inconsistencies when dangling references force lazy bindings after unload or reload.
+
 * `load_all()` now restores S3 methods registered by third party packages (#163).
 
 * `load_dll()` will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL's with different names (#162, @dfalbel).
+
 
 # pkgload 1.2.1
 
