@@ -119,6 +119,7 @@
 <a href="#pkgload-development-version" class="anchor"></a>pkgload (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p>pkgload now forces all bindings on unload. This fixes errors and inconsistencies when dangling references force lazy bindings after unload or reload.</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> now restores S3 methods registered by third party packages (<a href='https://github.com/r-lib/pkgload/issues/163'>#163</a>).</p></li>
 <li><p><code><a href="../reference/load_dll.html">load_dll()</a></code> will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL’s with different names (<a href='https://github.com/r-lib/pkgload/issues/162'>#162</a>, <a href='https://github.com/dfalbel'>@dfalbel</a>).</p></li>
 </ul>
