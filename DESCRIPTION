@@ -1,6 +1,6 @@
 Package: pkgload
 Title: Simulate Package Installation and Attach
-Version: 1.2.1.9000
+Version: 1.2.2
 Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Jim", "Hester", , "jim.hester@rstudio.com", role = c("aut", "cre")),
