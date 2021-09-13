@@ -120,7 +120,12 @@ test_that("reloading a package reloads own methods", {
     method,
     envir = ns
   )
-  expect_equal(my_generic(x), "Not OK")
+
+  # `registerS3method()` doesn't seem to overwrite methods on older
+  # versions of R < 3.5.0.
+  if (is_installed("base", "3.5.0")) {
+    expect_equal(my_generic(x), "Not OK")
+  }
 
   load_all("testS3removed")
   expect_equal(my_generic(x), "registered")
