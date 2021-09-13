@@ -158,6 +158,12 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
       # methods. We'll restore the foreign methods but let the package
       # register its own methods again.
       old_methods <- as.list(methods_env)
+
+      is_foreign_method <- function(x) {
+        env <- environment(x)
+        !is_namespace(env) || !is_string(ns_env_name(env), package)
+      }
+      old_methods <- Filter(is_foreign_method, old_methods)
     }
   }
 
