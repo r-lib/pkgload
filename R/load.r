@@ -159,11 +159,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
       # register its own methods again.
       old_methods <- as.list(methods_env)
 
-      is_foreign_method <- function(x) {
-        env <- environment(x)
-        !is_namespace(env) || !is_string(ns_env_name(env), package)
-      }
-      old_methods <- Filter(is_foreign_method, old_methods)
+      old_methods <- Filter(function(x) is_foreign_method(x, package), old_methods)
     }
   }
 
@@ -343,4 +339,9 @@ find_test_dir <- function(path) {
   if (dir.exists(inst)) return(inst)
 
   stop("No testthat directories found in ", path, call. = FALSE)
+}
+
+is_foreign_method <- function(x, package) {
+  env <- environment(x)
+  !is_namespace(env) || !is_string(ns_env_name(env), package)
 }
