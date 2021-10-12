@@ -1,3 +1,5 @@
+# pkgload (development version)
+
 # pkgload 1.2.2
 
 * pkgload now forces all bindings on unload. This fixes errors and inconsistencies when dangling references force lazy bindings after unload or reload.
