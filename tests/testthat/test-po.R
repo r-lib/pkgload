@@ -4,4 +4,7 @@ test_that("translation domain correctly loaded", {
 
   withr::local_envvar(LANGUAGE = "fr")
   expect_equal(hello(), "Bonjour")
+
+  load_all(test_path("testTranslations"))
+  expect_equal(length(temp_po_dirs()), 1)
 })
