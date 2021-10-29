@@ -6,5 +6,5 @@ test_that("translation domain correctly loaded", {
   expect_equal(hello(), "Bonjour")
 
   load_all(test_path("testTranslations"))
-  expect_equal(length(temp_po_dirs()), 1)
+  expect_equal(length(temp_po_dirs("testTranslations")), 1)
 })

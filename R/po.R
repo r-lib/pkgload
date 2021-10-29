@@ -5,10 +5,10 @@ load_po <- function(package, path) {
   }
 
   # Clean up previous copies
-  unlink(temp_po_dirs(), recursive = TRUE, force = TRUE)
+  unlink(temp_po_dirs(package), recursive = TRUE, force = TRUE)
 
   # Create new copy of translations in temp dir
-  tmp <- tempfile("pkgload-po-")
+  tmp <- tempfile(temp_po_prefix(package))
   dir.create(tmp, showWarnings = FALSE)
   tmp_po <- file.path(tmp, "po")
   file.copy(po_path, tmp, recursive = TRUE)
@@ -19,6 +19,10 @@ load_po <- function(package, path) {
   invisible()
 }
 
-temp_po_dirs <- function() {
-  dir(tempdir(), pattern = "^pkgload-po-", full.names = TRUE)
+temp_po_prefix <- function(package) {
+  paste0("pkgload-po-", package, "-")
+}
+
+temp_po_dirs <- function(package) {
+  dir(tempdir(), paste0("^", temp_po_prefix(package)), full.names = TRUE)
 }
