@@ -210,6 +210,7 @@ below and <code><a href='load_code.html'>load_code()</a></code> for more details
 <li><p>Compiles any C, C++, or Fortran code in the <code>src/</code> directory
 and connects the generated DLL into R. See <code>pkgload::compile_dll()</code>
 for more details.</p></li>
+<li><p>Loads any compiled translations in <code>inst/po</code>.</p></li>
 <li><p>Runs <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onAttach()</a></code>, <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onLoad()</a></code> and <code><a href='https://rdrr.io/r/base/ns-hooks.html'>.onUnload()</a></code>
 functions at the correct times.</p></li>
 <li><p>If you use <span class="pkg">testthat</span>, will load all test helpers so
