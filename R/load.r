@@ -17,6 +17,8 @@
 #'     and connects the generated DLL into R. See `pkgload::compile_dll()`
 #'     for more details.
 #'
+#'   \item Loads any compiled translations in `inst/po`.
+#'
 #'   \item Runs `.onAttach()`, `.onLoad()` and `.onUnload()`
 #'     functions at the correct times.
 #'
@@ -189,6 +191,8 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   if (isTRUE(attach_testthat) && package != "testthat") {
     ("base" %:::% "library")("testthat", warn.conflicts = FALSE)
   }
+
+  load_po(package, path)
 
   # Run namespace load hooks
   run_pkg_hook(package, "load")
