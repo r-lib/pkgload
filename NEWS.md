@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* Lionel Henry is now the maintainer.
+
 * `load_all()` automatically registers package translations, if found.
 
 # pkgload 1.2.3
