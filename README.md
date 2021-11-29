@@ -1,8 +1,8 @@
 # pkgload
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/r-pkgs/pkgload/workflows/R-CMD-check/badge.svg)](https://github.com/r-pkgs/pkgload/actions)
-[![Codecov test coverage](https://codecov.io/gh/r-lib/pkgload/branch/master/graph/badge.svg)](https://app.codecov.io/gh/r-lib/pkgload?branch=master)
+[![R-CMD-check](https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/pkgload/actions)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/pkgload/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/pkgload?branch=main)
 <!-- badges: end -->
 
 The goal of pkgload is to simulate the process of installing and loading a
