@@ -147,7 +147,7 @@
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> will now work for packages that have testthat tests but do not have testthat installed (<a href='https://github.com/r-lib/pkgload/issues/151'>#151</a>)</p></li>
 <li><p>The <code>pkgbuild</code> dependency has been moved to <code>Suggests</code>, as it is only needed for packages with compiled code.</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> will now work for packages that have testthat tests but do not have testthat installed (<a href='https://github.com/r-lib/pkgload/issues/151'>#151</a>)</p></li>
-<li><p><code><a href="../reference/load_all.html">load_all(warn_conflicts = TRUE)</a></code> becomes more narrow and only warns when a <em>function</em> in the global environment masks a <em>function</em> in the package, consistent with the docs (<a href='https://github.com/r-lib/pkgload/issues/125'>#125</a>, <a href='https://github.com/r-lib/pkgload/issues/143'>#143</a> <a href='https://github.com/jennybc'>@jennybc</a>).</p></li>
+<li><p><code>load_all(warn_conflicts = TRUE)</code> becomes more narrow and only warns when a <em>function</em> in the global environment masks a <em>function</em> in the package, consistent with the docs (<a href='https://github.com/r-lib/pkgload/issues/125'>#125</a>, <a href='https://github.com/r-lib/pkgload/issues/143'>#143</a> <a href='https://github.com/jennybc'>@jennybc</a>).</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> no longer does a comprehensive check on the <code>DESCRIPTION</code> file when loading, instead just checking that it exists and starts with Package (<a href='https://github.com/r-lib/pkgload/issues/149'>#149</a>, <a href='https://github.com/malcolmbarrett'>@malcolmbarrett</a>)</p></li>
 <li><p><code><a href="../reference/unload.html">unload()</a></code> no longer warns when it can’t unload a namespace.</p></li>
 </ul>
@@ -203,7 +203,7 @@
 <li><p><code>help()</code> will no longer error when trying to load package level help (<a href='https://github.com/r-lib/pkgload/issues/67'>#67</a>).</p></li>
 <li><p>Trailing slashes now removed from all paths, which fixes issues on Windows (<a href='https://github.com/r-lib/pkgload/issues/73'>#73</a>).</p></li>
 <li><p><code><a href="../reference/load_dll.html">load_dll()</a></code> now fixed in R-devel (<a href='https://github.com/r-lib/pkgload/issues/77'>#77</a>).</p></li>
-<li><p>The help shim’s now work for <code><a href="https://rdrr.io/r/base/ns-dblcolon.html">:::</a></code> inputs (<a href='https://github.com/r-lib/pkgload/issues/72'>#72</a>).</p></li>
+<li><p>The help shim’s now work for <code>:::</code> inputs (<a href='https://github.com/r-lib/pkgload/issues/72'>#72</a>).</p></li>
 </ul>
 </div>
     <div id="pkgload-100" class="section level1">
@@ -216,7 +216,7 @@
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> now attaches <code>testthat</code> if the <code>attach_testthat</code> option is <code>TRUE</code>. This allows <code><a href="../reference/load_all.html">load_all()</a></code> to more closely mimic the testing environment. (<a href='https://github.com/r-lib/pkgload/issues/56'>#56</a>)</p></li>
 <li><p><code><a href="../reference/check_dep_version.html">check_dep_version()</a></code> and <code><a href="../reference/check_suggested.html">check_suggested()</a></code> are now exported.</p></li>
 <li><p><code><a href="../reference/check_dep_version.html">check_dep_version()</a></code> now emits a warning and returns <code>FALSE</code> rather than aborting. (<a href='https://github.com/r-lib/pkgload/issues/47'>#47</a>)</p></li>
-<li><p>Package imports are now exported when using <code><a href="../reference/load_all.html">load_all()</a></code>. This behavior can be disabled by using <code><a href="../reference/load_all.html">load_all(export_imports = FALSE)</a></code>.</p></li>
+<li><p>Package imports are now exported when using <code><a href="../reference/load_all.html">load_all()</a></code>. This behavior can be disabled by using <code>load_all(export_imports = FALSE)</code>.</p></li>
 <li><p>The <code>as.package()</code> and <code>is.package()</code> functions have been removed.</p></li>
 <li><p><code><a href="../reference/load_code.html">load_code()</a></code>, <code><a href="../reference/load_data.html">load_data()</a></code>, <code><a href="../reference/load_dll.html">load_dll()</a></code>, <code><a href="../reference/load_all.html">load_all()</a></code>, <code><a href="../reference/parse_ns_file.html">parse_ns_file()</a></code> all now take an explicit path rather than a path or a <code>package</code> object.</p></li>
 <li><p><code><a href="../reference/imports_env.html">imports_env()</a></code>, <code><a href="../reference/ns_env.html">ns_env()</a></code>, <code><a href="../reference/pkg_env.html">pkg_env()</a></code> and <code><a href="../reference/unload.html">unload()</a></code> now take a package name rather than a path or a <code>package</code> object.</p></li>
