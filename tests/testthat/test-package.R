@@ -1,4 +1,4 @@
-context('package')
+local_load_all_quiet()
 
 test_that("it can load from outside of package root", {
   expect_false('testHooks' %in% loadedNamespaces())

@@ -1,4 +1,4 @@
-context("Load hooks")
+local_load_all_quiet()
 
 test_that("hooks called in correct order", {
   record_use <- function(hook) {

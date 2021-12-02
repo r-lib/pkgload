@@ -1,5 +1,3 @@
-context("extract_lang")
-
 f <- function(x) {
   a <- 1:10
   for (i in seq_along(a)) {

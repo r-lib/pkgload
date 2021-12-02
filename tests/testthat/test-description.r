@@ -1,4 +1,4 @@
-context("DESCRIPTION checks")
+local_load_all_quiet()
 
 test_that("Parse DESCRIPTION file", {
   pkg <- pkg_desc("testNamespace")

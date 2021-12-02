@@ -1,4 +1,4 @@
-context("s4-unload")
+local_load_all_quiet()
 
 # Returns a named vector of this class's superclasses.
 # Results are sorted so they can be compared easily to a vector.

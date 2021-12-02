@@ -1,4 +1,4 @@
-context("Load: collate")
+local_load_all_quiet()
 
 test_that("If collate absent, load in alphabetical order", {
   load_all("testCollateAbsent")

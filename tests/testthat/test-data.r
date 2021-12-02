@@ -1,4 +1,4 @@
-context("Data")
+local_load_all_quiet()
 
 test_that("data available when lazydata not true", {
   load_all("testData")

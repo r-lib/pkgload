@@ -1,4 +1,4 @@
-context("examples")
+local_load_all_quiet()
 
 test_that("default run_example ignores donttest and dontrun ", {
   env <- run_example(test_path("test-examples.Rd"), quiet = TRUE)

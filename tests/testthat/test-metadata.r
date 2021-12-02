@@ -1,4 +1,4 @@
-context("Metadata")
+local_load_all_quiet()
 
 test_that("devtools metadata for load hooks", {
 

@@ -103,15 +103,25 @@
 #' load_all("./", export_all = FALSE)
 #' }
 #' @export
-load_all <- function(path = ".", reset = TRUE, compile = NA,
-                     export_all = TRUE, export_imports = export_all,
-                     helpers = TRUE, attach_testthat = uses_testthat(path),
-                     quiet = FALSE, recompile = FALSE, warn_conflicts = TRUE) {
+load_all <- function(path = ".",
+                     reset = TRUE,
+                     compile = NA,
+                     export_all = TRUE,
+                     export_imports = export_all,
+                     helpers = TRUE,
+                     attach_testthat = uses_testthat(path),
+                     quiet = NULL,
+                     recompile = FALSE,
+                     warn_conflicts = TRUE) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
 
-  if (!quiet) cli::cli_alert_info("Loading {.pkg {package}}")
+  quiet <- quiet %||% peek_option("testthat:::load_all_quiet") %||% FALSE
+
+  if (!quiet) {
+    cli::cli_alert_info("Loading {.pkg {package}}")
+  }
 
   if (package == "compiler") {
     # Disable JIT while loading the compiler package to avoid interference
@@ -172,7 +182,7 @@ load_all <- function(path = ".", reset = TRUE, compile = NA,
   out <- list(env = ns_env(package))
 
   # Load dependencies
-  load_depends(path)
+  load_depends(path, quiet = quiet)
   load_imports(path)
   # Add shim objects to imports environment
   insert_imports_shims(package)

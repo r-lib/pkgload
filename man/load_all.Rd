@@ -12,7 +12,7 @@ load_all(
   export_imports = export_all,
   helpers = TRUE,
   attach_testthat = uses_testthat(path),
-  quiet = FALSE,
+  quiet = NULL,
   recompile = FALSE,
   warn_conflicts = TRUE
 )

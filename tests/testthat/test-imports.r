@@ -1,4 +1,4 @@
-context("Imports")
+local_load_all_quiet()
 
 test_that("Imported objects are copied to package environment", {
   load_all("testNamespace")

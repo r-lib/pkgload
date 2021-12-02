@@ -1,4 +1,4 @@
-context("Namespace")
+local_load_all_quiet()
 
 # Is e an ancestor environment of x?
 is_ancestor_env <- function(e, x) {
