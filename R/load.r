@@ -206,6 +206,11 @@ load_all <- function(path = ".",
 
   # Run namespace load hooks
   run_pkg_hook(package, "load")
+
+  # Set up the exports in the namespace metadata (this must happen after
+  # the objects are loaded)
+  setup_ns_exports(path, export_all, export_imports)
+
   run_ns_load_actions(package)
   run_user_hook(package, "load")
 
@@ -215,10 +220,6 @@ load_all <- function(path = ".",
 
   # Copy over lazy data objects from the namespace environment
   export_lazydata(package)
-
-  # Set up the exports in the namespace metadata (this must happen after
-  # the objects are loaded)
-  setup_ns_exports(path, export_all, export_imports)
 
   # Copy over objects from the namespace environment
   export_ns(package)

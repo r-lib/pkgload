@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* User `onLoad` hooks are now run after exports have been
+  populated. This allows the hook to use exported functions.
+
 * Errors thrown in user hooks are now demoted to a warning
   condition. Previously they were demoted using `try()`, making it
   harder to debug them.
