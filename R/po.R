@@ -4,12 +4,25 @@ load_po <- function(package, path) {
     return()
   }
 
-  # Reset cache to avoid gettext() retrieving cached value
-  # See <https://bugs.r-project.org/show_bug.cgi?id=18055> for details
-  bindtextdomain("reset", withr::local_tempdir())
+  # Clean up previous copies
+  unlink(temp_po_dirs(package), recursive = TRUE, force = TRUE)
 
-  bindtextdomain(paste0("R-", package), po_path) # R level messages
-  bindtextdomain(package, po_path) # C level messages
+  # Create new copy of translations in temp dir
+  tmp <- tempfile(temp_po_prefix(package))
+  dir.create(tmp, showWarnings = FALSE)
+  tmp_po <- file.path(tmp, "po")
+  file.copy(po_path, tmp, recursive = TRUE)
+
+  bindtextdomain(paste0("R-", package), tmp_po) # R level messages
+  bindtextdomain(package, tmp_po) # C level messages
 
   invisible()
+}
+
+temp_po_prefix <- function(package) {
+  paste0("pkgload-po-", package, "-")
+}
+
+temp_po_dirs <- function(package) {
+  dir(tempdir(), paste0("^", temp_po_prefix(package)), full.names = TRUE)
 }
