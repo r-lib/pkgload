@@ -1,4 +1,6 @@
-suppressMessages(load_all("testS4sort"))
+local_load_all_quiet()
+
+load_all("testS4sort")
 classes <- methods::getClasses(ns_env('testS4sort'))
 
 

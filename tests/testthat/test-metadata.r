@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 test_that("devtools metadata for load hooks", {
 
   # testLoadHooks test package has .onLoad and .onAttach

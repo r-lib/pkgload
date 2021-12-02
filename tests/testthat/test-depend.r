@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 test_that("Warned about dependency versions", {
   # Should give a warning about grid version
   expect_warning(load_all("testImportVersion"), "Need grid >=")

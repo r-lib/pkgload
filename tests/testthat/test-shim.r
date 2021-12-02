@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 # Utility functions -----------------------------
 # Take file paths and split them into pieces
 expand_path <- function(path) {
@@ -85,7 +87,7 @@ test_that("Replacement system.file returns correct values when installed", {
 
   install.packages(test_path("testShim"), repos = NULL,
     type = "source", quiet = TRUE)
-  expect_true(require(testShim))
+  expect_true(require(testShim, quietly = TRUE))
 
   # The special version of system.file shouldn't exist - this get() will fall
   # through to the base namespace

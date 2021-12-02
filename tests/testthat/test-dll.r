@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 test_that("unload() unloads DLLs from packages loaded with library()", {
 
   # Make a temp lib directory to install test package into
@@ -12,7 +14,7 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
   # Install package
   install.packages(test_path("testDllLoad"), repos = NULL, type = "source",
     INSTALL_opts = "--no-multiarch", quiet = TRUE)
-  expect_true(require(testDllLoad))
+  expect_true(require(testDllLoad, quietly = TRUE))
 
   # Check that it's loaded properly, by running a function from the package.
   # nulltest() calls a C function which returns null.

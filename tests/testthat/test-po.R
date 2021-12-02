@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 test_that("translation domain correctly loaded", {
   load_all(test_path("testTranslations"))
   withr::defer(unload("testTranslations"))

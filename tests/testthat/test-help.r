@@ -1,3 +1,5 @@
+local_load_all_quiet()
+
 test_that("shim_help behaves the same as utils::help for non-devtools-loaded packages", {
   # stats wasn't loaded with devtools. There are many combinations of calling
   # with quotes and without; make sure they're the same both ways. Need to index
@@ -63,7 +65,9 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
 
   withr::with_options(
     c(pager = pager_fun),
-    print(h1, type = 'text'))
+    suppressMessages(
+      print(h1, type = 'text')
+    ))
 })
 
 test_that("dev_help works with package and function help with the same name", {
