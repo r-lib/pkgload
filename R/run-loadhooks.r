@@ -59,10 +59,16 @@ run_user_hook <- function(package, hook) {
       fun(package),
       error = function(cnd) {
         msg <- sprintf(
-          "Problem while running user %s hook for package %s.",
+          "Problem while running user `%s` hook for package %s.",
           hook_name,
           package
         )
+
+        name <- env_name(topenv(fn_env(fun)))
+        if (nzchar(name)) {
+          msg <- c(msg, i = sprintf("The hook inherits from `%s`.", name))
+        }
+
         warn(msg, parent = cnd)
       }
     )
