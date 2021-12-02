@@ -1,10 +1,16 @@
 # pkgload (development version)
 
+* Errors thrown in user hooks are now demoted to a warning
+  condition. Previously they were demoted using `try()`, making it
+  harder to debug them.
+
+
 # pkgload 1.2.4
 
 * Lionel Henry is now the maintainer.
 
 * `load_all()` automatically registers package translations, if found.
+
 
 # pkgload 1.2.3
 
@@ -13,6 +19,7 @@
 * `load_all()` now restores S3 methods registered by third party packages (#163).
 
 * `load_dll()` will now preserve the DLL name when loading instead of always using the package name. This allows packages to include DLL's with different names (#162, @dfalbel).
+
 
 # pkgload 1.2.2
 
@@ -29,6 +36,7 @@
 * `load_all()` no longer does a comprehensive check on the `DESCRIPTION` file when loading, instead just checking that it exists and starts with Package (#149, @malcolmbarrett)
 
 * `unload()` no longer warns when it can't unload a namespace.
+
 
 # pkgload 1.2.0
 
@@ -65,6 +73,7 @@
 
 * If `load_all()` attaches testthat, it automatically suppresses conflicts.
 
+
 # pkgload 1.1.0
 
 * `dev_example()` now works after removing an inconsistent call to `load_all()` (@riccardoporreca, #122).
@@ -74,6 +83,7 @@
 * `run_example()` arguments `run` and `test` are deprecated in favor of the (hopefully) more clear `run_dontrun` and `run_donttest` (#107).
 
 * Internal fixes for compatibility with the future 4.1.0 release.
+
 
 # pkgload 1.0.2
 
@@ -85,6 +95,7 @@
 * `load_all()` gains a `compile` argument which controls more finely whether to
   compile the code or not. The `recompile` argument is now deprecated and will
   be removed in a future version of pkgload.
+
 
 # pkgload 1.0.1
 

@@ -45,12 +45,28 @@ run_user_hook <- function(package, hook) {
   hook_name <- trans[hook]
 
   metadata <- dev_meta(package)
-  if (isTRUE(metadata[[hook_name]])) return(FALSE)
+  if (isTRUE(metadata[[hook_name]])) {
+    return(FALSE)
+  }
 
   hooks <- getHook(packageEvent(package, hook_name))
-  if (length(hooks) == 0) return(FALSE)
+  if (length(hooks) == 0) {
+    return(FALSE)
+  }
 
-  for(fun in rev(hooks)) try(fun(package))
+  for (fun in rev(hooks)) {
+    try_catch(
+      fun(package),
+      error = function(cnd) {
+        msg <- sprintf(
+          "Problem while running user %s hook for package %s.",
+          hook_name,
+          package
+        )
+        warn(msg, parent = cnd)
+      }
+    )
+  }
   metadata[[hook_name]] <- TRUE
   invisible(TRUE)
 }
