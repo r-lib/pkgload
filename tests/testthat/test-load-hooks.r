@@ -149,4 +149,23 @@ test_that("user onLoad hooks are properly run", {
     load_all("testUserLoadHookUpstream"),
     class = "hook_was_run"
   )
+
+  unload("testUserLoadHook")
+  unload("testUserLoadHookUpstream")
+})
+
+test_that("user onLoad hooks are properly run", {
+  load_all("testUserLoadHookError")
+
+  expect_snapshot({
+    (expect_warning(
+      expect_condition(
+        load_all("testUserLoadHookUpstream"),
+        class = "hook_was_run_error"
+      )
+    ))
+  })
+
+  unload("testUserLoadHookError")
+  unload("testUserLoadHookUpstream")
 })
