@@ -1,5 +1,3 @@
-context("Metadata")
-
 test_that("devtools metadata for load hooks", {
 
   # testLoadHooks test package has .onLoad and .onAttach

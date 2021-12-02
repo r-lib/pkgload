@@ -1,5 +1,3 @@
-context("examples")
-
 test_that("default run_example ignores donttest and dontrun ", {
   env <- run_example(test_path("test-examples.Rd"), quiet = TRUE)
   expect_equal(env$a, 1)

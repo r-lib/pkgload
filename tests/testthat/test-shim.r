@@ -1,5 +1,3 @@
-context("shim")
-
 # Utility functions -----------------------------
 # Take file paths and split them into pieces
 expand_path <- function(path) {

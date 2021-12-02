@@ -1,5 +1,3 @@
-context("Imports")
-
 test_that("Imported objects are copied to package environment", {
   load_all("testNamespace")
   # This package imports the whole 'compiler' package, bitops::bitAnd, and

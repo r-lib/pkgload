@@ -1,5 +1,3 @@
-context("DESCRIPTION checks")
-
 test_that("Parse DESCRIPTION file", {
   pkg <- pkg_desc("testNamespace")
 

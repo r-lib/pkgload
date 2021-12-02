@@ -1,5 +1,3 @@
-context("Load hooks")
-
 test_that("hooks called in correct order", {
   record_use <- function(hook) {
     function(...) {

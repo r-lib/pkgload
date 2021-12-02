@@ -1,5 +1,3 @@
-context("Load: collate")
-
 test_that("If collate absent, load in alphabetical order", {
   load_all("testCollateAbsent")
 

@@ -1,5 +1,3 @@
-context("help")
-
 test_that("shim_help behaves the same as utils::help for non-devtools-loaded packages", {
   # stats wasn't loaded with devtools. There are many combinations of calling
   # with quotes and without; make sure they're the same both ways. Need to index

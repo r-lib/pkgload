@@ -1,5 +1,3 @@
-context("Compiled DLLs")
-
 test_that("unload() unloads DLLs from packages loaded with library()", {
 
   # Make a temp lib directory to install test package into

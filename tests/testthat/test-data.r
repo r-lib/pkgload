@@ -1,5 +1,3 @@
-context("Data")
-
 test_that("data available when lazydata not true", {
   load_all("testData")
 

@@ -1,5 +1,3 @@
-context("Namespace")
-
 # Is e an ancestor environment of x?
 is_ancestor_env <- function(e, x) {
   if (identical(e, x))
