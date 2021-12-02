@@ -130,8 +130,6 @@ test_that("onLoad and onAttach", {
   unload("testLoadHooks")
 })
 
-
-
 test_that("onUnload", {
   load_all("testLoadHooks")
 
@@ -142,4 +140,13 @@ test_that("onUnload", {
 
   # Clean up
   rm(".__testLoadHooks__", envir = .GlobalEnv)
+})
+
+test_that("user onLoad hooks are properly run", {
+  load_all("testUserLoadHook")
+
+  expect_condition(
+    load_all("testUserLoadHookUpstream"),
+    class = "hook_was_run"
+  )
 })
