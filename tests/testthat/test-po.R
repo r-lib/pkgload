@@ -5,6 +5,9 @@ test_that("translation domain correctly loaded", {
   withr::defer(unload("testTranslations"))
 
   expect_equal(withr::with_language("fr", hello()), "Bonjour")
+
+  load_all(test_path("testTranslations"))
+  expect_equal(length(temp_po_dirs("testTranslations")), 1)
 })
 
 test_that("modifed translations are correctly reloaded", {
