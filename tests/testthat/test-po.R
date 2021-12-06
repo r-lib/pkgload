@@ -11,9 +11,10 @@ test_that("modifed translations are correctly reloaded", {
   pkg <- withr::local_tempdir()
   file.copy(dir(test_path("testTranslations"), full.names = TRUE), pkg, recursive = TRUE)
 
+  # Load package and generate translation
   load_all(pkg)
   withr::defer(unload("testTranslations"))
-  expect_equal(withr::with_envvar(list(LANGUAGE = "fr"), hello()), "Bonjour")
+  withr::with_envvar(list(LANGUAGE = "fr"), hello())
 
   # Modify .po file
   po_path <- file.path(pkg, "po", "R-fr.po")
@@ -27,6 +28,7 @@ test_that("modifed translations are correctly reloaded", {
     stop("Failed to run msgfmt")
   }
 
+  # Re-load and re-translate
   load_all(pkg)
   expect_equal(withr::with_envvar(list(LANGUAGE = "fr"), hello()), "Salut")
 })
