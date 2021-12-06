@@ -11,8 +11,9 @@ test_that("modifed translations are correctly reloaded", {
   pkg <- withr::local_tempdir()
   file.copy(dir(test_path("testTranslations"), full.names = TRUE), pkg, recursive = TRUE)
 
-  load_all(test_path(pkg))
+  load_all(pkg)
   withr::defer(unload("testTranslations"))
+  expect_equal(withr::with_envvar(list(LANGUAGE = "fr"), hello()), "Bonjour")
 
   # Modify .po file
   po_path <- file.path(pkg, "po", "R-fr.po")
