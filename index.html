@@ -21,6 +21,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,18 +35,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">pkgload</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -54,7 +50,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/r-lib/pkgload/">
+  <a href="https://github.com/r-lib/pkgload/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -71,15 +67,15 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="pkgload" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#pkgload" class="anchor"></a>pkgload</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="pkgload">pkgload<a class="anchor" aria-label="anchor" href="#pkgload"></a>
+</h1></div>
 <!-- badges: start -->
 
-<p>The goal of pkgload is to simulate the process of installing and loading a package, without actually doing the complete process, and hence making package iteration much faster. This was previously part of devtools (it was in fact the original motivation) but has been moved into its own package as part of the devtools <a href="https://github.com/r-lib/devtools#conscious-uncoupling">conscious uncoupling</a>.</p>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
+<p>The goal of pkgload is to simulate the process of installing and loading a package, without actually doing the complete process, and hence making package iteration much faster. This was previously part of devtools (it was in fact the original motivation) but has been moved into its own package as part of the devtools <a href="https://github.com/r-lib/devtools#conscious-uncoupling" class="external-link">conscious uncoupling</a>.</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
 <p>In most cases you will not use pkgload directly, and instead you’ll call it via <code>devtools::load_all()</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">load_all</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -89,51 +85,61 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=pkgload">https://​cloud.r-project.org/​package=pkgload</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/r-lib/pkgload/">https://​github.com/​r-lib/​pkgload/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/r-lib/pkgload/issues">https://​github.com/​r-lib/​pkgload/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="http://hadley.nz">Hadley Wickham</a> <br><small class="roles"> Author </small>  </li>
-<li>Winston Chang <br><small class="roles"> Author </small>  </li>
-<li>Jim Hester <br><small class="roles"> Author </small>  </li>
-<li>Lionel Henry <br><small class="roles"> Author, maintainer </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=pkgload" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/r-lib/pkgload/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/r-lib/pkgload/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/r-lib/pkgload/actions"><img src="https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/r-lib/pkgload?branch=main"><img src="https://codecov.io/gh/r-lib/pkgload/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing pkgload</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="http://hadley.nz" class="external-link">Hadley Wickham</a> <br><small class="roles"> Author </small>  </li>
+<li>Winston Chang <br><small class="roles"> Author </small>  </li>
+<li>Jim Hester <br><small class="roles"> Author </small>  </li>
+<li>Lionel Henry <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/r-lib/pkgload/actions" class="external-link"><img src="https://github.com/r-lib/pkgload/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/r-lib/pkgload?branch=main" class="external-link"><img src="https://codecov.io/gh/r-lib/pkgload/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://hadley.nz">Hadley Wickham</a>, Winston Chang, Jim Hester, Lionel Henry.</p>
+  <p></p>
+<p>Developed by <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, Winston Chang, Jim Hester, Lionel Henry.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
       </footer>
@@ -141,6 +147,8 @@
 
   
 
+
+  
 
   </body>
 </html>
