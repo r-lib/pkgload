@@ -7,6 +7,8 @@
   condition. Previously they were demoted using `try()`, making it
   harder to debug them.
 
+* `load_all()` correctly re-loads modified translations, avoiding 
+  the usual gettext behaviour.
 
 # pkgload 1.2.4
 
