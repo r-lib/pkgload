@@ -21,19 +21,21 @@ Imports:
     crayon,
     desc,
     methods,
-    rlang (>= 0.99.0.9001),
+    rlang (>= 0.99.0.9003),
     rprojroot,
     rstudioapi,
     utils,
     withr (>= 2.4.3)
 Suggests: 
+    Rcpp,
     bitops,
     covr,
+    pak,
     pkgbuild,
-    Rcpp,
+    remotes,
     testthat (>= 3.1.0)
 Remotes:
-    r-lib/rlang
+    r-lib/rlang@check-pkg-input
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2.9000

@@ -1,20 +1,19 @@
 local_load_all_quiet()
 
-test_that("Warned about dependency versions", {
+test_that("Warn about mismatched version", {
   # Should give a warning about grid version
-  expect_warning(load_all("testImportVersion"), "Need grid >=")
+  expect_error(
+    load_all("testImportVersion"),
+    class = "rlib_error_package_not_found"
+  )
   unload("testImportVersion")
-
-  # TODO: Add check for NOT giving a warning about compiler version
-  # Not possible with testthat?
 })
 
-
 test_that("Error on missing dependencies", {
-  # Should give a warning about missing package
-  expect_error(regexp =  "Dependency package[(]s[)] 'missingpackage' not available",
-    expect_warning(regexp = "missingpackage.* not available",
-      load_all("testImportMissing")))
+  expect_error(
+    load_all("testImportMissing"),
+    class = "rlib_error_package_not_found"
+  )
 
   # Loading process will be partially done; unload it
   unload("testImportMissing")
