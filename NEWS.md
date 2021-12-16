@@ -5,8 +5,8 @@
 
   Outdated and missing dependencies are installed using pak if
   installed. If not, the remotes package is used if installed.
-  Otherwise rlang is used as a last resort but this method does not
-  support Remotes fields.
+  Otherwise `install.packages()` is used as a last resort but this
+  method does not support Remotes fields.
 
 * User `onLoad` hooks are now run after exports have been
   populated. This allows the hook to use exported functions.

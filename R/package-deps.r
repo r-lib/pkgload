@@ -63,8 +63,8 @@ deps_check_installed <- function(path, deps, call = caller_env()) {
 
   # Outdated and missing dependencies are installed using pak if
   # installed. If not, the remotes package is used if installed.
-  # Otherwise rlang is used as a last resort but this method does not
-  # support Remotes fields.
+  # Otherwise `install.packages()` is used as a last resort but this
+  # method does not support Remotes fields.
   action <- function(pkg, ...) {
     if (is_installed("pak")) {
       deps <- pak::pkg_deps(path, upgrade = FALSE)
@@ -75,7 +75,7 @@ deps_check_installed <- function(path, deps, call = caller_env()) {
       deps <- deps[deps$package %in% pkg, ]
       update(deps, upgrade = TRUE)
     } else {
-      check_installed(pkg, action = NULL, call = call)
+      utils::install.packages(pkg)
     }
   }
 
