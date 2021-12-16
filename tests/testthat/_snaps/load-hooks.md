@@ -6,8 +6,8 @@
     Output
       <warning/rlang_warning>
       Warning:
-        Problem while running user `onLoad` hook for package testUserLoadHookUpstream.
-        i The hook inherits from `namespace:testUserLoadHookError`.
+      Problem while running user `onLoad` hook for package testUserLoadHookUpstream.
+      i The hook inherits from `namespace:testUserLoadHookError`.
       Caused by error in `fun()`:
-        The message.
+      ! The message.
 
