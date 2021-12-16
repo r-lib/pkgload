@@ -69,7 +69,7 @@ deps_check_installed <- function(path, deps, call = caller_env()) {
     if (is_installed("pak")) {
       deps <- pak::pkg_deps(path, upgrade = FALSE)
       deps <- deps[deps$package %in% pkg, ]
-      pak::pak(deps$ref, ask = FALSE)
+      pak::pkg_install(deps$ref, ask = FALSE)
     } else if (is_installed("remotes")) {
       deps <- remotes::dev_package_deps(path)
       deps <- deps[deps$package %in% pkg, ]
