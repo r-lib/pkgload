@@ -1,5 +1,13 @@
 # pkgload (development version)
 
+* `load_all()` now calls `rlang::check_installed()` to prompt whether
+  to install missing packages.
+
+  Outdated and missing dependencies are installed using pak if
+  installed. If not, the remotes package is used if installed.
+  Otherwise `install.packages()` is used as a last resort but this
+  method does not support Remotes fields.
+
 * User `onLoad` hooks are now run after exports have been
   populated. This allows the hook to use exported functions.
 

@@ -60,21 +60,10 @@ load_imports <- function(path = ".") {
     return(invisible(imports))
   }
 
-  res <- mapply(check_dep_version, imports$package, imports$version)
-  abort_for_missing_packages(res, imports$package)
-
+  deps_check_installed(path, imports)
   process_imports(path)
 
   invisible(deps)
-}
-
-abort_for_missing_packages <- function(x, pkgs) {
-  if (any(!x)) {
-    abort(
-      paste0("Dependency package(s) ",
-        paste0("'", pkgs[!x], "'", collapse = ","),
-        " not available."))
-  }
 }
 
 # Load imported objects

@@ -11,8 +11,7 @@ load_depends <- function(path = ".", quiet = FALSE) {
     return(invisible())
   }
 
-  res <- mapply(check_dep_version, depends$package, depends$version)
-  abort_for_missing_packages(res, depends$package)
+  deps_check_installed(path, depends)
 
   # The `quietly` argument of `require()` does not affect attachment
   # of required packages
