@@ -14,7 +14,7 @@
 #'     below and [load_code()] for more details.
 #'
 #'   \item Compiles any C, C++, or Fortran code in the `src/` directory
-#'     and connects the generated DLL into R. See `pkgload::compile_dll()`
+#'     and connects the generated DLL into R. See [pkgbuild::compile_dll()]
 #'     for more details.
 #'
 #'   \item Loads any compiled translations in `inst/po`.
