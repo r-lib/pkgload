@@ -55,7 +55,7 @@ run_user_hook <- function(package, hook) {
   }
 
   for (fun in rev(hooks)) {
-    try_call(
+    try_fetch(
       fun(package),
       error = function(cnd) {
         msg <- sprintf(
