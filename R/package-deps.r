@@ -73,7 +73,7 @@ deps_check_installed <- function(path, deps, call = caller_env()) {
     } else if (is_installed("remotes")) {
       deps <- remotes::dev_package_deps(path)
       deps <- deps[deps$package %in% pkg, ]
-      update(deps, upgrade = TRUE)
+      stats::update(deps, upgrade = TRUE)
     } else {
       utils::install.packages(pkg)
     }
