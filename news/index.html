@@ -54,6 +54,7 @@
 <p>Outdated and missing dependencies are installed using pak if installed. If not, the remotes package is used if installed. Otherwise <code><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages()</a></code> is used as a last resort but this method does not support Remotes fields.</p>
 </li>
 <li><p>User <code>onLoad</code> hooks are now run after exports have been populated. This allows the hook to use exported functions.</p></li>
+<li><p>The loaded namespace is now locked just before user <code>onLoad</code> hooks are run. This better reproduced the namespace sealing behaviour of regular loading.</p></li>
 <li><p>Errors thrown in user hooks are now demoted to a warning condition. Previously they were demoted using <code><a href="https://rdrr.io/r/base/try.html" class="external-link">try()</a></code>, making it harder to debug them.</p></li>
 <li><p><code><a href="../reference/load_all.html">load_all()</a></code> correctly re-loads modified translations, avoiding the usual gettext behaviour.</p></li>
 </ul></div>
