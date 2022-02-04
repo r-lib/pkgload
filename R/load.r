@@ -175,7 +175,9 @@ load_all <- function(path = ".",
     }
   }
 
-  if (!is_loaded(package)) {
+  if (is_loaded(package)) {
+    rlang::env_unlock(ns_env(package))
+  } else {
     create_ns_env(path)
   }
 
@@ -212,6 +214,8 @@ load_all <- function(path = ".",
   setup_ns_exports(path, export_all, export_imports)
 
   run_ns_load_actions(package)
+  lockEnvironment(ns_env(package))
+
   run_user_hook(package, "load")
 
   # Set up the package environment ------------------------------------

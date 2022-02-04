@@ -11,6 +11,10 @@
 * User `onLoad` hooks are now run after exports have been
   populated. This allows the hook to use exported functions.
 
+* The loaded namespace is now locked just before user `onLoad` hooks
+  are run. This better reproduced the namespace sealing behaviour of
+  regular loading.
+
 * Errors thrown in user hooks are now demoted to a warning
   condition. Previously they were demoted using `try()`, making it
   harder to debug them.
