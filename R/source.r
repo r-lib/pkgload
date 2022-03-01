@@ -1,4 +1,4 @@
-source_many <- function(files, encoding, envir = parent.frame()) {
+source_many <- function(files, encoding = "UTF-8", envir = parent.frame()) {
   stopifnot(is.character(files))
   stopifnot(is.environment(envir))
 
@@ -9,7 +9,14 @@ source_many <- function(files, encoding, envir = parent.frame()) {
   on.exit(options(oop))
 
   for (file in files) {
-    source_one(file, encoding, envir = envir)
+    try_fetch(
+      source_one(file, encoding, envir = envir),
+      error = function(cnd) {
+        path <- file.path(basename(dirname(file)), basename(file))
+        msg <- paste0("Failed to load {.file {path}}")
+        cli::cli_abort(msg, parent = cnd, call = quote(load_all()))
+      }
+    )
   }
   invisible()
 }
