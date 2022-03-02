@@ -9,3 +9,6 @@
 ^appveyor\.yml$
 ^script\.R$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
