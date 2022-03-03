@@ -4,6 +4,9 @@
     <loc>https://pkgload.r-lib.org/404.html</loc>
   </url>
   <url>
+    <loc>https://pkgload.r-lib.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
     <loc>https://pkgload.r-lib.org/authors.html</loc>
   </url>
   <url>
@@ -77,6 +80,9 @@
   </url>
   <url>
     <loc>https://pkgload.r-lib.org/reference/pkg_env.html</loc>
+  </url>
+  <url>
+    <loc>https://pkgload.r-lib.org/reference/pkgload-package.html</loc>
   </url>
   <url>
     <loc>https://pkgload.r-lib.org/reference/pkgtest.html</loc>
