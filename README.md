@@ -18,3 +18,8 @@ In most cases you will not use pkgload directly, and instead you'll call it via 
 ``` r
 devtools::load_all()
 ```
+
+
+## Code of Conduct
+
+Please note that the pkgload project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
