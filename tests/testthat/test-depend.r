@@ -49,6 +49,7 @@ test_that("Parse dependencies", {
 })
 
 test_that("Declared dependencies are added to .Depends object", {
+  skip_if_not_installed("httr")
   load_all("testDependsExists")
   expect_equal(get(".Depends", "package:testDependsExists", inherits = FALSE),
                 "httr")
