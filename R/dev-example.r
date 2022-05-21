@@ -27,7 +27,6 @@ dev_example <- function(topic, quiet = FALSE) {
 #' @param path Path to `.Rd` file
 #' @param run_dontrun if `TRUE`, do run `\dontrun` sections in the Rd files.
 #' @param run_donttest if `TRUE`, do run `\donttest` sections in the Rd files.
-#'   out.
 #' @param env Environment in which code will be run.
 #' @param macros Custom macros to use to parse the `.Rd` file. See the
 #'   `macros` argument of [tools::parse_Rd()]. If `NULL`, then the
