@@ -184,3 +184,7 @@ single_quote <- function(x) {
 ns_s3_methods <- function(pkg) {
  ns_env(pkg)$.__S3MethodsTable__. 
 }
+
+paste_line <- function(...) {
+  paste(c(...), collapse = "\n")
+}

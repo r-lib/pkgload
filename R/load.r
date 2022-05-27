@@ -285,21 +285,15 @@ warn_if_conflicts <- function(package, env1, env2) {
 
   bullets <- conflict_bullets(package, both)
 
-  directions <- crayon::silver(
-    paste0(
-      "Did you accidentally source a file rather than using `load_all()`?\n",
-      "Run `rm(list = c(", paste0('"', both, '"', collapse = ", "),
-      "))` to remove the conflicts."
-    )
-  )
+  objects <- paste0('"', both, '"', collapse = ", ")
+
+  directions <- cli::style_blurred(cli::format_bullets_raw(c(
+    "i" = "Did you accidentally source a file rather than using `load_all()`?",
+    " " = cli::format_inline("Run `rm(list = {objects})` to remove the conflicts.")
+  )))
 
   warn(
-    sprintf(
-      "\n%s\n%s\n\n%s",
-      header,
-      bullets,
-      directions
-    ),
+    paste_line(header, bullets, directions),
     class = "pkgload::conflict"
   )
 }
@@ -330,7 +324,7 @@ conflict_bullets <- function(package, both) {
 
   bullets <- paste0(collapse = "\n",
     sprintf(
-      "%s %s masks %s::%s()",
+      "`%s` %s masks `%s::%s()`.",
       crayon::red(cli::symbol$cross),
       format(crayon::green(paste0(both, "()"))),
       crayon::blue(package),

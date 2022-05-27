@@ -20,7 +20,7 @@ BugReports: https://github.com/r-lib/pkgload/issues
 Depends:
     R (>= 3.4.0)
 Imports: 
-    cli,
+    cli (>= 3.3.0),
     crayon,
     desc,
     methods,

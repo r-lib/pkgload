@@ -36,12 +36,9 @@ test_that("warn_if_conflicts warns for conflicts and both objects are functions"
   e2$foo <- function() "foo2"
 
   # warning for a conflict
-  withr::with_options(c(crayon.enabled = FALSE),
-    expect_warning(
-      warn_if_conflicts("pkg", e1, e2),
-      "foo().*masks.*pkg::foo()"
-    )
-  )
+  expect_snapshot({
+    (expect_warning(warn_if_conflicts("pkg", e1, e2)))
+  })
 })
 
 test_that("warn_if_conflicts does not warn for conflicts when one of the objects is not a function", {
