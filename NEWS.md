@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* rstudioapi is no longer a hard dependency of pkgload (#187).
+
 * `load_all()` now calls `rlang::check_installed()` to prompt whether
   to install missing packages.
 

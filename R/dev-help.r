@@ -65,7 +65,7 @@ print.dev_topic <- function(x, ...) {
     tools::Rd2txt(x$path, out = out_path, package = x$pkg, stages = x$stage, macros = macros)
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
-    if (rstudioapi::hasFun("previewRd")) {
+    if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
       rstudioapi::callFun("previewRd", x$path)
       return(invisible())
     }
