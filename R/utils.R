@@ -188,3 +188,12 @@ ns_s3_methods <- function(pkg) {
 paste_line <- function(...) {
   paste(c(...), collapse = "\n")
 }
+
+style_hyperlink_run <- function(code) {
+  if (nzchar(Sys.getenv("R_CLI_HAS_HYPERLINK_RUN"))) {
+    link <- paste0("rstudio:run:", code)
+    code <- cli::style_hyperlink(code, link)
+  }
+
+  cli::format_inline("{.code {code}}")
+}
