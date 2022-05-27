@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* The `?` shim no longer interprets `?"/"` as a path (#198).
+
 * rstudioapi is no longer a hard dependency of pkgload (#187).
 
 * `load_all()` now calls `rlang::check_installed()` to prompt whether

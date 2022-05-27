@@ -51,22 +51,30 @@ dev_topic_parse <- function(topic, dev_packages = NULL) {
 
 
 dev_topic_path <- function(topic, path = ".") {
+  # Don't interpret the division operator as a path (#198)
+  if (is_string(topic, "/")) {
+    return(NULL)
+  }
+
   path <- pkg_path(path)
 
   # First see if a man file of that name exists
   man <- package_file("man", topic, path = path)
-  if (file.exists(man))
+  if (file.exists(man)) {
     return(man)
+  }
 
   # Next, look in index
   index <- dev_topic_index(path)
-  if (topic %in% names(index))
+  if (topic %in% names(index)) {
     return(package_file("man", last(index[[topic]]), path = path))
+  }
 
   # Finally, try adding .Rd to name
   man_rd <- package_file("man", paste0(topic, ".Rd"), path = path)
-  if (file.exists(man_rd))
+  if (file.exists(man_rd)) {
     return(man_rd)
+  }
 
   NULL
 }

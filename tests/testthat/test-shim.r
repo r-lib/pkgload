@@ -111,3 +111,7 @@ test_that("Replacement system.file returns correct values when installed", {
   # Reset the libpath
   .libPaths(old_libpaths)
 })
+
+test_that("division operator is not interpreted as a path (#198)", {
+  expect_null(dev_topic_find("/"))
+})
