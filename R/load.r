@@ -362,7 +362,14 @@ is_foreign_method <- function(x, package) {
 }
 
 #' @rdname load_all
+#' @param pkg If supplied, `is_loading()` only returns `TRUE` if the
+#'   package being loaded is `pkg`.
 #' @export
-is_loading <- function() {
-  nzchar(Sys.getenv("DEVTOOLS_LOAD"))
+is_loading <- function(pkg = NULL) {
+  var <- Sys.getenv("DEVTOOLS_LOAD")
+  if (is_null(pkg)) {
+    nzchar(var)
+  } else {
+    is_string(var, pkg)
+  }
 }

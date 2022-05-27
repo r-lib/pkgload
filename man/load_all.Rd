@@ -18,7 +18,7 @@ load_all(
   warn_conflicts = TRUE
 )
 
-is_loading()
+is_loading(pkg = NULL)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -58,6 +58,9 @@ accidentally source a \code{.R} file, rather than using \code{load_all()}, or if
 define a function directly in the R console. This is frustrating to debug,
 as it feels like the changes you make to the package source aren't having
 the expected effect.}
+
+\item{pkg}{If supplied, \code{is_loading()} only returns \code{TRUE} if the
+package being loaded is \code{pkg}.}
 }
 \description{
 \code{load_all} loads a package. It roughly simulates what happens

@@ -48,6 +48,8 @@ test_that("onLoad and onAttach", {
   with_options(
     "pkgload:::testLoadHooks::.onLoad" = function() {
       expect_true(is_loading())
+      expect_true(is_loading("testLoadHooks"))
+      expect_false(is_loading("foobar"))
       ran <<- TRUE
     },
     load_all("testLoadHooks")
