@@ -5,7 +5,7 @@ Description: desc
 Authors@R: c(
     person("Gábor", "Csárdi", email = "csardi.gabor@gmail.com", role = c("aut", "cre"))
     )
-License: GPL-3
+License: MIT
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
