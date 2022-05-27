@@ -288,10 +288,12 @@ warn_if_conflicts <- function(package, env1, env2) {
   bullets <- conflict_bullets(package, both)
 
   objects <- paste0('"', both, '"', collapse = ", ")
+  run_rm <- sprintf("rm(list = c(%s))", objects)
+  run_rm <- style_hyperlink_run(run_rm)
 
-  directions <- cli::style_blurred(cli::format_bullets_raw(c(
+  directions <- cli::col_silver(cli::format_bullets_raw(c(
     "i" = "Did you accidentally source a file rather than using `load_all()`?",
-    " " = cli::format_inline("Run `rm(list = {objects})` to remove the conflicts.")
+    " " = glue::glue("Run {run_rm} to remove the conflicts.")
   )))
 
   warn(

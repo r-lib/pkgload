@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* The advice about running `rm()` to remove conflicts with objects in
+  the global environment is now clickable in RStudio (#199).
+
 * New `is_loading()` predicate to detect whether `load_all()` is
   currently running (#134).
 

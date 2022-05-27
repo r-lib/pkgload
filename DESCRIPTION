@@ -23,6 +23,7 @@ Imports:
     cli (>= 3.3.0),
     crayon,
     desc,
+    glue,
     methods,
     rlang (>= 1.0.0),
     rprojroot,
