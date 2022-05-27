@@ -6,6 +6,11 @@ onload_lib <- ""
 onattach_lib <- ""
 
 .onLoad <- function(lib, pkg) {
+  hook <- getOption("pkgload:::testLoadHooks::.onLoad")
+  if (is.function(hook)) {
+    hook()
+  }
+
   onload_lib <<- lib
   a <<- a + 1
 }

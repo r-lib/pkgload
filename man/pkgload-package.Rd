@@ -12,6 +12,7 @@ Simulates the process of installing a package and then attaching it. This is a k
 Useful links:
 \itemize{
   \item \url{https://github.com/r-lib/pkgload}
+  \item \url{https://pkgload.r-lib.org}
   \item Report bugs at \url{https://github.com/r-lib/pkgload/issues}
 }
 
@@ -28,7 +29,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item RStudio [copyright holder]
+  \item RStudio [copyright holder, funder]
   \item R Core team (Some namespace and vignette code extracted from base R) [contributor]
 }
 

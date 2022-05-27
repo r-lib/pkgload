@@ -29,6 +29,9 @@
 #'
 #' }
 #'
+#' `is_loading()` returns `TRUE` when it is called while `load_all()`
+#' is running. This may be useful e.g. in onLoad hooks.
+#'
 #' @section Namespaces:
 #' The namespace environment `<namespace:pkgname>`, is a child of
 #' the imports environment, which has the name attribute
@@ -113,9 +116,12 @@ load_all <- function(path = ".",
                      quiet = NULL,
                      recompile = FALSE,
                      warn_conflicts = TRUE) {
+
   path <- pkg_path(path)
   package <- pkg_name(path)
   description <- pkg_desc(path)
+
+  withr::local_envvar(c(DEVTOOLS_LOAD = package))
 
   quiet <- quiet %||% peek_option("testthat:::load_all_quiet") %||% FALSE
 
@@ -235,7 +241,7 @@ load_all <- function(path = ".",
 
   # Source test helpers into package environment
   if (uses_testthat(path) && helpers) {
-    withr_with_envvar(c(NOT_CRAN = "true", DEVTOOLS_LOAD = "true"),
+    withr_with_envvar(c(NOT_CRAN = "true"),
       testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
     )
   }
@@ -353,4 +359,10 @@ find_test_dir <- function(path) {
 is_foreign_method <- function(x, package) {
   env <- environment(x)
   !is_namespace(env) || !is_string(ns_env_name(env), package)
+}
+
+#' @rdname load_all
+#' @export
+is_loading <- function() {
+  nzchar(Sys.getenv("DEVTOOLS_LOAD"))
 }

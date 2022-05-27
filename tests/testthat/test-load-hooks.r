@@ -44,7 +44,17 @@ test_that("hooks called in correct order", {
 })
 
 test_that("onLoad and onAttach", {
-  load_all("testLoadHooks")
+  ran <- FALSE
+  with_options(
+    "pkgload:::testLoadHooks::.onLoad" = function() {
+      expect_true(is_loading())
+      ran <<- TRUE
+    },
+    load_all("testLoadHooks")
+  )
+
+  expect_true(ran)
+
   nsenv <- ns_env("testLoadHooks")
   pkgenv <- pkg_env("testLoadHooks")
 

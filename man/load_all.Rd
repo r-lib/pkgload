@@ -2,6 +2,7 @@
 % Please edit documentation in R/load.r
 \name{load_all}
 \alias{load_all}
+\alias{is_loading}
 \title{Load complete package}
 \usage{
 load_all(
@@ -16,6 +17,8 @@ load_all(
   recompile = FALSE,
   warn_conflicts = TRUE
 )
+
+is_loading()
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
@@ -86,6 +89,9 @@ you can access them interactively. devtools sets the
 let you check whether the helpers are run during package loading.
 
 }
+
+\code{is_loading()} returns \code{TRUE} when it is called while \code{load_all()}
+is running. This may be useful e.g. in onLoad hooks.
 }
 \section{Namespaces}{
 

@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* New `is_loading()` predicate to detect whether `load_all()` is
+  currently running (#134).
+
 * `unregister()` is now exported. This is a gentler version of
   `unload()` which removes the package from the search path,
   unregisters methods, and unregisters the namespace. However it
