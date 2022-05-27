@@ -37,7 +37,9 @@ onload_assign("load_dll", {
 
     # Delete the temporary SO when the namespace gets garbage collected
     dll_path <- dlls[[package]][["path"]]
-    new_weakref(env, finalizer = ns_finalizer(dll_path))
+    if (!is_null(dll_path)) {
+      new_weakref(env, finalizer = ns_finalizer(dll_path))
+    }
 
     invisible(dlls)
   }
@@ -51,6 +53,10 @@ onload_assign("load_dll", {
 ns_finalizer <- function(path) {
   force(path)
   function(...) {
+    if (!is_string(path)) {
+      return(NULL)
+    }
+
     # Clean up the temporary .so file.
     unlink(path)
 
