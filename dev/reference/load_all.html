@@ -65,7 +65,9 @@ when a package is installed and loaded with <code><a href="https://rdrr.io/r/bas
   quiet <span class="op">=</span> <span class="cn">NULL</span>,
   recompile <span class="op">=</span> <span class="cn">FALSE</span>,
   warn_conflicts <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span>
+
+<span class="fu">is_loading</span><span class="op">(</span>pkg <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -108,6 +110,9 @@ accidentally source a <code>.R</code> file, rather than using <code>load_all()</
 define a function directly in the R console. This is frustrating to debug,
 as it feels like the changes you make to the package source aren't having
 the expected effect.</p></dd>
+<dt>pkg</dt>
+<dd><p>If supplied, <code>is_loading()</code> only returns <code>TRUE</code> if the
+package being loaded is <code>pkg</code>.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -127,7 +132,9 @@ functions at the correct times.</p></li>
 you can access them interactively. devtools sets the
 <code>DEVTOOLS_LOAD</code> environment variable to <code>"true"</code> to
 let you check whether the helpers are run during package loading.</p></li>
-</ul></div>
+</ul><p><code>is_loading()</code> returns <code>TRUE</code> when it is called while <code>load_all()</code>
+is running. This may be useful e.g. in onLoad hooks.</p>
+    </div>
     <div class="section level2">
     <h2 id="namespaces">Namespaces<a class="anchor" aria-label="anchor" href="#namespaces"></a></h2>
     
