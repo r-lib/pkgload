@@ -288,7 +288,7 @@ warn_if_conflicts <- function(package, env1, env2) {
   bullets <- conflict_bullets(package, both)
 
   objects <- paste0('"', both, '"', collapse = ", ")
-  run_rm <- sprintf("rm(list = %s)", objects)
+  run_rm <- sprintf("rm(list = c(%s))", objects)
   run_rm <- style_hyperlink_run(run_rm)
 
   directions <- cli::col_silver(cli::format_bullets_raw(c(
