@@ -29,7 +29,7 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
 }
 
 dev_topic_parse <- function(topic, dev_packages = NULL) {
-  stopifnot(is.character(topic), length(topic) == 1)
+  stopifnot(is_string(topic))
 
   pieces <- strsplit(topic, ":::?")[[1]]
   if (length(pieces) == 1) {

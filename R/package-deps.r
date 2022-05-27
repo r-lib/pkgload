@@ -11,8 +11,10 @@
 #' # only package dependencies are returned
 #' parse_deps("utils (== 2.12.1),\ntools,\nR (>= 2.10),\nmemoise")
 parse_deps <- function(string) {
-  if (is.null(string)) return()
-  stopifnot(is.character(string), length(string) == 1)
+  if (is.null(string)) {
+    return()
+  }
+  stopifnot(is_string(string))
   if (grepl("^\\s*$", string)) return()
 
   pieces <- strsplit(string, "[[:space:]]*,[[:space:]]*")[[1]]
