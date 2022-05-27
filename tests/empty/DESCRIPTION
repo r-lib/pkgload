@@ -1,0 +1,18 @@
+Package: empty
+Version: 1.0.0
+Title: title
+Description: desc
+Authors@R: c(
+    person("Gábor", "Csárdi", email = "csardi.gabor@gmail.com", role = c("aut", "cre"))
+    )
+License: MIT
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+RoxygenNote: 7.1.2
+Roxygen: list(markdown = TRUE)
+Depends:
+    R (>= 3.2)
+Imports:
+    tools,
+    utils

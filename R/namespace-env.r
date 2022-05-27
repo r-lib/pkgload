@@ -249,7 +249,7 @@ unregister_namespace <- function(name = NULL) {
   eapply(ns_env(name), force, all.names = TRUE)
 
   # Remove the item from the registry
-  do.call(rm, args = list(name, envir = ns_registry()))
+  env_unbind(ns_registry(), name)
   invisible()
 }
 

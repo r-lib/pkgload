@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* `.dynLibs()` is no longer emptied when package with no DLL is
+  unloaded (#176).
+
 * The `?` shim no longer interprets `?"/"` as a path (#198).
 
 * rstudioapi is no longer a hard dependency of pkgload (#187).
