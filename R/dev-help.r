@@ -141,8 +141,15 @@ print.dev_topic <- function(x, ...) {
 shim_help <- function(topic, package = NULL, ...) {
   # Reproduce help's NSE for topic - try to eval it and see if it's a string
   topic_name <- substitute(topic)
-  is_char <- FALSE
-  try(is_char <- is.character(topic) && length(topic) == 1L, silent = TRUE)
+
+  is_char <- tryCatch(
+    error = function(...) FALSE,
+    {
+      force(topic)
+      is_string(topic)
+    }
+  )
+
   if (is_char) {
     topic_str <- topic
     topic_name <- as.name(topic)
