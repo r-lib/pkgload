@@ -293,14 +293,14 @@ warn_if_conflicts <- function(package, env1, env2) {
     )
   )
 
-  rlang::warn(
+  warn(
     sprintf(
       "\n%s\n%s\n\n%s",
       header,
       bullets,
       directions
     ),
-    .subclass = "pkgload::conflict"
+    class = "pkgload::conflict"
   )
 }
 
