@@ -148,6 +148,7 @@ load_all <- function(path = ".",
 
   if (isTRUE(compile)) {
     rlang::check_installed("pkgbuild", reason = "to compile packages with a `src/` directory.")
+    pkgbuild::clean_dll(path)
     pkgbuild::compile_dll(path, force = TRUE, quiet = quiet)
   } else if (identical(compile, NA)) {
     rlang::check_installed("pkgbuild", reason = "to compile packages with a `src/` directory.")

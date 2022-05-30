@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_all(compile = TRUE)` now forces a full recompilation (#93).
+
 * The advice about running `rm()` to remove conflicts with objects in
   the global environment is now clickable in RStudio (#199).
 
