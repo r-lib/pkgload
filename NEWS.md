@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* Unknown Rd macros no longer trigger a warning when building the
+  package topic index (#119).
+
 * `load_all(compile = TRUE)` now forces a full recompilation (#93).
 
 * The advice about running `rm()` to remove conflicts with objects in

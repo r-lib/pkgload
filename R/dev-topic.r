@@ -112,8 +112,12 @@ build_topic_index <- function(path = ".") {
   macros <- load_rd_macros(path)
   rds <- rd_files(path)
 
+  # Pass `permissive = TRUE` to suppress warnings about unknown
+  # macros (#119). It is unlikely that a macro generates `name` or
+  # `alias` commands, so we shouldn't be missing any topics from
+  # unknown macros.
   aliases <- function(path) {
-    parsed <- tools::parse_Rd(path, macros = macros)
+    parsed <- tools::parse_Rd(path, macros = macros, permissive = TRUE)
     tags <- vapply(parsed, function(x) attr(x, "Rd_tag")[[1]], character(1))
     unlist(parsed[tags == "\\alias"])
   }
