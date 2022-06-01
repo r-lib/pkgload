@@ -81,6 +81,11 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
 #' @rdname unload
 #' @export
 unregister <- function(package = pkg_name()) {
+  # Before unregistering anything, force all imported functions that
+  # might be needed during package reloading, in case they come from
+  # `package`
+  force_load_all_deps()
+
   unload_pkg_env(package)
   unregister_methods(package)
   unregister_namespace(package)
