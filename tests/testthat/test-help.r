@@ -77,3 +77,14 @@ test_that("dev_help works with package and function help with the same name", {
   h1 <- dev_help("testHelp")
   expect_identical(shim_question(testHelp::testHelp), h1)
 })
+
+test_that("unknown macros don't trigger warnings (#119)", {
+  load_all("testUnknownMacro")
+  local_options(pager = function(...) "")
+
+  expect_snapshot({
+    expect_no_warning(
+      print(dev_help("testUnknownMacro"))
+    )
+  })
+})

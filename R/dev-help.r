@@ -67,7 +67,8 @@ print.dev_topic <- function(x, ...) {
       out = out_path,
       package = x$pkg,
       stages = x$stage,
-      macros = macros
+      macros = macros,
+      permissive = TRUE
     )
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
@@ -81,7 +82,8 @@ print.dev_topic <- function(x, ...) {
       package = x$pkg,
       stages = x$stage,
       no_links = TRUE,
-      macros = macros
+      macros = macros,
+      permissive = TRUE
     )
 
     css_path <- file.path(tempdir(), "R.css")
