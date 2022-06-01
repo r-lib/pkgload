@@ -25,7 +25,7 @@ Imports:
     desc,
     glue,
     methods,
-    rlang (>= 1.0.0),
+    rlang (>= 1.0.2),
     rprojroot,
     utils,
     withr (>= 2.4.3)
