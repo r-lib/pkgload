@@ -46,7 +46,7 @@ dev_help <- function(topic,
 
 load_rd_macros <- function(dir) {
   macros <- tools::loadPkgRdMacros(dir)
-  macros <- tools::loadRdMacros(
+  tools::loadRdMacros(
     file.path(R.home("share"), "Rd", "macros", "system.Rd"),
     macros = macros
   )
@@ -62,15 +62,27 @@ print.dev_topic <- function(x, ...) {
   macros <- load_rd_macros(dirname(dirname(x$path)))
 
   if (type == "text") {
-    tools::Rd2txt(x$path, out = out_path, package = x$pkg, stages = x$stage, macros = macros)
+    tools::Rd2txt(
+      x$path,
+      out = out_path,
+      package = x$pkg,
+      stages = x$stage,
+      macros = macros
+    )
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
     if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
       rstudioapi::callFun("previewRd", x$path)
       return(invisible())
     }
-    tools::Rd2HTML(x$path, out = out_path, package = x$pkg, stages = x$stage,
-      no_links = TRUE, macros = macros)
+    tools::Rd2HTML(
+      x$path,
+      out = out_path,
+      package = x$pkg,
+      stages = x$stage,
+      no_links = TRUE,
+      macros = macros
+    )
 
     css_path <- file.path(tempdir(), "R.css")
     if (!file.exists(css_path)) {
