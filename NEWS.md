@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* `load_all()` now imports its dependencies lazily to avoid parallel
+  installation issues (#89).
+
 * Unknown Rd macros no longer trigger a warning when building the
   package topic index (#119).
 
