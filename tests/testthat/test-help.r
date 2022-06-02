@@ -89,7 +89,7 @@ test_that("unknown macros don't trigger warnings (#119)", {
   skip_on_cran()
 
   # Because on RStudio the print method uses a different method
-  skip_if(is_installed("rstudioapi"))
+  skip_if(is_installed("rstudioapi") && rstudioapi::hasFun("previewRd"))
 
   # We should still be displaying a warning when rendering the documentation
   local_options(pager = function(...) "")
