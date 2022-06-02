@@ -124,6 +124,7 @@ modify_lang <- function(x, f, ...) {
   } else if (is.function(x)) {
      formals(x) <- modify_lang(formals(x), f, ...)
      body(x) <- modify_lang(body(x), f, ...)
+     x
   } else {
     x
   }

@@ -130,17 +130,14 @@ shim_library.dynam.unload <- function(chname, libpath,
 }
 
 # This shim version of library.dynam addresses the issue raised in:
-# https://github.com/r-lib/pkgload/issues/48
-# It helps `load_all()` to find libraries placed within inst/libs/
-# This CRAN incompatible practice allows for including a dll compiled
-# elsewhere in an R package.
-# See also https://stackoverflow.com/questions/8977346
+# https://github.com/r-lib/pkgload/issues/48 It helps `load_all()` to
+# find libraries placed within inst/libs/ This CRAN-incompatible
+# practice allows for including a custom compiled dll in an R package.
+# See also https://stackoverflow.com/questions/8977346.
 #
 # This shim function first attempts using base::libary.dynam() if
-# that fails it uses .inst_libary.dynam() which is very similar but
-# inserts "inst/" in the dll/so path. Finally, if both of those fail
-# it goes back to the base::library.dynam() so that the error state
-# is based on that function.
+# that fails it uses `inst_libary.dynam()` which is very similar but
+# inserts "inst/" in the dll/so path.
 shim_library.dynam <- function(chname,
                                package,
                                lib.loc,
@@ -178,66 +175,23 @@ shim_library.dynam <- function(chname,
 }
 
 # Version of libary.dynam that looks for libraries or objects to load
-# Within the "/inst" package subdirectory. This is for the rare case
-# that a user has placed a linked library or shared object compiled
-# elsewhere within the inst/.
-#
-# Note this was copied from base::library.dynam v3.4.4. Two lines were
-# edited by replacing "libs" with "inst/libs" Otherwise it is
-# unchanged.
-inst_library.dynam <- function(chname,
-                               package,
-                               lib.loc,
-                               verbose = getOption("verbose"),
-                               file.ext = .Platform$dynlib.ext,
-                               ...) {
+# within the `inst` package subdirectory
+on_load(
+  inst_library.dynam <- modify_lang(base::library.dynam, file_path_update)
+)
 
-  dll_list <- .dynLibs()
-  if (missing(chname) || !nzchar(chname))
-    return(dll_list)
-  package
-  lib.loc
-  r_arch <- .Platform$r_arch
-  chname1 <- paste0(chname, file.ext)
-  for (pkg in find.package(package, lib.loc, verbose = verbose)) {
-    DLLpath <- if (nzchar(r_arch))
-      file.path(pkg, "inst/libs", r_arch)  # This line differs from base::dynam.load
-    else file.path(pkg, "inst/libs")       # This line differs from base::dynam.load
-    file <- file.path(DLLpath, chname1)
-    if (file.exists(file))
-      break
-    else file <- ""
+file_path_update <- function(x) {
+  if (is_file_path(x)) {
+    x[[3]] <- file.path("inst", "libs")
   }
-  if (file == "")
-    if (.Platform$OS.type == "windows")
-      stop(gettextf("DLL %s not found: maybe not installed for this architecture?",
-                    sQuote(chname)), domain = NA)
-  else stop(gettextf("shared object %s not found", sQuote(chname1)),
-            domain = NA)
-  file <- file.path(normalizePath(DLLpath, "/", TRUE), chname1)
-  ind <- vapply(dll_list, function(x) x[["path"]] == file,
-                NA)
-  if (length(ind) && any(ind)) {
-    if (verbose)
-      if (.Platform$OS.type == "windows")
-        message(gettextf("DLL %s already loaded", sQuote(chname1)),
-                domain = NA)
-    else message(gettextf("shared object '%s' already loaded",
-                          sQuote(chname1)), domain = NA)
-    return(invisible(dll_list[[seq_along(dll_list)[ind]]]))
+  x
+}
+
+is_file_path <- function(x) {
+  if (!is_call(x, "file.path")) {
+    return(FALSE)
   }
-  if (.Platform$OS.type == "windows") {
-    PATH <- Sys.getenv("PATH")
-    Sys.setenv(PATH = paste(gsub("/", "\\\\", DLLpath),
-                            PATH, sep = ";"))
-    on.exit(Sys.setenv(PATH = PATH))
-  }
-  if (verbose)
-    message(gettextf("now dyn.load(\"%s\") ...", file),
-            domain = NA)
-  dll <- if ("DLLpath" %in% names(list(...)))
-    dyn.load(file, ...)
-  else dyn.load(file, DLLpath = DLLpath, ...)
-  .dynLibs(c(dll_list, list(dll)))
-  invisible(dll)
+
+  args <- as.list(x[2:3])
+  identical(args, list(quote(pkg), "libs"))
 }
