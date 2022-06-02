@@ -154,7 +154,7 @@ shim_help <- function(topic, package = NULL, ...) {
   # Reproduce help's NSE for topic - try to eval it and see if it's a string
   topic_name <- substitute(topic)
 
-  is_char <- tryCatch(
+  is_string <- tryCatch(
     error = function(...) FALSE,
     {
       force(topic)
@@ -162,12 +162,12 @@ shim_help <- function(topic, package = NULL, ...) {
     }
   )
 
-  if (is_char) {
+  if (is_string) {
     topic_str <- topic
-    topic_name <- as.name(topic)
+    topic_name <- sym(topic)
   } else if (missing(topic_name)) {
     # Leave the vars missing
-  } else if (is.null(topic_name)) {
+  } else if (is_null(topic_name)) {
     topic_str <- NULL
     topic_name <- NULL
   } else {
@@ -179,17 +179,19 @@ shim_help <- function(topic, package = NULL, ...) {
 
   # help's NSE for package is slightly simpler
   package_name <- substitute(package)
-  if (is.name(package_name)) {
-    package_str <- as.character(package_name)
-  } else if (is.null(package_name)) {
+  if (is_symbol(package_name)) {
+    package_str <- as_string(package_name)
+  } else if (is_null(package_name)) {
     package_str <- NULL
   } else {
     package_str <- package
-    package_name <- as.name(package)
+    package_name <- sym(package)
   }
 
-  use_dev <- (!missing(topic) && !is.null(package_str) && package_str %in% dev_packages()) ||
-    (!missing(topic_name) && is.null(package_str) && !is.null(dev_topic_find(topic_str)))
+  use_dev <-
+    (!missing(topic) && is_string(package_str) && package_str %in% dev_packages()) ||
+    (!missing(topic_name) && is_null(package_str) && !is_null(dev_topic_find(topic_str)))
+
   if (use_dev) {
     dev_help(topic_str, package_str)
   } else {
