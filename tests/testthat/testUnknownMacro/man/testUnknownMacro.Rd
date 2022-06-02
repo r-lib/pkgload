@@ -7,5 +7,5 @@
 testUnknownMacro()
 }
 \description{
-This macro is \unknown{}.
+This macro is \unknown{}. This one is \known{}.
 }
