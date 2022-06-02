@@ -46,7 +46,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pkgload-development-version">pkgload (development version)<a class="anchor" aria-label="anchor" href="#pkgload-development-version"></a></h2>
-<ul><li><p><code><a href="../reference/load_all.html">load_all()</a></code> now imports its dependencies lazily to avoid parallel installation issues (<a href="https://github.com/r-lib/pkgload/issues/89" class="external-link">#89</a>).</p></li>
+<ul><li><p>The <code><a href="../reference/system.file.html">system.file()</a></code> shim now fails if you supply a path that starts with <code>inst</code> to better reproduce the behaviour with installed packages (<a href="https://github.com/r-lib/pkgload/issues/104" class="external-link">#104</a>).</p></li>
+<li><p><code><a href="../reference/load_all.html">load_all()</a></code> now imports its dependencies lazily to avoid parallel installation issues (<a href="https://github.com/r-lib/pkgload/issues/89" class="external-link">#89</a>).</p></li>
 <li><p>Unknown Rd macros no longer trigger a warning when building the package topic index (<a href="https://github.com/r-lib/pkgload/issues/119" class="external-link">#119</a>).</p></li>
 <li><p><code>load_all(compile = TRUE)</code> now forces a full recompilation (<a href="https://github.com/r-lib/pkgload/issues/93" class="external-link">#93</a>).</p></li>
 <li><p>The advice about running <code><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm()</a></code> to remove conflicts with objects in the global environment is now clickable in RStudio (<a href="https://github.com/r-lib/pkgload/issues/199" class="external-link">#199</a>).</p></li>
