@@ -6,7 +6,9 @@
 #' @inheritParams load_all
 #' @keywords programming
 #' @export
-load_code <- function(path = ".") {
+load_code <- function(path = ".", quiet = FALSE) {
+  quiet <- load_all_quiet(quiet, "load_code")
+
   path <- pkg_path(path)
   package <- pkg_name(path)
   encoding <- pkg_desc(path)$get("Encoding")
@@ -18,7 +20,7 @@ load_code <- function(path = ".") {
 
   env <- ns_env(package)
 
-  r_files <- find_code(path)
+  r_files <- find_code(path, quiet = quiet)
   paths <- changed_files(r_files)
   if (length(paths) == 0L) return()
 
@@ -37,7 +39,7 @@ load_code <- function(path = ".") {
 }
 
 # Find all R files in given directory.
-find_code <- function(path = ".") {
+find_code <- function(path = ".", quiet = FALSE) {
   path_r <- package_file("R", path = path)
 
   r_files <- withr_with_collate(
@@ -54,13 +56,13 @@ find_code <- function(path = ".") {
     collate <- file.path(path_r, collate)
 
     missing <- setdiff(collate, r_files)
-    if (length(missing) > 0) {
+    if (!quiet && length(missing) > 0) {
       cli::cli_alert_warning("Skipping missing files: {.file {missing}}")
     }
     collate <- setdiff(collate, missing)
 
     extra <- setdiff(r_files, collate)
-    if (length(extra) > 0) {
+    if (!quiet && length(extra) > 0) {
       cli::cli_alert_warning("Adding files missing in collate: {.file {extra}}")
     }
 

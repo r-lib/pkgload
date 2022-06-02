@@ -168,7 +168,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   dir.create(file.path(inst_dir, "libs"), recursive = TRUE, showWarnings = FALSE)
   file.copy(compiled_libs, inst_dir, recursive = TRUE, overwrite = TRUE)
 
-  load_all(pkg_dir)
+  load_all(pkg_dir, quiet = TRUE)
   expect_true(rlang::is_installed("testLibDynam"))
 
   # Check that it's loaded properly, by running a function from the package.

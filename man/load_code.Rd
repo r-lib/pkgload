@@ -4,10 +4,12 @@
 \alias{load_code}
 \title{Load R code.}
 \usage{
-load_code(path = ".")
+load_code(path = ".", quiet = FALSE)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
+
+\item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
 \description{
 Load all R code in the \code{R} directory. The first time the code is
