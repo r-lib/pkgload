@@ -159,7 +159,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   # Install testDllLoad package
   install.packages(test_path("testDllLoad"), repos = NULL, type = "source",
                    INSTALL_opts = "--no-multiarch", quiet = TRUE)
-  expect_true(require(testDllLoad))
+  expect_true(rlang::is_installed("testDllLoad"))
   unload("testDllLoad")
 
   # Copy  libs/ from installed testDllLoad packageinto  testDynLib/inst/libs/
@@ -169,7 +169,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   file.copy(compiled_libs, inst_dir, recursive = TRUE, overwrite = TRUE)
 
   load_all(pkg_dir)
-  expect_true(require(testLibDynam))
+  expect_true(rlang::is_installed("testLibDynam"))
 
   # Check that it's loaded properly, by running a function from the package.
   # nulltest3() calls a C function which returns null.
