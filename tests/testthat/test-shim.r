@@ -142,12 +142,13 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   # 4. test that we can use load_all on the package and that the dll can be used
 
   # Make a temp lib directory to install test package into
-  old_libpaths <- .libPaths()
   tmp_libpath = file.path(tempdir(), "library-dynam-test")
-  if (!dir.exists(tmp_libpath)) dir.create(tmp_libpath)
-  .libPaths(c(tmp_libpath, .libPaths()))
+  if (!dir.exists(tmp_libpath)) {
+    dir.create(tmp_libpath)
+  }
 
-  # Reset the libpath on exit
+  old_libpaths <- .libPaths()
+  .libPaths(c(tmp_libpath, .libPaths()))
   on.exit(.libPaths(old_libpaths), add = TRUE)
 
   # Create temp directory for assembling testLibDynam with dll or so in inst/libs/
@@ -157,8 +158,13 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   expect_true(file.exists(pkg_dir))
 
   # Install testDllLoad package
-  install.packages(test_path("testDllLoad"), repos = NULL, type = "source",
-                   INSTALL_opts = "--no-multiarch", quiet = TRUE)
+  install.packages(
+    test_path("testDllLoad"),
+    repos = NULL,
+    type = "source",
+    INSTALL_opts = "--no-multiarch",
+    quiet = TRUE
+  )
   expect_true(rlang::is_installed("testDllLoad"))
   unload("testDllLoad")
 
