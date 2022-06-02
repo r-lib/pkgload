@@ -89,6 +89,25 @@ helpers are run during package loading.
 \code{is_loading()} returns \code{TRUE} when it is called while \code{load_all()}
 is running. This may be useful e.g. in onLoad hooks.
 }
+\section{Differences with \code{loadNamespace()} and \code{library()}}{
+
+\code{load_all()} tries its best to reproduce the behaviour of
+\code{\link[=loadNamespace]{loadNamespace()}} and \code{\link[=library]{library()}}. However it deviates from normal
+package loading in several ways.
+\itemize{
+\item It doesn't install the package on disk, so \code{\link[=system.file]{system.file()}} has no
+way of determining the location of the development files. To work
+around this, pkgload installs its own version of \code{\link[=system.file]{system.file()}}
+on the search path to make it easier to use interactively while
+developing. However this definition is only visible to the global
+environment, not to the namespaces of third party packages.
+
+One workaround for other packages to see the development files of
+your package while you're developing with devtools is for them to
+use \code{fs::path_package()} instead of \code{system.file()}.
+}
+}
+
 \section{Namespaces}{
 
 The namespace environment \verb{<namespace:pkgname>}, is a child of
