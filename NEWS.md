@@ -1,10 +1,7 @@
 # pkgload (development version)
 
-* Changed how compiled objects are loaded so that both the standard
-  location and, if that fails, the same relative path from within the
-  inst/ subdirectory are checked for compiled objects. This allows
-  packages with precompiled .so or .dll files within inst to be loaded
-  with `load_all` (@ethanplunkett, #48).
+* Added support for loading a .so or .dll file from the `inst`
+  folder via a new `library.dynam()` shim (@ethanplunkett, #48).
 
 * The `system.file()` shim now fails if you supply a path that starts
   with `inst` to better reproduce the behaviour with installed
