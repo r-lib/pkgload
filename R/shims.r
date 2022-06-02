@@ -5,6 +5,7 @@ insert_imports_shims <- function(package) {
   imp_env <- imports_env(package)
   imp_env$system.file <- shim_system.file
   imp_env$library.dynam.unload <- shim_library.dynam.unload
+  imp_env$library.dynam <- shim_library.dynam
 }
 
 # Create a new environment as the parent of global, with devtools versions of
@@ -126,4 +127,71 @@ shim_library.dynam.unload <- function(chname, libpath,
   # Should only reach this in the rare case that the devtools-loaded package is
   # trying to unload a different package's DLL.
   base::library.dynam.unload(chname, libpath, verbose, file.ext)
+}
+
+# This shim version of library.dynam addresses the issue raised in:
+# https://github.com/r-lib/pkgload/issues/48 It helps `load_all()` to
+# find libraries placed within inst/libs/ This CRAN-incompatible
+# practice allows for including a custom compiled dll in an R package.
+# See also https://stackoverflow.com/questions/8977346.
+#
+# This shim function first attempts using base::libary.dynam() if
+# that fails it uses `inst_libary.dynam()` which is very similar but
+# inserts "inst/" in the dll/so path.
+shim_library.dynam <- function(chname,
+                               package,
+                               lib.loc,
+                               verbose = getOption("verbose"),
+                               file.ext = .Platform$dynlib.ext,
+                               ...) {
+  err <- tryCatch(
+    return(base::library.dynam(
+      chname,
+      package,
+      lib.loc,
+      verbose = getOption("verbose"),
+      file.ext = .Platform$dynlib.ext,
+      ...
+    )),
+    error = identity
+  )
+
+  # Call version of library.dynam that adds the inst subdirectory to
+  # the dll paths
+  tryCatch(
+    return(inst_library.dynam(
+      chname,
+      package,
+      lib.loc,
+      verbose = getOption("verbose"),
+      file.ext = .Platform$dynlib.ext,
+      ...
+    )),
+    error = identity
+  )
+
+  # Signal original error for debugging
+  cnd_signal(err)
+}
+
+# Version of libary.dynam that looks for libraries or objects to load
+# within the `inst` package subdirectory
+on_load(
+  inst_library.dynam <- modify_lang(base::library.dynam, file_path_update)
+)
+
+file_path_update <- function(x) {
+  if (is_file_path(x)) {
+    x[[3]] <- file.path("inst", "libs")
+  }
+  x
+}
+
+is_file_path <- function(x) {
+  if (!is_call(x, "file.path")) {
+    return(FALSE)
+  }
+
+  args <- as.list(x[2:3])
+  identical(args, list(quote(pkg), "libs"))
 }

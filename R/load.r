@@ -122,8 +122,7 @@ load_all <- function(path = ".",
   description <- pkg_desc(path)
 
   withr::local_envvar(c(DEVTOOLS_LOAD = package))
-
-  quiet <- quiet %||% peek_option("testthat:::load_all_quiet") %||% FALSE
+  quiet <- load_all_quiet(quiet, "load_all")
 
   if (!quiet) {
     cli::cli_alert_info("Loading {.pkg {package}}")
@@ -194,7 +193,7 @@ load_all <- function(path = ".",
 
   out$data <- load_data(path)
 
-  out$code <- load_code(path)
+  out$code <- load_code(path, quiet = quiet)
   register_s3(path)
   if (identical(compile, FALSE)) {
     out$dll <- try_load_dll(path)
@@ -259,6 +258,13 @@ load_all <- function(path = ".",
   }
 
   invisible(out)
+}
+
+load_all_quiet <- function(quiet, fn = NULL) {
+  if (!is_null(fn)) {
+    quiet <- peek_option(sprintf("testthat:::%s_quiet_override", fn))
+  }
+  quiet %||% peek_option("testthat:::load_all_quiet") %||% FALSE
 }
 
 is_function_in_environment <- function(name, env) {

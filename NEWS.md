@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* Added support for loading a .so or .dll file from the `inst`
+  folder via a new `library.dynam()` shim (@ethanplunkett, #48).
+
 * The `system.file()` shim now fails if you supply a path that starts
   with `inst` to better reproduce the behaviour with installed
   packages (#104).
