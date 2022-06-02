@@ -47,3 +47,9 @@ force_load_all_deps <- function() {
     testthat_source_test_helpers
   )
 }
+
+# R CMD check NOTE
+function() {
+  desc::desc
+  rprojroot::rprojroot_find_package_root_file
+}
