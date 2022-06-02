@@ -115,3 +115,14 @@ test_that("Replacement system.file returns correct values when installed", {
 test_that("division operator is not interpreted as a path (#198)", {
   expect_null(dev_topic_find("/"))
 })
+
+test_that("system.file() fails if path starts with `inst` (#104)", {
+  expect_true(
+    is_string(shim_system.file(package = "pkgload", mustWork = TRUE))
+  )
+
+  expect_snapshot({
+    (expect_error(shim_system.file("inst/WORDLIST", package = "pkgload", mustWork = TRUE)))
+    (expect_error(shim_system.file("inst", "WORDLIST", package = "pkgload", mustWork = TRUE)))
+  })
+})

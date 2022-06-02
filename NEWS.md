@@ -1,5 +1,9 @@
 # pkgload (development version)
 
+* The `system.file()` shim now fails if you supply a path that starts
+  with `inst` to better reproduce the behaviour with installed
+  packages (#104).
+
 * `load_all()` now imports its dependencies lazily to avoid parallel
   installation issues (#89).
 

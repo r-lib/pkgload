@@ -66,6 +66,15 @@ shim_system.file <- function(...,
   # be installed. To fully duplicate R's package-building and installation
   # behavior would be complicated, so we'll just use this simple method.
 
+  if (dots_n(...) && is_string(..1)) {
+    if (is_string("inst", ..1) || grepl("^inst/", ..1)) {
+      cli::cli_abort(c(
+        "Paths can't start with `inst`",
+        i = "Files in `inst` are installed at top-level."
+      ))
+    }
+  }
+
   pkg_path <- find.package(package)
 
   # First look in inst/
