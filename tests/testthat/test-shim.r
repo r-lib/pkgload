@@ -130,6 +130,8 @@ test_that("system.file() fails if path starts with `inst` (#104)", {
 })
 
 test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
+  skip_on_cran()
+
   # Most of the code below is overhead to create a package that contains
   # a compiled .dll (or .so) within  inst/libs/
   # The process:
