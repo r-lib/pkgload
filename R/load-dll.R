@@ -131,10 +131,10 @@ onload_assign("assignNativeRoutines", {
 })
 
 try_load_dll <- function(path = ".") {
-  tryCatch(
+  try_fetch(
     load_dll(path = path),
-    error = function(e) {
-      warn(paste0("Failed to load at least one DLL: ", e$message))
+    error = function(cnd) {
+      cli::cli_warn("Failed to load at least one DLL.", parent = cnd)
       list()
     }
   )

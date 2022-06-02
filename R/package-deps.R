@@ -14,8 +14,11 @@ parse_deps <- function(string) {
   if (is.null(string)) {
     return()
   }
+
   stopifnot(is_string(string))
-  if (grepl("^\\s*$", string)) return()
+  if (grepl("^\\s*$", string)) {
+    return()
+  }
 
   pieces <- strsplit(string, "[[:space:]]*,[[:space:]]*")[[1]]
 
@@ -35,12 +38,16 @@ parse_deps <- function(string) {
   compare_nna   <- compare[!is.na(compare)]
   compare_valid <- compare_nna %in% c(">", ">=", "==", "<=", "<")
   if(!all(compare_valid)) {
-    stop("Invalid comparison operator in dependency: ",
-      paste(compare_nna[!compare_valid], collapse = ", "))
+    deps <- paste(compare_nna[!compare_valid], collapse = ", ")
+    cli::cli_abort("Invalid comparison operator in dependency: {deps}.")
   }
 
-  deps <- data.frame(name = names, compare = compare,
-    version = versions, stringsAsFactors = FALSE)
+  deps <- data.frame(
+    name = names,
+    compare = compare,
+    version = versions,
+    stringsAsFactors = FALSE
+  )
 
   # Remove R dependency
   deps[names != "R", ]
@@ -98,7 +105,7 @@ check_dep_version <- function(dep_name, dep_ver = "*") {
   }
 
   if (!requireNamespace(dep_name, quietly = TRUE)) {
-    warning("Dependency package '", dep_name, "' not available.")
+    cli::cli_warn("Dependency package {.pkg {dep_name}} is not available.")
     return(FALSE)
   }
   if (dep_ver == "*") {
@@ -113,13 +120,7 @@ check_dep_version <- function(dep_name, dep_ver = "*") {
   if (!compare(
       as.numeric_version(getNamespaceVersion(dep_name)),
       as.numeric_version(dep_ver))) {
-
-    warning("Need ", dep_name, " ", dep_compare,
-      " ", dep_ver,
-      " but loaded version is ", getNamespaceVersion(dep_name),
-      call. = FALSE
-    )
-
+    cli::cli_warn("Need {.pkg {dep_name}} {dep_compare} {dep_ver} but loaded version is {getNamespaceVersion(dep_name)}.")
   }
 
   return(TRUE)

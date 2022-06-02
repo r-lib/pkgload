@@ -12,15 +12,16 @@
 #' @export
 imports_env <- function(package) {
   if (!is_loaded(package)) {
-    stop("Namespace environment must be created before accessing imports environment.")
+    cli::cli_abort("Namespace environment must be created before accessing imports environment.")
   }
 
   env <- parent.env(ns_env(package))
 
   if (attr(env, 'name') != imports_env_name(package)) {
-    stop("Imports environment does not have attribute 'name' with value ",
-      imports_env_name(package),
-      ". This probably means that the namespace environment was not created correctly.")
+    cli::cli_abort(c(
+      "Imports environment does not have attribute {.arg name} with value {imports_env_name(package)}.",
+      "i" = "This probably means that the namespace environment was not created correctly."
+    ))
   }
 
   env

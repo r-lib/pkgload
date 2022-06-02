@@ -130,6 +130,6 @@ test_that("reloading a package reloads own methods", {
 
 test_that("load_all() errors when no DESCRIPTION found", {
   withr::with_tempdir({
-    expect_error(load_all(), class = "pkgload_no_desc")
+    (expect_error(load_all(), class = "pkgload_no_desc"))
   })
 })

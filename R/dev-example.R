@@ -42,16 +42,15 @@ run_example <- function(path,
                         test) {
 
   if (!missing(run)) {
-    warning("`run_example(run=)` is deprecated, please use `run_example(run_dontrun=)` instead", call. = FALSE)
+    cli::cli_warn("{.code run_example(run =)} is deprecated, please use {.code run_example(run_dontrun =)} instead")
     run_dontrun <- run
   }
   if (!missing(test)) {
-    warning("`run_example(test=)` is deprecated, please use `run_example(run_donttest=)` instead", call. = FALSE)
+    cli::cli_warn("{.code run_example(test =)} is deprecated, please use {.code run_example(run_donttest =)} instead")
     run_donttest <- test
   }
-
   if (!file.exists(path)) {
-    stop("'", path, "' does not exist", call. = FALSE)
+    cli::cli_abort("The path {.path {path}} must exit.")
   }
 
   tmp <- tempfile(fileext = ".R")

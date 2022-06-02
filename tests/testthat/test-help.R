@@ -42,8 +42,10 @@ test_that("shim_question behaves the same as utils::? for nonexistent objects", 
   expect_equal(length(shim_question("foofoo")), 0)
 
   # If given a function call with nonexistent function, error
-  expect_error(utils::`?`(foofoo(123)))
-  expect_error(shim_question(foofoo(123)))
+  expect_snapshot({
+    (expect_error(utils::`?`(foofoo(123))))
+    (expect_error(shim_question(foofoo(123))))
+  })
 })
 
 test_that("show_help and shim_question files for devtools-loaded packages", {
@@ -99,7 +101,9 @@ test_that("unknown macros don't trigger warnings (#119)", {
 })
 
 test_that("complex expressions are checked", {
-  expect_error(shim_help({ foo; bar }), "must be a name")
+  expect_snapshot({
+    (expect_error(shim_help({ foo; bar }), "must be a name"))
+  })
 })
 
 test_that("can use macros in other packages (#120)", {

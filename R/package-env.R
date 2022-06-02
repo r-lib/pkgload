@@ -3,7 +3,7 @@ attach_ns <- function(package) {
   nsenv <- ns_env(package)
 
   if (is_attached(package)) {
-    stop("Package ", package, " is already attached.")
+    cli::cli_abort("Package {.pkg {package}} can't be already attached.")
   }
 
   # This should be similar to attachNamespace

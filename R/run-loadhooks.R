@@ -69,7 +69,7 @@ run_user_hook <- function(package, hook) {
           msg <- c(msg, i = sprintf("The hook inherits from `%s`.", name))
         }
 
-        warn(msg, parent = cnd)
+        cli::cli_warn(msg, parent = cnd)
       }
     )
   }

@@ -2,18 +2,22 @@ local_load_all_quiet()
 
 test_that("Warn about mismatched version", {
   # Should give a warning about grid version
-  expect_error(
-    load_all("testImportVersion"),
-    class = "rlib_error_package_not_found"
-  )
+  expect_snapshot({
+    (expect_error(
+      load_all("testImportVersion"),
+      class = "rlib_error_package_not_found"
+    ))
+  })
   unload("testImportVersion")
 })
 
 test_that("Error on missing dependencies", {
-  expect_error(
-    load_all("testImportMissing"),
-    class = "rlib_error_package_not_found"
-  )
+  expect_snapshot({
+    (expect_error(
+      load_all("testImportMissing"),
+      class = "rlib_error_package_not_found"
+    ))
+  })
 
   # Loading process will be partially done; unload it
   unload("testImportMissing")
@@ -36,11 +40,13 @@ test_that("Parse dependencies", {
 
 
   # Invalid version specifications
-  expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (3.0)"))
-  expect_error(parse_deps("\nhttr (< 2.1),\nRCurl ( 3.0)"))
-  expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (==3.0)"))
-  expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (==3.0 )"))
-  expect_error(parse_deps("\nhttr (< 2.1),\nRCurl ( ==3.0)"))
+  expect_snapshot({
+    (expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (3.0)")))
+    (expect_error(parse_deps("\nhttr (< 2.1),\nRCurl ( 3.0)")))
+    (expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (==3.0)")))
+    (expect_error(parse_deps("\nhttr (< 2.1),\nRCurl (==3.0 )")))
+    (expect_error(parse_deps("\nhttr (< 2.1),\nRCurl ( ==3.0)")))
+  })
 
   # This should be OK (no error)
   deps <- parse_deps("\nhttr (< 2.1),\nRCurl (==  3.0.1)")

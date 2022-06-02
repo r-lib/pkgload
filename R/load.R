@@ -125,7 +125,7 @@ load_all <- function(path = ".",
   quiet <- load_all_quiet(quiet, "load_all")
 
   if (!quiet) {
-    cli::cli_alert_info("Loading {.pkg {package}}")
+    cli::cli_inform(c("i" = "Loading {.pkg {package}}."))
   }
 
   if (package == "compiler") {
@@ -155,7 +155,7 @@ load_all <- function(path = ".",
   } else if (identical(compile, FALSE)) {
     # don't compile
   } else {
-    stop("`compile` must be a logical vector of length 1", call. = FALSE)
+    cli::cli_abort("{.arg compile} must be a logical vector of length 1.")
   }
 
   old_methods <- list()
@@ -298,13 +298,13 @@ warn_if_conflicts <- function(package, env1, env2) {
   run_rm <- sprintf("rm(list = c(%s))", objects)
   run_rm <- style_hyperlink_run(run_rm)
 
-  directions <- cli::col_silver(cli::format_bullets_raw(c(
-    "i" = "Did you accidentally source a file rather than using `load_all()`?",
-    " " = glue::glue("Run {run_rm} to remove the conflicts.")
-  )))
+  directions <- c(
+    "i" = cli::col_silver("Did you accidentally source a file rather than using `load_all()`?"),
+    " " = cli::col_silver(glue::glue("Run {run_rm} to remove the conflicts."))
+  )
 
-  warn(
-    paste_line(header, bullets, directions),
+  cli::cli_warn(
+    c(header, bullets, directions),
     class = "pkgload::conflict"
   )
 }
@@ -324,26 +324,14 @@ conflict_bullets <- function(package, both) {
   MAX_BULLETS <- 3
 
   if (length(both) > MAX_BULLETS + 1) {
-    more <- paste0(
-      "\n", cli::symbol$ellipsis, " and ",
-      length(both) - MAX_BULLETS, " more"
-    )
+    more <- c(" " = glue::glue("{cli::symbol$ellipsis} and more."))
     both <- utils::head(both, MAX_BULLETS)
   } else {
-    more <- ""
+    more <- NULL
   }
 
-  bullets <- paste0(collapse = "\n",
-    sprintf(
-      "`%s` %s masks `%s::%s()`.",
-      crayon::red(cli::symbol$cross),
-      format(crayon::green(paste0(both, "()"))),
-      crayon::blue(package),
-      both
-    )
-  )
-
-  paste0(bullets, more)
+  bullets <- glue::glue("`{crayon::green(both)}` masks `{crayon::blue(package)}::{both}()`.")
+  c(set_names(bullets, "x"), more)
 }
 
 uses_testthat <- function(path = ".") {
@@ -357,12 +345,16 @@ uses_testthat <- function(path = ".") {
 
 find_test_dir <- function(path) {
   testthat <- package_file("tests", "testthat", path = path)
-  if (dir.exists(testthat)) return(testthat)
+  if (dir.exists(testthat)) {
+    return(testthat)
+  }
 
   inst <- package_file("inst", "tests", path = path)
-  if (dir.exists(inst)) return(inst)
+  if (dir.exists(inst)) {
+    return(inst)
+  }
 
-  stop("No testthat directories found in ", path, call. = FALSE)
+  cli::cli_abort("No testthat directories found in {.path {path}}.")
 }
 
 is_foreign_method <- function(x, package) {
