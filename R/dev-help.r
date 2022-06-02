@@ -195,26 +195,11 @@ shim_help <- function(topic, package = NULL, ...) {
   if (use_dev) {
     dev_help(topic_str, package_str)
   } else {
-    # This is similar to list(), except that one of the args is a missing var,
-    # it will replace it with an empty symbol instead of trying to evaluate it.
-    as_list <- function(..., .env = parent.frame()) {
-      dots <- match.call(expand.dots = FALSE)$`...`
-
-      lapply(dots, function(var) {
-        is_missing <- eval(substitute(missing(x), list(x = var)), .env)
-        if (is_missing) {
-          quote(expr=)
-        } else {
-          eval(var, .env)
-        }
-      })
-    }
-
-    call <- substitute(
-      utils::help(topic, package, ...),
-      as_list(topic = topic_name, package = package_name)
-    )
-    eval(call)
+    inject(utils::help(
+      !!maybe_missing(topic_name),
+      !!maybe_missing(package_name),
+      ...
+    ))
   }
 }
 
