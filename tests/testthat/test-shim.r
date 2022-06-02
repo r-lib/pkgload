@@ -166,6 +166,8 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
     quiet = TRUE
   )
   expect_true(rlang::is_installed("testDllLoad"))
+
+  pkgbuild::clean_dll("testDllLoad")
   unload("testDllLoad")
 
   # Copy  libs/ from installed testDllLoad packageinto  testDynLib/inst/libs/
@@ -183,7 +185,6 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
 
   # Clean out compiled objects
   pkgbuild::clean_dll("testLibDynam")
-
   unload("testLibDynam")
 
   # Unlink temporary package dir
