@@ -65,8 +65,12 @@ print.dev_topic <- function(x, ...) {
     topic_write_text(x, out_path)
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
-    topic_write_html(x, out_path)
-    utils::browseURL(out_path)
+    if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
+      rstudioapi::callFun("previewRd", x$path)
+    } else {
+      topic_write_html(x, out_path)
+      utils::browseURL(out_path)
+    }
   }
 }
 
@@ -83,11 +87,6 @@ topic_write_text <- function(x, path) {
 }
 
 topic_write_html <- function(x, path) {
-  if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
-    rstudioapi::callFun("previewRd", x$path)
-    return(invisible())
-  }
-
   macros <- load_rd_macros(dirname(dirname(x$path)))
 
   tools::Rd2HTML(

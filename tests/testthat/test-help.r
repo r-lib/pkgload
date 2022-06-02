@@ -102,7 +102,7 @@ test_that("complex expressions are checked", {
 test_that("can use macros in other packages (#120)", {
   skip_if_not_installed("mathjaxr")
 
-  load_all("testMacroDownstream")
+  load_all(test_path("testMacroDownstream"))
 
   topic <- dev_help("macro_downstream")
   text_lines <- topic_lines(topic, "text")
