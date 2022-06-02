@@ -79,7 +79,7 @@ test_that("dev_help works with package and function help with the same name", {
 })
 
 test_that("unknown macros don't trigger warnings (#119)", {
-  load_all("testUnknownMacro")
+  load_all(test_path("testUnknownMacro"))
 
   expect_no_warning(
     out <- dev_help("testUnknownMacro")
@@ -87,6 +87,9 @@ test_that("unknown macros don't trigger warnings (#119)", {
 
   # Because we're testing internal behaviour in `tools`
   skip_on_cran()
+
+  # Because on RStudio the print method uses a different method
+  skip_if(is_installed("rstudioapi"))
 
   # We should still be displaying a warning when rendering the documentation
   local_options(pager = function(...) "")
