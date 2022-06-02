@@ -5,29 +5,26 @@
 #'
 #' Currently `load_all`:
 #'
-#' \itemize{
-#'   \item Loads all data files in `data/`.  See [load_data()]
-#'     for more details.
+#' - Loads all data files in `data/`.  See [load_data()] for more
+#'   details.
 #'
-#'   \item Sources all R files in the R directory, storing results in
-#'     environment that behaves like a regular package namespace. See
-#'     below and [load_code()] for more details.
+#' - Sources all R files in the R directory, storing results in
+#'   environment that behaves like a regular package namespace. See
+#'   below and [load_code()] for more details.
 #'
-#'   \item Compiles any C, C++, or Fortran code in the `src/` directory
-#'     and connects the generated DLL into R. See [pkgbuild::compile_dll()]
-#'     for more details.
+#' - Compiles any C, C++, or Fortran code in the `src/` directory and
+#'   connects the generated DLL into R. See [pkgbuild::compile_dll()]
+#'   for more details.
 #'
-#'   \item Loads any compiled translations in `inst/po`.
+#' - Loads any compiled translations in `inst/po`.
 #'
-#'   \item Runs `.onAttach()`, `.onLoad()` and `.onUnload()`
-#'     functions at the correct times.
+#' - Runs `.onAttach()`, `.onLoad()` and `.onUnload()` functions at
+#'   the correct times.
 #'
-#'   \item If you use \pkg{testthat}, will load all test helpers so
-#'     you can access them interactively. devtools sets the
-#'     \code{DEVTOOLS_LOAD} environment variable to \code{"true"} to
-#'     let you check whether the helpers are run during package loading.
-#'
-#' }
+#' - If you use \pkg{testthat}, will load all test helpers so you can
+#'   access them interactively. devtools sets the `DEVTOOLS_LOAD`
+#'   environment variable to `"true"` to let you check whether the
+#'   helpers are run during package loading.
 #'
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
 #' is running. This may be useful e.g. in onLoad hooks.

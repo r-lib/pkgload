@@ -68,29 +68,22 @@ when a package is installed and loaded with \code{\link[=library]{library()}}.
 }
 \details{
 Currently \code{load_all}:
-
 \itemize{
-\item Loads all data files in \verb{data/}.  See \code{\link[=load_data]{load_data()}}
-for more details.
-
+\item Loads all data files in \verb{data/}.  See \code{\link[=load_data]{load_data()}} for more
+details.
 \item Sources all R files in the R directory, storing results in
 environment that behaves like a regular package namespace. See
 below and \code{\link[=load_code]{load_code()}} for more details.
-
-\item Compiles any C, C++, or Fortran code in the \verb{src/} directory
-and connects the generated DLL into R. See \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}
+\item Compiles any C, C++, or Fortran code in the \verb{src/} directory and
+connects the generated DLL into R. See \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}
 for more details.
-
 \item Loads any compiled translations in \code{inst/po}.
-
-\item Runs \code{.onAttach()}, \code{.onLoad()} and \code{.onUnload()}
-functions at the correct times.
-
-\item If you use \pkg{testthat}, will load all test helpers so
-you can access them interactively. devtools sets the
-\code{DEVTOOLS_LOAD} environment variable to \code{"true"} to
-let you check whether the helpers are run during package loading.
-
+\item Runs \code{.onAttach()}, \code{.onLoad()} and \code{.onUnload()} functions at
+the correct times.
+\item If you use \pkg{testthat}, will load all test helpers so you can
+access them interactively. devtools sets the \code{DEVTOOLS_LOAD}
+environment variable to \code{"true"} to let you check whether the
+helpers are run during package loading.
 }
 
 \code{is_loading()} returns \code{TRUE} when it is called while \code{load_all()}
