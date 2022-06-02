@@ -197,3 +197,7 @@ style_hyperlink_run <- function(code) {
 
   cli::format_inline("{.code {code}}")
 }
+
+cat_line <- function(...) {
+  cat(paste0(..., "\n", collapse = ""))
+}

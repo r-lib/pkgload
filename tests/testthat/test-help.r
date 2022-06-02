@@ -98,3 +98,16 @@ test_that("unknown macros don't trigger warnings (#119)", {
 test_that("complex expressions are checked", {
   expect_error(shim_help({ foo; bar }), "must be a name")
 })
+
+test_that("can use macros in other packages (#120)", {
+  skip_if_not_installed("mathjaxr")
+
+  load_all("testMacroDownstream")
+
+  topic <- dev_help("macro_downstream")
+  text_lines <- topic_lines(topic, "text")
+  html_lines <- topic_lines(topic, "html")
+
+  expect_true(any(grepl("foreign macro success", text_lines)))
+  expect_true(any(grepl("foreign macro.*success", html_lines)))
+})

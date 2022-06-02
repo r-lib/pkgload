@@ -62,37 +62,60 @@ print.dev_topic <- function(x, ...) {
   macros <- load_rd_macros(dirname(dirname(x$path)))
 
   if (type == "text") {
-    tools::Rd2txt(
-      x$path,
-      out = out_path,
-      package = x$pkg,
-      stages = x$stage,
-      macros = macros
-    )
+    topic_write_text(x, out_path)
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
   } else if (type == "html") {
-    if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
-      rstudioapi::callFun("previewRd", x$path)
-      return(invisible())
-    }
-    tools::Rd2HTML(
-      x$path,
-      out = out_path,
-      package = x$pkg,
-      stages = x$stage,
-      no_links = TRUE,
-      macros = macros
-    )
-
-    css_path <- file.path(tempdir(), "R.css")
-    if (!file.exists(css_path)) {
-      file.copy(file.path(R.home("doc"), "html", "R.css"), css_path)
-    }
-
+    topic_write_html(x, out_path)
     utils::browseURL(out_path)
   }
 }
 
+topic_write_text <- function(x, path) {
+  macros <- load_rd_macros(dirname(dirname(x$path)))
+
+  tools::Rd2txt(
+    x$path,
+    out = path,
+    package = x$pkg,
+    stages = x$stage,
+    macros = macros
+  )
+}
+
+topic_write_html <- function(x, path) {
+  if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
+    rstudioapi::callFun("previewRd", x$path)
+    return(invisible())
+  }
+
+  macros <- load_rd_macros(dirname(dirname(x$path)))
+
+  tools::Rd2HTML(
+    x$path,
+    out = path,
+    package = x$pkg,
+    stages = x$stage,
+    no_links = TRUE,
+    macros = macros
+  )
+
+  css_path <- file.path(tempdir(), "R.css")
+  if (!file.exists(css_path)) {
+    file.copy(file.path(R.home("doc"), "html", "R.css"), css_path)
+  }
+}
+
+topic_lines <- function(x, type = c("text", "html")) {
+  file <- withr::local_tempfile()
+
+  switch(
+    arg_match(type),
+    text = topic_write_text(x, file),
+    html = topic_write_html(x, file)
+  )
+
+  readLines(file)
+}
 
 #' Drop-in replacements for help and ? functions
 #'
