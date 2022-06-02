@@ -94,3 +94,7 @@ test_that("unknown macros don't trigger warnings (#119)", {
     expect_warning(print(out), "unknown macro")
   )
 })
+
+test_that("complex expressions are checked", {
+  expect_error(shim_help({ foo; bar }), "must be a name")
+})

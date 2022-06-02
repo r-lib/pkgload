@@ -172,6 +172,9 @@ shim_help <- function(topic, package = NULL, ...) {
     topic_name <- NULL
   } else {
     topic_str <- deparse(substitute(topic))
+    if (length(topic_str) != 1) {
+      cli::cli_abort("{.arg topic} must be a name.")
+    }
   }
 
   # help's NSE for package is slightly simpler
