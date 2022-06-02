@@ -28,13 +28,16 @@ ns_path <- function(package) {
 }
 
 # Create the namespace environment for a package
-create_ns_env <- function(path = ".") {
+create_ns_env <- function(path = ".", call = caller_env()) {
   path <- pkg_path(path)
   package <- pkg_name(path)
   version <- pkg_version(path)
 
   if (is_loaded(package)) {
-    stop("Namespace for ", package, " already exists.")
+    cli::cli_abort(
+      "Namespace for {.pkg {package}} can't already exist.",
+      call = call
+    )
   }
 
   env <- makeNamespace(package, version)
@@ -121,8 +124,10 @@ setup_ns_exports <- function(path = ".", export_all = FALSE, export_imports = ex
   extra_exports <- setdiff(exports, ns_and_imports)
 
   if (length(extra_exports) > 0) {
-    warning("Objects listed as exports, but not present in namespace: ",
-            paste(extra_exports, collapse = ", "))
+    cli::cli_warn(c(
+      "Objects listed as exports, but not present in namespace: ",
+      set_names(extra_exports, "*")
+    ))
     exports <- intersect(ns_and_imports, exports)
   }
 
@@ -213,15 +218,15 @@ utils::globalVariables("getNamespaceRegistry")
 
 # Register a namespace
 register_namespace <- function(name = NULL, env = NULL) {
-  # Be careful about what we allow
-  if (!is.character(name) || name == "" || length(name) != 1)
-    stop("'name' must be a non-empty character string.")
-
-  if (!is.environment(env))
-    stop("'env' must be an environment.")
-
-  if (name %in% loadedNamespaces())
-    stop("Namespace ", name, " is already registered.")
+  if (!is.character(name) || name == "" || length(name) != 1) {
+    cli::cli_abort("{.arg name} must be a non-empty character string.")
+  }
+  if (!is.environment(env)) {
+    cli::cli_abort("{.arg env} must be an environment.")
+  }
+  if (name %in% loadedNamespaces()) {
+    cli::cli_abort("Namespace {.arg {name}} can't be already registered.")
+  }
 
   # Add the environment to the registry
   nsr <- ns_registry()
@@ -231,15 +236,15 @@ register_namespace <- function(name = NULL, env = NULL) {
 }
 
 
-# unregister a namespace - should be used only if unloadNamespace()
+# Unregister a namespace - should be used only if unloadNamespace()
 # fails for some reason
 unregister_namespace <- function(name = NULL) {
-  # Be careful about what we allow
-  if (!is.character(name) || name == "" || length(name) != 1)
-    stop("'name' must be a non-empty character string.")
-
-  if (!(name %in% loadedNamespaces()))
-    stop(name, " is not a registered namespace.")
+  if (!is_string(name) || name == "") {
+    cli::cli_abort("{.arg name} must be a non-empty character string.")
+  }
+  if (!(name %in% loadedNamespaces())) {
+    cli::cli_abort("{.pkg {name}} must be a registered namespace.")
+  }
 
   # Force all bindings of the namespace in case of dangling
   # references. If lazy bindings are forced after the namespace is

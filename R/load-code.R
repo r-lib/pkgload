@@ -57,13 +57,13 @@ find_code <- function(path = ".", quiet = FALSE) {
 
     missing <- setdiff(collate, r_files)
     if (!quiet && length(missing) > 0) {
-      cli::cli_alert_warning("Skipping missing files: {.file {missing}}")
+      cli::cli_inform(c("!" = "Skipping missing files: {.file {missing}}"))
     }
     collate <- setdiff(collate, missing)
 
     extra <- setdiff(r_files, collate)
     if (!quiet && length(extra) > 0) {
-      cli::cli_alert_warning("Adding files missing in collate: {.file {extra}}")
+      cli::cli_inform(c("!" = "Adding files missing in collate: {.file {extra}}"))
     }
 
     r_files <- union(collate, r_files)

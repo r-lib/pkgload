@@ -43,12 +43,11 @@ pkg_path <- function(path = ".") {
     rprojroot_find_package_root_file(path = path)
   },
   error = function(e) {
-    abort(paste(
-      "Could not find a root 'DESCRIPTION' file that starts with '^Package' in",
-      paste0("'", normalizePath(path), "'."),
-      "Are you in your project directory,",
-      "and does your project have a 'DESCRIPTION' file?"
-    ), class = "pkgload_no_desc")
+    msg <- c(
+      "Could not find a root 'DESCRIPTION' file that starts with '^Package' in {.path {normalizePath(path)}}.",
+      "i" = "Are you in your project directory and does your project have a 'DESCRIPTION' file?"
+    )
+    cli::cli_abort(msg, class = "pkgload_no_desc")
   })
 
   # Strip trailing slashes, which can cause errors on Windows (#73)

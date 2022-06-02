@@ -22,7 +22,10 @@
 dev_meta <- function(name) {
   ns <- .getNamespace(name)
   if (is.null(ns)) {
-    stop("Namespace not found for ", name, ". Is it loaded?")
+    cli::cli_abort(c(
+      "Namespace not found for {.arg {name}}",
+      "i" = "Is it loaded?"
+    ))
   }
 
   if (is.null(ns$.__DEVTOOLS__)) {
@@ -39,10 +42,9 @@ create_dev_meta <- function(name) {
   ns <- .getNamespace(name)
 
   if (!is.null(ns$.__DEVTOOLS__)) {
-    stop("devtools metadata for package ", name, " already exists.")
+    cli::cli_abort("Devtools metadata for package {.pkg {name}} can't already exist.")
   }
 
   ns$.__DEVTOOLS__ <- new.env(parent = ns)
-
   ns$.__DEVTOOLS__
 }

@@ -34,7 +34,6 @@
 #' }
 #' @export
 unload <- function(package = pkg_name(), quiet = FALSE) {
-
   if (package == "compiler") {
     # Disable JIT compilation as it could interfere with the compiler
     # unloading. Also, if the JIT was kept enabled, it would cause the
@@ -43,12 +42,12 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
     # enableJIT itself would load the compiler again.
     oldEnable <- compiler::enableJIT(0)
     if (oldEnable != 0) {
-      warning("JIT automatically disabled when unloading the compiler.")
+      cli::cli_warn("JIT automatically disabled when unloading the compiler.")
     }
   }
 
   if (!package %in% loadedNamespaces()) {
-    stop("Package ", package, " not found in loaded packages or namespaces")
+    cli::cli_abort("Package {.pkg {package}} not found in loaded packages or namespaces.")
   }
 
   unregister_methods(package)

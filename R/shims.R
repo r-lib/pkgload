@@ -105,7 +105,7 @@ shim_system.file <- function(...,
     normalizePath(files, winslash = "/")
   } else {
     if (mustWork) {
-      abort("No file found", call = NULL)
+      cli::cli_abort("Can't find package file.", call = NULL)
     }
     ""
   }

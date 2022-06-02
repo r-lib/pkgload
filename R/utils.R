@@ -29,43 +29,37 @@ is_installed <- function(package, version = 0) {
 #' @keywords internal
 #' @export
 check_suggested <- function(package, version = NULL, compare = NA, path = inst("pkgload")) {
-
   if (is.null(version)) {
     if (!is.na(compare)) {
-      stop("Cannot set ", sQuote(compare), " without setting ",
-           sQuote(version), call. = FALSE)
+      cli::cli_abort("Must provide both {.arg compare} and {.arg version}.")
     }
-
     version <- suggests_dep(package, path = path)
   }
 
   if (!is_installed(package) || !check_dep_version(package, version)) {
-    msg <- paste0(sQuote(package),
-      if (is.na(version)) "" else paste0(" ", version),
-      " must be installed for this functionality.")
+    cli_version <- if (is_na(version)) "" else paste0(" ", version)
+    msg <- c("{.pkg package}{cli_version} must be installed for this functionality.")
 
     if (interactive()) {
-      cli::cli_alert_info(msg)
-      cli::cli_alert_danger("Would you like to install it?")
+      cli::cli_inform(c("i" = msg))
+      cli::cli_inform(c("!" = "Would you like to install it?"))
       if (utils::menu(c("Yes", "No")) == 1) {
         utils::install.packages(package)
-      } else {
-        stop(msg, call. = FALSE)
+        return()
       }
-    } else {
-      stop(msg, call. = FALSE)
     }
+    cli::cli_abort(msg)
   }
 }
 
 suggests_dep <- function(package, path = inst("pkgload")) {
-
   desc <- pkg_desc(path)$get_deps()
   found <- desc[desc$type == "Suggests" & desc$package == package, "version"]
 
   if (!length(found)) {
-     stop("'", package, "' is not in Suggests: for '", pkg_name(path), "'", call. = FALSE)
+    cli::cli_abort("{.pkg {package}} is not in {.code Suggests:} for {.pkg {pkg_name(path)}}.")
   }
+
   found
 }
 
@@ -104,7 +98,10 @@ extract_lang <- function(x, f, ...) {
     res <- recurse(x)[[1]]
     if (top_level_call <- identical(sys.call()[[1]], as.symbol("extract_lang"))
         && is.null(res)) {
-      warning("pkgload is incompatible with the current version of R. `load_all()` may function incorrectly.", call. = FALSE)
+      cli::cli_warn(c(
+        "pkgload is incompatible with the current version of R.",
+        "i" = "{.code load_all()} may function incorrectly."
+      ))
     }
     return(res)
   }

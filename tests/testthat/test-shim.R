@@ -55,9 +55,11 @@ test_that("shimmed system.file respects mustWork", {
   }
 
   expect_equal(find_missing(FALSE), "")
-  expect_error(find_missing(TRUE), "No file found")
-})
 
+  expect_snapshot({
+    (expect_error(find_missing(TRUE), "Can't find package file."))
+  })
+})
 
 test_that("Shimmed system.file returns correct values when used with load_all", {
   load_all("testShim")

@@ -130,7 +130,9 @@ test_that("unload() removes package environments from search", {
   expect_false(is_loaded("testNamespace"))
 
   # R's asNamespace function should error
-  expect_error(asNamespace("testNamespace"))
+  expect_snapshot({
+    (expect_error(asNamespace("testNamespace")))
+  })
 
   # pkgenv should NOT be an ancestor of the global environment
   # This is what makes the objects inaccessible from global env

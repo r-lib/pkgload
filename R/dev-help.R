@@ -29,7 +29,7 @@ dev_help <- function(topic,
   loc <- dev_topic_find(topic, dev_packages)
 
   if (is.null(loc$path)) {
-    stop("Could not find development topic '", topic, "'", call. = FALSE)
+    cli::cli_abort("Can't find development topic {.arg {topic}}.")
   }
 
   structure(
@@ -54,7 +54,7 @@ load_rd_macros <- function(dir) {
 
 #' @export
 print.dev_topic <- function(x, ...) {
-  cli::cli_alert_info("Rendering development documentation for {.val {x$topic}}")
+  cli::cli_inform(c("i" = "Rendering development documentation for {.val {x$topic}}"))
 
   type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
@@ -257,7 +257,7 @@ shim_question <- function(e1, e2) {
     topic <- e1
     pkg <- NULL
   } else {
-    stop("Unknown input", call. = FALSE)
+    cli::cli_abort("Unknown input.")
   }
 
   # Search for the topic in devtools-loaded packages.

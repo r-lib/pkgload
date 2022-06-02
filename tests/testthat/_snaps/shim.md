@@ -1,3 +1,12 @@
+# shimmed system.file respects mustWork
+
+    Code
+      (expect_error(find_missing(TRUE), "Can't find package file."))
+    Output
+      <error/rlang_error>
+      Error:
+      ! Can't find package file.
+
 # system.file() fails if path starts with `inst` (#104)
 
     Code

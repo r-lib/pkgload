@@ -22,7 +22,9 @@ pkgtest <- function(package) {
   stopifnot(has_tests())
 
   path <- system.file(package = "pkgload", "tests", "testthat", package)
-  if (path == "") stop(package, " not found", call. = FALSE)
+  if (path == "") {
+    cli::cli_abort("Can't find {.pkg {package}}.")
+  }
 
   path
 }
