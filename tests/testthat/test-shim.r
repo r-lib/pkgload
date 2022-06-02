@@ -121,6 +121,8 @@ test_that("system.file() fails if path starts with `inst` (#104)", {
     is_string(shim_system.file(package = "pkgload", mustWork = TRUE))
   )
 
+  skip_if_not("pkgload" %in% dev_packages())
+
   expect_snapshot({
     (expect_error(shim_system.file("inst/WORDLIST", package = "pkgload", mustWork = TRUE)))
     (expect_error(shim_system.file("inst", "WORDLIST", package = "pkgload", mustWork = TRUE)))
