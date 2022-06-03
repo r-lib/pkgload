@@ -46,6 +46,10 @@
 #'   your package while you're developing with devtools is for them to
 #'   use `fs::path_package()` instead of `system.file()`.
 #'
+#' - Whereas `loadNamespace()` and `library()` only load package
+#'   dependencies when they are needed, `load_all()` loads all packages
+#'   referenced in `Imports` at load time.
+#'
 #' @section Namespaces:
 #' The namespace environment `<namespace:pkgname>`, is a child of
 #' the imports environment, which has the name attribute

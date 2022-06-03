@@ -105,6 +105,9 @@ environment, not to the namespaces of third party packages.
 One workaround for other packages to see the development files of
 your package while you're developing with devtools is for them to
 use \code{fs::path_package()} instead of \code{system.file()}.
+\item Whereas \code{loadNamespace()} and \code{library()} only load package
+dependencies when they are needed, \code{load_all()} loads all packages
+referenced in \code{Imports} at load time.
 }
 }
 
