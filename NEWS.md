@@ -1,5 +1,9 @@
 # pkgload (development version)
 
+* Improved the way help pages are displayed in RStudio. This makes the
+  behaviour within and outside RStudio consistent and fixes issues
+  with Rd macros (#120).
+
 * Added support for loading a .so or .dll file from the `inst`
   folder via a new `library.dynam()` shim (@ethanplunkett, #48).
 

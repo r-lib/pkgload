@@ -56,19 +56,32 @@ load_rd_macros <- function(dir) {
 print.dev_topic <- function(x, ...) {
   cli::cli_inform(c("i" = "Rendering development documentation for {.val {x$topic}}"))
 
-  type <- match.arg(x$type %||% "text", c("text", "html"))
-  out_path <- paste(tempfile("Rtxt"), type, sep = ".")
+  type <- arg_match0(x$type %||% "text", c("text", "html"))
+  file <- fs::path_ext_set(fs::path_file(x$path), type)
+
+  # This directory structure is necessary for RStudio to open the
+  # .html file in the help pane (see rstudio/rustdio#11336)
+  doc_path <- fs::path("doc", "html", file)
+  path <- fs::path(tempdir(), ".R", doc_path)
+  fs::dir_create(fs::path_dir(path), recurse = TRUE)
 
   if (type == "text") {
-    topic_write_text(x, out_path)
-    file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
+    topic_write_text(x, path)
+    title <- paste(x$pkg, basename(x$path), sep = ":")
+    file.show(path, title = title)
   } else if (type == "html") {
+    topic_write_html(x, path)
+
     if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
-      rstudioapi::callFun("previewRd", x$path)
+      # This localhost URL is also part of getting RStudio to open in
+      # the help pane
+      port <- exec(env_get(ns_env("tools"), "httpdPort"))
+      url <- sprintf("http://localhost:%i/%s", port, doc_path)
     } else {
-      topic_write_html(x, out_path)
-      utils::browseURL(out_path)
+      url <- path
     }
+
+    utils::browseURL(url)
   }
 }
 
