@@ -59,8 +59,6 @@ print.dev_topic <- function(x, ...) {
   type <- match.arg(x$type %||% "text", c("text", "html"))
   out_path <- paste(tempfile("Rtxt"), type, sep = ".")
 
-  macros <- load_rd_macros(dirname(dirname(x$path)))
-
   if (type == "text") {
     topic_write_text(x, out_path)
     file.show(out_path, title = paste(x$pkg, basename(x$path), sep = ":"))
