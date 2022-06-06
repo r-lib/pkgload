@@ -75,7 +75,7 @@ print.dev_topic <- function(x, ...) {
     if (is_rstudio()) {
       # This localhost URL is also part of getting RStudio to open in
       # the help pane
-      port <- exec(env_get(ns_env("tools"), "httpdPort"))
+      port <- httpdPort()
       url <- sprintf("http://localhost:%i/%s", port, doc_path)
     } else {
       url <- path
@@ -84,6 +84,10 @@ print.dev_topic <- function(x, ...) {
     utils::browseURL(url)
   }
 }
+
+on_load(
+  httpdPort %<~% env_get(rlang::ns_env("tools"), "httpdPort")
+)
 
 topic_write_text <- function(x, path) {
   macros <- load_rd_macros(dirname(dirname(x$path)))
