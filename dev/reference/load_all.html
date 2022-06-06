@@ -135,6 +135,25 @@ helpers are run during package loading.</p></li>
 is running. This may be useful e.g. in onLoad hooks.</p>
     </div>
     <div class="section level2">
+    <h2 id="differences-with-loadnamespace-and-library-">Differences with <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadNamespace()</a></code> and <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code><a class="anchor" aria-label="anchor" href="#differences-with-loadnamespace-and-library-"></a></h2>
+    
+
+<p><code>load_all()</code> tries its best to reproduce the behaviour of
+<code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadNamespace()</a></code> and <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>. However it deviates from normal
+package loading in several ways.</p><ul><li><p>It doesn't install the package on disk, so <code><a href="system.file.html">system.file()</a></code> has no
+way of determining the location of the development files. To work
+around this, pkgload installs its own version of <code><a href="system.file.html">system.file()</a></code>
+on the search path to make it easier to use interactively while
+developing. However this definition is only visible to the global
+environment, not to the namespaces of third party packages.</p>
+<p>One workaround for other packages to see the development files of
+your package while you're developing with devtools is for them to
+use <code><a href="https://fs.r-lib.org/reference/path_package.html" class="external-link">fs::path_package()</a></code> instead of <code><a href="system.file.html">system.file()</a></code>.</p></li>
+<li><p>Whereas <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadNamespace()</a></code> and <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> only load package
+dependencies when they are needed, <code>load_all()</code> loads all packages
+referenced in <code>Imports</code> at load time.</p></li>
+</ul></div>
+    <div class="section level2">
     <h2 id="namespaces">Namespaces<a class="anchor" aria-label="anchor" href="#namespaces"></a></h2>
     
 
