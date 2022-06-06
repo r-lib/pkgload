@@ -51,5 +51,5 @@ force_load_all_deps <- function() {
 # R CMD check NOTE
 unused <- function() {
   desc::desc
-  rprojroot::rprojroot_find_package_root_file
+  rprojroot::find_package_root_file
 }
