@@ -58,6 +58,7 @@ when a package is installed and loaded with <code><a href="https://rdrr.io/r/bas
   path <span class="op">=</span> <span class="st">"."</span>,
   reset <span class="op">=</span> <span class="cn">TRUE</span>,
   compile <span class="op">=</span> <span class="cn">NA</span>,
+  attach <span class="op">=</span> <span class="cn">TRUE</span>,
   export_all <span class="op">=</span> <span class="cn">TRUE</span>,
   export_imports <span class="op">=</span> <span class="va">export_all</span>,
   helpers <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -84,6 +85,12 @@ large code bases, but is a significantly less accurate approximation.</p></dd>
 <dd><p>If <code>TRUE</code> always recompiles the package; if <code>NA</code>
 recompiles if needed (as determined by <code><a href="https://rdrr.io/pkg/pkgbuild/man/needs_compile.html" class="external-link">pkgbuild::needs_compile()</a></code>);
 if <code>FALSE</code>, never recompiles.</p></dd>
+<dt>attach</dt>
+<dd><p>Whether to attach a package environment to the search
+path. If <code>FALSE</code> <code>load_all()</code> behaves like <code><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">loadNamespace()</a></code>. If
+<code>TRUE</code> (the default), it behaves like <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>. If <code>FALSE</code>,
+the <code>export_all</code>, <code>export_imports</code>, and <code>helpers</code> arguments have
+no effect.</p></dd>
 <dt>export_all</dt>
 <dd><p>If <code>TRUE</code> (the default), export all objects.
 If <code>FALSE</code>, export only the objects that are listed as exports
