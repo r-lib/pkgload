@@ -133,3 +133,11 @@ test_that("load_all() errors when no DESCRIPTION found", {
     (expect_error(load_all(), class = "pkgload_no_desc"))
   })
 })
+
+test_that("can load without attaching", {
+  load_all("testLoadAttach", attach = FALSE)
+  expect_false(is_attached("testLoadAttach"))
+
+  load_all("testLoadAttach", attach = TRUE)
+  expect_true(is_attached("testLoadAttach"))
+})

@@ -1,5 +1,10 @@
 # pkgload (development version)
 
+* `load_all()` gains an `attach` argument set to `TRUE` by default (#209).
+  If set to `FALSE`, `load_all()` creates a new namespace but doesn't
+  create a package environment on the search path. In this case, it is
+  more similar to `loadNamespace()` than to `library()`.
+
 * Improved the way help pages are displayed in RStudio. This makes the
   behaviour within and outside RStudio consistent and fixes issues
   with Rd macros (#120).
