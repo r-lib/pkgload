@@ -29,6 +29,27 @@
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
 #' is running. This may be useful e.g. in onLoad hooks.
 #'
+#' @section Differences with `loadNamespace()` and `library()`:
+
+#' `load_all()` tries its best to reproduce the behaviour of
+#' [loadNamespace()] and [library()]. However it deviates from normal
+#' package loading in several ways.
+#'
+#' - It doesn't install the package on disk, so [system.file()] has no
+#'   way of determining the location of the development files. To work
+#'   around this, pkgload installs its own version of [system.file()]
+#'   on the search path to make it easier to use interactively while
+#'   developing. However this definition is only visible to the global
+#'   environment, not to the namespaces of third party packages.
+#'
+#'   One workaround for other packages to see the development files of
+#'   your package while you're developing with devtools is for them to
+#'   use `fs::path_package()` instead of `system.file()`.
+#'
+#' - Whereas `loadNamespace()` and `library()` only load package
+#'   dependencies when they are needed, `load_all()` loads all packages
+#'   referenced in `Imports` at load time.
+#'
 #' @section Namespaces:
 #' The namespace environment `<namespace:pkgname>`, is a child of
 #' the imports environment, which has the name attribute
