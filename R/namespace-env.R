@@ -126,7 +126,8 @@ setup_ns_exports <- function(path = ".",
     # This code is from base::loadNamespace
     exports <- nsInfo$exports
     for (p in nsInfo$exportPatterns) {
-      exports <- c(env_names(nsenv, pattern = p), exports)
+      # FIXME! Needs a test for `exportPatterns`
+      exports <- c(ls(nsenv, pattern = p, all.names = TRUE), exports)
     }
   }
 
