@@ -88,6 +88,11 @@
 #' @param compile If `TRUE` always recompiles the package; if `NA`
 #'   recompiles if needed (as determined by [pkgbuild::needs_compile()]);
 #'   if `FALSE`, never recompiles.
+#' @param attach Whether to attach a package environment to the search
+#'   path. If `FALSE` `load_all()` behaves like `loadNamespace()`. If
+#'   `TRUE` (the default), it behaves like `library()`. If `FALSE`,
+#'   the `export_all`, `export_imports`, and `helpers` arguments have
+#'   no effect.
 #' @param export_all If `TRUE` (the default), export all objects.
 #'   If `FALSE`, export only the objects that are listed as exports
 #'   in the NAMESPACE file.
@@ -127,6 +132,7 @@
 load_all <- function(path = ".",
                      reset = TRUE,
                      compile = NA,
+                     attach = TRUE,
                      export_all = TRUE,
                      export_imports = export_all,
                      helpers = TRUE,
@@ -240,28 +246,34 @@ load_all <- function(path = ".",
 
   # Set up the package environment ------------------------------------
   # Create the package environment if needed
-  if (!is_attached(package)) attach_ns(package)
+  if (attach) {
+    if (!is_attached(package)) {
+      attach_ns(package)
+    }
 
-  # Copy over lazy data objects from the namespace environment
-  export_lazydata(package)
+    # Copy over lazy data objects from the namespace environment
+    export_lazydata(package)
 
-  # Copy over objects from the namespace environment
-  export_ns(package)
+    # Copy over objects from the namespace environment
+    export_ns(package)
 
-  # Assign .Depends, if any, to package environment from namespace
-  assign_depends(package)
+    # Assign .Depends, if any, to package environment from namespace
+    assign_depends(package)
+  }
 
   env_bind(ns_s3_methods(package), !!!old_methods)
 
-  # Run hooks
-  run_pkg_hook(package, "attach")
-  run_user_hook(package, "attach")
+  if (attach) {
+    # Run hooks
+    run_pkg_hook(package, "attach")
+    run_user_hook(package, "attach")
 
-  # Source test helpers into package environment
-  if (uses_testthat(path) && helpers) {
-    withr_with_envvar(c(NOT_CRAN = "true"),
-      testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
-    )
+    # Source test helpers into package environment
+    if (uses_testthat(path) && helpers) {
+      withr_with_envvar(c(NOT_CRAN = "true"),
+        testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
+      )
+    }
   }
 
   # Replace help and ? in utils package environment

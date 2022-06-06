@@ -9,6 +9,7 @@ load_all(
   path = ".",
   reset = TRUE,
   compile = NA,
+  attach = TRUE,
   export_all = TRUE,
   export_imports = export_all,
   helpers = TRUE,
@@ -32,6 +33,12 @@ large code bases, but is a significantly less accurate approximation.}
 \item{compile}{If \code{TRUE} always recompiles the package; if \code{NA}
 recompiles if needed (as determined by \code{\link[pkgbuild:needs_compile]{pkgbuild::needs_compile()}});
 if \code{FALSE}, never recompiles.}
+
+\item{attach}{Whether to attach a package environment to the search
+path. If \code{FALSE} \code{load_all()} behaves like \code{loadNamespace()}. If
+\code{TRUE} (the default), it behaves like \code{library()}. If \code{FALSE},
+the \code{export_all}, \code{export_imports}, and \code{helpers} arguments have
+no effect.}
 
 \item{export_all}{If \code{TRUE} (the default), export all objects.
 If \code{FALSE}, export only the objects that are listed as exports
