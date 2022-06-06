@@ -60,7 +60,7 @@ print.dev_topic <- function(x, ...) {
   file <- fs::path_ext_set(fs::path_file(x$path), type)
 
   # This directory structure is necessary for RStudio to open the
-  # .html file in the help pane (see rstudio/rustdio#11336)
+  # .html file in the help pane (see rstudio/rstudio#11336)
   doc_path <- fs::path("doc", "html", file)
   path <- fs::path(tempdir(), ".R", doc_path)
   fs::dir_create(fs::path_dir(path), recurse = TRUE)
