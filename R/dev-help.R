@@ -72,7 +72,7 @@ print.dev_topic <- function(x, ...) {
   } else if (type == "html") {
     topic_write_html(x, path)
 
-    if (is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
+    if (is_rstudio()) {
       # This localhost URL is also part of getting RStudio to open in
       # the help pane
       port <- exec(env_get(ns_env("tools"), "httpdPort"))

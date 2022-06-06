@@ -199,3 +199,7 @@ style_hyperlink_run <- function(code) {
 cat_line <- function(...) {
   cat(paste0(..., "\n", collapse = ""))
 }
+
+is_rstudio <- function() {
+  is_string(.Platform$GUI, "RStudio")
+}
