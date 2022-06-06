@@ -240,7 +240,12 @@ load_all <- function(path = ".",
   setup_ns_exports(path, export_all, export_imports)
 
   run_ns_load_actions(package)
-  lockEnvironment(ns_env(package))
+
+  ns <- ns_env(package)
+  lockEnvironment(ns)
+  for (nm in names(ns)) {
+    lockBinding(nm, ns)
+  }
 
   run_user_hook(package, "load")
 
