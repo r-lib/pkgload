@@ -199,13 +199,6 @@ is_loaded <- function(package) {
 }
 
 
-# Returns the namespace registry
-ns_registry <- function() {
-  (get(".Internal", envir = baseenv(), mode = "function"))(getNamespaceRegistry())
-}
-# To avoid a note about getNamespaceRegistry being missing
-utils::globalVariables("getNamespaceRegistry")
-
 # Register a namespace
 register_namespace <- function(name = NULL, env = NULL) {
   if (!is.character(name) || name == "" || length(name) != 1) {
@@ -219,7 +212,7 @@ register_namespace <- function(name = NULL, env = NULL) {
   }
 
   # Add the environment to the registry
-  nsr <- ns_registry()
+  nsr <- ns_registry_env()
   nsr[[name]] <- env
 
   env
@@ -244,7 +237,7 @@ unregister_namespace <- function(name = NULL) {
   eapply(ns_env(name), force, all.names = TRUE)
 
   # Remove the item from the registry
-  env_unbind(ns_registry(), name)
+  env_unbind(ns_registry_env(), name)
   invisible()
 }
 
