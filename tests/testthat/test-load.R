@@ -59,7 +59,10 @@ test_that("unloading or reloading forces bindings", {
       # Allow running test interactively
       on.exit(unload("testLoadLazy"))
 
-      load_all("testLoadLazy")
+      # On older R versions, `env_coalesce()` forces bindings
+      attach <- getRversion() >= "4.0.0"
+
+      load_all("testLoadLazy", attach = attach)
       expect_false(forced)
 
       load_all("testLoadLazy")
