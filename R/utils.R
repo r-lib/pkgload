@@ -170,7 +170,7 @@ copy_env_lazy <- function(src, dest = new.env(parent = emptyenv()),
 
 # A version of delayedAssign which does _not_ use substitute
 delayed_assign <- function(x, value, eval.env = parent.frame(1), assign.env = parent.frame(1)) {
-  (get(".Internal", baseenv()))(delayedAssign(x, value, eval.env, assign.env))
+  inject(delayedAssign(x, !!value, eval.env, assign.env))
 }
 
 last <- function(x) utils::tail(x, n = 1L)
