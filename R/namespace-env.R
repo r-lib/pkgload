@@ -86,49 +86,18 @@ setup_ns_imports <- function(path = ".") {
 # Read the NAMESPACE file and set up the exports metdata. This must be
 # run after all the objects are loaded into the namespace because
 # namespaceExport throw errors if the objects are not present.
-setup_ns_exports <- function(path = ".",
-                             export_all = FALSE,
-                             export_imports = export_all) {
+setup_ns_exports <- function(path = ".") {
   path <- pkg_path(path)
   package <- pkg_name(path)
 
   nsInfo <- parse_ns_file(path)
   nsenv <- ns_env(package)
 
-  if (export_all) {
-    exports <- env_names(nsenv)
-
-    # Make sure to re-export objects that are imported from other packages but
-    # not copied.
-    exports <- union(exports, nsInfo$exports)
-
-    # if export_imports export all imports as well
-    if (export_imports) {
-      exports <- c(exports, env_names(imports_env(package)))
-    }
-
-    # List of things to ignore is from loadNamespace. There are also a
-    # couple things to ignore from devtools.
-    ignoreidx <- exports %in% c(
-      ".__NAMESPACE__.",
-      ".__S3MethodsTable__.",
-      ".packageName",
-      ".First.lib",
-      ".onLoad",
-      ".onAttach",
-      ".conflicts.OK",
-      ".noGenerics",
-      ".__DEVTOOLS__",
-      ".cache"
-    )
-    exports <- exports[!ignoreidx]
-  } else {
-    # This code is from base::loadNamespace
-    exports <- nsInfo$exports
-    for (p in nsInfo$exportPatterns) {
-      # FIXME! Needs a test for `exportPatterns`
-      exports <- c(ls(nsenv, pattern = p, all.names = TRUE), exports)
-    }
+  # This code is from base::loadNamespace
+  exports <- nsInfo$exports
+  for (p in nsInfo$exportPatterns) {
+    # FIXME! Needs a test for `exportPatterns`
+    exports <- c(ls(nsenv, pattern = p, all.names = TRUE), exports)
   }
 
   # Don't try to export objects that are missing from the namespace and imports

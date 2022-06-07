@@ -59,7 +59,10 @@ test_that("unloading or reloading forces bindings", {
       # Allow running test interactively
       on.exit(unload("testLoadLazy"))
 
-      load_all("testLoadLazy")
+      # On older R versions, `env_coalesce()` forces bindings
+      attach <- getRversion() >= "4.0.0"
+
+      load_all("testLoadLazy", attach = attach)
       expect_false(forced)
 
       load_all("testLoadLazy")
@@ -140,4 +143,17 @@ test_that("can load without attaching", {
 
   load_all("testLoadAttach", attach = TRUE)
   expect_true(is_attached("testLoadAttach"))
+})
+
+test_that("internal functions exported to the search path are not imported in downstream packages", {
+  # This package has an internal function called `internal`
+  load_all(test_path("testLoadImportUpstream"))
+
+  # This package exports a function called `internal`
+  load_all(test_path("testLoadImportUpstreamAlt"))
+
+  # This package imports both packages above
+  expect_no_warning(
+    load_all(test_path("testLoadImportDownstream"))
+  )
 })

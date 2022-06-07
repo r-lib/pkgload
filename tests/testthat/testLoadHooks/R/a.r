@@ -31,8 +31,8 @@ the$onattach_lib <- ""
 
   the$b <- the$b + 1
 
-  # FIXME: The package env should not be populated with internal
-  # helpers when the hook is run
+  # The package env is not populated with internal helpers when the
+  # hook is run
   env <- as.environment("package:testLoadHooks")
   if (!is.null(env$the)) {
     the$c <- the$c + 1
