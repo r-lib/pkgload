@@ -141,3 +141,16 @@ test_that("can load without attaching", {
   load_all("testLoadAttach", attach = TRUE)
   expect_true(is_attached("testLoadAttach"))
 })
+
+test_that("internal functions exported to the search path are not imported in downstream packages", {
+  # This package has an internal function called `internal`
+  load_all(test_path("testLoadImportUpstream"))
+
+  # This package exports a function called `internal`
+  load_all(test_path("testLoadImportUpstreamAlt"))
+
+  # This package imports both packages above
+  expect_no_warning(
+    load_all(test_path("testLoadImportDownstream"))
+  )
+})

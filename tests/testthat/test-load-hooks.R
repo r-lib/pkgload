@@ -76,7 +76,7 @@ test_that("onLoad and onAttach", {
   # c: modified by onAttach in package env
   expect_equal(the$a, 2)
   expect_equal(the$b, 2)
-  expect_equal(the$c, 2)
+  expect_equal(the$c, 1)
 
   # ===================================================================
   # Loading again without reset won't change a, b, and c in the
@@ -91,7 +91,7 @@ test_that("onLoad and onAttach", {
 
   expect_equal(the$a, 2)
   expect_equal(the$b, 2)
-  expect_equal(the$c, 2)
+  expect_equal(the$c, 1)
 
   # ===================================================================
   # With reset=TRUE, there should be new package and namespace
@@ -110,7 +110,7 @@ test_that("onLoad and onAttach", {
   # Values should be same as first time
   expect_equal(the2$a, 2)
   expect_equal(the2$b, 2)
-  expect_equal(the2$c, 2)
+  expect_equal(the2$c, 1)
 
   unload("testLoadHooks")
 
@@ -129,7 +129,7 @@ test_that("onLoad and onAttach", {
   # Values should be same as first time
   expect_equal(the3$a, 2)
   expect_equal(the3$b, 2)
-  expect_equal(the3$c, 2)
+  expect_equal(the3$c, 1)
 
   unload("testLoadHooks")
 })

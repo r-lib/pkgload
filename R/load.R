@@ -237,7 +237,7 @@ load_all <- function(path = ".",
 
   # Set up the exports in the namespace metadata (this must happen after
   # the objects are loaded)
-  setup_ns_exports(path, export_all, export_imports)
+  setup_ns_exports(path)
 
   run_ns_load_actions(package)
 
@@ -273,8 +273,19 @@ load_all <- function(path = ".",
     run_pkg_hook(package, "attach")
     run_user_hook(package, "attach")
 
+    if (export_all) {
+      pkg_env <- pkg_env(package)
+      env_coalesce(pkg_env, ns_env(package))
+
+      if (export_imports) {
+        env_coalesce(pkg_env, imports_env(package))
+      }
+
+      env_unbind(pkg_env, exports_exclusion_list)
+    }
+
     # Source test helpers into package environment
-    if (uses_testthat(path) && helpers) {
+    if (helpers && uses_testthat(path)) {
       withr_with_envvar(c(NOT_CRAN = "true"),
         testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
       )
@@ -294,6 +305,20 @@ load_all <- function(path = ".",
 
   invisible(out)
 }
+
+# Namespace and devtools bindings to exclude from package envs
+exports_exclusion_list <- c(
+  ".__NAMESPACE__.",
+  ".__S3MethodsTable__.",
+  ".packageName",
+  ".First.lib",
+  ".onLoad",
+  ".onAttach",
+  ".conflicts.OK",
+  ".noGenerics",
+  ".__DEVTOOLS__",
+  ".cache"
+)
 
 load_all_quiet <- function(quiet, fn = NULL) {
   if (!is_null(fn)) {

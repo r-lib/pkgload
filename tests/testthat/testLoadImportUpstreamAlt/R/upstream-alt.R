@@ -1,0 +1,2 @@
+#' @export
+internal <- function() NULL
