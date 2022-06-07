@@ -73,7 +73,9 @@ test_that("onLoad and onAttach", {
 
   # a: modified by onLoad in namespace env
   # b: modified by onAttach in namespace env
-  # c: modified by onAttach in package env
+  # c: modified by onAttach in package env (no longer the case because
+  # internal bindings are no longer populated at the time the `onAttach`
+  # hook is run)
   expect_equal(the$a, 2)
   expect_equal(the$b, 2)
   expect_equal(the$c, 1)
