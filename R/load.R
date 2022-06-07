@@ -252,44 +252,15 @@ load_all <- function(path = ".",
   # Set up the package environment ------------------------------------
   # Create the package environment if needed
   if (attach) {
-    if (!is_attached(package)) {
-      attach_ns(package)
-    }
-
-    # Copy over lazy data objects from the namespace environment
-    export_lazydata(package)
-
-    # Copy over objects from the namespace environment
-    export_ns(package)
-
-    # Assign .Depends, if any, to package environment from namespace
-    assign_depends(package)
+    setup_pkg_env(package)
   }
 
   env_bind(ns_s3_methods(package), !!!old_methods)
 
   if (attach) {
-    # Run hooks
     run_pkg_hook(package, "attach")
     run_user_hook(package, "attach")
-
-    if (export_all) {
-      pkg_env <- pkg_env(package)
-      env_coalesce(pkg_env, ns_env(package))
-
-      if (export_imports) {
-        env_coalesce(pkg_env, imports_env(package))
-      }
-
-      env_unbind(pkg_env, exports_exclusion_list)
-    }
-
-    # Source test helpers into package environment
-    if (helpers && uses_testthat(path)) {
-      withr_with_envvar(c(NOT_CRAN = "true"),
-        testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
-      )
-    }
+    populate_pkg_env(package, path, export_all, export_imports, helpers)
   }
 
   # Replace help and ? in utils package environment
@@ -304,6 +275,45 @@ load_all <- function(path = ".",
   }
 
   invisible(out)
+}
+
+setup_pkg_env <- function(pkg) {
+  if (!is_attached(pkg)) {
+    attach_ns(pkg)
+  }
+
+  # Copy over lazy data objects from the namespace environment
+  export_lazydata(pkg)
+
+  # Copy over objects from the namespace environment
+  export_ns(pkg)
+
+  # Assign .Depends, if any, to package environment from namespace
+  assign_depends(pkg)
+}
+
+populate_pkg_env <- function(package,
+                             path,
+                             export_all,
+                             export_imports,
+                             helpers) {
+  if (export_all) {
+    pkg_env <- pkg_env(package)
+    env_coalesce(pkg_env, ns_env(package))
+
+    if (export_imports) {
+      env_coalesce(pkg_env, imports_env(package))
+    }
+
+    env_unbind(pkg_env, exports_exclusion_list)
+  }
+
+  # Source test helpers into package environment
+  if (helpers && uses_testthat(path)) {
+    withr_with_envvar(c(NOT_CRAN = "true"),
+      testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
+    )
+  }
 }
 
 # Namespace and devtools bindings to exclude from package envs
