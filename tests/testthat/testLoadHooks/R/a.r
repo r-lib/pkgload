@@ -1,9 +1,13 @@
-a <- 1
-b <- 1
-c <- 1
+ns_locked <- TRUE
+pkg_locked <- TRUE
 
-onload_lib <- ""
-onattach_lib <- ""
+the <- new.env()
+the$a <- 1
+the$b <- 1
+the$c <- 1
+
+the$onload_lib <- ""
+the$onattach_lib <- ""
 
 .onLoad <- function(lib, pkg) {
   hook <- getOption("pkgload:::testLoadHooks::.onLoad")
@@ -11,21 +15,28 @@ onattach_lib <- ""
     hook()
   }
 
-  onload_lib <<- lib
-  a <<- a + 1
+  # Namespace is not sealed at this point
+  ns_locked <<- FALSE
+
+  the$onload_lib <- lib
+  the$a <- the$a + 1
 }
 
 .onAttach <- function(lib, pkg) {
-  onattach_lib <<- lib
+  the$onattach_lib <- lib
 
-  # Attempt to modify b in namespace. This should throw an error
-  # in a real install+load because namespace is locked. But with
-  # load_all, it will work because the namespace doesn't get locked.
-  try(b <<- b + 1, silent = TRUE)
+  # Attempt to modify b in namespace. This throws an error because the
+  # namespace is sealed at this point.
+  expect_error(pkg_locked <<- FALSE)
 
-  # Now modify c in package environment
+  the$b <- the$b + 1
+
+  # FIXME: The package env should not be populated with internal
+  # helpers when the hook is run
   env <- as.environment("package:testLoadHooks")
-  env$c <- env$c + 1
+  if (!is.null(env$the)) {
+    the$c <- the$c + 1
+  }
 }
 
 .onUnload <- function(libpath) {

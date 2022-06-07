@@ -58,6 +58,9 @@
   are run. This better reproduced the namespace sealing behaviour of
   regular loading.
 
+  The package environment environment is now locked as well before
+  both the user and package `onAttach` hooks are run.
+
 * Errors thrown in user hooks are now demoted to a warning
   condition. Previously they were demoted using `try()`, making it
   harder to debug them.
