@@ -23,6 +23,11 @@ test_that("helpers are available after load_all", {
   unload("testLoadHelpers")
 })
 
+test_that("`quiet` argument works (#213)", {
+  expect_message(load_all(test_path("testLoadHelpers"), quiet = FALSE), "Loading")
+  expect_no_message(load_all(test_path("testLoadHelpers"), quiet = TRUE))
+})
+
 test_that("warn_if_conflicts warns for conflicts and both objects are functions", {
   e1 <- new.env(parent = emptyenv())
   e2 <- new.env(parent = emptyenv())
