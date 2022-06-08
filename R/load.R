@@ -277,11 +277,17 @@ load_all <- function(path = ".",
   invisible(out)
 }
 
+# The override logic is somewhat complicated but allows changing the
+# global verbosity default to `FALSE` during unit tests, as well as
+# turning on or off verbosity selectively in different loading phases.
 load_all_quiet <- function(quiet, fn = NULL) {
   if (!is_null(fn)) {
-    quiet <- peek_option(sprintf("testthat:::%s_quiet_override", fn))
+    # This overwrites the `quiet` setting
+    quiet <- peek_option(sprintf("testthat:::%s_quiet_override", fn)) %||% quiet
   }
-  quiet %||% peek_option("testthat:::load_all_quiet") %||% FALSE
+
+  # This doesn't overwrite the `quiet` setting, only changes the default
+  quiet %||% peek_option("testthat:::load_all_quiet_default") %||% FALSE
 }
 
 is_function_in_environment <- function(name, env) {
