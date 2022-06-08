@@ -149,7 +149,7 @@ load_all <- function(path = ".",
   quiet <- load_all_quiet(quiet, "load_all")
 
   if (!quiet) {
-    cli::cli_inform(c("i" = "Loading {.pkg {package}}."))
+    cli::cli_inform(c("i" = "Loading {.pkg {package}}"))
   }
 
   if (package == "compiler") {
