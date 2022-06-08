@@ -1,3 +1,18 @@
+setup_pkg_env <- function(pkg) {
+  if (!is_attached(pkg)) {
+    attach_ns(pkg)
+  }
+
+  # Copy over lazy data objects from the namespace environment
+  export_lazydata(pkg)
+
+  # Copy over objects from the namespace environment
+  export_ns(pkg)
+
+  # Assign .Depends, if any, to package environment from namespace
+  assign_depends(pkg)
+}
+
 # Create the package environment where exported objects will be copied to
 attach_ns <- function(package) {
   nsenv <- ns_env(package)
@@ -12,6 +27,46 @@ attach_ns <- function(package) {
 
   invisible(pkgenv)
 }
+
+populate_pkg_env <- function(pkg,
+                             path,
+                             export_all,
+                             export_imports,
+                             helpers) {
+  pkg_env <- pkg_env(pkg)
+
+  if (export_all) {
+    env_coalesce(pkg_env, ns_env(pkg))
+
+    if (export_imports) {
+      env_coalesce(pkg_env, imports_env(pkg))
+    }
+
+    env_unbind(pkg_env, exports_exclusion_list)
+  }
+
+  # Source test helpers into pkg environment
+  if (helpers && uses_testthat(path)) {
+    withr_with_envvar(
+      c(NOT_CRAN = "true"),
+      testthat_source_test_helpers(find_test_dir(path), env = pkg_env)
+    )
+  }
+}
+
+# Namespace and devtools bindings to exclude from package envs
+exports_exclusion_list <- c(
+  ".__NAMESPACE__.",
+  ".__S3MethodsTable__.",
+  ".packageName",
+  ".First.lib",
+  ".onLoad",
+  ".onAttach",
+  ".conflicts.OK",
+  ".noGenerics",
+  ".__DEVTOOLS__",
+  ".cache"
+)
 
 # Invoke namespace load actions. According to the documentation for setLoadActions
 # these actions should be called at the end of processing of S4 metadata, after

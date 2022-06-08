@@ -277,59 +277,6 @@ load_all <- function(path = ".",
   invisible(out)
 }
 
-setup_pkg_env <- function(pkg) {
-  if (!is_attached(pkg)) {
-    attach_ns(pkg)
-  }
-
-  # Copy over lazy data objects from the namespace environment
-  export_lazydata(pkg)
-
-  # Copy over objects from the namespace environment
-  export_ns(pkg)
-
-  # Assign .Depends, if any, to package environment from namespace
-  assign_depends(pkg)
-}
-
-populate_pkg_env <- function(package,
-                             path,
-                             export_all,
-                             export_imports,
-                             helpers) {
-  if (export_all) {
-    pkg_env <- pkg_env(package)
-    env_coalesce(pkg_env, ns_env(package))
-
-    if (export_imports) {
-      env_coalesce(pkg_env, imports_env(package))
-    }
-
-    env_unbind(pkg_env, exports_exclusion_list)
-  }
-
-  # Source test helpers into package environment
-  if (helpers && uses_testthat(path)) {
-    withr_with_envvar(c(NOT_CRAN = "true"),
-      testthat_source_test_helpers(find_test_dir(path), env = pkg_env(package))
-    )
-  }
-}
-
-# Namespace and devtools bindings to exclude from package envs
-exports_exclusion_list <- c(
-  ".__NAMESPACE__.",
-  ".__S3MethodsTable__.",
-  ".packageName",
-  ".First.lib",
-  ".onLoad",
-  ".onAttach",
-  ".conflicts.OK",
-  ".noGenerics",
-  ".__DEVTOOLS__",
-  ".cache"
-)
-
 load_all_quiet <- function(quiet, fn = NULL) {
   if (!is_null(fn)) {
     quiet <- peek_option(sprintf("testthat:::%s_quiet_override", fn))
