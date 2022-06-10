@@ -6,7 +6,7 @@
 #' @inheritParams load_all
 #' @keywords programming
 #' @export
-load_code <- function(path = ".", quiet = FALSE) {
+load_code <- function(path = ".", quiet = NULL) {
   quiet <- load_all_quiet(quiet, "load_code")
 
   path <- pkg_path(path)

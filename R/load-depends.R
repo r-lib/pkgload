@@ -1,5 +1,6 @@
-load_depends <- function(path = ".", quiet = FALSE) {
+load_depends <- function(path = ".", quiet = NULL) {
   path <- pkg_path(path)
+  quiet <- load_all_quiet(quiet, "load_depends")
 
   description <- pkg_desc(path)
 

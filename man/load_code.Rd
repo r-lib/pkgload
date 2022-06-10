@@ -4,7 +4,7 @@
 \alias{load_code}
 \title{Load R code.}
 \usage{
-load_code(path = ".", quiet = FALSE)
+load_code(path = ".", quiet = NULL)
 }
 \arguments{
 \item{path}{Path to a package, or within a package.}
