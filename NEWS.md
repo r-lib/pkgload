@@ -1,5 +1,13 @@
 # pkgload (development version)
 
+* `load_all()` now calls `rlang::check_installed()` to prompt whether
+  to install missing packages.
+
+  Outdated and missing dependencies are installed using pak if
+  installed. If not, the remotes package is used if installed.
+  Otherwise `install.packages()` is used as a last resort but this
+  method does not support Remotes fields.
+
 * `load_all()` gains an `attach` argument set to `TRUE` by default (#209).
   If set to `FALSE`, `load_all()` creates a new namespace but doesn't
   create a package environment on the search path. In this case, it is
@@ -8,6 +16,22 @@
 * Improved the way help pages are displayed in RStudio. This makes the
   behaviour within and outside RStudio consistent and fixes issues
   with Rd macros (#120).
+
+* `unregister()` is now exported. This is a gentler version of
+  `unload()` which removes the package from the search path,
+  unregisters methods, and unregisters the namespace. However it
+  doesn't try to unload the namespace or its DLL so that dangling
+  references keep working.
+
+* User `onLoad` hooks are now run after exports have been
+  populated. This allows the hook to use exported functions.
+
+* The loaded namespace is now locked just before user `onLoad` hooks
+  are run. This better reproduced the namespace sealing behaviour of
+  regular loading.
+
+  The package environment environment is now locked as well before
+  both the user and package `onAttach` hooks are run.
 
 * Added support for loading a .so or .dll file from the `inst`
   folder via a new `library.dynam()` shim (@ethanplunkett, #48).
@@ -30,12 +54,6 @@
 * New `is_loading()` predicate to detect whether `load_all()` is
   currently running (#134).
 
-* `unregister()` is now exported. This is a gentler version of
-  `unload()` which removes the package from the search path,
-  unregisters methods, and unregisters the namespace. However it
-  doesn't try to unload the namespace or its DLL so that dangling
-  references keep working.
-
 * `.dynLibs()` is no longer emptied when package with no DLL is
   unloaded (#176).
 
@@ -43,30 +61,13 @@
 
 * rstudioapi is no longer a hard dependency of pkgload (#187).
 
-* `load_all()` now calls `rlang::check_installed()` to prompt whether
-  to install missing packages.
-
-  Outdated and missing dependencies are installed using pak if
-  installed. If not, the remotes package is used if installed.
-  Otherwise `install.packages()` is used as a last resort but this
-  method does not support Remotes fields.
-
-* User `onLoad` hooks are now run after exports have been
-  populated. This allows the hook to use exported functions.
-
-* The loaded namespace is now locked just before user `onLoad` hooks
-  are run. This better reproduced the namespace sealing behaviour of
-  regular loading.
-
-  The package environment environment is now locked as well before
-  both the user and package `onAttach` hooks are run.
-
 * Errors thrown in user hooks are now demoted to a warning
   condition. Previously they were demoted using `try()`, making it
   harder to debug them.
 
-* `load_all()` correctly re-loads modified translations, avoiding 
+* `load_all()` correctly re-loads modified translations, avoiding
   the usual gettext behaviour.
+
 
 # pkgload 1.2.4
 
