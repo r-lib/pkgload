@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.3.0
 
 * `load_all()` now calls `rlang::check_installed()` to prompt whether
   to install missing packages.
