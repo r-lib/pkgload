@@ -323,7 +323,7 @@ warn_if_conflicts <- function(package, env1, env2) {
 
   directions <- c(
     "i" = cli::col_silver("Did you accidentally source a file rather than using `load_all()`?"),
-    " " = cli::col_silver(glue::glue("Run {run_rm} to remove the conflicts."))
+    " " = cli::col_silver(glue::glue("Run the following code to remove the conflicts: {run_rm}"))
   )
 
   cli::cli_warn(
