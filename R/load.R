@@ -35,7 +35,7 @@
 #'   helpers are run during package loading.
 #'
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
-#' is running. This may be useful e.g. in onLoad hooks.
+#' is running. This may be useful e.g. in `.onLoad` hooks.
 #'
 #' # Differences to regular loading
 #'
