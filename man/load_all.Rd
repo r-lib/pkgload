@@ -78,7 +78,7 @@ having to first install the package. It:
 details.
 \item Sources all R files in the R directory, storing results in
 environment that behaves like a regular package namespace. See
-below and \code{\link[=load_code]{load_code()}} for more details.
+\code{\link[=load_code]{load_code()}} for more details.
 \item Adds a shim from \code{\link[=system.file]{system.file()}} to \code{\link[=shim_system.file]{shim_system.file()}} in
 the imports environment of the package. This ensures that \code{system.file()}
 works with both development and installed packages despite their differing

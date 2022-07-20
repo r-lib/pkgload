@@ -12,7 +12,7 @@ load_code(path = ".", quiet = NULL)
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
 \description{
-Load all R code in the \code{R} directory. The first time the code is
-loaded, \code{.onLoad} will be run if it exists.
+Sources all \code{.R}/\code{.r} files in the \verb{R/} directory, storing results into
+the package namespace.
 }
 \keyword{programming}

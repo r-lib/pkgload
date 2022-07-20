@@ -10,7 +10,7 @@
 #'
 #' - Sources all R files in the R directory, storing results in
 #'   environment that behaves like a regular package namespace. See
-#'   below and [load_code()] for more details.
+#'   [load_code()] for more details.
 #'
 #' - Adds a shim from [system.file()] to [shim_system.file()] in
 #'   the imports environment of the package. This ensures that `system.file()`
