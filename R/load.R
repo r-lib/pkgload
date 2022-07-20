@@ -17,7 +17,7 @@
 #'   works with both development and installed packages despite their differing
 #'   directory structures.
 #'
-#' - Add shims from `help()` and `?` to [shim_help()] and [shim_question()]
+#' - Adds shims from `help()` and `?` to [shim_help()] and [shim_question()]
 #'   to make it easier to preview development documentation.
 #'
 #' - Compiles any C, C++, or Fortran code in the `src/` directory and
@@ -49,14 +49,14 @@
 #'   work correctly. However, this shim is not visble to third party packages,
 #'   so they will fail if they attempt to find paths within your package.
 #'   One potential workaround is to use [fs::path_package()] instead of
-#'   `system.file()`, since that understand the mechanisms that devtools
+#'   `system.file()`, since that understands the mechanisms that devtools
 #'   uses to load packages.
 #'
 #' - Whereas `loadNamespace()` and `library()` only load package
 #'   dependencies when they are needed, `load_all()` loads all packages
 #'   referenced in `Imports` at load time.
 #'
-#' - `load_all()` copies all objects (not just the ones listed as exports) to
+#' - `load_all()` copies all objects (not just the ones listed as exports)
 #'    into the package environment. This is useful during development because
 #'    it makes all objects easy to access.  To export only the objects listed
 #'    as exports, use `export_all = FALSE`. This more closely simulates
