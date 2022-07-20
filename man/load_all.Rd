@@ -83,7 +83,7 @@ below and \code{\link[=load_code]{load_code()}} for more details.
 the imports environment of the package. This ensures that \code{system.file()}
 works with both development and installed packages despite their differing
 directory structures.
-\item Add shims from \code{help()} and \verb{?} to \code{\link[=shim_help]{shim_help()}} and \code{\link[=shim_question]{shim_question()}}
+\item Adds shims from \code{help()} and \verb{?} to \code{\link[=shim_help]{shim_help()}} and \code{\link[=shim_question]{shim_question()}}
 to make it easier to preview development documentation.
 \item Compiles any C, C++, or Fortran code in the \verb{src/} directory and
 connects the generated DLL into R. See \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}
@@ -111,12 +111,12 @@ To partly work around this, pkgload installs its own shim,
 work correctly. However, this shim is not visble to third party packages,
 so they will fail if they attempt to find paths within your package.
 One potential workaround is to use \code{\link[fs:path_package]{fs::path_package()}} instead of
-\code{system.file()}, since that understand the mechanisms that devtools
+\code{system.file()}, since that understands the mechanisms that devtools
 uses to load packages.
 \item Whereas \code{loadNamespace()} and \code{library()} only load package
 dependencies when they are needed, \code{load_all()} loads all packages
 referenced in \code{Imports} at load time.
-\item \code{load_all()} copies all objects (not just the ones listed as exports) to
+\item \code{load_all()} copies all objects (not just the ones listed as exports)
 into the package environment. This is useful during development because
 it makes all objects easy to access.  To export only the objects listed
 as exports, use \code{export_all = FALSE}. This more closely simulates
