@@ -43,18 +43,18 @@
 #' [loadNamespace()] and [library()]. However it deviates from normal
 #' package loading in several ways.
 #'
-#' - It doesn't install the package on disk, so [system.file()] doesn't work.
-#'   To partly work around this, pkgload installs its own shim,
-#'   [shim_system.file()], which ensures that code in your package will
-#'   work correctly. However, this shim is not visble to third party packages,
-#'   so they will fail if they attempt to find paths within your package.
-#'   One potential workaround is to use [fs::path_package()] instead of
-#'   `system.file()`, since that understands the mechanisms that devtools
-#'   uses to load packages.
+#' -  It doesn't install the package on disk, so [system.file()] doesn't work.
+#'    To partly work around this, pkgload installs its own shim,
+#'    [shim_system.file()], which ensures that code in your package will
+#'    work correctly. However, this shim is not visble to third party packages,
+#'    so they will fail if they attempt to find paths within your package.
+#'    One potential workaround is to use [fs::path_package()] instead of
+#'    `system.file()`, since that understands the mechanisms that devtools
+#'    uses to load packages.
 #'
-#' - Whereas `loadNamespace()` and `library()` only load package
-#'   dependencies when they are needed, `load_all()` loads all packages
-#'   referenced in `Imports` at load time.
+#' -  Whereas `loadNamespace()` and `library()` only load package
+#'    dependencies when they are needed, `load_all()` loads all packages
+#'    referenced in `Imports` at load time.
 #'
 #' - `load_all()` copies all objects (not just the ones listed as exports)
 #'    into the package environment. This is useful during development because
