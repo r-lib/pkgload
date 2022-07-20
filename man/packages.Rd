@@ -28,14 +28,14 @@ until they find a DESCRIPTION file.
 }
 \section{Functions}{
 \itemize{
-\item \code{pkg_path}: Return the normalized package path.
+\item \code{pkg_path()}: Return the normalized package path.
 
-\item \code{pkg_name}: Return the package name.
+\item \code{pkg_name()}: Return the package name.
 
-\item \code{pkg_desc}: Return the package DESCRIPTION as a \code{\link[desc:desc]{desc::desc()}} object.
+\item \code{pkg_desc()}: Return the package DESCRIPTION as a \code{\link[desc:desc]{desc::desc()}} object.
 
-\item \code{pkg_version}: Return the package version.
+\item \code{pkg_version()}: Return the package version.
 
-\item \code{pkg_ns}: Return the package namespace.
+\item \code{pkg_ns()}: Return the package namespace.
+
 }}
-
