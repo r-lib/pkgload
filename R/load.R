@@ -1,16 +1,24 @@
 #' Load complete package
 #'
-#' `load_all` loads a package. It roughly simulates what happens
-#' when a package is installed and loaded with [library()].
+#' @description
+#' `load_all()` loads a package. It roughly simulates what happens
+#' when a package is installed and loaded with [library()], without
+#' having to first install the package. It:
 #'
-#' Currently `load_all`:
-#'
-#' - Loads all data files in `data/`.  See [load_data()] for more
+#' - Loads all data files in `data/`. See [load_data()] for more
 #'   details.
 #'
 #' - Sources all R files in the R directory, storing results in
 #'   environment that behaves like a regular package namespace. See
 #'   below and [load_code()] for more details.
+#'
+#' - Adds a shim from [system.file()] to [shim_system.file()] in
+#'   the imports environment of the package. This ensures that `system.file()`
+#'   works with both development and installed packages despite their differing
+#'   directory structures.
+#'
+#' - Add shims from `help()` and `?` to [shim_help()] and [shim_question()]
+#'   to make it easier to preview development documentation.
 #'
 #' - Compiles any C, C++, or Fortran code in the `src/` directory and
 #'   connects the generated DLL into R. See [pkgbuild::compile_dll()]
@@ -29,55 +37,31 @@
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
 #' is running. This may be useful e.g. in onLoad hooks.
 #'
-#' @section Differences with `loadNamespace()` and `library()`:
-
+#' # Differences to regular loading
+#'
 #' `load_all()` tries its best to reproduce the behaviour of
 #' [loadNamespace()] and [library()]. However it deviates from normal
 #' package loading in several ways.
 #'
-#' - It doesn't install the package on disk, so [system.file()] has no
-#'   way of determining the location of the development files. To work
-#'   around this, pkgload installs its own version of [system.file()]
-#'   on the search path to make it easier to use interactively while
-#'   developing. However this definition is only visible to the global
-#'   environment, not to the namespaces of third party packages.
-#'
-#'   One workaround for other packages to see the development files of
-#'   your package while you're developing with devtools is for them to
-#'   use `fs::path_package()` instead of `system.file()`.
+#' - It doesn't install the package on disk, so [system.file()] doesn't work.
+#'   To partly work around this, pkgload installs its own shim,
+#'   [shim_system.file()], which ensures that code in your package will
+#'   work correctly. However, this shim is not visble to third party packages,
+#'   so they will fail if they attempt to find paths within your package.
+#'   One potential workaround is to use [fs::path_package()] instead of
+#'   `system.file()`, since that understand the mechanisms that devtools
+#'   uses to load packages.
 #'
 #' - Whereas `loadNamespace()` and `library()` only load package
 #'   dependencies when they are needed, `load_all()` loads all packages
 #'   referenced in `Imports` at load time.
 #'
-#' @section Namespaces:
-#' The namespace environment `<namespace:pkgname>`, is a child of
-#' the imports environment, which has the name attribute
-#' `imports:pkgname`. It is in turn is a child of
-#' `<namespace:base>`, which is a child of the global environment.
-#' (There is also a copy of the base namespace that is a child of the empty
-#' environment.)
-#'
-#' The package environment `<package:pkgname>` is an ancestor of the
-#' global environment. Normally when loading a package, the objects
-#' listed as exports in the NAMESPACE file are copied from the namespace
-#' to the package environment. However, `load_all` by default will
-#' copy all objects (not just the ones listed as exports) to the package
-#' environment. This is useful during development because it makes all
-#' objects easy to access.
-#'
-#' To export only the objects listed as exports, use
-#' `export_all=FALSE`. This more closely simulates behavior when
-#' loading an installed package with [library()], and can be
-#' useful for checking for missing exports.
-#'
-#' @section Shim files:
-#' `load_all` also inserts shim functions into the imports environment
-#' of the loaded package. It presently adds a replacement version of
-#' `system.file` which returns different paths from
-#' `base::system.file`. This is needed because installed and uninstalled
-#' package sources have different directory structures. Note that this is not
-#' a perfect replacement for `base::system.file`.
+#' - `load_all()` copies all objects (not just the ones listed as exports) to
+#'    into the package environment. This is useful during development because
+#'    it makes all objects easy to access.  To export only the objects listed
+#'    as exports, use `export_all = FALSE`. This more closely simulates
+#'    behavior when loading an installed package with [library()], and can
+#'    be useful for checking for missing exports.
 #'
 #' @param path Path to a package, or within a package.
 #' @param reset clear package environment and reset file cache before loading
@@ -105,7 +89,7 @@
 #' @param quiet if `TRUE` suppresses output from this function.
 #' @param recompile DEPRECATED. force a recompile of DLL from source code, if
 #'   present. This is equivalent to running [pkgbuild::clean_dll()] before
-#'   `load_all`
+#'   `load_all()`
 #' @param warn_conflicts If `TRUE`, issues a warning if a function in the global
 #'   environment masks a function in the package. This can happen when you
 #'   accidentally source a `.R` file, rather than using `load_all()`, or if you
