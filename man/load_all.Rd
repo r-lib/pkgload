@@ -105,21 +105,20 @@ is running. This may be useful e.g. in \code{.onLoad} hooks.
 \code{\link[=loadNamespace]{loadNamespace()}} and \code{\link[=library]{library()}}. However it deviates from normal
 package loading in several ways.
 \itemize{
-\item It doesn't install the package on disk, so \code{\link[=system.file]{system.file()}} doesn't work.
-To partly work around this, pkgload installs its own shim,
-\code{\link[=shim_system.file]{shim_system.file()}}, which ensures that code in your package will
-work correctly. However, this shim is not visble to third party packages,
-so they will fail if they attempt to find paths within your package.
-One potential workaround is to use \code{\link[fs:path_package]{fs::path_package()}} instead of
-\code{system.file()}, since that understands the mechanisms that devtools
-uses to load packages.
-\item Whereas \code{loadNamespace()} and \code{library()} only load package
-dependencies when they are needed, \code{load_all()} loads all packages
-referenced in \code{Imports} at load time.
+\item \code{load_all()} doesn't install the package to a library, so \code{\link[=system.file]{system.file()}}
+doesn't work. pkgload fixes this for the package itself installing a shim,
+\code{\link[=shim_system.file]{shim_system.file()}}. However, this shim is not visible to third party
+packages, so they will fail if they attempt to find files within your
+package. One potential workaround is to use \code{\link[fs:path_package]{fs::path_package()}}
+instead of \code{system.file()}, since that understands the mechanisms that
+devtools uses to load packages.
+\item \code{load_all()} loads all packages referenced in \code{Imports} at load time,
+but \code{loadNamespace()} and \code{library()} only load package dependencies as
+they are needed.
 \item \code{load_all()} copies all objects (not just the ones listed as exports)
 into the package environment. This is useful during development because
-it makes all objects easy to access.  To export only the objects listed
-as exports, use \code{export_all = FALSE}. This more closely simulates
+it makes internal objects easy to access.  To export only the objects
+listed as exports, use \code{export_all = FALSE}. This more closely simulates
 behavior when loading an installed package with \code{\link[=library]{library()}}, and can
 be useful for checking for missing exports.
 }
