@@ -190,6 +190,8 @@ load_all <- function(path = ".",
     # Remove package from known namespaces. We don't unload it to allow
     # safe usage of dangling references.
     if (is_loaded(package)) {
+      patch_colon(package)
+
       methods_env <- ns_s3_methods(package)
       unregister(package)
 
@@ -396,4 +398,27 @@ is_loading <- function(pkg = NULL) {
   } else {
     is_string(var, pkg)
   }
+}
+
+# Ensure that calls to `::` resolve to the original unregistered
+# namespace
+patch_colon <- function(package) {
+  ns <- asNamespace(package)
+  rlang::env_unlock(ns)
+
+  ns[["::"]] <- function(lhs, rhs) {
+    lhs <- as.character(substitute(lhs))
+    rhs <- as.character(substitute(rhs))
+
+    if (identical(lhs, package)) {
+      if (!exists(rhs, envir = ns, inherits = FALSE)) {
+        stop(sprintf("Can't find `%s` in %s.", rhs, lhs))
+      }
+      ns[[rhs]]
+    } else {
+      eval(bquote(base::`::`(.(lhs), .(rhs))), baseenv())
+    }
+  }
+
+  lockEnvironment(ns)
 }
