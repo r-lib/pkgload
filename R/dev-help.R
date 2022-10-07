@@ -57,6 +57,13 @@ print.dev_topic <- function(x, ...) {
   cli::cli_inform(c("i" = "Rendering development documentation for {.val {x$topic}}"))
 
   type <- arg_match0(x$type %||% "text", c("text", "html"))
+
+  # use rstudio's previewRd() is possible
+  if (type == "html" && is_rstudio() && is_installed("rstudioapi") && rstudioapi::hasFun("previewRd")) {
+    return(rstudioapi::callFun("previewRd", x$path))
+  }
+
+  # otherwise render and serve
   file <- fs::path_ext_set(fs::path_file(x$path), type)
 
   # This directory structure is necessary for RStudio to open the
