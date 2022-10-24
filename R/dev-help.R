@@ -26,9 +26,16 @@ dev_help <- function(topic,
                      dev_packages = NULL,
                      stage = "render",
                      type = getOption("help_type")) {
+
   loc <- dev_topic_find(topic, dev_packages)
 
-  if (is.null(loc$path)) {
+  if (!is.null(loc$path) && !file.exists(loc$path)) {
+    # Documentation topic might have moved, so reset topic index and try again
+    dev_topic_index_reset(loc$pkg)
+    loc <- dev_topic_find(topic, dev_packages)
+  }
+
+  if (is.null(loc$path) || !file.exists(loc$path)) {
     cli::cli_abort("Can't find development topic {.arg {topic}}.")
   }
 

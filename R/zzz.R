@@ -2,6 +2,11 @@
   run_on_load()
   ns <- ns_env(pkgname)
 
+  # Force reload global shims if developing pkgload itself
+  if (is_loading()) {
+    insert_global_shims(TRUE)
+  }
+
   nms <- fn_env(onload_assign)$names
   funs <- fn_env(onload_assign)$funs
 

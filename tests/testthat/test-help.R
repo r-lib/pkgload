@@ -72,6 +72,23 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
     ))
 })
 
+test_that("shim_help and shim_questions works if topic moves", {
+  load_all(test_path('testHelp'))
+  on.exit(unload(test_path('testHelp')))
+
+  foofoo_path <- test_path("testHelp/man/foofoo.Rd")
+  barbar_path <- test_path("testHelp/man/barbar.Rd")
+
+  expect_equal(shim_help("foofoo")$path, normalizePath(foofoo_path))
+  expect_equal(shim_question("foofoo")$path, normalizePath(foofoo_path))
+
+  file.rename(foofoo_path, barbar_path)
+  on.exit(file.rename(barbar_path, foofoo_path))
+
+  expect_equal(shim_help("foofoo")$path, normalizePath(barbar_path))
+  expect_equal(shim_question("foofoo")$path, normalizePath(barbar_path))
+})
+
 test_that("dev_help works with package and function help with the same name", {
   load_all(test_path('testHelp'))
   on.exit(unload(test_path('testHelp')))
