@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* `dev_help()` will remind you to run `pkgload::load_all()` if no 
+  in-development packages found (#221).
+
 # pkgload 1.3.0
 
 * `load_all()` now calls `rlang::check_installed()` to prompt whether
