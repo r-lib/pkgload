@@ -44,6 +44,21 @@ dev_help <- function(topic,
   )
 }
 
+has_rd_macros <- function(dir) {
+  desc <- file.path(dir, "DESCRIPTION")
+  if (!file.exists(desc)) {
+    return(FALSE)
+  }
+
+  tryCatch(
+    expr = {
+      desc <- read.dcf(desc)
+      "RdMacros" %in% colnames(desc)
+    },
+    error = function(...) FALSE
+  )
+}
+
 load_rd_macros <- function(dir) {
   macros <- tools::loadPkgRdMacros(dir)
   tools::loadRdMacros(
@@ -57,6 +72,19 @@ print.dev_topic <- function(x, ...) {
   cli::cli_inform(c("i" = "Rendering development documentation for {.val {x$topic}}"))
 
   type <- arg_match0(x$type %||% "text", c("text", "html"))
+
+  # Use rstudio's previewRd() if possible
+  if (type == "html" && is_rstudio() && is_installed("rstudioapi")) {
+    # If the package has Rd macros, this needs a version of rstudio
+    # that loads them, see rstudio/rstudio#12111
+    version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) "2022.12.0.256"
+
+    if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
+      return(rstudioapi::callFun("previewRd", x$path))
+    }
+  }
+
+  # otherwise render and serve
   file <- fs::path_ext_set(fs::path_file(x$path), type)
 
   # This directory structure is necessary for RStudio to open the
