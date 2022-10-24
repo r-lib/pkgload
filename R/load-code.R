@@ -1,7 +1,7 @@
 #' Load R code.
 #'
-#' Load all R code in the `R` directory. The first time the code is
-#' loaded, `.onLoad` will be run if it exists.
+#' Sources all `.R`/`.r` files in the `R/` directory, storing results into
+#' the package namespace.
 #'
 #' @inheritParams load_all
 #' @keywords programming
