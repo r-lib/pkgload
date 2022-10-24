@@ -45,15 +45,18 @@ dev_help <- function(topic,
 }
 
 has_rd_macros <- function(dir) {
-  DESCRIPTION <- file.path(dir, "DESCRIPTION")
-  if (!file.exists(DESCRIPTION))
+  desc <- file.path(dir, "DESCRIPTION")
+  if (!file.exists(desc)) {
     return(FALSE)
+  }
 
-  DESCRIPTION <- try(read.dcf(DESCRIPTION), silent = TRUE)
-  if (inherits(DESCRIPTION, "try-error"))
-    return(FALSE)
-
-  "RdMacros" %in% colnames(DESCRIPTION)
+  tryCatch(
+    expr = {
+      desc <- read.dcf(desc)
+      "RdMacros" %in% colnames(desc)
+    },
+    error = function(...) FALSE
+  )
 }
 
 load_rd_macros <- function(dir) {
@@ -70,13 +73,15 @@ print.dev_topic <- function(x, ...) {
 
   type <- arg_match0(x$type %||% "text", c("text", "html"))
 
-  # use rstudio's previewRd() if possible
+  # Use rstudio's previewRd() if possible
   if (type == "html" && is_rstudio() && is_installed("rstudioapi")) {
-    # if the package has Rd macros, this needs a version of rstudio
+    # If the package has Rd macros, this needs a version of rstudio
     # that loads them, see rstudio/rstudio#12111
     version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) "2022.12.0.256"
-    if (rstudioapi::hasFun("previewRd", version_needed = version_needed))
+
+    if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
       return(rstudioapi::callFun("previewRd", x$path))
+    }
   }
 
   # otherwise render and serve
