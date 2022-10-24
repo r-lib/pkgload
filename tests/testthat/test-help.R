@@ -107,6 +107,8 @@ test_that("complex expressions are checked", {
 })
 
 test_that("can use macros in other packages (#120)", {
+  expect_true(has_rd_macros(test_path("testMacroDownstream/")))
+
   skip_if_not_installed("mathjaxr")
 
   load_all(test_path("testMacroDownstream"))
