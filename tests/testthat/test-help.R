@@ -83,7 +83,7 @@ test_that("shim_help and shim_questions works if topic moves", {
   expect_equal(shim_question("foofoo")$path, normalizePath(foofoo_path))
 
   file.rename(foofoo_path, barbar_path)
-  on.exit(file.rename(barbar_path, foofoo_path))
+  on.exit(file.rename(barbar_path, foofoo_path), add = TRUE)
 
   expect_equal(shim_help("foofoo")$path, normalizePath(barbar_path))
   expect_equal(shim_question("foofoo")$path, normalizePath(barbar_path))

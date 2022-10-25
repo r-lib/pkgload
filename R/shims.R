@@ -12,12 +12,11 @@ insert_imports_shims <- function(package) {
 # help, ?, and system.file.
 insert_global_shims <- function(force = FALSE) {
   if ("devtools_shims" %in% search()) {
-    if (force) {
-      base::detach("devtools_shims")
-    } else {
+    if (!force) {
       # If shims already present, just return
       return()
     }
+    base::detach("devtools_shims")
   }
 
   e <- new.env()

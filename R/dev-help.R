@@ -26,7 +26,6 @@ dev_help <- function(topic,
                      dev_packages = NULL,
                      stage = "render",
                      type = getOption("help_type")) {
-
   loc <- dev_topic_find(topic, dev_packages)
 
   if (!is.null(loc$path) && !file.exists(loc$path)) {
