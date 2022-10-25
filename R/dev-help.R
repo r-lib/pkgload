@@ -26,6 +26,14 @@ dev_help <- function(topic,
                      dev_packages = NULL,
                      stage = "render",
                      type = getOption("help_type")) {
+
+  if (length(dev_packages()) == 0) {
+    cli::cli_abort(c(
+      "Can't find development documentation because no in-development packages loaded.",
+      i = "Do you need to run {.run pkgload::load_all()}?"
+    ))
+  }
+
   loc <- dev_topic_find(topic, dev_packages)
 
   if (!is.null(loc$path) && !fs::file_exists(loc$path)) {

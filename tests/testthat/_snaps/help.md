@@ -9,6 +9,15 @@
     Output
       <simpleError in .helpForCall(topicExpr, parent.frame()): no methods for 'foofoo' and no documentation for it as a function>
 
+# dev_help gives clear error if no packages loaded
+
+    Code
+      dev_help("foo")
+    Condition
+      Error in `dev_help()`:
+      ! Can't find development documentation because no in-development packages loaded.
+      i Do you need to run `pkgload::load_all()`?
+
 # complex expressions are checked
 
     Code
