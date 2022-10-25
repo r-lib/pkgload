@@ -10,9 +10,14 @@ insert_imports_shims <- function(package) {
 
 # Create a new environment as the parent of global, with devtools versions of
 # help, ?, and system.file.
-insert_global_shims <- function() {
-  # If shims already present, just return
-  if ("devtools_shims" %in% search()) return()
+insert_global_shims <- function(force = FALSE) {
+  if ("devtools_shims" %in% search()) {
+    if (!force) {
+      # If shims already present, just return
+      return()
+    }
+    base::detach("devtools_shims")
+  }
 
   e <- new.env()
 

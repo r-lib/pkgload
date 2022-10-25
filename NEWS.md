@@ -3,6 +3,8 @@
 * `dev_help()` will remind you to run `pkgload::load_all()` if no 
   in-development packages found (#221).
 
+* Shimmed `?` now works even if you've renamed the documentation topic (#220).
+
 # pkgload 1.3.0
 
 * `load_all()` now calls `rlang::check_installed()` to prompt whether
