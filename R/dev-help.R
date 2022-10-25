@@ -29,7 +29,7 @@ dev_help <- function(topic,
 
   if (length(dev_packages()) == 0) {
     cli::cli_abort(c(
-      "No in-development packages found.",
+      "Can't find development documentation because no in-development packages loaded.",
       i = "Do you need to run {.run pkgload::load_all()}?"
     ))
   }

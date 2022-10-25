@@ -34,6 +34,7 @@ Suggests:
     bitops,
     covr,
     mathjaxr,
+    mockr,
     pak,
     pkgbuild,
     Rcpp,

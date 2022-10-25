@@ -80,6 +80,11 @@ test_that("dev_help works with package and function help with the same name", {
   expect_identical(shim_question(testHelp::testHelp), h1)
 })
 
+test_that("dev_help gives clear error if no packages loaded", {
+  mockr::local_mock(dev_packages = function() character())
+  expect_snapshot(dev_help("foo"), error = TRUE)
+})
+
 test_that("unknown macros don't trigger warnings (#119)", {
   load_all(test_path("testUnknownMacro"))
 
