@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.3.1
 
 * `dev_topic_find()` is now exported (#215).
 
