@@ -2,6 +2,7 @@
 % Please edit documentation in R/dev-help.R, R/dev-topic.R
 \name{dev_help}
 \alias{dev_help}
+\alias{dev_topic_find}
 \alias{dev_topic_index_reset}
 \title{In-development help for package loaded with devtools}
 \usage{
@@ -11,6 +12,8 @@ dev_help(
   stage = "render",
   type = getOption("help_type")
 )
+
+dev_topic_find(topic, dev_packages = NULL)
 
 dev_topic_index_reset(pkg_name)
 }

@@ -9,6 +9,8 @@ rd_files <- function(path) {
   sort_ci(files)
 }
 
+#' @rdname dev_help
+#' @export
 dev_topic_find <- function(topic, dev_packages = NULL) {
   topic <- dev_topic_parse(topic, dev_packages)
 
