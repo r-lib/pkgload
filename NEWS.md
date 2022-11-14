@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.3.2
 
 * Fixes for CRAN checks.
 
