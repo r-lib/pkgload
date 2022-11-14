@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* Fixes for CRAN checks.
+
+
 # pkgload 1.3.1
 
 * `dev_topic_find()` is now exported (#215).

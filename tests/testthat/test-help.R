@@ -77,12 +77,10 @@ test_that("shim_help and shim_questions works if topic moves", {
   on.exit(unload(test_path('testHelp')))
 
   path_man <- test_path("testHelp/man/")
-  rel_rd_path <- function(x) {
-    as.character(fs::path_rel(x$path, path_man))
-  }
+  base_rd_path <- function(x) basename(x$path)
 
-  expect_equal(rel_rd_path(shim_help("foofoo")), "foofoo.Rd")
-  expect_equal(rel_rd_path(shim_question("foofoo")), "foofoo.Rd")
+  expect_equal(base_rd_path(shim_help("foofoo")), "foofoo.Rd")
+  expect_equal(base_rd_path(shim_question("foofoo")), "foofoo.Rd")
 
   fs::file_move(fs::path(path_man, "foofoo.Rd"), fs::path(path_man, "barbar.Rd"))
   on.exit(
@@ -90,8 +88,8 @@ test_that("shim_help and shim_questions works if topic moves", {
     add = TRUE
   )
 
-  expect_equal(rel_rd_path(shim_help("foofoo")), "barbar.Rd")
-  expect_equal(rel_rd_path(shim_question("foofoo")), "barbar.Rd")
+  expect_equal(base_rd_path(shim_help("foofoo")), "barbar.Rd")
+  expect_equal(base_rd_path(shim_question("foofoo")), "barbar.Rd")
 })
 
 test_that("dev_help works with package and function help with the same name", {
