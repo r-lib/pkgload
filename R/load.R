@@ -144,11 +144,7 @@ load_all <- function(path = ".",
     on.exit(compiler::enableJIT(oldEnabled), TRUE)
   }
 
-  # Compile dll if requested, we don't ever need to do this if a package doesn't
-  # have a src/ directory
-  if (!dir.exists(file.path(path, "src"))) {
-    compile <- FALSE
-  } else if (missing(compile) && !missing(recompile)) {
+  if (missing(compile) && !missing(recompile)) {
     compile <- if (isTRUE(recompile)) TRUE else NA
   }
 
