@@ -5,8 +5,8 @@ Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Winston", "Chang", role = "aut"),
     person("Jim", "Hester", role = "aut"),
-    person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
-    person("RStudio", role = c("cph", "fnd")),
+    person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
+    person("Posit Software, PBC", role = c("cph", "fnd")),
     person("R Core team", role = "ctb",
            comment = "Some namespace and vignette code extracted from base R")
   )
