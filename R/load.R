@@ -183,7 +183,14 @@ load_all <- function(path = ".",
   }
 
   if (is_loaded(package)) {
-    rlang::env_unlock(ns_env(package))
+    unlock <- function(env) {
+      rlang::env_unlock(env)
+      for (nm in names(env)) {
+        unlockBinding(nm, env)
+      }
+    }
+    unlock(ns_env(package))
+    unlock(imports_env(package))
   } else {
     create_ns_env(path)
   }
