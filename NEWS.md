@@ -1,9 +1,13 @@
 # pkgload (development version)
 
+* `load_all()` no longer standardises version number in namespace metadata 
+  (#231).
+  
+* New `pkg_version_raw()` to get raw package version as a string.
+
 # pkgload 1.3.2
 
 * Fixes for CRAN checks.
-
 
 # pkgload 1.3.1
 

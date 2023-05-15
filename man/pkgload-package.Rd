@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
+\strong{Maintainer}: Lionel Henry \email{lionel@posit.co}
 
 Authors:
 \itemize{
@@ -29,7 +29,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item RStudio [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
   \item R Core team (Some namespace and vignette code extracted from base R) [contributor]
 }
 

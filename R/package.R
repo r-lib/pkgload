@@ -57,7 +57,7 @@ pkg_path <- function(path = ".") {
 #' @describeIn packages Return the package name.
 #' @export
 pkg_name <- function(path = ".") {
-  desc_desc_get("Package", pkg_path(path))[[1]]
+  desc_desc_get_field("Package", file = pkg_path(path))
 }
 
 #' @describeIn packages Return the package DESCRIPTION as a [desc::desc()] object.
@@ -66,10 +66,16 @@ pkg_desc <- function(path = ".") {
   desc_desc(pkg_path(path))
 }
 
-#' @describeIn packages Return the package version.
+#' @describeIn packages Return the parsed package version.
 #' @export
 pkg_version <- function(path = ".") {
   desc_desc_get_version(pkg_path(path))
+}
+
+#' @describeIn packages Return the raw package version (as a string).
+#' @export
+pkg_version_raw <- function(path = ".") {
+  desc_desc_get_field("Version", file = pkg_path(path))[[1]]
 }
 
 #' @describeIn packages Return the package namespace.

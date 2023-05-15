@@ -28,7 +28,7 @@ on_load({
   withr_with_envvar %<~% withr::with_envvar
 
   desc_desc %<~% desc::desc
-  desc_desc_get %<~% desc::desc_get
+  desc_desc_get_field %<~% desc::desc_get_field
   desc_desc_get_version %<~% desc::desc_get_version
 
   rprojroot_find_package_root_file %<~% rprojroot::find_package_root_file
@@ -46,7 +46,7 @@ force_load_all_deps <- function() {
     withr_with_collate,
     withr_with_envvar,
     desc_desc,
-    desc_desc_get,
+    desc_desc_get_field,
     desc_desc_get_version,
     rprojroot_find_package_root_file,
     testthat_source_test_helpers
