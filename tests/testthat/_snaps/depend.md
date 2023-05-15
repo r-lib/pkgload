@@ -6,7 +6,7 @@
     Output
       <error/rlib_error_package_not_found>
       Error in `load_imports()`:
-      ! The package `grid` (>= 100.0) is required.
+      ! The package "grid" (>= 100.0) is required.
 
 # Error on missing dependencies
 
@@ -16,7 +16,7 @@
     Output
       <error/rlib_error_package_not_found>
       Error in `load_imports()`:
-      ! The package `missingpackage` is required.
+      ! The package "missingpackage" is required.
 
 # Parse dependencies
 
