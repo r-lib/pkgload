@@ -31,7 +31,7 @@ ns_path <- function(package) {
 create_ns_env <- function(path = ".", call = caller_env()) {
   path <- pkg_path(path)
   package <- pkg_name(path)
-  version <- pkg_version(path)
+  version <- pkg_version_raw(path)
 
   if (is_loaded(package)) {
     cli::cli_abort(

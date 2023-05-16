@@ -6,6 +6,7 @@
 \alias{pkg_name}
 \alias{pkg_desc}
 \alias{pkg_version}
+\alias{pkg_version_raw}
 \alias{pkg_ns}
 \title{Helper functions for working with development packages.}
 \usage{
@@ -16,6 +17,8 @@ pkg_name(path = ".")
 pkg_desc(path = ".")
 
 pkg_version(path = ".")
+
+pkg_version_raw(path = ".")
 
 pkg_ns(path = ".")
 }
@@ -34,7 +37,9 @@ until they find a DESCRIPTION file.
 
 \item \code{pkg_desc()}: Return the package DESCRIPTION as a \code{\link[desc:desc]{desc::desc()}} object.
 
-\item \code{pkg_version()}: Return the package version.
+\item \code{pkg_version()}: Return the parsed package version.
+
+\item \code{pkg_version_raw()}: Return the raw package version (as a string).
 
 \item \code{pkg_ns()}: Return the package namespace.
 
