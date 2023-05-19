@@ -31,7 +31,7 @@
 #'
 #' - If you use \pkg{testthat}, will load all test helpers so you can
 #'   access them interactively. devtools sets the `DEVTOOLS_LOAD`
-#'   environment variable to `"true"` to let you check whether the
+#'   environment variable to the package name to let you check whether the
 #'   helpers are run during package loading.
 #'
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
