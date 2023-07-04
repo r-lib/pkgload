@@ -16,7 +16,7 @@ compact <- function(x) {
   get(f, envir = asNamespace(p))
 }
 
-is_installed <- function(package, version = 0) {
+is_installed <- function(package, version = "0") {
   installed_version <- tryCatch(utils::packageVersion(package), error = function(e) NA)
   !is.na(installed_version) && installed_version >= version
 }
@@ -180,7 +180,7 @@ single_quote <- function(x) {
 }
 
 ns_s3_methods <- function(pkg) {
- ns_env(pkg)$.__S3MethodsTable__. 
+ ns_env(pkg)$.__S3MethodsTable__.
 }
 
 paste_line <- function(...) {
