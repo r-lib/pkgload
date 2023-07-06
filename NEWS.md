@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.3.3
 
 * pkgload now depends unconditionally on pkgbuild (#249).
 
