@@ -10,7 +10,7 @@ test_that("translation domain correctly loaded", {
   expect_equal(length(temp_po_dirs("testTranslations")), 1)
 })
 
-test_that("modifed translations are correctly reloaded", {
+test_that("modified translations are correctly reloaded", {
   pkg <- withr::local_tempdir()
   file.copy(dir(test_path("testTranslations"), full.names = TRUE), pkg, recursive = TRUE)
 

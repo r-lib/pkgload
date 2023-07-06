@@ -79,7 +79,7 @@ sort_s4classes <- function(classes, package) {
 # A by removing subclass references to B.
 #
 # This function sidesteps the problem by modifying B. It finds all the classes
-# in B@contains which also have references back to B, then modifes B to keep
+# in B@contains which also have references back to B, then modifies B to keep
 # references to those classes, but remove references to all other classes.
 # Finally, it removes B. Calling removeClass("B") tells the classes referred to
 # in B@contains to remove their references back to B.

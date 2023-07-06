@@ -1,4 +1,4 @@
-test_that("respects version seperator", {
+test_that("respects version separator", {
   ns <- create_ns_env(test_path("testVersionSep"))
   withr::defer(unregister_namespace("testVersionSep"))
 

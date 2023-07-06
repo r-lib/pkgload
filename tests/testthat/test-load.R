@@ -14,7 +14,7 @@ test_that("helpers are available after load_all", {
   # object defined in a helper
   expect_equal(foo, 1)
 
-  # object definde in helper, referencing lazy data object mtcars2
+  # object defined in helper, referencing lazy data object mtcars2
   expect_equal(head_mtcars, head(mtcars2))
 
   # object defined in helper using explicitly qualified package name
