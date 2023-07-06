@@ -72,7 +72,7 @@ onload_assign("makeNamespace",
       }))
 )
 
-# Read the NAMESPACE file and set up the imports metdata.
+# Read the NAMESPACE file and set up the imports metadata.
 # (which is stored in .__NAMESPACE__.)
 setup_ns_imports <- function(path = ".") {
   path <- pkg_path(path)
@@ -83,7 +83,7 @@ setup_ns_imports <- function(path = ".") {
 }
 
 
-# Read the NAMESPACE file and set up the exports metdata. This must be
+# Read the NAMESPACE file and set up the exports metadata. This must be
 # run after all the objects are loaded into the namespace because
 # namespaceExport throw errors if the objects are not present.
 setup_ns_exports <- function(path = ".") {
