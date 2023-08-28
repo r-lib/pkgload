@@ -47,7 +47,7 @@ is a low-level function that takes a path to an Rd file.
 library("ggplot2")
 example("ggplot")
 
-# Runs develoment example:
+# Runs development example:
 dev_example("ggplot")
 }
 }

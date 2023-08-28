@@ -19,7 +19,7 @@ if (has_tests()) {
 # Load the test package in directory "testLoadHooks"
 load_all(pkgtest("testLoadHooks"))
 
-# Get metdata for the package
+# Get metadata for the package
 x <- dev_meta("testLoadHooks")
 as.list(x)
 
