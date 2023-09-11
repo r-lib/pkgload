@@ -1,0 +1,6 @@
+Package: testActiveBindings
+Title: Test package with active bindings
+License: MIT
+Author: Konrad Rudolph <konrad.rudolph@gmail.com>
+Maintainer: Konrad Rudolph <konrad.rudolph@gmail.com>
+Version: 1.0
