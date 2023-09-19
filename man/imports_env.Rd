@@ -7,7 +7,7 @@
 imports_env(package)
 }
 \arguments{
-\item{path}{TODO: fix doc}
+\item{package}{The package name as a string.}
 }
 \description{
 Contains objects imported from other packages. Is the parent of the

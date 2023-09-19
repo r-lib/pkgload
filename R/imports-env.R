@@ -4,7 +4,7 @@
 #' package namespace environment, and is a child of `<namespace:base>`,
 #' which is a child of `R_GlobalEnv`.
 #' @keywords internal
-#' @param path TODO: fix doc
+#' @param package The package name as a string.
 #' @seealso [ns_env()] for the namespace environment that
 #'   all the objects (exported and not exported).
 #' @seealso [pkg_env()] for the attached environment that contains
