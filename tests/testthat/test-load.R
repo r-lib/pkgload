@@ -76,6 +76,12 @@ test_that("unloading or reloading forces bindings", {
   )
 })
 
+test_that("unloading or reloading does not call active bindings", {
+  on.exit(unload("testActiveBindings"))
+
+  expect_no_error(load_all(test_path("testActiveBindings")))
+})
+
 test_that("reloading a package unloads deleted S3 methods", {
   x <- structure(list(), class = "pkgload_foobar")
 
