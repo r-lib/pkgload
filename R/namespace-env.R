@@ -234,13 +234,12 @@ unregister_namespace <- function(name = NULL) {
   # unloaded, it might lead to decompress errors if unloaded or to
   # inconsistencies if reloaded (the bindings are resolved in the new
   # namespace).
+  #
+  # We take precautions not to trigger active bindings in case these
+  # have side effects such as throwing an error.
   ns <- ns_env(name)
-  for (binding in ls(ns, all.names = TRUE)) {
-    # Do not evaluate active bindings, since these might have side-effects.
-    if (! bindingIsActive(binding, ns)) {
-      get(binding, ns, inherits = FALSE)
-    }
-  }
+  active_bindings <- env_binding_are_active(ns)
+  env_get_list(ns, names(active_bindings)[!active_bindings])
 
   # Remove the item from the registry
   env_unbind(ns_registry_env(), name)
