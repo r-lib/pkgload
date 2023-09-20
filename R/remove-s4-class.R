@@ -139,7 +139,7 @@ contains_backrefs <- function(classname, pkgname, contains) {
 
   # Get a named vector of 'contains', where each item's name is the class,
   # and the value is the package.
-  contain_pkgs <- sapply(contains, "slot", "package")
+  contain_pkgs <- sapply(contains, methods::slot, "package")
 
   mapply(has_subclass_ref, names(contain_pkgs), contain_pkgs, classname, pkgname)
 }

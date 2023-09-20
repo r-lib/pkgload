@@ -4,7 +4,7 @@ local_load_all_quiet()
 # Results are sorted so they can be compared easily to a vector.
 # A contains B  ==  A is a superclass of B
 get_superclasses <- function(class) {
-  superclasses <- vapply(getClass(class)@contains, slot, "superClass",
+  superclasses <- vapply(getClass(class)@contains, methods::slot, "superClass",
     FUN.VALUE = character(1))
 
   sort(unname(superclasses))
@@ -14,7 +14,7 @@ get_superclasses <- function(class) {
 # Results are sorted so they can be compared easily to a vector.
 # A extends B  ==  A is a subclass of B
 get_subclasses <- function(class) {
-  subclasses <- vapply(getClass(class)@subclasses, slot, "subClass",
+  subclasses <- vapply(getClass(class)@subclasses, methods::slot, "subClass",
     FUN.VALUE = character(1))
 
   sort(unname(subclasses))
