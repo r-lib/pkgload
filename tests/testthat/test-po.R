@@ -11,13 +11,21 @@ test_that("translation domain correctly loaded", {
 })
 
 test_that("modified translations are correctly reloaded", {
+  # Need to also specify `LC_ALL` because `LANGUAGE` is ignored when
+  # `LANG` is set (here via `LC_ALL`) to `C` or `C.UTF-8`
+  with_lang <- function(lc, language, expr) {
+    withr::local_envvar(c(LC_ALL = lc))
+    withr::local_language(language)
+    expr
+  }
+
   pkg <- withr::local_tempdir()
   file.copy(dir(test_path("testTranslations"), full.names = TRUE), pkg, recursive = TRUE)
 
   # Load package and generate translation
   load_all(pkg)
   withr::defer(unload("testTranslations"))
-  withr::with_language("fr", hello())
+  with_lang("fr_FR", "fr", hello())
 
   # Modify .po file
   po_path <- file.path(pkg, "po", "R-fr.po")
@@ -33,5 +41,5 @@ test_that("modified translations are correctly reloaded", {
 
   # Re-load and re-translate
   load_all(pkg)
-  expect_equal(withr::with_language("fr", hello()), "Salut")
+  expect_equal(with_lang("fr_FR", "fr", hello()), "Salut")
 })
