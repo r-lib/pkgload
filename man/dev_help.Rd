@@ -3,6 +3,7 @@
 \name{dev_help}
 \alias{dev_help}
 \alias{dev_topic_find}
+\alias{dev_topic_index}
 \alias{dev_topic_index_reset}
 \title{In-development help for package loaded with devtools}
 \usage{
@@ -14,6 +15,8 @@ dev_help(
 )
 
 dev_topic_find(topic, dev_packages = NULL)
+
+dev_topic_index(path = ".")
 
 dev_topic_index_reset(pkg_name)
 }
@@ -30,13 +33,16 @@ If \code{NULL}, defaults to all packages loaded by devtools.}
 \item{type}{of html to produce: \code{"html"} or \code{"text"}. Defaults to
 your default documentation type.}
 
+\item{path}{Path to package.}
+
 \item{pkg_name}{Name of package.}
 }
 \description{
-\code{dev_help} searches for source documentation provided in
-packages loaded by devtools. To improve performance, the \code{.Rd} files
-are parsed to create to index once, then cached. Use
-\code{dev_topic_index_reset} to clear that index.
+\code{dev_help()} searches for source documentation provided in packages
+loaded by devtools. To improve performance, the \code{.Rd} files are
+parsed to create to index once, then cached. Use
+\code{dev_topic_index_reset()} to clear that index. You can manually
+retrieve the index for a local package with \code{dev_topic_index()}.
 }
 \examples{
 \dontrun{

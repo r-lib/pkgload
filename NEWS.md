@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `dev_topic_index()` is now exported (#257).
+
 * Fix handling of active bindings inside a package during unloading (#255, @klmr).
 
 
