@@ -79,6 +79,10 @@ dev_topic_path <- function(topic, path = ".") {
 # Cache -------------------------------------------------------------------
 
 dev_topic_indices <- new.env(parent = emptyenv())
+
+#' @rdname dev_help
+#' @param path Path to package.
+#' @export
 dev_topic_index <- function(path = ".") {
   path <- pkg_path(path)
   package <- pkg_name(path)
@@ -89,9 +93,9 @@ dev_topic_index <- function(path = ".") {
   dev_topic_indices[[package]]
 }
 
-#' @export
 #' @rdname dev_help
 #' @param pkg_name Name of package.
+#' @export
 dev_topic_index_reset <- function(pkg_name) {
   if (exists(pkg_name, dev_topic_indices)) {
     rm(list = pkg_name, envir = dev_topic_indices)
