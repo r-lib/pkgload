@@ -13,7 +13,7 @@
 #' library("ggplot2")
 #' example("ggplot")
 #'
-#' # Runs develoment example:
+#' # Runs development example:
 #' dev_example("ggplot")
 #' }
 dev_example <- function(topic, quiet = FALSE) {
