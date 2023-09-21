@@ -1,13 +1,13 @@
-# NA
+# zellkonverter
 
 <details>
 
 * Version: NA
 * GitHub: NA
-* Source code: https://github.com/cran/NA
-* Number of recursive dependencies: 0
+* Source code: https://github.com/cran/zellkonverter
+* Number of recursive dependencies: 156
 
-Run `cloud_details(, "NA")` for more info
+Run `revdepcheck::cloud_details(, "zellkonverter")` for more info
 
 </details>
 
