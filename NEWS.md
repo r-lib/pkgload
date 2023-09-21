@@ -1,4 +1,4 @@
-# pkgload (development version)
+# pkgload 1.3.3
 
 * `dev_topic_index()` is now exported (#257).
 
@@ -7,9 +7,6 @@
 * The `helpers` argument of `load_all` now defaults to the value
   provided for the `export_all` arguments. This makes the behaviour
   safer by default (#244).
-
-
-# pkgload 1.3.3
 
 * pkgload now depends unconditionally on pkgbuild (#249).
 
