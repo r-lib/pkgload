@@ -4,6 +4,10 @@
 
 * Fix handling of active bindings inside a package during unloading (#255, @klmr).
 
+* The `helpers` argument of `load_all` now defaults to the value
+  provided for the `export_all` arguments. This makes the behaviour
+  safer by default (#244).
+
 
 # pkgload 1.3.3
 
