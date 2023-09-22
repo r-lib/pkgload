@@ -18,3 +18,11 @@ suppress_output <- function(expr) {
     type = "output"
   )
 }
+
+# Need to also specify `LC_ALL` because `LANGUAGE` is ignored when
+# `LANG` is set (here via `LC_ALL`) to `C` or `C.UTF-8`
+with_lang <- function(lc, language, expr) {
+  withr::local_envvar(c(LC_ALL = lc))
+  withr::local_language(language)
+  expr
+}
