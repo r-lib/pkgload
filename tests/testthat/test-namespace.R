@@ -122,7 +122,7 @@ test_that("unload() removes package environments from search", {
   pkgenv <- pkg_env("testNamespace")
   nsenv   <- ns_env("testNamespace")
   unload("testNamespace")
-  unload("compiler")
+  suppressWarnings(unload("compiler"))
   unload("bitops")
 
   # Should report not loaded for package and namespace environments
