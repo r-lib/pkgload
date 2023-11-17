@@ -1,5 +1,10 @@
 # pkgload (development version)
 
+* On load, pkgload now sets `PKGLOAD_PARENT_TEMPDIR` to the temporary
+  directory used in the current process. This provides a convenient place
+  to cache results for functions used in subprocesses (e.g. `devtools::test()`,
+  `devtools::document()`).
+
 # pkgload 1.3.3
 
 * `dev_topic_index()` is now exported (#257).

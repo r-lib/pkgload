@@ -2,6 +2,11 @@
   run_on_load()
   ns <- ns_env(pkgname)
 
+  # Capture TEMPDIR for use in subproceses
+  if (identical(Sys.getenv("PKGLOAD_PARENT_TEMPDIR"), "")) {
+    Sys.setenv("PKGLOAD_PARENT_TEMPDIR" = tempdir())
+  }
+
   # Force reload global shims if developing pkgload itself
   if (is_loading()) {
     insert_global_shims(force = TRUE)
