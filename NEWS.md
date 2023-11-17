@@ -1,6 +1,6 @@
 # pkgload (development version)
 
-* `load_all()` now sets `PKGLOAD_PARENT_TEMPDIR` to the temporary
+* On load, pkgload now sets `PKGLOAD_PARENT_TEMPDIR` to the temporary
   directory used in the current process. This provides a convenient place
   to cache results for functions used in subprocesses (e.g. `devtools::test()`,
   `devtools::document()`).

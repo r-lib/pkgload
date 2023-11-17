@@ -129,9 +129,6 @@ load_all <- function(path = ".",
   description <- pkg_desc(path)
 
   withr::local_envvar(c(DEVTOOLS_LOAD = package))
-  if (identical(Sys.getenv("PKGLOAD_PARENT_TEMPDIR"), "")) {
-    Sys.setenv("PKGLOAD_PARENT_TEMPDIR" = tempdir())
-  }
 
   quiet <- load_all_quiet(quiet, "load_all")
 
