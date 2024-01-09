@@ -140,8 +140,8 @@ shim_library.dynam.unload <- function(chname, libpath,
 # practice allows for including a custom compiled dll in an R package.
 # See also https://stackoverflow.com/questions/8977346.
 #
-# This shim function first attempts using base::libary.dynam() if
-# that fails it uses `inst_libary.dynam()` which is very similar but
+# This shim function first attempts using base::library.dynam() if
+# that fails it uses `inst_library.dynam()` which is very similar but
 # inserts "inst/" in the dll/so path.
 shim_library.dynam <- function(chname,
                                package,
@@ -179,7 +179,7 @@ shim_library.dynam <- function(chname,
   cnd_signal(err)
 }
 
-# Version of libary.dynam that looks for libraries or objects to load
+# Version of library.dynam that looks for libraries or objects to load
 # within the `inst` package subdirectory
 on_load(
   inst_library.dynam <- modify_lang(base::library.dynam, file_path_update)
