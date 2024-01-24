@@ -27,6 +27,12 @@ test_that("shim_help works with complex NULL `package = ` argument (#266)", {
     class(pkgload:::shim_help(list, package = (NULL))),
     "help_files_with_topic"
   )
+
+  package <- "base"
+  expect_equal(
+    class(pkgload:::shim_help(list, package = (package))),
+    "help_files_with_topic"
+  )
 })
 
 test_that("shim_question behaves the same as utils::? for non-devtools-loaded packages", {
