@@ -76,7 +76,7 @@ deps_check_installed <- function(path, deps, call = caller_env()) {
   # method does not support Remotes fields.
   action <- function(pkg, ...) {
     if (is_installed("pak")) {
-      deps <- pak::pkg_deps(path, upgrade = FALSE)
+      deps <- pak::local_deps(path, upgrade = FALSE)
       deps <- deps[deps$package %in% pkg, ]
       pak::pkg_install(deps$ref, ask = FALSE)
     } else if (is_installed("remotes")) {
