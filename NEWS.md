@@ -1,5 +1,9 @@
 # pkgload (development version)
 
+* Fixed a bug in `shim_help()` where a complex `package = ` argument
+  evaluating to `NULL` would cause an error (#266).
+
+
 # pkgload 1.3.4
 
 * On load, pkgload now sets `PKGLOAD_PARENT_TEMPDIR` to the temporary

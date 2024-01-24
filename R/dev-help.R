@@ -261,11 +261,12 @@ shim_help <- function(topic, package = NULL, ...) {
   package_name <- substitute(package)
   if (is_symbol(package_name)) {
     package_str <- as_string(package_name)
-  } else if (is_null(package_name)) {
-    package_str <- NULL
   } else {
+    # Complex expression, just evaluate it (#266). The value is
+    # injected in `utils::help(package = )` below, causing it to be
+    # interpreted as is.
     package_str <- package
-    package_name <- sym(package)
+    package_name <- package
   }
 
   use_dev <-
