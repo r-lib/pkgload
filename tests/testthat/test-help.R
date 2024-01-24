@@ -22,6 +22,12 @@ test_that("shim_help behaves the same as utils::help for nonexistent objects", {
   expect_equal(length(shim_help("foofoo")), 0)
 })
 
+test_that("shim_help works with complex NULL `package = ` argument (#266)", {
+  expect_equal(
+    class(pkgload:::shim_help(list, package = (NULL))),
+    "help_files_with_topic"
+  )
+})
 
 test_that("shim_question behaves the same as utils::? for non-devtools-loaded packages", {
   expect_identical(shim_question(lm)[1], utils::`?`(lm)[1])
