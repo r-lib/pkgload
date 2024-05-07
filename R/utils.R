@@ -200,10 +200,14 @@ cat_line <- function(...) {
   cat(paste0(..., "\n", collapse = ""))
 }
 
+rstudioapi_available <- function() {
+  is_installed("rstudioapi") && rstudioapi::isAvailable()
+}
+
 is_rstudio <- function() {
   is_string(.Platform$GUI, "RStudio")
 }
 
-rstudioapi_available <- function() {
-  is_installed("rstudioapi") && rstudioapi::isAvailable()
+is_positron <- function() {
+  nzchar(Sys.getenv("POSITRON", ""))
 }

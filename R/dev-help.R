@@ -89,7 +89,7 @@ print.dev_topic <- function(x, ...) {
   type <- arg_match0(x$type %||% "text", c("text", "html"))
 
   # Use rstudio's previewRd() if possible
-  if (type == "html" && rstudioapi_available()) {
+  if (type == "html" && is_rstudio() && rstudioapi_available()) {
     # If the package has Rd macros, this needs a version of rstudio
     # that loads them, see rstudio/rstudio#12111
     version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) "2022.12.0.256"
@@ -115,7 +115,7 @@ print.dev_topic <- function(x, ...) {
   } else if (type == "html") {
     topic_write_html(x, path)
 
-    if (is_rstudio()) {
+    if (is_rstudio() || is_positron()) {
       # This localhost URL is also part of getting RStudio to open in
       # the help pane
       port <- httpdPort()
