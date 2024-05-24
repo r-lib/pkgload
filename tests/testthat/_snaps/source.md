@@ -6,7 +6,7 @@
       Error in `load_all()`:
       ! Failed to load "b.R"
       Caused by error in `parse()`:
-      ! testSource/b.R:2:0: unexpected end of input
+      ! At 'testSource/b.R:2:0': unexpected end of input
       1: b <-
          ^
 

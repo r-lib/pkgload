@@ -28,7 +28,7 @@ source_many <- function(files, encoding = "UTF-8", envir = parent.frame()) {
             path_hyperlink <- cli::format_inline(paste0("At {.file ", path_show, "}:"))
 
             cnd$message <- sub(
-              paste0("^.+", path_show, "\\:"),
+              paste0("^.*", path_show, "\\:"),
               path_hyperlink,
               cnd$message
             )
