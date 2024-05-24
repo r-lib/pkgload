@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
+
 * Fixed an error when updating packages on load (@olivroy, #261).
 
 * Fixed a bug in `shim_help()` where a complex `package = ` argument
