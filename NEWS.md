@@ -2,6 +2,8 @@
 
 * `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
 
+* User onload hooks are now passed a library path.
+
 * Fixed an error when updating packages on load (@olivroy, #261).
 
 * Fixed a bug in `shim_help()` where a complex `package = ` argument
