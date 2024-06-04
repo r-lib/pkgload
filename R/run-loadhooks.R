@@ -44,6 +44,9 @@ run_user_hook <- function(package, hook) {
   hook <- match.arg(hook, names(trans))
   hook_name <- trans[hook]
 
+  ns_path <- ns_path(package)
+  lib_path <- dirname(ns_path)
+
   metadata <- dev_meta(package)
   if (isTRUE(metadata[[hook_name]])) {
     return(FALSE)
@@ -56,7 +59,11 @@ run_user_hook <- function(package, hook) {
 
   for (fun in rev(hooks)) {
     try_fetch(
-      fun(package),
+      if (hook %in% c("load", "attach")) {
+        fun(package, lib_path)
+      } else {
+        fun(package)
+      },
       error = function(cnd) {
         msg <- sprintf(
           "Problem while running user `%s` hook for package %s.",

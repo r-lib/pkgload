@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* User onload hooks are now passed a library path.
+
 * Fixed an error when updating packages on load (@olivroy, #261).
 
 * Fixed a bug in `shim_help()` where a complex `package = ` argument
