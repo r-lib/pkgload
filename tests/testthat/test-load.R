@@ -36,7 +36,7 @@ test_that("warn_if_conflicts warns for conflicts and both objects are functions"
   e2$bar <- function() "bar"
 
   # no warning if no conflicts
-  expect_warning(warn_if_conflicts("pkg", e1, e2), NA)
+  expect_no_warning(warn_if_conflicts("pkg", e1, e2))
 
   e2$foo <- function() "foo2"
 
@@ -53,7 +53,7 @@ test_that("warn_if_conflicts does not warn for conflicts when one of the objects
   e1$foo <- function() "foo"
   e2$foo <- "foo"
 
-  expect_warning(warn_if_conflicts("pkg", e1, e2), NA)
+  expect_no_warning(warn_if_conflicts("pkg", e1, e2))
 })
 
 test_that("unloading or reloading forces bindings", {
