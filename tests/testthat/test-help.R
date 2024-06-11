@@ -113,7 +113,7 @@ test_that("dev_help works with package and function help with the same name", {
 })
 
 test_that("dev_help gives clear error if no packages loaded", {
-  mockr::local_mock(dev_packages = function() character())
+  local_mocked_bindings(dev_packages = function() character())
   expect_snapshot(dev_help("foo"), error = TRUE)
 })
 

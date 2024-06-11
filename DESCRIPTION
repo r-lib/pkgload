@@ -31,9 +31,7 @@ Imports:
     withr (>= 2.4.3)
 Suggests: 
     bitops,
-    covr,
     mathjaxr,
-    mockr,
     pak,
     Rcpp,
     remotes,
