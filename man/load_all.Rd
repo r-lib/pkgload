@@ -99,6 +99,8 @@ helpers are run during package loading.
 
 \code{is_loading()} returns \code{TRUE} when it is called while \code{load_all()}
 is running. This may be useful e.g. in \code{.onLoad} hooks.
+A package loaded with \code{load_all()} can be identified with with
+\code{\link[=is_dev_package]{is_dev_package()}}.
 }
 \section{Differences to regular loading}{
 \code{load_all()} tries its best to reproduce the behaviour of
