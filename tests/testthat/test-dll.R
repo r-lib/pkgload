@@ -48,7 +48,7 @@ test_that("load_all() compiles and loads DLLs", {
 
   # DLL should be listed in .dynLibs()
   dynlibs <- vapply(.dynLibs(), `[[`, "name", FUN.VALUE = character(1))
-  expect_match(dynlibs, "TestDllLoad", all = FALSE)
+  expect_match(dynlibs, "testDllLoad", all = FALSE)
   pkgbuild::clean_dll("testDllLoad")
 
   unload("testDllLoad")
