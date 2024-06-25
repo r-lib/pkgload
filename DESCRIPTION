@@ -25,6 +25,7 @@ Imports:
     glue,
     methods,
     pkgbuild,
+    processx,
     rlang (>= 1.1.1),
     rprojroot,
     utils,
