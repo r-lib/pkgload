@@ -24,9 +24,13 @@ generate_db <- function(path = ".") {
   json <- jsonlite::toJSON(unname(directives))
   json <- jsonlite::prettify(json)
 
+  # We want a pretty file with a single trailing newline
+  json <- sub("\n*$", "\n", json)
+
   writeLines(
     json,
     fs::path(path, "compile_commands.json"),
+    sep = "",
     useBytes = TRUE
   )
 
