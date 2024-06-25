@@ -40,14 +40,14 @@ test_that("loading and reloading s4 classes", {
     expect_equal(getClassDef("BOrNull")@package, "testS4union")
 
     # Unloading shouldn't result in any errors or warnings
-    expect_warning(unload("testS4union"), NA)
+    expect_no_warning(unload("testS4union"))
 
     # Check that classes are unregistered
-    expect_true(is.null(getClassDef("A")))
-    expect_true(is.null(getClassDef("B")))
-    expect_true(is.null(getClassDef("AB")))
-    expect_true(is.null(getClassDef("AorNULL")))
-    expect_true(is.null(getClassDef("BorNULL")))
+    expect_null(getClassDef("A"))
+    expect_null(getClassDef("B"))
+    expect_null(getClassDef("AB"))
+    expect_null(getClassDef("AorNULL"))
+    expect_null(getClassDef("BorNULL"))
   }
 
   load_all("testS4union")
@@ -67,7 +67,7 @@ test_that("loading and reloading s4 classes", {
   })
 
   # Loading again shouldn't result in any errors or warnings
-  expect_warning(load_all("testS4union", reset = FALSE), NA)
+  expect_no_warning(load_all("testS4union", reset = FALSE) )
 
   unload("testS4union")
   unloadNamespace("stats4")   # This was imported by testS4union
@@ -75,7 +75,7 @@ test_that("loading and reloading s4 classes", {
   # Check that classes are unregistered
   # This test on A fails for some bizarre reason - bug in R? But it doesn't
   # to cause any practical problems.
-  expect_true(is.null(getClassDef("A")))
-  expect_true(is.null(getClassDef("B")))
-  expect_true(is.null(getClassDef("AB")))
+  expect_null(getClassDef("A"))
+  expect_null(getClassDef("B"))
+  expect_null(getClassDef("AB"))
 })
