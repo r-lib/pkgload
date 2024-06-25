@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
+
 * User onload hooks are now passed a library path.
 
 * Fixed an error when updating packages on load (@olivroy, #261).
