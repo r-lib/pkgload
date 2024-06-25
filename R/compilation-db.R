@@ -164,8 +164,14 @@ build_commands <- function(src_path, package, files, desc) {
 # `R CMD config` is quite slow so we print the variables of interest by directly
 # invoking make
 compilers <- function() {
+  if (is_windows()) {
+    system_makeconf <- fs::path(R.home(), "etc", .Platform$r_arch, "Makeconf")
+  } else {
+    system_makeconf <- fs::path(R.home(), "etc", "Makeconf")
+  }
+
   makevars <- c(
-    fs::path(R.home(), "etc", "Makeconf"),
+    system_makeconf,
     tools::makevars_site(),
     tools::makevars_user(),
     system.file("print-var.mk", package = "pkgload")
