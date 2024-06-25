@@ -256,6 +256,14 @@ load_all <- function(path = ".",
     )
   }
 
+  # Regenerate compilation database if needed. This must happen after loading
+  # the DLL to ensure that `Makevars` is up-to-date.
+  catch_and_warn(
+    if (has_compilation_db(description)) {
+      generate_db(path)
+    }
+  )
+
   invisible(out)
 }
 

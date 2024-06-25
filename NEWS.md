@@ -1,7 +1,19 @@
 # pkgload (development version)
 
-* `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
+* New experimental feature for generating a `compile_commands.json` file after
+  each `load_all()`. This file is used by LSP servers such as clangd to provide
+  intellisense features in your native files. To enable it, add this directive
+  to your `DESCRIPTION` file:
 
+  ```
+  Config/devtools/compilation-database: true
+  ```
+
+  You'll also want to add `compile_commands.json` to your gitignoe and
+  Rbuildignore files.
+
+* `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
+  
 * User onload hooks are now passed a library path.
 
 * Fixed an error when updating packages on load (@olivroy, #261).

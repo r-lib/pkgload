@@ -33,6 +33,18 @@ generate_db <- function(path = ".") {
   invisible(json)
 }
 
+has_compilation_db <- function(desc) {
+  field <- toupper(desc$get_field(
+    "Config/devtools/compilation-database",
+    default = FALSE
+  ))
+
+  out <- as.logical(field)
+  check_bool(out, arg = "Config/devtools/compilation-database")
+  
+  out
+}
+
 build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
   has_objects <- !is.null(makevars) && any(grepl("^OBJECTS *=", readLines(makevars)))
