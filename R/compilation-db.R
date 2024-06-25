@@ -124,13 +124,19 @@ build_commands <- function(src_path, package, files, desc) {
   # inject these manually
   linking_to_flags <- linking_to_flags(desc)
 
+  if (is_windows()) {
+    ext <- ".dll"
+  } else {
+    ext <- ".so"
+  }
+
   out <- rcmd(
     wd = src_path,
     env = c(CLINK_CPPFLAGS = linking_to_flags),
     "SHLIB",
     c(
       "--dry-run",
-      "-o", paste0(package, ".so"),
+      "-o", paste0(package, ext),
       # Inject `--always-make` in make arguments to force full dry-run
       # See https://github.com/rstudio/rstudio/pull/11917
       sprintf("' --always-make %s IGNORED='", linking_to_flags),
