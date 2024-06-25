@@ -36,6 +36,8 @@
 #'
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
 #' is running. This may be useful e.g. in `.onLoad` hooks.
+#' A package loaded with `load_all()` can be identified with with
+#' [is_dev_package()].
 #'
 #' # Differences to regular loading
 #'
@@ -291,7 +293,7 @@ warn_if_conflicts <- function(package, env1, env2) {
   }
 
   header <- cli::rule(
-    left = crayon::bold("Conflicts"),
+    left = cli::style_bold("Conflicts"),
     right = paste0(package, " ", "conflicts")
   )
 
@@ -303,7 +305,7 @@ warn_if_conflicts <- function(package, env1, env2) {
 
   directions <- c(
     "i" = cli::col_silver("Did you accidentally source a file rather than using `load_all()`?"),
-    " " = cli::col_silver(glue::glue("Run {run_rm} to remove the conflicts."))
+    " " = cli::col_silver("Run {run_rm} to remove the conflicts.")
   )
 
   cli::cli_warn(
@@ -333,7 +335,7 @@ conflict_bullets <- function(package, both) {
     more <- NULL
   }
 
-  bullets <- glue::glue("`{crayon::green(both)}` masks `{crayon::blue(package)}::{both}()`.")
+  bullets <- glue::glue("`{cli::col_green(both)}` masks `{cli::col_blue(package)}::{both}()`.")
   c(set_names(bullets, "x"), more)
 }
 

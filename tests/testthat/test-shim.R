@@ -183,7 +183,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
 
   # Check that it's loaded properly, by running a function from the package.
   # nulltest3() calls a C function which returns null.
-  expect_true(is.null(nulltest3()))
+  expect_null(nulltest3())
 
   # Clean out compiled objects
   pkgbuild::clean_dll("testLibDynam")
