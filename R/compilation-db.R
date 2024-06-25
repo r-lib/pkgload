@@ -53,14 +53,59 @@ build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
   has_objects <- !is.null(makevars) && any(grepl("^OBJECTS *=", readLines(makevars)))
 
-  if (has_objects) {
-    files <- stop("todo")
-  } else {
-    # Same pattern as in `R CMD shlib`
+  if (!has_objects) {
+    # If the Makevars doesn't define custom objects, just grab all source files
+    # in `src`. Same pattern as in `R CMD shlib`.
     files <- dir(src_path, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE)
+    return(files)
   }
 
-  files
+  # The `OBJECTS` variable should not depend on R variables, so we can inspect
+  # it in isolation
+  withr::with_dir(
+    src_path,
+    pkgbuild::with_build_tools(
+      out <- processx::run(
+        "make",
+        c(
+          "-f",
+          makevars,
+          "-f",
+          system.file("print-var.mk", package = "pkgload"),
+          "print-OBJECTS"
+        ),
+      )
+    )
+  )
+
+  files <- strsplit(out$stdout, " ")[[1]]
+  files <- fs::path(src_path, files)
+
+  vapply(files, find_source, "")
+}
+
+find_source <- function(file) {
+  base <- fs::path_file(fs::path_ext_remove(file))
+  dir <- fs::path_dir(file)
+
+  candidates <- dir(dir, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE)
+  candidates <- candidates[startsWith(candidates, paste0(base, "."))]
+  n <- length(candidates)
+
+  if (n < 1) {
+    abort(sprintf("Can't find source for object file %s", file))
+  }
+
+  if (n > 1) {
+    warn(sprintf(
+      "Object file %s has more than one corresponding source file.\nSelected: %s\nDiscarded: %s",
+      file,
+      candidates[[1]],
+      paste0(candidates[-1], collapse = ", ")
+    ))
+  }
+
+  candidates[[1]]
 }
 
 build_commands <- function(src_path, package, files) {
@@ -88,20 +133,11 @@ build_commands <- function(src_path, package, files) {
   )
   out <- strsplit(out, "\n")[[1]]
 
-  cc <- rcmd(
-    wd = src_path,
-    "config",
-    "CC"
-  )
-  stopifnot(is_string(cc), nchar(cc) > 1)
-
-  # Remove trailing newline
-  cc <- substr(cc, 1, nchar(cc) - 1);
-
   # Remove any line that doesn't look like a compilation command. Note that
   # removing the header and footer is not sufficient, some other build commands
   # might be interspersed in some cases, e.g. with rlang.
-  commands <- out[startsWith(out, cc)]
+  keep <- Reduce(function(keep, cmp) keep | startsWith(out, cmp), compilers(), FALSE)
+  commands <- out[keep]
 
   if (length(commands) != length(files)) {
     abort(
@@ -111,6 +147,38 @@ build_commands <- function(src_path, package, files) {
   }
 
   commands
+}
+
+# R CMD config is quite slow so we print the variables of interest by directly
+# `R CMD config` is quite slow so we print the variables of interest by directly
+# invoking make
+compilers <- function() {
+  makevars <- c(
+    fs::path(R.home(), "etc", "Makeconf"),
+    tools::makevars_site(),
+    tools::makevars_user(),
+    system.file("print-var.mk", package = "pkgload")
+  )
+  makevars <- unlist(lapply(makevars, function(var) if (length(var)) c("-f", var)))
+
+  # These variables are normally set by frontends but just in case
+  env <- c(
+    "current",
+    R_INCLUDE_DIR = fs::path(R.home(), "include"),
+    R_SHARE_DIR = fs::path(R.home(), "share")
+  )
+
+  pkgbuild::with_build_tools(
+    out <- processx::run("make", c(makevars, "print-compilers"), env = env)
+  )
+
+  compilers <- strsplit(out$stdout, "\n")[[1]]
+
+  # Remove arguments
+  compilers <- strsplit(compilers, " ")
+  compilers <- vapply(compilers, function(cmp) cmp[[1]], "")
+
+  unique(compilers)
 }
 
 as_json_directive <- function(cmd, file, dir) {
