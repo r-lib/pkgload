@@ -5,6 +5,7 @@ generate_db <- function(path = ".") {
 
   path <- pkg_path(path)
   package <- pkg_name(path)
+  desc <- pkg_desc(path)
 
   src_path <- fs::path(path, "src")
 
@@ -13,7 +14,7 @@ generate_db <- function(path = ".") {
   }
 
   files <- build_files(src_path)
-  commands <- build_commands(src_path, package, files)
+  commands <- build_commands(src_path, package, files, desc)
   directives <- Map(
     cmd = commands,
     file = files,
@@ -108,7 +109,7 @@ find_source <- function(file) {
   candidates[[1]]
 }
 
-build_commands <- function(src_path, package, files) {
+build_commands <- function(src_path, package, files, desc) {
   rcmd <- function(...) {
     out <- pkgbuild::rcmd_build_tools(..., quiet = TRUE)
 
@@ -119,15 +120,20 @@ build_commands <- function(src_path, package, files) {
     out$stdout
   }
 
+  # `R CMD shlib` doesn't include `-I` flags for `LinkingTo` dependencies so we
+  # inject these manually
+  linking_to_flags <- linking_to_flags(desc)
+
   out <- rcmd(
     wd = src_path,
+    env = c(CLINK_CPPFLAGS = linking_to_flags),
     "shlib",
     c(
       "--dry-run",
       "-o", paste0(package, ".so"),
       # Inject `--always-make` in make arguments to force full dry-run
       # See https://github.com/rstudio/rstudio/pull/11917
-      "' --always-make IGNORED='",
+      sprintf("' --always-make %s IGNORED='", linking_to_flags),
       files
     )
   )
@@ -149,7 +155,6 @@ build_commands <- function(src_path, package, files) {
   commands
 }
 
-# R CMD config is quite slow so we print the variables of interest by directly
 # `R CMD config` is quite slow so we print the variables of interest by directly
 # invoking make
 compilers <- function() {
@@ -222,4 +227,24 @@ makevars_file <- function(src_path) {
   }
 
   NULL
+}
+
+linking_to_flags <- function(desc) {
+  linking_to <- desc$get_field("LinkingTo", default = NULL)
+
+  if (is.null(linking_to)) {
+    return(character())
+  }
+
+  # Split by comma
+  linking_to <- strsplit(linking_to, " *, *",)[[1]]
+
+  # Remove version if any
+  linking_to <- strsplit(linking_to, " *\\(",)
+  linking_to <- vapply(linking_to, function(pkg) pkg[[1]], "")
+
+  paths <- vapply(linking_to, function(pkg) system.file("include", package = pkg), "")
+  paths <- paths[paths != ""]
+
+  paste(paste0("-I'", paths, "'"), collapse = " ")
 }
