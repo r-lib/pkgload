@@ -127,7 +127,7 @@ build_commands <- function(src_path, package, files, desc) {
   out <- rcmd(
     wd = src_path,
     env = c(CLINK_CPPFLAGS = linking_to_flags),
-    "shlib",
+    "SHLIB",
     c(
       "--dry-run",
       "-o", paste0(package, ".so"),
