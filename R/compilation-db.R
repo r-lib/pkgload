@@ -233,7 +233,7 @@ linking_to_flags <- function(desc) {
   linking_to <- desc$get_field("LinkingTo", default = NULL)
 
   if (is.null(linking_to)) {
-    return(character())
+    return("")
   }
 
   # Split by comma
