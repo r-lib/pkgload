@@ -13,7 +13,7 @@ source_many <- function(files, encoding = "UTF-8", envir = parent.frame()) {
       source_one(file, encoding, envir = envir),
       error = function(cnd) {
         path <- file.path(basename(dirname(file)), basename(file))
-        is_parse_error <- tryCatch(identical(as.character(cnd$call[1]), "parse"), error = function(e) FALSE)
+        is_parse_error <- is_call(cnd$call, "parse")
 
         if (is_parse_error) {
           # Tweak base message to be shorter and add link to src location.
