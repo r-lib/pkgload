@@ -9,7 +9,7 @@
   Config/devtools/compilation-database: true
   ```
 
-  You'll also want to add `compile_commands.json` to your gitignoe and
+  You'll also want to add `compile_commands.json` to your gitignore and
   Rbuildignore files.
 
 * `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
