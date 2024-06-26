@@ -383,11 +383,24 @@ is_loading <- function(pkg = NULL) {
   }
 }
 
-# Ensure that calls to `::` resolve to the original unregistered
-# namespace
+# Ensure that calls to `::` resolve to the original detached namespace. It is
+# uncommon to refer to functions in your own package with `::` but it sometimes
+# is necessary, e.g. in standalone files.
+#
+# To enable this, assign `::` in your namespace, e.g.
+#
+# ```
+# on_load(`::` <- base::`::`)
+# ```
 patch_colon <- function(package) {
   ns <- asNamespace(package)
-  rlang::env_unlock(ns)
+
+  if (!env_has(ns, "::")) {
+    return()
+  }
+
+  rlang::env_binding_unlock(ns, "::")
+  on.exit(rlang::env_binding_lock(ns, "::"))
 
   ns[["::"]] <- function(lhs, rhs) {
     lhs <- as.character(substitute(lhs))
@@ -402,6 +415,4 @@ patch_colon <- function(package) {
       eval(bquote(base::`::`(.(lhs), .(rhs))), baseenv())
     }
   }
-
-  lockEnvironment(ns)
 }
