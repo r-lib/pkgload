@@ -12,6 +12,10 @@
   You'll also want to add `compile_commands.json` and `.cache` to your gitignore
   and Rbuildignore files.
 
+  To accomplish all these steps, feel free to use the unexported function
+  `pkgload:::use_compilation_db()`. It will eventually be exported from the
+  usethis package.
+
 * `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
   
 * User onload hooks are now passed a library path.

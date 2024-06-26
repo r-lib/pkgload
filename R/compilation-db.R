@@ -1,7 +1,19 @@
 # Should these tools move to pkgbuild?
 
+use_compilation_db <- function() {
+  check_installed("usethis")
+
+  # Sneaky import won't be necessary once in usethis
+  proj_desc_field_update <- env_get(ns_env("usethis"), "proj_desc_field_update")
+  proj_desc_field_update("Config/build/compilation-database", "true")
+
+  files <- c("compile_commands.json", ".cache")
+  usethis::use_git_ignore(files)
+  usethis::use_build_ignore(files)
+}
+
 generate_db <- function(path = ".") {
-  rlang::check_installed("jsonlite")
+  check_installed("jsonlite")
 
   path <- pkg_path(path)
   package <- pkg_name(path)
