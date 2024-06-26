@@ -40,12 +40,12 @@ generate_db <- function(path = ".") {
 
 has_compilation_db <- function(desc) {
   field <- toupper(desc$get_field(
-    "Config/devtools/compilation-database",
+    "Config/build/compilation-database",
     default = FALSE
   ))
 
   out <- as.logical(field)
-  check_bool(out, arg = "Config/devtools/compilation-database")
+  check_bool(out, arg = "Config/build/compilation-database")
   
   out
 }

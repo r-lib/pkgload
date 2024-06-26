@@ -6,7 +6,7 @@
   to your `DESCRIPTION` file:
 
   ```
-  Config/devtools/compilation-database: true
+  Config/build/compilation-database: true
   ```
 
   You'll also want to add `compile_commands.json` to your gitignore and
