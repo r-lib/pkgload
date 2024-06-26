@@ -9,8 +9,8 @@
   Config/build/compilation-database: true
   ```
 
-  You'll also want to add `compile_commands.json` to your gitignore and
-  Rbuildignore files.
+  You'll also want to add `compile_commands.json` and `.cache` to your gitignore
+  and Rbuildignore files.
 
 * `load_all()` now includes a link to the exact location when loading failed (@olivroy, #282).
   
