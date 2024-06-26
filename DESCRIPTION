@@ -25,18 +25,21 @@ Imports:
     glue,
     methods,
     pkgbuild,
+    processx,
     rlang (>= 1.1.1),
     rprojroot,
     utils,
     withr (>= 2.4.3)
 Suggests: 
     bitops,
+    jsonlite,
     mathjaxr,
     pak,
     Rcpp,
     remotes,
     rstudioapi,
-    testthat (>= 3.2.1.1)
+    testthat (>= 3.2.1.1),
+    usethis
 Config/Needs/website: tidyverse/tidytemplate, ggplot2
 Config/testthat/edition: 3
 Config/testthat/parallel: TRUE

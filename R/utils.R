@@ -207,3 +207,14 @@ is_rstudio <- function() {
 rstudioapi_available <- function() {
   is_installed("rstudioapi") && rstudioapi::isAvailable()
 }
+
+is_windows <- function() {
+  .Platform$OS.type == "windows"
+}
+
+catch_and_warn <- function(expr) {
+  tryCatch(
+    expr,
+    error = function(cnd) warn(function(w, ...) conditionMessage(cnd))
+  )
+}
