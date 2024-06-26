@@ -24,11 +24,9 @@ is_loading(pkg = NULL)
 \arguments{
 \item{path}{Path to a package, or within a package.}
 
-\item{reset}{clear package environment and reset file cache before loading
-any pieces of the package. This largely equivalent to running
-\code{\link[=unload]{unload()}}, however the old namespaces are not completely removed and no
-\code{.onUnload()} hooks are called. Use \code{reset = FALSE} may be faster for
-large code bases, but is a significantly less accurate approximation.}
+\item{reset}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This is no longer supported
+because preserving the namespace requires unlocking its environment, which
+is no longer possible in recent versions of R.}
 
 \item{compile}{If \code{TRUE} always recompiles the package; if \code{NA}
 recompiles if needed (as determined by \code{\link[pkgbuild:needs_compile]{pkgbuild::needs_compile()}});
@@ -133,9 +131,6 @@ load_all("./")
 
 # Running again loads changed files
 load_all("./")
-
-# With reset=TRUE, unload and reload the package for a clean start
-load_all("./", TRUE)
 
 # With export_all=FALSE, only objects listed as exports in NAMESPACE
 # are exported

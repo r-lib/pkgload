@@ -67,7 +67,7 @@ test_that("loading and reloading s4 classes", {
   })
 
   # Loading again shouldn't result in any errors or warnings
-  expect_no_warning(load_all("testS4union", reset = FALSE) )
+  expect_no_warning(load_all("testS4union") )
 
   unload("testS4union")
   unloadNamespace("stats4")   # This was imported by testS4union
