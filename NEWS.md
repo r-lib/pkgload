@@ -1,5 +1,10 @@
 # pkgload (development version)
 
+* The `reset` argment of `load_all()` is no longer supported because preserving
+  the namespace requires unlocking its environment, which is no longer possible
+  in recent versions of R. It should no longer be necessary as the performance
+  issues caused by resetting the namespace were resolved a while ago.
+  
 * New experimental feature for generating a `compile_commands.json` file after
   each `load_all()`. This file is used by LSP servers such as clangd to provide
   intellisense features in your native files. To enable it, add this directive

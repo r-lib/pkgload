@@ -26,10 +26,6 @@ test_that("hooks called in correct order", {
   )
 
   reset_events()
-  load_all("testHooks", reset = FALSE)
-  expect_equal(globalenv()$hooks$events, character())
-
-  reset_events()
   unload("testHooks")
   expect_equal(globalenv()$hooks$events,
     c("user_detach", "pkg_detach", "user_unload", "pkg_unload")
@@ -80,13 +76,6 @@ test_that("onLoad and onAttach", {
   expect_equal(the$b, 2)
   expect_equal(the$c, 1)
 
-  # ===================================================================
-  # Loading again without reset won't change a, b, and c in the
-  # namespace env, and also shouldn't trigger onload or onattach. But
-  # the existing namespace values will be copied over to the package
-  # environment
-  load_all("testLoadHooks", reset = FALSE)
-
   # Shouldn't form new environments
   expect_identical(nsenv, ns_env("testLoadHooks"))
   expect_identical(pkgenv, pkg_env("testLoadHooks"))
@@ -96,10 +85,10 @@ test_that("onLoad and onAttach", {
   expect_equal(the$c, 1)
 
   # ===================================================================
-  # With reset=TRUE, there should be new package and namespace
+  # When loading again there should be new package and namespace
   # environments, and the values should be the same as the first
   # load_all.
-  load_all("testLoadHooks", reset = TRUE)
+  load_all("testLoadHooks")
   nsenv2 <- ns_env("testLoadHooks")
   pkgenv2 <- pkg_env("testLoadHooks")
 

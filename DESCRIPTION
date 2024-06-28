@@ -23,6 +23,7 @@ Imports:
     desc,
     fs,
     glue,
+    lifecycle,
     methods,
     pkgbuild,
     processx,
