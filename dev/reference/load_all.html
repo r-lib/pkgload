@@ -159,11 +159,9 @@ A package loaded with <code>load_all()</code> can be identified with with
 
 
 <dt>reset</dt>
-<dd><p>clear package environment and reset file cache before loading
-any pieces of the package. This largely equivalent to running
-<code><a href="unload.html">unload()</a></code>, however the old namespaces are not completely removed and no
-<code>.onUnload()</code> hooks are called. Use <code>reset = FALSE</code> may be faster for
-large code bases, but is a significantly less accurate approximation.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> This is no longer supported
+because preserving the namespace requires unlocking its environment, which
+is no longer possible in recent versions of R.</p></dd>
 
 
 <dt>compile</dt>
@@ -255,9 +253,6 @@ be useful for checking for missing exports.</p></li>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Running again loads changed files</span></span></span>
 <span class="r-in"><span><span class="fu">load_all</span><span class="op">(</span><span class="st">"./"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># With reset=TRUE, unload and reload the package for a clean start</span></span></span>
-<span class="r-in"><span><span class="fu">load_all</span><span class="op">(</span><span class="st">"./"</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># With export_all=FALSE, only objects listed as exports in NAMESPACE</span></span></span>
 <span class="r-in"><span><span class="co"># are exported</span></span></span>
