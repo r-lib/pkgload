@@ -194,7 +194,7 @@ compilers <- function() {
   env <- c(
     "current",
     R_INCLUDE_DIR = Sys.getenv("R_INCLUDE_DIR", unset = fs::path(R.home(), "include")),
-    R_SHARE_DIR = Sys.getenv("R_SHARE_DIR", fs::path(R.home(), "share"))
+    R_SHARE_DIR = Sys.getenv("R_SHARE_DIR", unset = fs::path(R.home(), "share"))
   )
 
   pkgbuild::with_build_tools(
