@@ -46,7 +46,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="pkgload-development-version">pkgload (development version)<a class="anchor" aria-label="anchor" href="#pkgload-development-version"></a></h2>
-</div>
+<ul><li><p>The generator of <code>compile_commands.json</code> now checks for existing <code>R_SHARE_DIR</code> and <code>R_INCLUDE_DIR</code> environment variables (<a href="https://github.com/r-lib/pkgload/issues/287" class="external-link">#287</a>, <a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>).</p></li>
+<li><p>The generator of <code>compile_commands.json</code> is now more reliable in the presence of extra whitespace in <code>make</code>’s output (<a href="https://github.com/r-lib/pkgload/issues/288" class="external-link">#288</a>, <a href="https://github.com/TimTaylor" class="external-link">@TimTaylor</a>).</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.0" id="pkgload-140">pkgload 1.4.0<a class="anchor" aria-label="anchor" href="#pkgload-140"></a></h2><p class="text-muted">CRAN release: 2024-06-28</p>
 <ul><li><p>The <code>reset</code> argment of <code><a href="../reference/load_all.html">load_all()</a></code> is no longer supported because preserving the namespace requires unlocking its environment, which is no longer possible in recent versions of R. It should no longer be necessary as the performance issues caused by resetting the namespace were resolved a while ago.</p></li>
