@@ -47,10 +47,8 @@ populate_pkg_env <- function(pkg,
 
   # Source test helpers into pkg environment
   if (helpers && uses_testthat(path)) {
-    withr_with_envvar(
-      c(NOT_CRAN = "true"),
-      testthat_source_test_helpers(find_test_dir(path), env = pkg_env)
-    )
+    local_envvar(NOT_CRAN = "true")
+    testthat_source_test_helpers(find_test_dir(path), env = pkg_env)
   }
 }
 

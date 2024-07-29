@@ -136,7 +136,8 @@ strip_internal_calls <- function(x, package) {
 }
 
 sort_ci <- function(x) {
-  withr_with_collate("C", x[order(tolower(x), x)])
+  local_collate("C")
+  x[order(tolower(x), x)]
 }
 
 dev_packages <- function() {

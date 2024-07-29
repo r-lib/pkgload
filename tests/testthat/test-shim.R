@@ -151,7 +151,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
 
   old_libpaths <- .libPaths()
   .libPaths(c(tmp_libpath, .libPaths()))
-  on.exit(.libPaths(old_libpaths), add = TRUE)
+  defer(.libPaths(old_libpaths))
 
   # Create temp directory for assembling testLibDynam with dll or so in inst/libs/
   temp_dir <-tempdir()

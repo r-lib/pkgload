@@ -163,7 +163,8 @@ topic_write_html <- function(x, path) {
 }
 
 topic_lines <- function(x, type = c("text", "html")) {
-  file <- withr::local_tempfile()
+  file <- tempfile()
+  defer(unlink(file))
 
   switch(
     arg_match(type),

@@ -17,7 +17,7 @@ test_that("run dontrun when requested", {
 
 test_that("can run example package", {
   load_all(test_path("testHelp"))
-  on.exit(unload(test_path("testHelp")))
+  defer(unload(test_path("testHelp")))
 
   env <- dev_example("foofoo", quiet = TRUE)
   expect_equal(env$a, 101)
@@ -25,7 +25,7 @@ test_that("can run example package", {
 
 test_that("can use system macros", {
   load_all(test_path("testHelp"))
-  on.exit(unload(test_path("testHelp")))
+  defer(unload(test_path("testHelp")))
 
   expect_silent(
     run_example(
