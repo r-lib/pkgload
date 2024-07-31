@@ -62,7 +62,7 @@ test_that("shim_question behaves the same as utils::? for nonexistent objects", 
 
 test_that("show_help and shim_question files for devtools-loaded packages", {
   load_all(test_path('testHelp'))
-  on.exit(unload(test_path('testHelp')))
+  defer(unload(test_path('testHelp')))
 
   h1 <- shim_help("foofoo")
   expect_s3_class(h1, "dev_topic")
@@ -77,16 +77,13 @@ test_that("show_help and shim_question files for devtools-loaded packages", {
     expect_equal(title, "testHelp:foofoo.Rd")
   }
 
-  withr::with_options(
-    c(pager = pager_fun),
-    suppressMessages(
-      print(h1, type = 'text')
-    ))
+  local_options(pager = pager_fun)
+  suppressMessages(print(h1, type = 'text'))
 })
 
 test_that("shim_help and shim_questions works if topic moves", {
   load_all(test_path('testHelp'))
-  on.exit(unload(test_path('testHelp')))
+  defer(unload(test_path('testHelp')))
 
   path_man <- test_path("testHelp/man/")
   base_rd_path <- function(x) basename(x$path)
@@ -95,10 +92,7 @@ test_that("shim_help and shim_questions works if topic moves", {
   expect_equal(base_rd_path(shim_question("foofoo")), "foofoo.Rd")
 
   fs::file_move(fs::path(path_man, "foofoo.Rd"), fs::path(path_man, "barbar.Rd"))
-  on.exit(
-    fs::file_move(fs::path(path_man, "barbar.Rd"), fs::path(path_man, "foofoo.Rd")),
-    add = TRUE
-  )
+  defer(fs::file_move(fs::path(path_man, "barbar.Rd"), fs::path(path_man, "foofoo.Rd")))
 
   expect_equal(base_rd_path(shim_help("foofoo")), "barbar.Rd")
   expect_equal(base_rd_path(shim_question("foofoo")), "barbar.Rd")
@@ -106,7 +100,7 @@ test_that("shim_help and shim_questions works if topic moves", {
 
 test_that("dev_help works with package and function help with the same name", {
   load_all(test_path('testHelp'))
-  on.exit(unload(test_path('testHelp')))
+  defer(unload(test_path('testHelp')))
 
   h1 <- dev_help("testHelp")
   expect_identical(shim_question(testHelp::testHelp), h1)

@@ -62,7 +62,7 @@ test_that("unloading or reloading forces bindings", {
   withCallingHandlers(
     forced = function(...) forced <<- TRUE, {
       # Allow running test interactively
-      on.exit(unload("testLoadLazy"))
+      defer(unload("testLoadLazy"))
 
       # On older R versions, `env_coalesce()` forces bindings
       attach <- getRversion() >= "4.0.0"
@@ -77,7 +77,7 @@ test_that("unloading or reloading forces bindings", {
 })
 
 test_that("unloading or reloading does not call active bindings", {
-  on.exit(unload("testActiveBindings"))
+  defer(unload("testActiveBindings"))
 
   expect_no_error(load_all(test_path("testActiveBindings")))
 })

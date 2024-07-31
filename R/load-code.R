@@ -30,9 +30,12 @@ load_code <- function(path = ".", quiet = NULL) {
     clear_cache()
     unload(package)
   }
-  on.exit(cleanup())
+  defer(cleanup())
 
-  withr_with_dir(path, source_many(paths, encoding, env))
+  local({
+    local_dir(path)
+    source_many(paths, encoding, env)
+  })
   success <- TRUE
 
   invisible(r_files)
@@ -42,10 +45,10 @@ load_code <- function(path = ".", quiet = NULL) {
 find_code <- function(path = ".", quiet = FALSE) {
   path_r <- package_file("R", path = path)
 
-  r_files <- withr_with_collate(
-    "C",
+  r_files <- local({
+    local_collate("C")
     tools::list_files_with_type(path_r, "code", full.names = TRUE)
-  )
+  })
 
   collate <- pkg_desc(path)$get_collate()
 

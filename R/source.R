@@ -2,11 +2,12 @@ source_many <- function(files, encoding = "UTF-8", envir = parent.frame()) {
   stopifnot(is.character(files))
   stopifnot(is.environment(envir))
 
-  oop <- options(
+  
+  local_options(
     keep.source = TRUE,
     show.error.locations = TRUE,
-    topLevelEnvironment = as.environment(envir))
-  on.exit(options(oop))
+    topLevelEnvironment = as.environment(envir)
+  )
 
   for (file in files) {
     try_fetch(

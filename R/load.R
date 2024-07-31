@@ -132,7 +132,7 @@ load_all <- function(path = ".",
   package <- pkg_name(path)
   description <- pkg_desc(path)
 
-  withr::local_envvar(c(DEVTOOLS_LOAD = package))
+  local_envvar(DEVTOOLS_LOAD = package)
 
   quiet <- load_all_quiet(quiet, "load_all")
 
@@ -146,7 +146,7 @@ load_all <- function(path = ".",
     # JIT compilation and it would be locked before we can insert shims into
     # it).
     oldEnabled <- compiler::enableJIT(0)
-    on.exit(compiler::enableJIT(oldEnabled), TRUE)
+    defer(compiler::enableJIT(oldEnabled))
   }
 
   if (missing(compile) && !missing(recompile)) {

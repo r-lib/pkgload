@@ -4,7 +4,7 @@ test_that("translation domain correctly loaded", {
   skip_if_c_locale()
 
   load_all(test_path("testTranslations"))
-  withr::defer(unload("testTranslations"))
+  defer(unload("testTranslations"))
 
   expect_equal(withr::with_language("fr", hello()), "Bonjour")
 
@@ -20,7 +20,7 @@ test_that("modified translations are correctly reloaded", {
 
   # Load package and generate translation
   load_all(pkg)
-  withr::defer(unload("testTranslations"))
+  defer(unload("testTranslations"))
   withr::with_language("fr", hello())
 
   # Modify .po file

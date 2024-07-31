@@ -75,19 +75,17 @@ build_files <- function(src_path) {
 
   # The `OBJECTS` variable should not depend on R variables, so we can inspect
   # it in isolation
-  withr::with_dir(
-    src_path,
-    pkgbuild::with_build_tools(
-      out <- processx::run(
-        "make",
-        c(
-          "-f",
-          makevars,
-          "-f",
-          system.file("print-var.mk", package = "pkgload"),
-          "print-OBJECTS"
-        ),
-      )
+  local_dir(src_path)
+  pkgbuild::with_build_tools(
+    out <- processx::run(
+      "make",
+      c(
+        "-f",
+        makevars,
+        "-f",
+        system.file("print-var.mk", package = "pkgload"),
+        "print-OBJECTS"
+      ),
     )
   )
 

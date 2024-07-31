@@ -29,8 +29,7 @@ Imports:
     processx,
     rlang (>= 1.1.1),
     rprojroot,
-    utils,
-    withr (>= 2.4.3)
+    utils
 Suggests: 
     bitops,
     jsonlite,
@@ -40,7 +39,8 @@ Suggests:
     remotes,
     rstudioapi,
     testthat (>= 3.2.1.1),
-    usethis
+    usethis,
+    withr
 Config/Needs/website: tidyverse/tidytemplate, ggplot2
 Config/testthat/edition: 3
 Config/testthat/parallel: TRUE

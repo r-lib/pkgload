@@ -9,7 +9,7 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
   .libPaths(c(tmp_libpath, .libPaths()))
 
   # Reset the libpath on exit
-  on.exit(.libPaths(old_libpaths), add = TRUE)
+  defer(.libPaths(old_libpaths))
 
   # Install package
   install.packages(test_path("testDllLoad"), repos = NULL, type = "source",
