@@ -1,96 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/check_dep_version.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/check_suggested.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/dev_example.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/dev_help.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/dev_meta.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/has_tests.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/help.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/imports_env.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/inst.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/is_dev_package.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/load_all.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/load_code.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/load_data.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/load_dll.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/load_imports.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/ns_env.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/package_file.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/packages.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/parse_deps.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/parse_ns_file.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/pkg_env.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/pkgload-package.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/pkgtest.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/run_pkg_hook.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/system.file.html</loc>
-  </url>
-  <url>
-    <loc>https://pkgload.r-lib.org/dev/reference/unload.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://pkgload.r-lib.org/dev/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/authors.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/index.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/news/index.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/check_dep_version.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/check_suggested.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/dev_example.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/dev_help.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/dev_meta.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/has_tests.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/help.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/imports_env.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/index.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/inst.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/is_dev_package.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/load_all.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/load_code.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/load_data.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/load_dll.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/load_imports.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/ns_env.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/package_file.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/packages.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/parse_deps.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/parse_ns_file.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/pkg_env.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/pkgload-package.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/pkgtest.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/run_pkg_hook.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/system.file.html</loc></url>
+<url><loc>https://pkgload.r-lib.org/dev/reference/unload.html</loc></url>
 </urlset>
+
