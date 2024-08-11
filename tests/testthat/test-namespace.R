@@ -1,5 +1,8 @@
 local_load_all_quiet()
 
+# Used by several test packages
+skip_if_not_installed("bitops")
+
 # Is e an ancestor environment of x?
 is_ancestor_env <- function(e, x) {
   if (identical(e, x))
