@@ -191,8 +191,8 @@ compilers <- function() {
   # These variables are normally set by frontends but just in case
   env <- c(
     "current",
-    R_INCLUDE_DIR = Sys.getenv("R_INCLUDE_DIR", unset = fs::path(R.home(), "include")),
-    R_SHARE_DIR = Sys.getenv("R_SHARE_DIR", unset = fs::path(R.home(), "share"))
+    R_INCLUDE_DIR = R.home("include"),
+    R_SHARE_DIR = R.home("share")
   )
 
   pkgbuild::with_build_tools(
