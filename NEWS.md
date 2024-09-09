@@ -1,7 +1,8 @@
 # pkgload (development version)
 
 * The generator of `compile_commands.json` now checks for existing `R_SHARE_DIR`
-  and `R_INCLUDE_DIR` environment variables (#287, @TimTaylor).
+  and `R_INCLUDE_DIR` environment variables (#287, #296, @TimTaylor and
+  @shikokuchuo).
 
 * The generator of `compile_commands.json` is now more reliable in the presence
   of extra whitespace in `make`'s output (#288, @TimTaylor).
