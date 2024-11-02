@@ -1,6 +1,6 @@
 Package: testDllcpp11
 Title: Test package for compiling DLLs that link to cpp11
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Description: Test package for compiling DLLs that link to cpp11.
   Just for testing purposes.
 Authors@R: c(

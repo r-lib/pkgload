@@ -14,4 +14,3 @@
 ^pkgdown$
 ^CRAN-SUBMISSION$
 ^\.vscode$
-^tests/testthat/testDllcpp11/\.Rbuildignore$
