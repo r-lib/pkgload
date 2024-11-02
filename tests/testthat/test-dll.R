@@ -101,21 +101,21 @@ test_that("Specific functions from DLLs listed in NAMESPACE can be called", {
 })
 
 
-test_that("load_all() can compile and load DLLs linked to Rcpp", {
+test_that("load_all() can compile and load DLLs linked to cpp11", {
 
-  pkgbuild::clean_dll("testDllRcpp")
+  pkgbuild::clean_dll("testDllcpp11")
 
-  load_all("testDllRcpp", reset = TRUE, quiet = TRUE)
+  load_all("testDllcpp11", reset = TRUE, quiet = TRUE)
 
   # Check that it's loaded properly by calling the hello world function
   # which returns a list
-  expect_type(rcpp_hello_world(), "list")
+  expect_type(cpp11_hello_world(), "list")
 
   # Check whether attribute compilation occurred and that exported
   # names are available from load_all
-  expect_true(rcpp_test_attributes())
+  expect_true(cpp11_test_attributes())
 
   # Unload and clean out compiled objects
-  unload("testDllRcpp")
-  pkgbuild::clean_dll("testDllRcpp")
+  unload("testDllcpp11")
+  pkgbuild::clean_dll("testDllcpp11")
 })

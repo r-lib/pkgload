@@ -1,11 +1,13 @@
 Package: pkgload
 Title: Simulate Package Installation and Attach
-Version: 1.4.0.9000
+Version: 1.4.0.9001
 Authors@R: c(
     person("Hadley", "Wickham", role = "aut"),
     person("Winston", "Chang", role = "aut"),
     person("Jim", "Hester", role = "aut"),
     person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
+    person("Mauricio", "Vargas Sepulveda", role = "ctb",
+        comment = c(ORCID = "0000-0003-1017-7574")),
     person("Posit Software, PBC", role = c("cph", "fnd")),
     person("R Core team", role = "ctb",
            comment = "Some namespace and vignette code extracted from base R")
@@ -20,6 +22,7 @@ Depends:
     R (>= 3.4.0)
 Imports: 
     cli (>= 3.3.0),
+    decor,
     desc,
     fs,
     glue,
@@ -35,7 +38,7 @@ Suggests:
     jsonlite,
     mathjaxr,
     pak,
-    Rcpp,
+    cpp11,
     remotes,
     rstudioapi,
     testthat (>= 3.2.1.1),
@@ -48,3 +51,5 @@ Config/testthat/start-first: dll
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+LinkingTo: 
+    cpp11

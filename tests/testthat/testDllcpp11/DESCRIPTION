@@ -1,0 +1,16 @@
+Package: testDllcpp11
+Title: Test package for compiling DLLs that link to cpp11
+License: MIT + file LICENSE
+Description: Test package for compiling DLLs that link to cpp11.
+  Just for testing purposes.
+Authors@R: c(
+    person("Hadley", "Wickham", role = c("aut", "cre"),
+      email = "hadley@posit.co"),
+    person("Mauricio", "Vargas Sepulveda", role = "aut")
+  )
+Version: 0.1
+LinkingTo: 
+    cpp11
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Encoding: UTF-8
