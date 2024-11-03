@@ -16,7 +16,8 @@ load_all(
   attach_testthat = uses_testthat(path),
   quiet = NULL,
   recompile = FALSE,
-  warn_conflicts = TRUE
+  warn_conflicts = TRUE,
+  debug = TRUE
 )
 
 is_loading(pkg = NULL)
@@ -63,6 +64,9 @@ accidentally source a \code{.R} file, rather than using \code{load_all()}, or if
 define a function directly in the R console. This is frustrating to debug,
 as it feels like the changes you make to the package source aren't having
 the expected effect.}
+
+\item{debug}{if \code{TRUE} (the default) \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}} will
+add debugging flags; \code{FALSE} will prevent that from happening.}
 
 \item{pkg}{If supplied, \code{is_loading()} only returns \code{TRUE} if the
 package being loaded is \code{pkg}.}

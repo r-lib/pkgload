@@ -95,6 +95,8 @@
 #'   define a function directly in the R console. This is frustrating to debug,
 #'   as it feels like the changes you make to the package source aren't having
 #'   the expected effect.
+#' @param debug if `TRUE` (the default) [pkgbuild::compile_dll()] will
+#'   add debugging flags; `FALSE` will prevent that from happening.
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -119,10 +121,11 @@ load_all <- function(path = ".",
                      attach_testthat = uses_testthat(path),
                      quiet = NULL,
                      recompile = FALSE,
-                     warn_conflicts = TRUE) {
+                     warn_conflicts = TRUE,
+                     debug = TRUE) {
   if (!isTRUE(reset)) {
     lifecycle::deprecate_warn(
-      when = "1.3.5", 
+      when = "1.3.5",
       what = "load_all(reset)",
       details = "`reset = FALSE` is no longer supported."
     )
@@ -155,9 +158,9 @@ load_all <- function(path = ".",
 
   if (isTRUE(compile)) {
     pkgbuild::clean_dll(path)
-    pkgbuild::compile_dll(path, quiet = quiet)
+    pkgbuild::compile_dll(path, quiet = quiet, debug = debug)
   } else if (identical(compile, NA)) {
-    pkgbuild::compile_dll(path, quiet = quiet)
+    pkgbuild::compile_dll(path, quiet = quiet, debug = debug)
   } else if (identical(compile, FALSE)) {
     # don't compile
   } else {
