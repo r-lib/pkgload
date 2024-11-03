@@ -7,6 +7,7 @@
 * The generator of `compile_commands.json` is now more reliable in the presence
   of extra whitespace in `make`'s output (#288, @TimTaylor).
 
+* Refactored to use the "cpp11" package for C++ code instead of "Rcpp". (@pachadotdev, #299)
 
 # pkgload 1.4.0
 
