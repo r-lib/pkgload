@@ -64,6 +64,16 @@
 #'    behavior when loading an installed package with [library()], and can
 #'    be useful for checking for missing exports.
 #'
+#' # Controlling the debug compiler flags
+#'
+#' `load_all()` delegates to [pkgbuild::compile_dll()] to perform the actual
+#' compilation, during which by default some debug compiler flags are
+#' appended. If you would like to produce an optimized build instead,
+#' you can opt out by setting the `pkg.build_extra_flags`
+#' option or the `PKG_BUILD_EXTRA_FLAGS` environment variable to `FALSE`.
+#' For further details see the Details section in [pkgbuild::compile_dll()].
+#'
+#'
 #' @param path Path to a package, or within a package.
 #' @param reset `r lifecycle::badge("deprecated")` This is no longer supported
 #'   because preserving the namespace requires unlocking its environment, which
@@ -122,7 +132,7 @@ load_all <- function(path = ".",
                      warn_conflicts = TRUE) {
   if (!isTRUE(reset)) {
     lifecycle::deprecate_warn(
-      when = "1.3.5", 
+      when = "1.3.5",
       what = "load_all(reset)",
       details = "`reset = FALSE` is no longer supported."
     )
