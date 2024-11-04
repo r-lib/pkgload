@@ -14,3 +14,4 @@
 ^pkgdown$
 ^CRAN-SUBMISSION$
 ^\.vscode$
+^LICENSE\.md$
