@@ -6,8 +6,6 @@ Authors@R: c(
     person("Winston", "Chang", role = "aut"),
     person("Jim", "Hester", role = "aut"),
     person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
-    person("Mauricio", "Vargas Sepulveda", role = "ctb",
-        comment = c(ORCID = "0000-0003-1017-7574")),
     person("Posit Software, PBC", role = c("cph", "fnd")),
     person("R Core team", role = "ctb",
            comment = "Some namespace and vignette code extracted from base R")
