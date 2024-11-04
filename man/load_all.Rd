@@ -127,8 +127,8 @@ be useful for checking for missing exports.
 \section{Controlling the debug compiler flags}{
 \code{load_all()} delegates to \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}} to perform the actual
 compilation, during which by default some debug compiler flags are
-appended. If this is undesired (for example, if you would like to produce
-an optimized build), you can opt out by setting the \code{pkg.build_extra_flags}
+appended. If you would like to produce an optimized build instead,
+you can opt out by setting the \code{pkg.build_extra_flags}
 option or the \code{PKG_BUILD_EXTRA_FLAGS} environment variable to \code{FALSE}.
 For further details see the Details section in \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}.
 }
