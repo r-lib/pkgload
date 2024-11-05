@@ -36,7 +36,7 @@
 #'
 #' `is_loading()` returns `TRUE` when it is called while `load_all()`
 #' is running. This may be useful e.g. in `.onLoad` hooks.
-#' A package loaded with `load_all()` can be identified with with
+#' A package loaded with `load_all()` can be identified with
 #' [is_dev_package()].
 #'
 #' # Differences to regular loading

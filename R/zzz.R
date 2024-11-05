@@ -2,7 +2,7 @@
   run_on_load()
   ns <- ns_env(pkgname)
 
-  # Capture TEMPDIR for use in subproceses
+  # Capture TEMPDIR for use in subprocesses
   if (identical(Sys.getenv("PKGLOAD_PARENT_TEMPDIR"), "")) {
     Sys.setenv("PKGLOAD_PARENT_TEMPDIR" = tempdir())
   }
