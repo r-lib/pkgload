@@ -13,3 +13,4 @@
 ^docs$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^LICENSE\.md$
