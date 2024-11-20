@@ -7,7 +7,8 @@
 * The generator of `compile_commands.json` is now more reliable in the presence
   of extra whitespace in `make`'s output (#288, @TimTaylor).
 
-
+* The generator of `compile_commands.json` now uses escaped double quotes for LinkingTo packages to ensure valid argument strings when parsed on Windows (#305, @tylermorganwall).
+  
 # pkgload 1.4.0
 
 * The `reset` argment of `load_all()` is no longer supported because preserving

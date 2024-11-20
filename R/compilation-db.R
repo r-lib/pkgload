@@ -268,5 +268,5 @@ linking_to_flags <- function(desc) {
   paths <- vapply(linking_to, function(pkg) system.file("include", package = pkg), "")
   paths <- paths[paths != ""]
 
-  paste(paste0("-I'", paths, "'"), collapse = " ")
+  paste(paste0("-I\"", paths, "\""), collapse = " ")
 }
