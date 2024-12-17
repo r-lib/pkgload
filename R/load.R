@@ -163,17 +163,6 @@ load_all <- function(path = ".",
     compile <- if (isTRUE(recompile)) TRUE else NA
   }
 
-  if (isTRUE(compile)) {
-    pkgbuild::clean_dll(path)
-    pkgbuild::compile_dll(path, quiet = quiet)
-  } else if (identical(compile, NA)) {
-    pkgbuild::compile_dll(path, quiet = quiet)
-  } else if (identical(compile, FALSE)) {
-    # don't compile
-  } else {
-    cli::cli_abort("{.arg compile} must be a logical vector of length 1.")
-  }
-
   old_methods <- list()
   clear_cache()
 
@@ -206,6 +195,18 @@ load_all <- function(path = ".",
 
   out$code <- load_code(path, quiet = quiet)
   register_s3(path)
+
+  if (isTRUE(compile)) {
+    pkgbuild::clean_dll(path)
+    pkgbuild::compile_dll(path, quiet = quiet)
+  } else if (identical(compile, NA)) {
+    pkgbuild::compile_dll(path, quiet = quiet)
+  } else if (identical(compile, FALSE)) {
+    # don't compile
+  } else {
+    cli::cli_abort("{.arg compile} must be a logical vector of length 1.")
+  }
+
   if (identical(compile, FALSE)) {
     out$dll <- try_load_dll(path)
   } else {
