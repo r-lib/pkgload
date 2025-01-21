@@ -25,8 +25,8 @@ generate_db <- function(path = ".") {
     return(invisible(NULL))
   }
 
-  files <- build_files(src_path)
-  commands <- build_commands(src_path, package, files, desc)
+  files <- sort(fs::path_rel(build_files(src_path), src_path))
+  commands <- sort(build_commands(src_path, package, files, desc))
   directives <- Map(
     cmd = commands,
     file = files,
@@ -116,7 +116,7 @@ find_source <- function(file) {
     ))
   }
 
-  candidates[[1]]
+  fs::path(dir, candidates[[1]])
 }
 
 build_commands <- function(src_path, package, files, desc) {
