@@ -199,7 +199,7 @@ compilers <- function() {
     out <- processx::run("make", c(makevars, "print-compilers"), env = env)
   )
 
-  compilers <- strsplit(trimws(out$stdout), "\n")[[1]]
+  compilers <- strsplit(trimws(out$stdout), "\n+")[[1]]
 
   # Remove arguments
   compilers <- strsplit(compilers, " ")
