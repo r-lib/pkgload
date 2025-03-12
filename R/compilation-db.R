@@ -188,6 +188,9 @@ compilers <- function() {
   )
   makevars <- unlist(lapply(makevars, function(var) if (length(var)) c("-f", var)))
 
+  # Add silent flag to avoid unwanted output
+  makevars <- c("-s", makevars)
+
   # These variables are normally set by frontends but just in case
   env <- c(
     "current",
