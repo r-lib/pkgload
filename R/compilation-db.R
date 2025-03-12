@@ -69,7 +69,7 @@ build_files <- function(src_path) {
   if (!has_objects) {
     # If the Makevars doesn't define custom objects, just grab all source files
     # in `src`. Same pattern as in `R CMD shlib`.
-    files <- dir(src_path, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE)
+    files <- dir(src_path, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE, full.names = TRUE)
     return(files)
   }
 
