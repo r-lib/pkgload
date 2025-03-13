@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* The generator of `compile_commands.json` now works with packages that compile extra libraries such as ragg.
+
 * The generator of `compile_commands.json` now works with sources in subdirectories (#308, @krlmlr).
 
 * The generator of `compile_commands.json` now checks for existing `R_SHARE_DIR`
