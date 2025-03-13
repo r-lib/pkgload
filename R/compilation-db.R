@@ -25,8 +25,15 @@ generate_db <- function(path = ".") {
     return(invisible(NULL))
   }
 
+  # Do we need this initial detection of files?
   files <- sort(fs::path_rel(build_files(src_path), src_path))
   commands <- sort(build_commands(src_path, package, files, desc))
+
+  # There might be additional files e.g. if another library is compiled.
+  # See https://github.com/r-lib/ragg/blob/2c09f210bbd4a6df9cc710022195aa63b97eaeb3/src/Makevars.win#L17
+  # We grab the files from the commands to cover that case.
+  files <- build_files_from_commands(commands)
+
   directives <- Map(
     cmd = commands,
     file = files,
@@ -62,6 +69,8 @@ has_compilation_db <- function(desc) {
   out
 }
 
+file_pattern <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
+
 build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
   has_objects <- !is.null(makevars) &&
@@ -72,7 +81,7 @@ build_files <- function(src_path) {
     # in `src`. Same pattern as in `R CMD shlib`.
     files <- dir(
       src_path,
-      pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
+      pattern = paste0(file_pattern, "$"),
       all.files = TRUE,
       full.names = TRUE
     )
@@ -99,6 +108,25 @@ build_files <- function(src_path) {
   files <- fs::path(src_path, files)
 
   vapply(files, find_source, "")
+}
+
+build_files_from_commands <- function(commands) {
+  file_pattern <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
+  pattern <- paste0("-c\\s+['\"]?([^\\s]+", file_pattern, ")")
+
+  files <- regmatches(
+    commands,
+    regexpr(pattern, commands, perl = TRUE)
+  )
+
+  if (length(files) != length(commands)) {
+    abort(
+      "Expected same number of object files as compilation commands",
+      .internal = TRUE
+    )
+  }
+
+  sub("-c\\s+['\"]?", "", files)
 }
 
 find_source <- function(file) {
@@ -174,16 +202,8 @@ build_commands <- function(src_path, package, files, desc) {
     compilers(),
     FALSE
   )
-  commands <- out[keep]
 
-  if (length(commands) != length(files)) {
-    abort(
-      "Expected same number of compilation commands as object files",
-      .internal = TRUE
-    )
-  }
-
-  commands
+  out[keep]
 }
 
 # `R CMD config` is quite slow so we print the variables of interest by directly
