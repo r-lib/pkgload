@@ -110,6 +110,8 @@ build_files <- function(src_path) {
   vapply(files, find_source, "")
 }
 
+# Build commands for object files take the input files in `-c` arguments that we
+# extract here
 build_files_from_commands <- function(commands) {
   file_pattern <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
   pattern <- paste0("-c\\s+['\"]?([^\\s]+", file_pattern, ")")
