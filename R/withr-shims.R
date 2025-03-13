@@ -1,4 +1,4 @@
-defer <- function (expr, env = caller_env(), after = FALSE) {
+defer <- function(expr, env = caller_env(), after = FALSE) {
   thunk <- as.call(list(function() expr))
   do.call(on.exit, list(thunk, TRUE, after), envir = env)
 }

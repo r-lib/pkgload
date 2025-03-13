@@ -6,10 +6,11 @@
 #' @keywords internal
 run_pkg_hook <- function(package, hook) {
   trans <- c(
-    "load"   = ".onLoad",
+    "load" = ".onLoad",
     "unload" = ".onUnload",
     "attach" = ".onAttach",
-    "detach" = ".onDetach")
+    "detach" = ".onDetach"
+  )
   hook <- match.arg(hook, names(trans))
   f_name <- trans[hook]
 
@@ -37,10 +38,11 @@ run_user_hook <- function(package, hook) {
   nsenv <- ns_env(package)
 
   trans <- c(
-    "load"   = "onLoad",
+    "load" = "onLoad",
     "unload" = "onUnload",
     "attach" = "attach",
-    "detach" = "detach")
+    "detach" = "detach"
+  )
   hook <- match.arg(hook, names(trans))
   hook_name <- trans[hook]
 

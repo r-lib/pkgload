@@ -39,16 +39,18 @@ NULL
 #' @describeIn packages Return the normalized package path.
 #' @export
 pkg_path <- function(path = ".") {
-  path <- tryCatch({
-    rprojroot_find_package_root_file(path = path)
-  },
-  error = function(e) {
-    msg <- c(
-      "Could not find a root 'DESCRIPTION' file that starts with '^Package' in {.path {normalizePath(path)}}.",
-      "i" = "Are you in your project directory and does your project have a 'DESCRIPTION' file?"
-    )
-    cli::cli_abort(msg, class = "pkgload_no_desc")
-  })
+  path <- tryCatch(
+    {
+      rprojroot_find_package_root_file(path = path)
+    },
+    error = function(e) {
+      msg <- c(
+        "Could not find a root 'DESCRIPTION' file that starts with '^Package' in {.path {normalizePath(path)}}.",
+        "i" = "Are you in your project directory and does your project have a 'DESCRIPTION' file?"
+      )
+      cli::cli_abort(msg, class = "pkgload_no_desc")
+    }
+  )
 
   # Strip trailing slashes, which can cause errors on Windows (#73)
   sub("[/\\]$", "", path)

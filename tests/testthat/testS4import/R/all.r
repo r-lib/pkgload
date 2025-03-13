@@ -1,2 +1,1 @@
-setClass('derived', contains='class_to_export')
-
+setClass('derived', contains = 'class_to_export')

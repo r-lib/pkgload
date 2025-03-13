@@ -13,7 +13,6 @@ test_that("Imported objects are copied to package environment", {
   expect_true(exists("cmpSpecial", asNamespace("compiler")))
   expect_false(exists("cmpSpecial", imp_env))
 
-
   # 'bitAnd' is a single object imported specifically from bitops
   expect_true(exists("bitAnd", imp_env))
 

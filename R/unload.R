@@ -47,17 +47,22 @@ unload <- function(package = pkg_name(), quiet = FALSE) {
   }
 
   if (!package %in% loadedNamespaces()) {
-    cli::cli_abort("Package {.pkg {package}} not found in loaded packages or namespaces.")
+    cli::cli_abort(
+      "Package {.pkg {package}} not found in loaded packages or namespaces."
+    )
   }
 
   unregister_methods(package)
 
   # unloadNamespace calls onUnload hook and .onUnload, and detaches the
   # package if it's attached. It will fail if a loaded package needs it.
-  unloaded <- tryCatch({
-    unloadNamespace(package)
-    TRUE
-  }, error = function(e) FALSE)
+  unloaded <- tryCatch(
+    {
+      unloadNamespace(package)
+      TRUE
+    },
+    error = function(e) FALSE
+  )
 
   if (!unloaded) {
     # unloadNamespace() failed before we get to the detach, so need to
@@ -128,7 +133,10 @@ s3_unregister <- function(package) {
   ns <- ns_env(package)
 
   # If the package is loaded, but not installed this will fail, so we bail out in that case.
-  ns_defs <- suppressWarnings(try(parse_ns_file(system.file(package = package)), silent = TRUE))
+  ns_defs <- suppressWarnings(try(
+    parse_ns_file(system.file(package = package)),
+    silent = TRUE
+  ))
   if (inherits(ns_defs, "try-error")) {
     return()
   }

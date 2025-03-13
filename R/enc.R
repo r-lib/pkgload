@@ -1,4 +1,10 @@
-read_lines_enc <- function(path, file_encoding = "UTF-8", n = -1L, ok = TRUE, skipNul = FALSE) {
+read_lines_enc <- function(
+  path,
+  file_encoding = "UTF-8",
+  n = -1L,
+  ok = TRUE,
+  skipNul = FALSE
+) {
   con <- file(path, encoding = file_encoding)
   defer(close(con))
 

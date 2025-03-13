@@ -16,7 +16,11 @@ test_that("modified translations are correctly reloaded", {
   skip_if_c_locale()
 
   pkg <- withr::local_tempdir()
-  file.copy(dir(test_path("testTranslations"), full.names = TRUE), pkg, recursive = TRUE)
+  file.copy(
+    dir(test_path("testTranslations"), full.names = TRUE),
+    pkg,
+    recursive = TRUE
+  )
 
   # Load package and generate translation
   load_all(pkg)
@@ -30,7 +34,10 @@ test_that("modified translations are correctly reloaded", {
   writeLines(po, po_path)
   # Update .mo
   mo_path <- file.path(pkg, "inst/po/fr/LC_MESSAGES/R-testTranslations.mo")
-  out <- system(paste0("msgfmt -c --statistics -o", mo_path, " ", po_path), ignore.stderr = TRUE)
+  out <- system(
+    paste0("msgfmt -c --statistics -o", mo_path, " ", po_path),
+    ignore.stderr = TRUE
+  )
   if (out != 0) {
     stop("Failed to run msgfmt")
   }

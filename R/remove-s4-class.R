@@ -109,7 +109,10 @@ remove_s4_class <- function(classname, package) {
   methods::assignClassDef(classname, class, where = nsenv, force = TRUE)
 
   # Remove the class, ignoring failures due to potentially locked environments.
-  tryCatch(methods::removeClass(classname, where = nsenv), error = function(e) NULL)
+  tryCatch(
+    methods::removeClass(classname, where = nsenv),
+    error = function(e) NULL
+  )
 }
 
 
@@ -117,7 +120,6 @@ remove_s4_class <- function(classname, package) {
 # same length. Each element is TRUE if the corresponding object has a reference
 # to this class, FALSE otherwise.
 contains_backrefs <- function(classname, pkgname, contains) {
-
   # If class_a in pkg_a has class_b in pkg_b as a subclass, return TRUE,
   # otherwise FALSE.
   has_subclass_ref <- function(class_a, pkg_a, class_b, pkg_b) {
@@ -141,5 +143,11 @@ contains_backrefs <- function(classname, pkgname, contains) {
   # and the value is the package.
   contain_pkgs <- sapply(contains, methods::slot, "package")
 
-  mapply(has_subclass_ref, names(contain_pkgs), contain_pkgs, classname, pkgname)
+  mapply(
+    has_subclass_ref,
+    names(contain_pkgs),
+    contain_pkgs,
+    classname,
+    pkgname
+  )
 }

@@ -22,8 +22,7 @@ ns_env <- function(package) {
 
 ns_path <- function(package) {
   ns <- asNamespace(package)
-  if (isBaseNamespace(ns))
-    return(path.package(package))
+  if (isBaseNamespace(ns)) return(path.package(package))
   getNamespaceInfo(ns, "path")
 }
 
@@ -53,13 +52,18 @@ create_ns_env <- function(path = ".", call = caller_env()) {
 
 # This is taken directly from base::loadNamespace()
 # https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L235-L258
-onload_assign("makeNamespace",
+onload_assign(
+  "makeNamespace",
   eval(
     modify_lang(
-      extract_lang(body(loadNamespace),
+      extract_lang(
+        body(loadNamespace),
 
         # Find makeNamespace definition
-        comp_lang, y = quote(makeNamespace <- NULL), idx = 1:2)[[3]],
+        comp_lang,
+        y = quote(makeNamespace <- NULL),
+        idx = 1:2
+      )[[3]],
 
       # Replace call to .Internal(registerNamespace()) is replaced by a call to
       # register_namespace
@@ -69,7 +73,9 @@ onload_assign("makeNamespace",
         } else {
           x
         }
-      }))
+      }
+    )
+  )
 )
 
 # Read the NAMESPACE file and set up the imports metadata.
@@ -140,28 +146,39 @@ setup_ns_exports <- function(path = ".") {
 # This function uses code from base::loadNamespace. Previously this code was
 # copied directly, now it is dynamically looked up instead, to prevent drift as
 # base::loadNamespace changes.
-onload_assign("add_classes_to_exports",
-  {
-    pattern <- if (getRversion() >= "4.1.0") {
-      quote(if (.isMethodsDispatchOn() && hasS4m && !identical(package, "methods"))  NULL)
-    } else {
-      quote(if (.isMethodsDispatchOn() && .hasS4MetaData(ns) && !identical(package, "methods"))  NULL)
-    }
-    make_function(alist(ns =, package =, exports =, nsInfo =),
-      call("{",
-        quote(lev <- 0L),
-        quote(hasS4m <- .hasS4MetaData(ns)),
-        extract_lang(
-          f = comp_lang,
-          y = pattern,
-          idx = c(1, 2),
-          modify_lang(body(base::loadNamespace), strip_internal_calls, "methods")
-        ),
-        quote(exports)
-      ), asNamespace("methods")
+onload_assign("add_classes_to_exports", {
+  pattern <- if (getRversion() >= "4.1.0") {
+    quote(
+      if (.isMethodsDispatchOn() && hasS4m && !identical(package, "methods"))
+        NULL
+    )
+  } else {
+    quote(
+      if (
+        .isMethodsDispatchOn() &&
+          .hasS4MetaData(ns) &&
+          !identical(package, "methods")
+      )
+        NULL
     )
   }
-)
+  make_function(
+    alist(ns = , package = , exports = , nsInfo = ),
+    call(
+      "{",
+      quote(lev <- 0L),
+      quote(hasS4m <- .hasS4MetaData(ns)),
+      extract_lang(
+        f = comp_lang,
+        y = pattern,
+        idx = c(1, 2),
+        modify_lang(body(base::loadNamespace), strip_internal_calls, "methods")
+      ),
+      quote(exports)
+    ),
+    asNamespace("methods")
+  )
+})
 
 #' Parses the NAMESPACE file for a package
 #'
@@ -175,8 +192,7 @@ onload_assign("add_classes_to_exports",
 parse_ns_file <- function(path = ".") {
   path <- pkg_path(path)
 
-  parseNamespaceFile(basename(path), dirname(path),
-    mustExist = FALSE)
+  parseNamespaceFile(basename(path), dirname(path), mustExist = FALSE)
 }
 
 

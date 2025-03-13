@@ -42,7 +42,9 @@ create_dev_meta <- function(name) {
   ns <- .getNamespace(name)
 
   if (!is.null(ns$.__DEVTOOLS__)) {
-    cli::cli_abort("Devtools metadata for package {.pkg {name}} can't already exist.")
+    cli::cli_abort(
+      "Devtools metadata for package {.pkg {name}} can't already exist."
+    )
   }
 
   ns$.__DEVTOOLS__ <- new.env(parent = ns)

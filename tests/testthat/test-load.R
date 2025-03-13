@@ -2,7 +2,10 @@ local_load_all_quiet()
 
 test_that("Package root and subdirectory is working directory when loading", {
   expect_message(load_all("testLoadDir"), "[|].*/testLoadDir[|]")
-  expect_message(load_all(file.path("testLoadDir", "R")), "[|].*/testLoadDir[|]")
+  expect_message(
+    load_all(file.path("testLoadDir", "R")),
+    "[|].*/testLoadDir[|]"
+  )
 })
 
 test_that("helpers are available after load_all", {
@@ -24,7 +27,10 @@ test_that("helpers are available after load_all", {
 })
 
 test_that("`quiet` argument works (#213)", {
-  expect_message(load_all(test_path("testLoadHelpers"), quiet = FALSE), "Loading")
+  expect_message(
+    load_all(test_path("testLoadHelpers"), quiet = FALSE),
+    "Loading"
+  )
   expect_no_message(load_all(test_path("testLoadHelpers"), quiet = TRUE))
 })
 
@@ -60,7 +66,8 @@ test_that("unloading or reloading forces bindings", {
   forced <- FALSE
 
   withCallingHandlers(
-    forced = function(...) forced <<- TRUE, {
+    forced = function(...) forced <<- TRUE,
+    {
       # Allow running test interactively
       defer(unload("testLoadLazy"))
 

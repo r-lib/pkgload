@@ -9,7 +9,7 @@ expand_path <- function(path) {
 # Return the last n elements of vector x
 last_n <- function(x, n = 1) {
   len <- length(x)
-  x[(len-n+1):len]
+  x[(len - n + 1):len]
 }
 
 
@@ -20,8 +20,10 @@ test_that("system.file returns correct values when used with load_all", {
   shim_ns <- ns_env("testShim")
 
   # The devtools::system.file function should return modified values.
-  files <- shim_system.file(c("A.txt", "B.txt", "C.txt", "D.txt"),
-                            package = "testShim")
+  files <- shim_system.file(
+    c("A.txt", "B.txt", "C.txt", "D.txt"),
+    package = "testShim"
+  )
   files <- expand_path(files)
 
   expect_true(all(last_n(files[[1]], 3) == c("testShim", "inst", "A.txt")))
@@ -38,12 +40,18 @@ test_that("system.file returns correct values when used with load_all", {
 
   # Test packages loaded the usual way - should just pass through to
   # base::system.file
-  expect_identical(base::system.file("Meta", "Rd.rds", package = "stats"),
-    shim_system.file("Meta", "Rd.rds", package = "stats"))
-  expect_identical(base::system.file("INDEX", package = "stats"),
-    shim_system.file("INDEX", package = "stats"))
-  expect_identical(base::system.file("nonexistent", package = "stats"),
-    shim_system.file("nonexistent", package = "stats"))
+  expect_identical(
+    base::system.file("Meta", "Rd.rds", package = "stats"),
+    shim_system.file("Meta", "Rd.rds", package = "stats")
+  )
+  expect_identical(
+    base::system.file("INDEX", package = "stats"),
+    shim_system.file("INDEX", package = "stats")
+  )
+  expect_identical(
+    base::system.file("nonexistent", package = "stats"),
+    shim_system.file("nonexistent", package = "stats")
+  )
 
   unload("testShim")
 })
@@ -86,23 +94,30 @@ test_that("Replacement system.file returns correct values when installed", {
   if (!dir.exists(tmp_libpath)) dir.create(tmp_libpath)
   .libPaths(c(tmp_libpath, .libPaths()))
 
-
-  install.packages(test_path("testShim"), repos = NULL,
-    type = "source", quiet = TRUE)
+  install.packages(
+    test_path("testShim"),
+    repos = NULL,
+    type = "source",
+    quiet = TRUE
+  )
   expect_true(require(testShim, quietly = TRUE))
 
   # The special version of system.file shouldn't exist - this get() will fall
   # through to the base namespace
-  expect_identical(get("system.file", pos = asNamespace("testShim")),
-    base::system.file)
+  expect_identical(
+    get("system.file", pos = asNamespace("testShim")),
+    base::system.file
+  )
 
   # Test within package testShim
-  files <- get_system.file()(c("A.txt", "B.txt", "C.txt", "D.txt"),
-    package = "testShim")
+  files <- get_system.file()(
+    c("A.txt", "B.txt", "C.txt", "D.txt"),
+    package = "testShim"
+  )
   files <- expand_path(files)
   expect_true(all(last_n(files[[1]], 2) == c("testShim", "A.txt")))
   expect_true(all(last_n(files[[2]], 2) == c("testShim", "B.txt")))
-  expect_equal(length(files), 2)  # Third and fourth should be dropped
+  expect_equal(length(files), 2) # Third and fourth should be dropped
 
   # If all files are not present, return ""
   files <- get_system.file()("nonexistent", package = "testShim")
@@ -126,8 +141,17 @@ test_that("system.file() fails if path starts with `inst` (#104)", {
   skip_if_not("pkgload" %in% dev_packages())
 
   expect_snapshot({
-    (expect_error(shim_system.file("inst/WORDLIST", package = "pkgload", mustWork = TRUE)))
-    (expect_error(shim_system.file("inst", "WORDLIST", package = "pkgload", mustWork = TRUE)))
+    (expect_error(shim_system.file(
+      "inst/WORDLIST",
+      package = "pkgload",
+      mustWork = TRUE
+    )))
+    (expect_error(shim_system.file(
+      "inst",
+      "WORDLIST",
+      package = "pkgload",
+      mustWork = TRUE
+    )))
   })
 })
 
@@ -154,7 +178,7 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   defer(.libPaths(old_libpaths))
 
   # Create temp directory for assembling testLibDynam with dll or so in inst/libs/
-  temp_dir <-tempdir()
+  temp_dir <- tempdir()
   file.copy(test_path("testLibDynam"), temp_dir, recursive = TRUE)
   pkg_dir <- file.path(temp_dir, "testLibDynam")
   expect_true(file.exists(pkg_dir))
@@ -173,9 +197,13 @@ test_that("shim_library.dynam loads compiled dll/so from inst/src/", {
   unload("testDllLoad")
 
   # Copy  libs/ from installed testDllLoad packageinto  testDynLib/inst/libs/
-  inst_dir <-file.path(pkg_dir, "inst")
+  inst_dir <- file.path(pkg_dir, "inst")
   compiled_libs <- file.path(tmp_libpath, "testDllLoad", "libs")
-  dir.create(file.path(inst_dir, "libs"), recursive = TRUE, showWarnings = FALSE)
+  dir.create(
+    file.path(inst_dir, "libs"),
+    recursive = TRUE,
+    showWarnings = FALSE
+  )
   file.copy(compiled_libs, inst_dir, recursive = TRUE, overwrite = TRUE)
 
   load_all(pkg_dir, quiet = TRUE)

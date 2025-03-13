@@ -1,4 +1,3 @@
-
 delayedAssign("foo", rlang::signal("", "forced"))
 
 #' @export

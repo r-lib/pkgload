@@ -23,11 +23,12 @@
 #' load_all("ggplot2")
 #' dev_help("ggplot") # loads development documentation for ggplot
 #' }
-dev_help <- function(topic,
-                     dev_packages = NULL,
-                     stage = "render",
-                     type = getOption("help_type")) {
-
+dev_help <- function(
+  topic,
+  dev_packages = NULL,
+  stage = "render",
+  type = getOption("help_type")
+) {
   if (length(dev_packages()) == 0) {
     cli::cli_abort(c(
       "Can't find development documentation because no in-development packages loaded.",
@@ -84,7 +85,9 @@ load_rd_macros <- function(dir) {
 
 #' @export
 print.dev_topic <- function(x, ...) {
-  cli::cli_inform(c("i" = "Rendering development documentation for {.val {x$topic}}"))
+  cli::cli_inform(c(
+    "i" = "Rendering development documentation for {.val {x$topic}}"
+  ))
 
   type <- arg_match0(x$type %||% "text", c("text", "html"))
 
@@ -92,7 +95,8 @@ print.dev_topic <- function(x, ...) {
   if (type == "html" && rstudioapi_available()) {
     # If the package has Rd macros, this needs a version of rstudio
     # that loads them, see rstudio/rstudio#12111
-    version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) "2022.12.0.256"
+    version_needed <- if (has_rd_macros(dirname(dirname(x$path))))
+      "2022.12.0.256"
 
     if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
       return(rstudioapi::callFun("previewRd", x$path))
@@ -271,8 +275,12 @@ shim_help <- function(topic, package = NULL, ...) {
   }
 
   use_dev <-
-    (!missing(topic) && is_string(package_str) && package_str %in% dev_packages()) ||
-    (!missing(topic_name) && is_null(package_str) && !is_null(dev_topic_find(topic_str)))
+    (!missing(topic) &&
+      is_string(package_str) &&
+      package_str %in% dev_packages()) ||
+    (!missing(topic_name) &&
+      is_null(package_str) &&
+      !is_null(dev_topic_find(topic_str)))
 
   if (use_dev) {
     dev_help(topic_str, package_str)

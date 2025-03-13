@@ -4,8 +4,12 @@ local_load_all_quiet()
 # Results are sorted so they can be compared easily to a vector.
 # A contains B  ==  A is a superclass of B
 get_superclasses <- function(class) {
-  superclasses <- vapply(getClass(class)@contains, methods::slot, "superClass",
-    FUN.VALUE = character(1))
+  superclasses <- vapply(
+    getClass(class)@contains,
+    methods::slot,
+    "superClass",
+    FUN.VALUE = character(1)
+  )
 
   sort(unname(superclasses))
 }
@@ -14,8 +18,12 @@ get_superclasses <- function(class) {
 # Results are sorted so they can be compared easily to a vector.
 # A extends B  ==  A is a subclass of B
 get_subclasses <- function(class) {
-  subclasses <- vapply(getClass(class)@subclasses, methods::slot, "subClass",
-    FUN.VALUE = character(1))
+  subclasses <- vapply(
+    getClass(class)@subclasses,
+    methods::slot,
+    "subClass",
+    FUN.VALUE = character(1)
+  )
 
   sort(unname(subclasses))
 }
@@ -67,10 +75,10 @@ test_that("loading and reloading s4 classes", {
   })
 
   # Loading again shouldn't result in any errors or warnings
-  expect_no_warning(load_all("testS4union") )
+  expect_no_warning(load_all("testS4union"))
 
   unload("testS4union")
-  unloadNamespace("stats4")   # This was imported by testS4union
+  unloadNamespace("stats4") # This was imported by testS4union
 
   # Check that classes are unregistered
   # This test on A fails for some bizarre reason - bug in R? But it doesn't
