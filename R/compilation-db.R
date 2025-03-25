@@ -69,7 +69,8 @@ has_compilation_db <- function(desc) {
   out
 }
 
-file_pattern <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
+# Same pattern as in `R CMD shlib`.
+FILE_PATTERN <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
 
 build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
@@ -78,10 +79,10 @@ build_files <- function(src_path) {
 
   if (!has_objects) {
     # If the Makevars doesn't define custom objects, just grab all source files
-    # in `src`. Same pattern as in `R CMD shlib`.
+    # in `src`.
     files <- dir(
       src_path,
-      pattern = paste0(file_pattern, "$"),
+      pattern = paste0(FILE_PATTERN, "$"),
       all.files = TRUE,
       full.names = TRUE
     )
@@ -113,8 +114,7 @@ build_files <- function(src_path) {
 # Build commands for object files take the input files in `-c` arguments that we
 # extract here
 build_files_from_commands <- function(commands) {
-  file_pattern <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
-  pattern <- paste0("-c\\s+['\"]?([^\\s]+", file_pattern, ")")
+  pattern <- paste0("-c\\s+['\"]?([^\\s]+", FILE_PATTERN, ")")
 
   files <- regmatches(
     commands,
