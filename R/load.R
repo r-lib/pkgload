@@ -196,6 +196,8 @@ load_all <- function(path = ".",
   out$code <- load_code(path, quiet = quiet)
   register_s3(path)
 
+  # compile after loading code, to allow
+  # R package code to generate compiled sources
   if (isTRUE(compile)) {
     pkgbuild::clean_dll(path)
     pkgbuild::compile_dll(path, quiet = quiet)
