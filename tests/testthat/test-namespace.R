@@ -2,37 +2,28 @@ local_load_all_quiet()
 
 # Is e an ancestor environment of x?
 is_ancestor_env <- function(e, x) {
-  if (identical(e, x))
-    return(TRUE)
-  else if (identical(x, emptyenv()))
-    return(FALSE)
-  else
-    is_ancestor_env(e, parent.env(x))
+  if (identical(e, x)) return(TRUE) else if (identical(x, emptyenv()))
+    return(FALSE) else is_ancestor_env(e, parent.env(x))
 }
 
 # Get parent environment n steps deep
 parent_env <- function(e, n = 1) {
-  if (n == 0)
-    e
-  else
-    parent_env(parent.env(e), n-1)
+  if (n == 0) e else parent_env(parent.env(e), n - 1)
 }
 
 test_that("Loaded namespaces have correct version", {
   load_all("testNamespace")
-  expect_identical(c(version="0.1"), getNamespaceVersion("testNamespace"))
+  expect_identical(c(version = "0.1"), getNamespaceVersion("testNamespace"))
   unload("testNamespace")
 })
 
 test_that("Exported objects are visible from global environment", {
-
   # a is listed as an export in NAMESPACE, b is not. But with load_all(),
   # they should both be visible in the global env.
   load_all("testNamespace")
   expect_equal(a, 1)
   expect_equal(b, 2)
   unload("testNamespace")
-
 
   # With export_all = FALSE, only the listed export should be visible
   # in the global env.
@@ -103,7 +94,7 @@ test_that("Namespace, imports, and package environments have correct hierarchy",
   load_all("testNamespace")
 
   pkgenv <- pkg_env("testNamespace")
-  nsenv  <- ns_env("testNamespace")
+  nsenv <- ns_env("testNamespace")
   impenv <- imports_env("testNamespace")
 
   expect_identical(parent_env(nsenv, 1), impenv)
@@ -120,7 +111,7 @@ test_that("Namespace, imports, and package environments have correct hierarchy",
 test_that("unload() removes package environments from search", {
   load_all("testNamespace")
   pkgenv <- pkg_env("testNamespace")
-  nsenv   <- ns_env("testNamespace")
+  nsenv <- ns_env("testNamespace")
   unload("testNamespace")
   suppressWarnings(unload("compiler"))
   unload("bitops")

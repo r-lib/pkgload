@@ -28,11 +28,7 @@ attach_ns <- function(package) {
   invisible(pkgenv)
 }
 
-populate_pkg_env <- function(pkg,
-                             path,
-                             export_all,
-                             export_imports,
-                             helpers) {
+populate_pkg_env <- function(pkg, path, export_all, export_imports, helpers) {
   pkg_env <- pkg_env(pkg)
 
   if (export_all) {
@@ -73,8 +69,7 @@ exports_exclusion_list <- c(
 run_ns_load_actions <- function(package) {
   nsenv <- ns_env(package)
   actions <- methods::getLoadActions(nsenv)
-  for (action in actions)
-    action(nsenv)
+  for (action in actions) action(nsenv)
 }
 
 # Copy over the objects from the namespace env to the package env
@@ -86,7 +81,6 @@ export_ns <- function(package) {
 
   exports <- getNamespaceExports(nsenv)
   importIntoEnv(pkgenv, exports, nsenv, exports)
-
 }
 
 export_lazydata <- function(package) {
@@ -97,8 +91,10 @@ export_lazydata <- function(package) {
   # If lazydata is true, manually copy data objects in $lazydata to package
   # environment
   lazydata <- desc$get("LazyData")
-  if (!is.na(lazydata) &&
-      tolower(lazydata) %in% c("true", "yes")) {
+  if (
+    !is.na(lazydata) &&
+      tolower(lazydata) %in% c("true", "yes")
+  ) {
     copy_env_lazy(src = nsenv$.__NAMESPACE__.$lazydata, dest = pkgenv)
   }
 }
@@ -109,8 +105,9 @@ assign_depends <- function(package) {
 
   desc <- pkg_desc(ns_path(package))
   deps <- desc$get_deps()
-  depends <- unique(deps[deps$type == "Depends"
-                         & deps$package != "R",]$package)
+  depends <- unique(
+    deps[deps$type == "Depends" & deps$package != "R", ]$package
+  )
   if (length(depends) > 0L) pkgenv$.Depends <- depends
 }
 

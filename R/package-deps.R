@@ -31,13 +31,13 @@ parse_deps <- function(string) {
   have_version <- grepl("\\(.*\\)", versions_str)
   versions_str[!have_version] <- NA
 
-  compare  <- sub(".*\\((\\S+)\\s+.*\\)", "\\1", versions_str)
+  compare <- sub(".*\\((\\S+)\\s+.*\\)", "\\1", versions_str)
   versions <- sub(".*\\(\\S+\\s+(.*)\\)", "\\1", versions_str)
 
   # Check that non-NA comparison operators are valid
-  compare_nna   <- compare[!is.na(compare)]
+  compare_nna <- compare[!is.na(compare)]
   compare_valid <- compare_nna %in% c(">", ">=", "==", "<=", "<")
-  if(!all(compare_valid)) {
+  if (!all(compare_valid)) {
     deps <- paste(compare_nna[!compare_valid], collapse = ", ")
     cli::cli_abort("Invalid comparison operator in dependency: {deps}.")
   }
@@ -117,10 +117,15 @@ check_dep_version <- function(dep_name, dep_ver = "*") {
   dep_ver <- pieces[[2]]
 
   compare <- match.fun(dep_compare)
-  if (!compare(
+  if (
+    !compare(
       as.numeric_version(getNamespaceVersion(dep_name)),
-      as.numeric_version(dep_ver))) {
-    cli::cli_warn("Need {.pkg {dep_name}} {dep_compare} {dep_ver} but loaded version is {getNamespaceVersion(dep_name)}.")
+      as.numeric_version(dep_ver)
+    )
+  ) {
+    cli::cli_warn(
+      "Need {.pkg {dep_name}} {dep_compare} {dep_ver} but loaded version is {getNamespaceVersion(dep_name)}."
+    )
   }
 
   return(TRUE)

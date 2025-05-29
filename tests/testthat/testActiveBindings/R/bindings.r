@@ -1,4 +1,3 @@
-
 makeActiveBinding("foo", function() rlang::abort("foo"), environment())
 
 #' @export

@@ -14,8 +14,13 @@ onload_assign("load_dll", {
         } else {
           x
         },
-        extract_lang(body(loadNamespace),
-          comp_lang, y = quote(for (i in seq_along(dynLibs)) NULL), idx = 1:3))
+      extract_lang(
+        body(loadNamespace),
+        comp_lang,
+        y = quote(for (i in seq_along(dynLibs)) NULL),
+        idx = 1:3
+      )
+    )
 
   ## The code below taken directly from base::loadNamespace
   ## https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L466-L485
@@ -113,20 +118,33 @@ library.dynam2 <- function(path = ".", lib = "") {
 
 # This is taken directly from base::loadNamespace()
 # https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L270-L273
-onload_assign("addNamespaceDynLibs",
-  eval(extract_lang(body(loadNamespace),
-      comp_lang, y = quote(addNamespaceDynLibs <- NULL), idx = 1:2)[[3]]))
+onload_assign(
+  "addNamespaceDynLibs",
+  eval(extract_lang(
+    body(loadNamespace),
+    comp_lang,
+    y = quote(addNamespaceDynLibs <- NULL),
+    idx = 1:2
+  )[[3]])
+)
 
 # This is taken directly from base::loadNamespace
 # https://github.com/wch/r-source/blob/tags/R-3-3-0/src/library/base/R/namespace.R#L287-L308
 # The only change is the line used get the package name
 onload_assign("assignNativeRoutines", {
   f <- eval(
-    extract_lang(body(loadNamespace),
-      comp_lang, y = quote(assignNativeRoutines <- NULL), idx = 1:2)[[3]])
-  body(f) <- as.call(append(after = 1,
-      as.list(body(f)),
-      quote(package <- methods::getPackageName(env))))
+    extract_lang(
+      body(loadNamespace),
+      comp_lang,
+      y = quote(assignNativeRoutines <- NULL),
+      idx = 1:2
+    )[[3]]
+  )
+  body(f) <- as.call(append(
+    after = 1,
+    as.list(body(f)),
+    quote(package <- methods::getPackageName(env))
+  ))
   f
 })
 

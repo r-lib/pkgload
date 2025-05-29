@@ -29,8 +29,16 @@ load_data <- function(path = ".") {
 
     paths <- dir(path_data, "\\.[rR]$", full.names = TRUE)
     paths <- changed_files(paths)
-    objs <- c(objs, unlist(lapply(paths, sys.source, envir = lazydata_env,
-      chdir = TRUE, keep.source = TRUE)))
+    objs <- c(
+      objs,
+      unlist(lapply(
+        paths,
+        sys.source,
+        envir = lazydata_env,
+        chdir = TRUE,
+        keep.source = TRUE
+      ))
+    )
   }
 
   invisible(objs)

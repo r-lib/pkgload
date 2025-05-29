@@ -31,13 +31,14 @@ test_that("Packages in depends are required", {
 })
 
 test_that("Parse dependencies", {
-  deps <- parse_deps("\nhttr (< 2.1),\nRCurl (>= 3),\nutils (== 2.12.1),\ntools,\nR (>= 2.10),\nmemoise")
+  deps <- parse_deps(
+    "\nhttr (< 2.1),\nRCurl (>= 3),\nutils (== 2.12.1),\ntools,\nR (>= 2.10),\nmemoise"
+  )
   expect_equal(nrow(deps), 5)
   expect_false("R" %in% deps$name)
 
   expect_equal(deps$compare, c("<", ">=", "==", NA, NA))
   expect_equal(deps$version, c("2.1", "3", "2.12.1", NA, NA))
-
 
   # Invalid version specifications
   expect_snapshot({
@@ -57,7 +58,9 @@ test_that("Parse dependencies", {
 test_that("Declared dependencies are added to .Depends object", {
   skip_if_not_installed("httr")
   load_all("testDependsExists")
-  expect_equal(get(".Depends", "package:testDependsExists", inherits = FALSE),
-                "httr")
+  expect_equal(
+    get(".Depends", "package:testDependsExists", inherits = FALSE),
+    "httr"
+  )
   unload("testDependsExists")
 })

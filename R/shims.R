@@ -49,11 +49,12 @@ insert_global_shims <- function(force = FALSE) {
 #'
 #' @rdname system.file
 #' @name system.file
-shim_system.file <- function(...,
-                             package = "base",
-                             lib.loc = NULL,
-                             mustWork = FALSE) {
-
+shim_system.file <- function(
+  ...,
+  package = "base",
+  lib.loc = NULL,
+  mustWork = FALSE
+) {
   # If package wasn't loaded with devtools, pass through to base::system.file.
   # If package was loaded with devtools (the package loaded with load_all)
   # search for files a bit differently.
@@ -116,10 +117,12 @@ shim_system.file <- function(...,
   }
 }
 
-shim_library.dynam.unload <- function(chname, libpath,
-                                      verbose = getOption("verbose"),
-                                      file.ext = .Platform$dynlib.ext) {
-
+shim_library.dynam.unload <- function(
+  chname,
+  libpath,
+  verbose = getOption("verbose"),
+  file.ext = .Platform$dynlib.ext
+) {
   # If package was loaded by devtools, we need to unload the dll ourselves
   # because libpath works differently from installed packages.
   if (!is.null(dev_meta(chname))) {
@@ -143,12 +146,14 @@ shim_library.dynam.unload <- function(chname, libpath,
 # This shim function first attempts using base::library.dynam() if
 # that fails it uses `inst_library.dynam()` which is very similar but
 # inserts "inst/" in the dll/so path.
-shim_library.dynam <- function(chname,
-                               package,
-                               lib.loc,
-                               verbose = getOption("verbose"),
-                               file.ext = .Platform$dynlib.ext,
-                               ...) {
+shim_library.dynam <- function(
+  chname,
+  package,
+  lib.loc,
+  verbose = getOption("verbose"),
+  file.ext = .Platform$dynlib.ext,
+  ...
+) {
   err <- tryCatch(
     return(base::library.dynam(
       chname,

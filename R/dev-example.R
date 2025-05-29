@@ -32,21 +32,26 @@ dev_example <- function(topic, quiet = FALSE) {
 #'   `macros` argument of [tools::parse_Rd()]. If `NULL`, then the
 #'   [tools::Rd2ex()] (and [tools::parse_Rd()]) default is used.
 #' @param run,test Deprecated, see `run_dontrun` and `run_donttest` above.
-run_example <- function(path,
-                        run_donttest = FALSE,
-                        run_dontrun = FALSE,
-                        env = new.env(parent = globalenv()),
-                        quiet = FALSE,
-                        macros = NULL,
-                        run,
-                        test) {
-
+run_example <- function(
+  path,
+  run_donttest = FALSE,
+  run_dontrun = FALSE,
+  env = new.env(parent = globalenv()),
+  quiet = FALSE,
+  macros = NULL,
+  run,
+  test
+) {
   if (!missing(run)) {
-    cli::cli_warn("{.code run_example(run =)} is deprecated, please use {.code run_example(run_dontrun =)} instead")
+    cli::cli_warn(
+      "{.code run_example(run =)} is deprecated, please use {.code run_example(run_dontrun =)} instead"
+    )
     run_dontrun <- run
   }
   if (!missing(test)) {
-    cli::cli_warn("{.code run_example(test =)} is deprecated, please use {.code run_example(run_donttest =)} instead")
+    cli::cli_warn(
+      "{.code run_example(test =)} is deprecated, please use {.code run_example(run_donttest =)} instead"
+    )
     run_donttest <- test
   }
   if (!file.exists(path)) {

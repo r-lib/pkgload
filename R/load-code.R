@@ -53,7 +53,6 @@ find_code <- function(path = ".", quiet = FALSE) {
   collate <- pkg_desc(path)$get_collate()
 
   if (length(collate) > 0) {
-
     # `r_files` have full paths, so add the package path to the collated files as
     # well.
     collate <- file.path(path_r, collate)
@@ -66,7 +65,9 @@ find_code <- function(path = ".", quiet = FALSE) {
 
     extra <- setdiff(r_files, collate)
     if (!quiet && length(extra) > 0) {
-      cli::cli_inform(c("!" = "Adding files missing in collate: {.file {extra}}"))
+      cli::cli_inform(c(
+        "!" = "Adding files missing in collate: {.file {extra}}"
+      ))
     }
 
     r_files <- union(collate, r_files)

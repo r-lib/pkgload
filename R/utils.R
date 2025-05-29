@@ -17,7 +17,10 @@ compact <- function(x) {
 }
 
 is_installed <- function(package, version = "0") {
-  installed_version <- tryCatch(utils::packageVersion(package), error = function(e) NA)
+  installed_version <- tryCatch(
+    utils::packageVersion(package),
+    error = function(e) NA
+  )
   !is.na(installed_version) && installed_version >= version
 }
 
@@ -28,7 +31,12 @@ is_installed <- function(package, version = "0") {
 #' @param compare The comparison operator used to check the version
 #' @keywords internal
 #' @export
-check_suggested <- function(package, version = NULL, compare = NA, path = inst("pkgload")) {
+check_suggested <- function(
+  package,
+  version = NULL,
+  compare = NA,
+  path = inst("pkgload")
+) {
   if (is.null(version)) {
     if (!is.na(compare)) {
       cli::cli_abort("Must provide both {.arg compare} and {.arg version}.")
@@ -38,7 +46,9 @@ check_suggested <- function(package, version = NULL, compare = NA, path = inst("
 
   if (!is_installed(package) || !check_dep_version(package, version)) {
     cli_version <- if (is_na(version)) "" else paste0(" ", version)
-    msg <- c("{.pkg package}{cli_version} must be installed for this functionality.")
+    msg <- c(
+      "{.pkg package}{cli_version} must be installed for this functionality."
+    )
 
     if (interactive()) {
       cli::cli_inform(c("i" = msg))
@@ -57,18 +67,20 @@ suggests_dep <- function(package, path = inst("pkgload")) {
   found <- desc[desc$type == "Suggests" & desc$package == package, "version"]
 
   if (!length(found)) {
-    cli::cli_abort("{.pkg {package}} is not in {.code Suggests:} for {.pkg {pkg_name(path)}}.")
+    cli::cli_abort(
+      "{.pkg {package}} is not in {.code Suggests:} for {.pkg {pkg_name(path)}}."
+    )
   }
 
   found
 }
 
-all_named <- function (x) {
+all_named <- function(x) {
   if (length(x) == 0) return(TRUE)
   !is.null(names(x)) && all(names(x) != "")
 }
 
-make_function <- function (args, body, env = parent.frame()) {
+make_function <- function(args, body, env = parent.frame()) {
   args <- as.pairlist(args)
   stopifnot(all_named(args), is.language(body))
   eval(call("function", args, body), env)
@@ -96,8 +108,10 @@ extract_lang <- function(x, f, ...) {
 
   if (is.call(x)) {
     res <- recurse(x)[[1]]
-    if (top_level_call <- identical(sys.call()[[1]], as.symbol("extract_lang"))
-        && is.null(res)) {
+    if (
+      top_level_call <- identical(sys.call()[[1]], as.symbol("extract_lang")) &&
+        is.null(res)
+    ) {
       cli::cli_warn(c(
         "pkgload is incompatible with the current version of R.",
         "i" = "{.code load_all()} may function incorrectly."
@@ -119,16 +133,20 @@ modify_lang <- function(x, f, ...) {
   if (is.call(x)) {
     as.call(recurse(x))
   } else if (is.function(x)) {
-     formals(x) <- modify_lang(formals(x), f, ...)
-     body(x) <- modify_lang(body(x), f, ...)
-     x
+    formals(x) <- modify_lang(formals(x), f, ...)
+    body(x) <- modify_lang(body(x), f, ...)
+    x
   } else {
     x
   }
 }
 
 strip_internal_calls <- function(x, package) {
-  if (is.call(x) && identical(x[[1L]], as.name(":::")) && identical(x[[2L]], as.name(package))) {
+  if (
+    is.call(x) &&
+      identical(x[[1L]], as.name(":::")) &&
+      identical(x[[2L]], as.name(package))
+  ) {
     x[[3L]]
   } else {
     x
@@ -141,27 +159,30 @@ sort_ci <- function(x) {
 }
 
 dev_packages <- function() {
-  packages <- vapply(loadedNamespaces(),
-    function(x) !is.null(dev_meta(x)), logical(1))
+  packages <- vapply(
+    loadedNamespaces(),
+    function(x) !is.null(dev_meta(x)),
+    logical(1)
+  )
 
   names(packages)[packages]
 }
 
-copy_env <- function(src, dest = new.env(parent = emptyenv()),
-  ignore = NULL) {
-
+copy_env <- function(src, dest = new.env(parent = emptyenv()), ignore = NULL) {
   srclist <- as.list(src, all.names = TRUE)
-  srclist <- srclist[ !(names(srclist) %in% ignore) ]
+  srclist <- srclist[!(names(srclist) %in% ignore)]
   list2env(srclist, envir = dest)
 
   dest
 }
 
-copy_env_lazy <- function(src, dest = new.env(parent = emptyenv()),
-  ignore = NULL) {
-
+copy_env_lazy <- function(
+  src,
+  dest = new.env(parent = emptyenv()),
+  ignore = NULL
+) {
   nms <- ls(src, all.names = TRUE)
-  nms <- nms[ !(nms %in% ignore) ]
+  nms <- nms[!(nms %in% ignore)]
   for (nme in nms) {
     delayed_assign(nme, as.symbol(nme), eval.env = src, assign.env = dest)
   }
@@ -170,7 +191,12 @@ copy_env_lazy <- function(src, dest = new.env(parent = emptyenv()),
 }
 
 # A version of delayedAssign which does _not_ use substitute
-delayed_assign <- function(x, value, eval.env = parent.frame(1), assign.env = parent.frame(1)) {
+delayed_assign <- function(
+  x,
+  value,
+  eval.env = parent.frame(1),
+  assign.env = parent.frame(1)
+) {
   inject(delayedAssign(x, !!value, eval.env, assign.env))
 }
 
@@ -181,7 +207,7 @@ single_quote <- function(x) {
 }
 
 ns_s3_methods <- function(pkg) {
- ns_env(pkg)$.__S3MethodsTable__.
+  ns_env(pkg)$.__S3MethodsTable__.
 }
 
 paste_line <- function(...) {

@@ -2,7 +2,6 @@ source_many <- function(files, encoding = "UTF-8", envir = parent.frame()) {
   stopifnot(is.character(files))
   stopifnot(is.environment(envir))
 
-  
   local_options(
     keep.source = TRUE,
     show.error.locations = TRUE,
@@ -24,7 +23,12 @@ source_one <- function(file, encoding, envir = parent.frame()) {
   stopifnot(is.environment(envir))
 
   lines <- read_lines_enc(file, file_encoding = encoding)
-  srcfile <- srcfilecopy(file, lines, file.info(file)[1, "mtime"], isFile = TRUE)
+  srcfile <- srcfilecopy(
+    file,
+    lines,
+    file.info(file)[1, "mtime"],
+    isFile = TRUE
+  )
 
   withCallingHandlers(
     exprs <- parse(text = lines, n = -1, srcfile = srcfile),
@@ -61,7 +65,11 @@ handle_parse_error <- function(cnd, file) {
 
   # Tweak parse() message to include an hyperlink.
   # Replace full path by relative path + hyperlink
-  path_hyperlink <- cli::format_inline(paste0("At {.file ", suffixed_path, "}:"))
+  path_hyperlink <- cli::format_inline(paste0(
+    "At {.file ",
+    suffixed_path,
+    "}:"
+  ))
   msg <- sub(
     paste0("^.*", suffixed_path, "\\:"),
     path_hyperlink,

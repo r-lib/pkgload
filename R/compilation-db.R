@@ -25,8 +25,15 @@ generate_db <- function(path = ".") {
     return(invisible(NULL))
   }
 
-  files <- build_files(src_path)
-  commands <- build_commands(src_path, package, files, desc)
+  # Do we need this initial detection of files?
+  files <- sort(fs::path_rel(build_files(src_path), src_path))
+  commands <- sort(build_commands(src_path, package, files, desc))
+
+  # There might be additional files e.g. if another library is compiled.
+  # See https://github.com/r-lib/ragg/blob/2c09f210bbd4a6df9cc710022195aa63b97eaeb3/src/Makevars.win#L17
+  # We grab the files from the commands to cover that case.
+  files <- build_files_from_commands(commands)
+
   directives <- Map(
     cmd = commands,
     file = files,
@@ -62,14 +69,23 @@ has_compilation_db <- function(desc) {
   out
 }
 
+# Same pattern as in `R CMD shlib`.
+FILE_PATTERN <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
+
 build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
-  has_objects <- !is.null(makevars) && any(grepl("^OBJECTS *=", readLines(makevars)))
+  has_objects <- !is.null(makevars) &&
+    any(grepl("^OBJECTS *=", readLines(makevars)))
 
   if (!has_objects) {
     # If the Makevars doesn't define custom objects, just grab all source files
-    # in `src`. Same pattern as in `R CMD shlib`.
-    files <- dir(src_path, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE)
+    # in `src`.
+    files <- dir(
+      src_path,
+      pattern = paste0(FILE_PATTERN, "$"),
+      all.files = TRUE,
+      full.names = TRUE
+    )
     return(files)
   }
 
@@ -95,11 +111,35 @@ build_files <- function(src_path) {
   vapply(files, find_source, "")
 }
 
+# Build commands for object files take the input files in `-c` arguments that we
+# extract here
+build_files_from_commands <- function(commands) {
+  pattern <- paste0("-c\\s+['\"]?([^\\s]+", FILE_PATTERN, ")")
+
+  files <- regmatches(
+    commands,
+    regexpr(pattern, commands, perl = TRUE)
+  )
+
+  if (length(files) != length(commands)) {
+    abort(
+      "Expected same number of object files as compilation commands",
+      .internal = TRUE
+    )
+  }
+
+  sub("-c\\s+['\"]?", "", files)
+}
+
 find_source <- function(file) {
   base <- fs::path_file(fs::path_ext_remove(file))
   dir <- fs::path_dir(file)
 
-  candidates <- dir(dir, pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$", all.files = TRUE)
+  candidates <- dir(
+    dir,
+    pattern = "\\.([cfmM]|cc|cpp|f90|f95|mm)$",
+    all.files = TRUE
+  )
   candidates <- candidates[startsWith(candidates, paste0(base, "."))]
   n <- length(candidates)
 
@@ -116,7 +156,7 @@ find_source <- function(file) {
     ))
   }
 
-  candidates[[1]]
+  fs::path(dir, candidates[[1]])
 }
 
 build_commands <- function(src_path, package, files, desc) {
@@ -146,7 +186,8 @@ build_commands <- function(src_path, package, files, desc) {
     "SHLIB",
     c(
       "--dry-run",
-      "-o", paste0(package, ext),
+      "-o",
+      paste0(package, ext),
       # Inject `--always-make` in make arguments to force full dry-run
       # See https://github.com/rstudio/rstudio/pull/11917
       sprintf("' --always-make %s IGNORED='", linking_to_flags),
@@ -158,17 +199,13 @@ build_commands <- function(src_path, package, files, desc) {
   # Remove any line that doesn't look like a compilation command. Note that
   # removing the header and footer is not sufficient, some other build commands
   # might be interspersed in some cases, e.g. with rlang.
-  keep <- Reduce(function(keep, cmp) keep | startsWith(out, cmp), compilers(), FALSE)
-  commands <- out[keep]
+  keep <- Reduce(
+    function(keep, cmp) keep | startsWith(out, cmp),
+    compilers(),
+    FALSE
+  )
 
-  if (length(commands) != length(files)) {
-    abort(
-      "Expected same number of compilation commands as object files",
-      .internal = TRUE
-    )
-  }
-
-  commands
+  out[keep]
 }
 
 # `R CMD config` is quite slow so we print the variables of interest by directly
@@ -186,7 +223,13 @@ compilers <- function() {
     tools::makevars_user(),
     system.file("print-var.mk", package = "pkgload")
   )
-  makevars <- unlist(lapply(makevars, function(var) if (length(var)) c("-f", var)))
+  makevars <- unlist(lapply(
+    makevars,
+    function(var) if (length(var)) c("-f", var)
+  ))
+
+  # Add silent flag to avoid unwanted output
+  makevars <- c("-s", makevars)
 
   # These variables are normally set by frontends but just in case
   env <- c(
@@ -199,7 +242,7 @@ compilers <- function() {
     out <- processx::run("make", c(makevars, "print-compilers"), env = env)
   )
 
-  compilers <- strsplit(trimws(out$stdout), "\n")[[1]]
+  compilers <- strsplit(trimws(out$stdout), "\n+")[[1]]
 
   # Remove arguments
   compilers <- strsplit(compilers, " ")
@@ -259,13 +302,17 @@ linking_to_flags <- function(desc) {
   }
 
   # Split by comma
-  linking_to <- strsplit(linking_to, " *, *",)[[1]]
+  linking_to <- strsplit(linking_to, " *, *", )[[1]]
 
   # Remove version if any
-  linking_to <- strsplit(linking_to, " *\\(",)
+  linking_to <- strsplit(linking_to, " *\\(", )
   linking_to <- vapply(linking_to, function(pkg) pkg[[1]], "")
 
-  paths <- vapply(linking_to, function(pkg) system.file("include", package = pkg), "")
+  paths <- vapply(
+    linking_to,
+    function(pkg) system.file("include", package = pkg),
+    ""
+  )
   paths <- paths[paths != ""]
 
   paste(paste0("-I\"", paths, "\""), collapse = " ")

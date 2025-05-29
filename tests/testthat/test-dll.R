@@ -1,7 +1,6 @@
 local_load_all_quiet()
 
 test_that("unload() unloads DLLs from packages loaded with library()", {
-
   # Make a temp lib directory to install test package into
   old_libpaths <- .libPaths()
   tmp_libpath = file.path(tempdir(), "devtools_test")
@@ -12,8 +11,13 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
   defer(.libPaths(old_libpaths))
 
   # Install package
-  install.packages(test_path("testDllLoad"), repos = NULL, type = "source",
-    INSTALL_opts = "--no-multiarch", quiet = TRUE)
+  install.packages(
+    test_path("testDllLoad"),
+    repos = NULL,
+    type = "source",
+    INSTALL_opts = "--no-multiarch",
+    quiet = TRUE
+  )
   expect_true(require(testDllLoad, quietly = TRUE))
 
   # Check that it's loaded properly, by running a function from the package.
@@ -30,14 +34,12 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
   dynlibs <- vapply(.dynLibs(), `[[`, "name", FUN.VALUE = character(1))
   expect_no_match(dynlibs, "testDllLoad")
 
-
   # Clean out compiled objects
   pkgbuild::clean_dll("testDllLoad")
 })
 
 
 test_that("load_all() compiles and loads DLLs", {
-
   pkgbuild::clean_dll("testDllLoad")
 
   load_all("testDllLoad", reset = TRUE, quiet = TRUE)
@@ -56,7 +58,6 @@ test_that("load_all() compiles and loads DLLs", {
   # DLL should not be listed in .dynLibs()
   dynlibs <- vapply(.dynLibs(), `[[`, "name", FUN.VALUE = character(1))
   expect_no_match(dynlibs, "testDllLoad")
-
 
   # Loading again, and reloading
   # Should not re-compile (don't have a proper test for this)
@@ -102,7 +103,6 @@ test_that("Specific functions from DLLs listed in NAMESPACE can be called", {
 
 
 test_that("load_all() can compile and load DLLs linked to Rcpp", {
-
   pkgbuild::clean_dll("testDllRcpp")
 
   load_all("testDllRcpp", reset = TRUE, quiet = TRUE)

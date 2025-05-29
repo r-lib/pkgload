@@ -4,7 +4,6 @@ load_depends <- function(path = ".", quiet = NULL) {
 
   description <- pkg_desc(path)
 
-
   # Get data frame of dependency names and versions
   deps <- description$get_deps()
   depends <- deps[deps$type == "Depends" & deps$package != "R", ]

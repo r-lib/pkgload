@@ -119,17 +119,19 @@
 #' load_all("./", export_all = FALSE)
 #' }
 #' @export
-load_all <- function(path = ".",
-                     reset = TRUE,
-                     compile = NA,
-                     attach = TRUE,
-                     export_all = TRUE,
-                     export_imports = export_all,
-                     helpers = export_all,
-                     attach_testthat = uses_testthat(path),
-                     quiet = NULL,
-                     recompile = FALSE,
-                     warn_conflicts = TRUE) {
+load_all <- function(
+  path = ".",
+  reset = TRUE,
+  compile = NA,
+  attach = TRUE,
+  export_all = TRUE,
+  export_imports = export_all,
+  helpers = export_all,
+  attach_testthat = uses_testthat(path),
+  quiet = NULL,
+  recompile = FALSE,
+  warn_conflicts = TRUE
+) {
   if (!isTRUE(reset)) {
     lifecycle::deprecate_warn(
       when = "1.3.5",
@@ -178,7 +180,10 @@ load_all <- function(path = ".",
     # methods. We'll restore the foreign methods but let the package
     # register its own methods again.
     old_methods <- as.list(methods_env)
-    old_methods <- Filter(function(x) is_foreign_method(x, package), old_methods)
+    old_methods <- Filter(
+      function(x) is_foreign_method(x, package),
+      old_methods
+    )
   }
 
   create_ns_env(path)
@@ -289,7 +294,14 @@ load_all_quiet <- function(quiet, fn = NULL) {
 }
 
 is_function_in_environment <- function(name, env) {
-  vapply(name, exists, logical(1), where = env, mode = "function", inherits = FALSE)
+  vapply(
+    name,
+    exists,
+    logical(1),
+    where = env,
+    mode = "function",
+    inherits = FALSE
+  )
 }
 
 warn_if_conflicts <- function(package, env1, env2) {
@@ -301,7 +313,7 @@ warn_if_conflicts <- function(package, env1, env2) {
   # Verify are functions in both environments
   both <- both[
     is_function_in_environment(both, env1) &
-    is_function_in_environment(both, env2)
+      is_function_in_environment(both, env2)
   ]
 
   if (length(both) == 0) {
@@ -320,7 +332,9 @@ warn_if_conflicts <- function(package, env1, env2) {
   run_rm <- style_hyperlink_run(run_rm)
 
   directions <- c(
-    "i" = cli::col_silver("Did you accidentally source a file rather than using `load_all()`?"),
+    "i" = cli::col_silver(
+      "Did you accidentally source a file rather than using `load_all()`?"
+    ),
     " " = cli::col_silver("Run {run_rm} to remove the conflicts.")
   )
 
@@ -351,7 +365,9 @@ conflict_bullets <- function(package, both) {
     more <- NULL
   }
 
-  bullets <- glue::glue("`{cli::col_green(both)}` masks `{cli::col_blue(package)}::{both}()`.")
+  bullets <- glue::glue(
+    "`{cli::col_green(both)}` masks `{cli::col_blue(package)}::{both}()`."
+  )
   c(set_names(bullets, "x"), more)
 }
 

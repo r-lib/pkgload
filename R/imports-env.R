@@ -12,7 +12,9 @@
 #' @export
 imports_env <- function(package) {
   if (!is_loaded(package)) {
-    cli::cli_abort("Namespace environment must be created before accessing imports environment.")
+    cli::cli_abort(
+      "Namespace environment must be created before accessing imports environment."
+    )
   }
 
   env <- parent.env(ns_env(package))
@@ -79,34 +81,48 @@ wrap_inner_loop <- function(x) {
   x
 }
 
-load_namespace_for1 <- function() wrap_inner_loop(
-  extract_lang(body(loadNamespace), comp_lang, y = quote(for(i in nsInfo$imports) NULL), idx = 1:3)
+load_namespace_for1 <- function()
+  wrap_inner_loop(
+    extract_lang(
+      body(loadNamespace),
+      comp_lang,
+      y = quote(for (i in nsInfo$imports) NULL),
+      idx = 1:3
+    )
   )
-load_namespace_for2 <- function() wrap_inner_loop(
-  extract_lang(body(loadNamespace), comp_lang,
-    y = quote(for(imp in nsInfo$importClasses) NULL),
-    idx = 1:3)
+load_namespace_for2 <- function()
+  wrap_inner_loop(
+    extract_lang(
+      body(loadNamespace),
+      comp_lang,
+      y = quote(for (imp in nsInfo$importClasses) NULL),
+      idx = 1:3
+    )
   )
-load_namespace_for3 <- function() wrap_inner_loop(
-  extract_lang(body(loadNamespace), comp_lang,
-    y = quote(for(imp in nsInfo$importMethods) NULL),
-    idx = 1:3)
+load_namespace_for3 <- function()
+  wrap_inner_loop(
+    extract_lang(
+      body(loadNamespace),
+      comp_lang,
+      y = quote(for (imp in nsInfo$importMethods) NULL),
+      idx = 1:3
+    )
   )
 
 onload_assign("process_imports", {
-
   process_imports <- function(path = ".") {
     path <- pkg_path(path)
     package <- pkg_name(path)
     desc_path <- package_file("DESCRIPTION", path = path)
-    vI <- ("tools" %:::% ".split_description")(("tools" %:::% ".read_description")(desc_path))$Imports
+    vI <- ("tools" %:::% ".split_description")(("tools" %:::%
+      ".read_description")(desc_path))$Imports
     nsInfo <- parse_ns_file(path)
     ns <- ns_env(package)
     lib.loc <- NULL
 
-    !! load_namespace_for1()
-    !! load_namespace_for2()
-    !! load_namespace_for3()
+    !!load_namespace_for1()
+    !!load_namespace_for2()
+    !!load_namespace_for3()
   }
 
   process_imports <- expr_interp(process_imports)

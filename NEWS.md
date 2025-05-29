@@ -1,5 +1,9 @@
 # pkgload (development version)
 
+* The generator of `compile_commands.json` now works with packages that compile extra libraries such as ragg.
+
+* The generator of `compile_commands.json` now works with sources in subdirectories (#308, @krlmlr).
+
 * The generator of `compile_commands.json` now checks for existing `R_SHARE_DIR`
   and `R_INCLUDE_DIR` environment variables (#287, #296, @TimTaylor and
   @shikokuchuo).
@@ -8,7 +12,8 @@
   of extra whitespace in `make`'s output (#288, @TimTaylor).
 
 * The generator of `compile_commands.json` now uses escaped double quotes for LinkingTo packages to ensure valid argument strings when parsed on Windows (#305, @tylermorganwall).
-  
+
+
 # pkgload 1.4.0
 
 * The `reset` argment of `load_all()` is no longer supported because preserving

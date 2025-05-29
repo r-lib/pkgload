@@ -1,14 +1,12 @@
 local_load_all_quiet()
 
 test_that("devtools metadata for load hooks", {
-
   # testLoadHooks test package has .onLoad and .onAttach
   load_all("testLoadHooks")
   md <- dev_meta("testLoadHooks")
   expect_true(md$.onLoad)
   expect_true(md$.onAttach)
   unload("testLoadHooks")
-
 
   # testNamespace test package doesn't have .onLoad and .onAttach
   load_all("testNamespace")
@@ -44,7 +42,6 @@ test_that("dev_packages() lists devtools-loaded packages", {
   unload("testLoadHooks")
   expect_false("testNamespace" %in% dev_packages())
   expect_false("testLoadHooks" %in% dev_packages())
-
 
   expect_false("stats" %in% dev_packages())
 })
