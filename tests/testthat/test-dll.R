@@ -74,6 +74,12 @@ test_that("load_all() compiles and loads DLLs", {
   expect_null(nulltest())
   unload("testDllLoad")
 
+  # Should re-compile without debug flags
+  pkgbuild::clean_dll("testDllLoad")
+  load_all("testDllLoad", debug = FALSE)
+  expect_null(nulltest())
+  unload("testDllLoad")
+
   # Clean out compiled objects
   pkgbuild::clean_dll("testDllLoad")
 })

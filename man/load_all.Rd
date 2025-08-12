@@ -16,7 +16,8 @@ load_all(
   attach_testthat = uses_testthat(path),
   quiet = NULL,
   recompile = FALSE,
-  warn_conflicts = TRUE
+  warn_conflicts = TRUE,
+  debug = TRUE
 )
 
 is_loading(pkg = NULL)
@@ -63,6 +64,10 @@ accidentally source a \code{.R} file, rather than using \code{load_all()}, or if
 define a function directly in the R console. This is frustrating to debug,
 as it feels like the changes you make to the package source aren't having
 the expected effect.}
+
+\item{debug}{If \code{TRUE} (the default), then the build
+runs without optimisation (\code{-O0}) and with debug symbols (\code{-g}). See
+\code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}} for details.}
 
 \item{pkg}{If supplied, \code{is_loading()} only returns \code{TRUE} if the
 package being loaded is \code{pkg}.}
@@ -127,10 +132,10 @@ be useful for checking for missing exports.
 \section{Controlling the debug compiler flags}{
 \code{load_all()} delegates to \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}} to perform the actual
 compilation, during which by default some debug compiler flags are
-appended. If you would like to produce an optimized build instead,
-you can opt out by setting the \code{pkg.build_extra_flags}
-option or the \code{PKG_BUILD_EXTRA_FLAGS} environment variable to \code{FALSE}.
-For further details see the Details section in \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}.
+appended. If you would like to produce an optimized build instead, you can
+opt out by either using \code{debug = FALSE}, setting the \code{pkg.build_extra_flags}
+option to \code{FALSE}, or setting the \code{PKG_BUILD_EXTRA_FLAGS} environment variable
+to \code{FALSE}. For further details see the Details section in \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}.
 }
 
 \examples{
