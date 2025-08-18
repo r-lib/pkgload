@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_all()` now supports explicit `debug` option to control using debug compiler flags (#224, @assaron).
+
 * The generator of `compile_commands.json` now works with packages that compile extra libraries such as ragg.
 
 * The generator of `compile_commands.json` now works with sources in subdirectories (#308, @krlmlr).

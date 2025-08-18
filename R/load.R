@@ -68,10 +68,10 @@
 #'
 #' `load_all()` delegates to [pkgbuild::compile_dll()] to perform the actual
 #' compilation, during which by default some debug compiler flags are
-#' appended. If you would like to produce an optimized build instead,
-#' you can opt out by setting the `pkg.build_extra_flags`
-#' option or the `PKG_BUILD_EXTRA_FLAGS` environment variable to `FALSE`.
-#' For further details see the Details section in [pkgbuild::compile_dll()].
+#' appended. If you would like to produce an optimized build instead, you can
+#' opt out by either using `debug = FALSE`, setting the `pkg.build_extra_flags`
+#' option to `FALSE`, or setting the `PKG_BUILD_EXTRA_FLAGS` environment variable
+#' to `FALSE`. For further details see the Details section in [pkgbuild::compile_dll()].
 #'
 #'
 #' @param path Path to a package, or within a package.
@@ -105,6 +105,9 @@
 #'   define a function directly in the R console. This is frustrating to debug,
 #'   as it feels like the changes you make to the package source aren't having
 #'   the expected effect.
+#' @param debug If `TRUE` (the default), then the build
+#'   runs without optimisation (`-O0`) and with debug symbols (`-g`). See
+#'   [pkgbuild::compile_dll()] for details.
 #' @keywords programming
 #' @examples
 #' \dontrun{
@@ -130,7 +133,8 @@ load_all <- function(
   attach_testthat = uses_testthat(path),
   quiet = NULL,
   recompile = FALSE,
-  warn_conflicts = TRUE
+  warn_conflicts = TRUE,
+  debug = TRUE
 ) {
   if (!isTRUE(reset)) {
     lifecycle::deprecate_warn(
@@ -167,9 +171,9 @@ load_all <- function(
 
   if (isTRUE(compile)) {
     pkgbuild::clean_dll(path)
-    pkgbuild::compile_dll(path, quiet = quiet)
+    pkgbuild::compile_dll(path, quiet = quiet, debug = debug)
   } else if (identical(compile, NA)) {
-    pkgbuild::compile_dll(path, quiet = quiet)
+    pkgbuild::compile_dll(path, quiet = quiet, debug = debug)
   } else if (identical(compile, FALSE)) {
     # don't compile
   } else {
