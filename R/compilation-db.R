@@ -70,7 +70,7 @@ has_compilation_db <- function(desc) {
 }
 
 # Same pattern as in `R CMD shlib`.
-FILE_PATTERN <- "\\.([cfmM]|cc|cpp|f90|f95|mm)"
+FILE_PATTERN <- "\\.(cc|cpp|f90|f95|mm|[cfmM])"
 
 build_files <- function(src_path) {
   makevars <- makevars_file(src_path)
