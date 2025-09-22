@@ -36,6 +36,7 @@ test_that("shim_help works with complex NULL `package = ` argument (#266)", {
 })
 
 test_that("shim_question behaves the same as utils::? for non-devtools-loaded packages", {
+  skip_on_cran()
   expect_identical(shim_question(lm)[1], utils::`?`(lm)[1])
   expect_identical(shim_question(stats::lm)[1], utils::`?`(stats::lm)[1])
   expect_identical(shim_question(lm(123))[1], utils::`?`(lm(123))[1])
