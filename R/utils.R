@@ -76,7 +76,9 @@ suggests_dep <- function(package, path = inst("pkgload")) {
 }
 
 all_named <- function(x) {
-  if (length(x) == 0) return(TRUE)
+  if (length(x) == 0) {
+    return(TRUE)
+  }
   !is.null(names(x)) && all(names(x) != "")
 }
 
@@ -91,7 +93,9 @@ comp_lang <- function(x, y, idx = seq_along(y)) {
     return(identical(x, y))
   }
 
-  if (length(x) < length(idx)) return(FALSE)
+  if (length(x) < length(idx)) {
+    return(FALSE)
+  }
 
   identical(x[idx], y[idx])
 }

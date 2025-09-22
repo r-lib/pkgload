@@ -15,13 +15,17 @@ run_pkg_hook <- function(package, hook) {
   f_name <- trans[hook]
 
   metadata <- dev_meta(package)
-  if (isTRUE(metadata[[f_name]])) return(FALSE)
+  if (isTRUE(metadata[[f_name]])) {
+    return(FALSE)
+  }
 
   # Run hook function if defined, and not already run
   nsenv <- ns_env(package)
   ns_path <- ns_path(package)
 
-  if (!exists(f_name, nsenv, inherits = FALSE)) return(FALSE)
+  if (!exists(f_name, nsenv, inherits = FALSE)) {
+    return(FALSE)
+  }
 
   if (hook %in% c("load", "attach")) {
     nsenv[[f_name]](dirname(ns_path), package)

@@ -81,33 +81,39 @@ wrap_inner_loop <- function(x) {
   x
 }
 
-load_namespace_for1 <- function()
+load_namespace_for1 <- function() {
   wrap_inner_loop(
     extract_lang(
       body(loadNamespace),
       comp_lang,
+      # fmt: skip
       y = quote(for (i in nsInfo$imports) NULL),
       idx = 1:3
     )
   )
-load_namespace_for2 <- function()
+}
+load_namespace_for2 <- function() {
   wrap_inner_loop(
     extract_lang(
       body(loadNamespace),
       comp_lang,
+      # fmt: skip
       y = quote(for (imp in nsInfo$importClasses) NULL),
       idx = 1:3
     )
   )
-load_namespace_for3 <- function()
+}
+load_namespace_for3 <- function() {
   wrap_inner_loop(
     extract_lang(
       body(loadNamespace),
       comp_lang,
+      # fmt: skip
       y = quote(for (imp in nsInfo$importMethods) NULL),
       idx = 1:3
     )
   )
+}
 
 onload_assign("process_imports", {
   process_imports <- function(path = ".") {

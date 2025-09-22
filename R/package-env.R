@@ -69,7 +69,9 @@ exports_exclusion_list <- c(
 run_ns_load_actions <- function(package) {
   nsenv <- ns_env(package)
   actions <- methods::getLoadActions(nsenv)
-  for (action in actions) action(nsenv)
+  for (action in actions) {
+    action(nsenv)
+  }
 }
 
 # Copy over the objects from the namespace env to the package env
@@ -135,7 +137,9 @@ assign_depends <- function(package) {
 pkg_env <- function(package) {
   name <- pkg_env_name(package)
 
-  if (!is_attached(package)) return(NULL)
+  if (!is_attached(package)) {
+    return(NULL)
+  }
 
   as.environment(name)
 }

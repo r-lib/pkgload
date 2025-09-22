@@ -95,8 +95,9 @@ print.dev_topic <- function(x, ...) {
   if (type == "html" && rstudioapi_available()) {
     # If the package has Rd macros, this needs a version of rstudio
     # that loads them, see rstudio/rstudio#12111
-    version_needed <- if (has_rd_macros(dirname(dirname(x$path))))
+    version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) {
       "2022.12.0.256"
+    }
 
     if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
       return(rstudioapi::callFun("previewRd", x$path))

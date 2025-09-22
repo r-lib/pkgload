@@ -22,11 +22,15 @@ load_code <- function(path = ".", quiet = NULL) {
 
   r_files <- find_code(path, quiet = quiet)
   paths <- changed_files(r_files)
-  if (length(paths) == 0L) return()
+  if (length(paths) == 0L) {
+    return()
+  }
 
   success <- FALSE
   cleanup <- function() {
-    if (success) return()
+    if (success) {
+      return()
+    }
     clear_cache()
     unload(package)
   }

@@ -8,15 +8,17 @@
 onload_assign("load_dll", {
   for_loop <-
     modify_lang(
-      f = function(x)
+      f = function(x) {
         if (comp_lang(x, quote(library.dynam()), 1)) {
           quote(library.dynam2(path, lib))
         } else {
           x
-        },
+        }
+      },
       extract_lang(
         body(loadNamespace),
         comp_lang,
+        # fmt: skip
         y = quote(for (i in seq_along(dynLibs)) NULL),
         idx = 1:3
       )

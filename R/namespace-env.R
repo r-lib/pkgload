@@ -15,14 +15,18 @@
 #'   imported objects for the package.
 #' @export
 ns_env <- function(package) {
-  if (!is_loaded(package)) return(NULL)
+  if (!is_loaded(package)) {
+    return(NULL)
+  }
 
   asNamespace(package)
 }
 
 ns_path <- function(package) {
   ns <- asNamespace(package)
-  if (isBaseNamespace(ns)) return(path.package(package))
+  if (isBaseNamespace(ns)) {
+    return(path.package(package))
+  }
   getNamespaceInfo(ns, "path")
 }
 
@@ -149,8 +153,9 @@ setup_ns_exports <- function(path = ".") {
 onload_assign("add_classes_to_exports", {
   pattern <- if (getRversion() >= "4.1.0") {
     quote(
-      if (.isMethodsDispatchOn() && hasS4m && !identical(package, "methods"))
+      if (.isMethodsDispatchOn() && hasS4m && !identical(package, "methods")) {
         NULL
+      }
     )
   } else {
     quote(
@@ -158,8 +163,9 @@ onload_assign("add_classes_to_exports", {
         .isMethodsDispatchOn() &&
           .hasS4MetaData(ns) &&
           !identical(package, "methods")
-      )
+      ) {
         NULL
+      }
     )
   }
   make_function(

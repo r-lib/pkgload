@@ -41,8 +41,12 @@ set_envvar <- function(envs) {
   old <- Sys.getenv(names(envs), names = TRUE, unset = NA)
   set <- !is.na(envs)
 
-  if (any(set)) do.call("Sys.setenv", as.list(envs[set]))
-  if (any(!set)) Sys.unsetenv(names(envs)[!set])
+  if (any(set)) {
+    do.call("Sys.setenv", as.list(envs[set]))
+  }
+  if (any(!set)) {
+    Sys.unsetenv(names(envs)[!set])
+  }
 
   invisible(old)
 }
