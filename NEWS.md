@@ -16,7 +16,7 @@
 
 # pkgload 1.4.0
 
-* The `reset` argment of `load_all()` is no longer supported because preserving
+* The `reset` argument of `load_all()` is no longer supported because preserving
   the namespace requires unlocking its environment, which is no longer possible
   in recent versions of R. It should no longer be necessary as the performance
   issues caused by resetting the namespace were resolved a while ago.
