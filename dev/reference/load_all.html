@@ -134,8 +134,7 @@ A package loaded with <code>load_all()</code> can be identified with with
 <span>  attach_testthat <span class="op">=</span> <span class="fu">uses_testthat</span><span class="op">(</span><span class="va">path</span><span class="op">)</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  recompile <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  warn_conflicts <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  debug <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  warn_conflicts <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_loading</span><span class="op">(</span>pkg <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
@@ -209,12 +208,6 @@ as it feels like the changes you make to the package source aren't having
 the expected effect.</p></dd>
 
 
-<dt id="arg-debug">debug<a class="anchor" aria-label="anchor" href="#arg-debug"></a></dt>
-<dd><p>If <code>TRUE</code> (the default), then the build
-runs without optimisation (<code>-O0</code>) and with debug symbols (<code>-g</code>). See
-<code><a href="https://pkgbuild.r-lib.org/reference/compile_dll.html" class="external-link">pkgbuild::compile_dll()</a></code> for details.</p></dd>
-
-
 <dt id="arg-pkg">pkg<a class="anchor" aria-label="anchor" href="#arg-pkg"></a></dt>
 <dd><p>If supplied, <code>is_loading()</code> only returns <code>TRUE</code> if the
 package being loaded is <code>pkg</code>.</p></dd>
@@ -245,10 +238,10 @@ be useful for checking for missing exports.</p></li>
     <h2 id="controlling-the-debug-compiler-flags">Controlling the debug compiler flags<a class="anchor" aria-label="anchor" href="#controlling-the-debug-compiler-flags"></a></h2>
     <p><code>load_all()</code> delegates to <code><a href="https://pkgbuild.r-lib.org/reference/compile_dll.html" class="external-link">pkgbuild::compile_dll()</a></code> to perform the actual
 compilation, during which by default some debug compiler flags are
-appended. If you would like to produce an optimized build instead, you can
-opt out by either using <code>debug = FALSE</code>, setting the <code>pkg.build_extra_flags</code>
-option to <code>FALSE</code>, or setting the <code>PKG_BUILD_EXTRA_FLAGS</code> environment variable
-to <code>FALSE</code>. For further details see the Details section in <code><a href="https://pkgbuild.r-lib.org/reference/compile_dll.html" class="external-link">pkgbuild::compile_dll()</a></code>.</p>
+appended. If you would like to produce an optimized build instead,
+you can opt out by setting the <code>pkg.build_extra_flags</code>
+option or the <code>PKG_BUILD_EXTRA_FLAGS</code> environment variable to <code>FALSE</code>.
+For further details see the Details section in <code><a href="https://pkgbuild.r-lib.org/reference/compile_dll.html" class="external-link">pkgbuild::compile_dll()</a></code>.</p>
     </div>
 
     <div class="section level2">
