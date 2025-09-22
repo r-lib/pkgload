@@ -1,6 +1,6 @@
 local_load_all_quiet()
 
-# Used by several test packages
+# Used by e.g. `testNamespace`
 skip_if_not_installed("bitops")
 
 # Is e an ancestor environment of x?
