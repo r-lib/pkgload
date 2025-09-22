@@ -42,7 +42,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.4.0" id="pkgload-140">pkgload 1.4.0<a class="anchor" aria-label="anchor" href="#pkgload-140"></a></h2><p class="text-muted">CRAN release: 2024-06-28</p>
-<ul><li><p>The <code>reset</code> argment of <code><a href="../reference/load_all.html">load_all()</a></code> is no longer supported because preserving the namespace requires unlocking its environment, which is no longer possible in recent versions of R. It should no longer be necessary as the performance issues caused by resetting the namespace were resolved a while ago.</p></li>
+<ul><li><p>The <code>reset</code> argument of <code><a href="../reference/load_all.html">load_all()</a></code> is no longer supported because preserving the namespace requires unlocking its environment, which is no longer possible in recent versions of R. It should no longer be necessary as the performance issues caused by resetting the namespace were resolved a while ago.</p></li>
 <li>
 <p>New experimental feature for generating a <code>compile_commands.json</code> file after each <code><a href="../reference/load_all.html">load_all()</a></code>. This file is used by LSP servers such as clangd to provide intellisense features in your native files. To enable it, add this directive to your <code>DESCRIPTION</code> file:</p>
 <pre><code><span><span class="va">Config</span><span class="op">/</span><span class="va">build</span><span class="op">/</span><span class="va">compilation</span><span class="op">-</span><span class="va">database</span><span class="op">:</span> <span class="va">true</span></span></code></pre>
