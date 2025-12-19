@@ -30,6 +30,17 @@ source_one <- function(file, encoding, envir = parent.frame()) {
     isFile = TRUE
   )
 
+  ark_annotate_source <- env_get(baseenv(), ".ark_annotate_source", default = NULL)
+  if (!is.null(ark_annotate_source)) {
+    # Just to be sure, but should already be normalized
+    file <- normalizePath(file, mustWork = TRUE)
+
+    # Ark expects URIs
+    uri <- paste0("file://", file)
+
+    lines <- ark_annotate_source(uri, paste_line(lines)) %||% lines
+  }
+
   withCallingHandlers(
     exprs <- parse(text = lines, n = -1, srcfile = srcfile),
     error = function(cnd) handle_parse_error(cnd, file)
