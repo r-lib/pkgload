@@ -36,7 +36,7 @@ source_one <- function(file, encoding, envir = parent.frame()) {
     # Ark expects URIs
     uri <- paste0("file:///", sub("^/", "", file))
 
-    annotated <- ark_annotate_source(uri, paste_line(lines))
+    annotated <- ark_annotate_source(paste_line(lines), uri)
     if (!is.null(annotated)) {
       lines <- strsplit(annotated, "\n", fixed = TRUE)[[1]]
     }
