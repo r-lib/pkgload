@@ -34,7 +34,7 @@ source_one <- function(file, encoding, envir = parent.frame()) {
     file <- normalizePath(file, mustWork = TRUE)
 
     # Ark expects URIs
-    uri <- paste0("file://", file)
+    uri <- paste0("file:///", sub("^/", "", file))
 
     annotated <- ark_annotate_source(uri, paste_line(lines))
     if (!is.null(annotated)) {
