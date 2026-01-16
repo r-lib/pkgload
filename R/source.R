@@ -23,14 +23,12 @@ source_one <- function(file, encoding, envir = parent.frame()) {
   stopifnot(is.environment(envir))
 
   lines <- read_lines_enc(file, file_encoding = encoding)
-  srcfile <- srcfilecopy(
-    file,
-    lines,
-    file.info(file)[1, "mtime"],
-    isFile = TRUE
-  )
 
-  ark_annotate_source <- env_get(baseenv(), ".ark_annotate_source", default = NULL)
+  ark_annotate_source <- env_get(
+    baseenv(),
+    ".ark_annotate_source",
+    default = NULL
+  )
   if (!is.null(ark_annotate_source)) {
     # Just to be sure, but should already be normalized
     file <- normalizePath(file, mustWork = TRUE)
@@ -38,8 +36,18 @@ source_one <- function(file, encoding, envir = parent.frame()) {
     # Ark expects URIs
     uri <- paste0("file://", file)
 
-    lines <- ark_annotate_source(uri, paste_line(lines)) %||% lines
+    annotated <- ark_annotate_source(uri, paste_line(lines))
+    if (!is.null(annotated)) {
+      lines <- strsplit(annotated, "\n", fixed = TRUE)[[1]]
+    }
   }
+
+  srcfile <- srcfilecopy(
+    file,
+    lines,
+    file.info(file)[1, "mtime"],
+    isFile = TRUE
+  )
 
   withCallingHandlers(
     exprs <- parse(text = lines, n = -1, srcfile = srcfile),
