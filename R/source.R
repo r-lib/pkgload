@@ -30,16 +30,24 @@ source_one <- function(file, encoding, envir = parent.frame()) {
     default = NULL
   )
   if (!is.null(ark_annotate_source)) {
-    # Just to be sure, but should already be normalized
-    file <- normalizePath(file, mustWork = TRUE)
+    tryCatch(
+      {
+        # Just to be sure, but should already be normalized
+        file <- normalizePath(file, mustWork = TRUE)
 
-    # Ark expects URIs
-    uri <- paste0("file:///", sub("^/", "", file))
+        # Ark expects URIs
+        uri <- paste0("file:///", sub("^/", "", file))
 
-    annotated <- ark_annotate_source(paste_line(lines), uri)
-    if (!is.null(annotated)) {
-      lines <- strsplit(annotated, "\n", fixed = TRUE)[[1]]
-    }
+        annotated <- ark_annotate_source(paste_line(lines), uri)
+        if (!is.null(annotated)) {
+          lines <- strsplit(annotated, "\n", fixed = TRUE)[[1]]
+        }
+      },
+
+      error = function(cnd) {
+        warn("Can't inject breakpoints", parent = cnd)
+      }
+    )
   }
 
   srcfile <- srcfilecopy(
