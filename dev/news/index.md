@@ -2,6 +2,9 @@
 
 ## pkgload (development version)
 
+- Added support for injecting breakpoints in Positron
+  (posit-dev/positron#1766).
+
 ## pkgload 1.4.1
 
 CRAN release: 2025-09-23
