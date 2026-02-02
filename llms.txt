@@ -1,0 +1,70 @@
+# pkgload
+
+The goal of pkgload is to simulate the process of installing and loading
+a package, without actually doing the complete process, and hence making
+package iteration much faster. This was previously part of devtools (it
+was in fact the original motivation) but has been moved into its own
+package as part of the devtools [conscious
+uncoupling](https://github.com/r-lib/devtools#conscious-uncoupling).
+
+## Usage
+
+In most cases you will not use pkgload directly, and instead you’ll call
+it via `devtools::load_all()`.
+
+``` r
+devtools::load_all()
+```
+
+## Code of Conduct
+
+Please note that the pkgload project is released with a [Contributor
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+# Package index
+
+## All functions
+
+- [`dev_example()`](https://pkgload.r-lib.org/reference/dev_example.md)
+  [`run_example()`](https://pkgload.r-lib.org/reference/dev_example.md)
+  : Run a examples for an in-development function.
+- [`dev_help()`](https://pkgload.r-lib.org/reference/dev_help.md)
+  [`dev_topic_find()`](https://pkgload.r-lib.org/reference/dev_help.md)
+  [`dev_topic_index()`](https://pkgload.r-lib.org/reference/dev_help.md)
+  [`dev_topic_index_reset()`](https://pkgload.r-lib.org/reference/dev_help.md)
+  : In-development help for package loaded with devtools
+- [`help`](https://pkgload.r-lib.org/reference/help.md)
+  [`shim_help`](https://pkgload.r-lib.org/reference/help.md)
+  [`?`](https://pkgload.r-lib.org/reference/help.md)
+  [`shim_question`](https://pkgload.r-lib.org/reference/help.md) :
+  Drop-in replacements for help and ? functions
+- [`inst()`](https://pkgload.r-lib.org/reference/inst.md) : Get the
+  installation path of a package
+- [`is_dev_package()`](https://pkgload.r-lib.org/reference/is_dev_package.md)
+  : Is the package currently under development?
+- [`load_all()`](https://pkgload.r-lib.org/reference/load_all.md)
+  [`is_loading()`](https://pkgload.r-lib.org/reference/load_all.md) :
+  Load complete package
+- [`load_code()`](https://pkgload.r-lib.org/reference/load_code.md) :
+  Load R code.
+- [`load_data()`](https://pkgload.r-lib.org/reference/load_data.md) :
+  Load data.
+- [`load_dll()`](https://pkgload.r-lib.org/reference/load_dll.md) : Load
+  a compiled DLL
+- [`package_file()`](https://pkgload.r-lib.org/reference/package_file.md)
+  : Find file in a package.
+- [`pkg_path()`](https://pkgload.r-lib.org/reference/packages.md)
+  [`pkg_name()`](https://pkgload.r-lib.org/reference/packages.md)
+  [`pkg_desc()`](https://pkgload.r-lib.org/reference/packages.md)
+  [`pkg_version()`](https://pkgload.r-lib.org/reference/packages.md)
+  [`pkg_version_raw()`](https://pkgload.r-lib.org/reference/packages.md)
+  [`pkg_ns()`](https://pkgload.r-lib.org/reference/packages.md) : Helper
+  functions for working with development packages.
+- [`shim_system.file()`](https://pkgload.r-lib.org/reference/system.file.md)
+  : Replacement version of system.file
+- [`unload()`](https://pkgload.r-lib.org/reference/unload.md)
+  [`unregister()`](https://pkgload.r-lib.org/reference/unload.md) :
+  Unload a package
+
