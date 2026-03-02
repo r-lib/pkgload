@@ -36,10 +36,8 @@ load_data <- function(path = ".") {
     return(invisible(objs))
   }
 
-  # The utils package is not attached by default in some R environments
-  # (e.g. R_DEFAULT_PACKAGES=NULL). R's native utils::data() function
-  # explicitly attaches 'utils' before sourcing .R files.
-  library("utils")
+  # always attach, as utils::data does
+  library(utils)
 
   # We source the .R files into lazydata_env, but we want them to be
   # able to find functions in the default packages like utils.

@@ -9,7 +9,7 @@ test_that("load_data can load .R files that use utils functions in a clean envir
   pkgload_path <- normalizePath(package_file(), mustWork = TRUE)
   
   # We use callr::r() to run a subprocess with a controlled environment.
-  res <- tryCatch({
+  expect_equal(
     callr::r(
       function(pkg_path, pkgload_path) {
         # Load the development version of pkgload, which has our fix
@@ -20,11 +20,7 @@ test_that("load_data can load .R files that use utils functions in a clean envir
       },
       args = list(pkg_path = pkg_path, pkgload_path = pkgload_path),
       env = c(R_DEFAULT_PACKAGES = "NULL")
-    )
-  }, error = function(e) {
-    print(e)
-    NULL
-  })
-  
-  expect_equal(res, 1L)
+    ),
+    1L
+  )
 })
