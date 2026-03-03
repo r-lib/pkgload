@@ -37,7 +37,7 @@ load_data <- function(path = ".") {
   }
 
   # always attach, as utils::data does
-  library(utils)
+  evalq(library(utils))
 
   # We source the .R files into lazydata_env, but we want them to be
   # able to find functions in the default packages like utils.
