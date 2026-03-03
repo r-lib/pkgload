@@ -36,7 +36,7 @@ load_data <- function(path = ".") {
     return(invisible(objs))
   }
 
-  # always attach, as utils::data does
+  # always attach, as utils::data does. evalq to hide library from R CMD check
   evalq(library(utils))
 
   # We source the .R files into lazydata_env, but we want them to be
