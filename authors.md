@@ -19,16 +19,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/r-lib/pkgload/blob/v1.5.0/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/r-lib/pkgload/blob/main/DESCRIPTION)
 
 Wickham H, Chang W, Hester J, Henry L (2026). *pkgload: Simulate Package
-Installation and Attach*. R package version 1.5.0,
+Installation and Attach*. R package version 1.5.1,
 <https://github.com/r-lib/pkgload>.
 
     @Manual{,
       title = {pkgload: Simulate Package Installation and Attach},
       author = {Hadley Wickham and Winston Chang and Jim Hester and Lionel Henry},
       year = {2026},
-      note = {R package version 1.5.0},
+      note = {R package version 1.5.1},
       url = {https://github.com/r-lib/pkgload},
     }

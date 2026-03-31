@@ -1,5 +1,9 @@
 # Changelog
 
+## pkgload 1.5.1
+
+- Fixes for CRAN checks.
+
 ## pkgload 1.5.0
 
 CRAN release: 2026-02-03
