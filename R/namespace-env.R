@@ -234,8 +234,7 @@ register_namespace <- function(name = NULL, env = NULL) {
   }
 
   # Add the environment to the registry
-  nsr <- ns_registry_env()
-  nsr[[name]] <- env
+  eval(call2(".Internal", call2("registerNamespace", name, env)))
 
   env
 }
@@ -264,7 +263,7 @@ unregister_namespace <- function(name = NULL) {
   env_get_list(ns, names(active_bindings)[!active_bindings])
 
   # Remove the item from the registry
-  env_unbind(ns_registry_env(), name)
+  eval(call2(".Internal", call2("unregisterNamespace", name)))
   invisible()
 }
 
