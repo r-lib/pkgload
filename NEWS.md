@@ -1,5 +1,8 @@
 # pkgload (development version)
 
+* Fixes for CRAN checks.
+
+
 # pkgload 1.5.0
 
 * Added support for injecting breakpoints in Positron (posit-dev/positron#1766).
