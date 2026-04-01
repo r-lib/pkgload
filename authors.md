@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/r-lib/pkgload/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/r-lib/pkgload/blob/v1.5.1/DESCRIPTION)
 
 Wickham H, Chang W, Hester J, Henry L (2026). *pkgload: Simulate Package
 Installation and Attach*. R package version 1.5.1,
