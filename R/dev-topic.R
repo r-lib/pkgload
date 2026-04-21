@@ -24,19 +24,18 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
   NULL
 }
 
-dev_topic_parse <- function(topic, dev_packages = NULL) {
+dev_topic_parse <- function(topic, packages = NULL) {
   stopifnot(is_string(topic))
 
-  pieces <- strsplit(topic, ":::?")[[1]]
-  if (length(pieces) == 1) {
-    if (is.null(dev_packages)) {
-      pkgs <- dev_packages()
-    } else {
-      pkgs <- dev_packages
-    }
-  } else {
-    pkgs <- pieces[1]
-    topic <- pieces[2]
+  # Only treat `::`/`:::` as a namespace qualifier when preceded by a valid
+  # package name at the start. Otherwise `::` may appear inside an S7 method
+  # alias like `fn,pkg::Class-method`.
+  m <- regmatches(topic, regexec("^([a-zA-Z][a-zA-Z0-9.]*):::?(.+)$", topic))[[1]]
+  if (length(m) == 3) {
+    pkgs <- m[[2]]
+    topic <- m[[3]]
+  } else  {
+    pkgs <- packages %||% dev_packages()
   }
 
   list(

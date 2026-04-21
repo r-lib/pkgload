@@ -165,6 +165,23 @@ test_that("can use macros in other packages (#120)", {
   expect_match(html_lines, "foreign macro.*success", all = FALSE)
 })
 
+test_that("dev_topic_parse recognises pkg::topic and pkg:::topic", {
+  parsed <- dev_topic_parse("foo::bar")
+  expect_equal(parsed$topic, "bar")
+  expect_equal(parsed$pkg_names, "foo")
+
+  parsed <- dev_topic_parse("foo:::bar")
+  expect_equal(parsed$topic, "bar")
+  expect_equal(parsed$pkg_names, "foo")
+})
+
+test_that("dev_topic_parse leaves S7 method aliases alone", {
+  topic <- "drop_spec_columns,hyperion.tables::TableSpec-method"
+  parsed <- dev_topic_parse(topic, packages = "mypkg")
+  expect_equal(parsed$topic, topic)
+  expect_equal(parsed$pkg_names, "mypkg")
+})
+
 test_that("httpdPort() is available", {
   skip_on_cran()
   # We're using this unexported function to open help pages in RStudio
