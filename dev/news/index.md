@@ -2,6 +2,13 @@
 
 ## pkgload (development version)
 
+## pkgload 1.5.2
+
+CRAN release: 2026-04-22
+
+- Better handling of S7 topics
+  ([\#332](https://github.com/r-lib/pkgload/issues/332)).
+
 ## pkgload 1.5.1
 
 CRAN release: 2026-04-01
