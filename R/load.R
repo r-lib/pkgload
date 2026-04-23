@@ -70,8 +70,9 @@
 #' compilation, during which by default some debug compiler flags are
 #' appended. If you would like to produce an optimized build instead, you can
 #' opt out by either using `debug = FALSE`, setting the `pkg.build_extra_flags`
-#' option to `FALSE`, or setting the `PKG_BUILD_EXTRA_FLAGS` environment variable
-#' to `FALSE`. For further details see the Details section in [pkgbuild::compile_dll()].
+#' option to `FALSE`, or setting the `PKG_BUILD_EXTRA_FLAGS` environment
+#' variable to `false`.
+#' For further details see the Details section in [pkgbuild::compile_dll()].
 #'
 #'
 #' @param path Path to a package, or within a package.

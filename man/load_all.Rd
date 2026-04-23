@@ -134,8 +134,9 @@ be useful for checking for missing exports.
 compilation, during which by default some debug compiler flags are
 appended. If you would like to produce an optimized build instead, you can
 opt out by either using \code{debug = FALSE}, setting the \code{pkg.build_extra_flags}
-option to \code{FALSE}, or setting the \code{PKG_BUILD_EXTRA_FLAGS} environment variable
-to \code{FALSE}. For further details see the Details section in \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}.
+option to \code{FALSE}, or setting the \code{PKG_BUILD_EXTRA_FLAGS} environment
+variable to \code{false}.
+For further details see the Details section in \code{\link[pkgbuild:compile_dll]{pkgbuild::compile_dll()}}.
 }
 
 \examples{
