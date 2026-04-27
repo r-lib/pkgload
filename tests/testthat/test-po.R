@@ -2,6 +2,7 @@ local_load_all_quiet()
 
 test_that("translation domain correctly loaded", {
   skip_if_c_locale()
+  skip_if_not(capabilities("NLS"))
 
   load_all(test_path("testTranslations"))
   defer(unload("testTranslations"))
