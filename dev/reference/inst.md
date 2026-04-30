@@ -27,5 +27,5 @@ are found, it will return the first one.
 inst("pkgload")
 #> [1] "/home/runner/work/_temp/Library/pkgload"
 inst("grid")
-#> [1] "/opt/R/4.5.3/lib/R/library/grid"
+#> [1] "/opt/R/4.6.0/lib/R/library/grid"
 ```
