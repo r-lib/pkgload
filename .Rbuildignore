@@ -16,3 +16,4 @@
 ^LICENSE\.md$
 ^\.git-blame-ignore-revs$
 ^dev-notes$
+^\.claude$
