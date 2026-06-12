@@ -1,5 +1,12 @@
 # pkgload (development version)
 
+* When reloading a package, `load_all()` now runs the unload hooks of the
+  previously loaded package (`.onUnload()` and user hooks registered with
+  `setHook()`), whether it was loaded with pkgload or regularly. The old
+  namespace and its DLL are still kept loaded so that dangling references
+  continue to work, and errors thrown from `.onUnload()` are demoted to
+  warnings so that they can't prevent reloading (#253).
+
 # pkgload 1.5.2
 
 * Better handling of S7 topics (#332).

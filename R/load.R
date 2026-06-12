@@ -64,6 +64,13 @@
 #'    behavior when loading an installed package with [library()], and can
 #'    be useful for checking for missing exports.
 #'
+#' - When reloading a package, `load_all()` runs the unload hooks
+#'    (`.onUnload()` and hooks registered with [setHook()]) of the old
+#'    namespace, but doesn't unload the namespace or its DLL. This keeps
+#'    dangling references to the old namespace in working order. Errors
+#'    thrown from `.onUnload()` are demoted to warnings so that they can't
+#'    prevent reloading.
+#'
 #' # Controlling the debug compiler flags
 #'
 #' `load_all()` delegates to [pkgbuild::compile_dll()] to perform the actual
@@ -183,12 +190,19 @@ load_all <- function(
   old_methods <- list()
   clear_cache()
 
-  # Remove package from known namespaces. We don't unload it to allow
-  # safe usage of dangling references.
+  # Remove package from known namespaces. We don't fully unload it, to
+  # allow safe usage of dangling references, but we run the unload hooks
+  # since `unloadNamespace()` never will (#253).
   if (is_loaded(package)) {
     patch_colon(package)
 
     methods_env <- ns_s3_methods(package)
+
+    # Detach first so that hooks run in the same order as in
+    # `unloadNamespace()`: detach hooks, then unload hooks
+    unload_pkg_env(package)
+    run_unload_hooks(package)
+
     unregister(package)
 
     # Save foreign methods after unregistering the package's own

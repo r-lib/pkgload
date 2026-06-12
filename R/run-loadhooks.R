@@ -30,7 +30,8 @@ run_pkg_hook <- function(package, hook) {
   if (hook %in% c("load", "attach")) {
     nsenv[[f_name]](dirname(ns_path), package)
   } else {
-    nsenv[[f_name]](dirname(ns_path))
+    # `.onUnload()` and `.onDetach()` take the full path to the package
+    nsenv[[f_name]](ns_path)
   }
   metadata[[f_name]] <- TRUE
 
@@ -67,6 +68,9 @@ run_user_hook <- function(package, hook) {
     try_fetch(
       if (hook %in% c("load", "attach")) {
         fun(package, lib_path)
+      } else if (hook == "unload") {
+        # `unloadNamespace()` passes the full path to the package
+        fun(package, ns_path)
       } else {
         fun(package)
       },
@@ -88,4 +92,24 @@ run_user_hook <- function(package, hook) {
   }
   metadata[[hook_name]] <- TRUE
   invisible(TRUE)
+}
+
+# Run the unload hooks of a package that `load_all()` is about to
+# reload. Reloading doesn't unload the namespace or its DLL (to allow
+# safe usage of dangling references), so `unloadNamespace()` never gets
+# a chance to run `.onUnload()` and the user `onUnload` hooks (#253).
+# Errors are demoted to warnings so that a failing hook can't prevent
+# reloading.
+run_unload_hooks <- function(package) {
+  run_user_hook(package, "unload")
+
+  try_fetch(
+    run_pkg_hook(package, "unload"),
+    error = function(cnd) {
+      cli::cli_warn(
+        "Problem while running `.onUnload()` for package {.pkg {package}}.",
+        parent = cnd
+      )
+    }
+  )
 }

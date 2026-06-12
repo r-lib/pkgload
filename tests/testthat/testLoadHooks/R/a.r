@@ -40,6 +40,11 @@ the$onattach_lib <- ""
 }
 
 .onUnload <- function(libpath) {
+  hook <- getOption("pkgload:::testLoadHooks::.onUnload")
+  if (is.function(hook)) {
+    hook(libpath)
+  }
+
   # Increment this variable if it exists in the global env
   if (exists(".__testLoadHooks__", .GlobalEnv)) {
     .GlobalEnv$.__testLoadHooks__ <- .GlobalEnv$.__testLoadHooks__ + 1
