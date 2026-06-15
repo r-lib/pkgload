@@ -13,6 +13,7 @@ In most cases you will not use pkgload directly, and instead you’ll call
 it via `devtools::load_all()`.
 
 ``` r
+
 devtools::load_all()
 ```
 
