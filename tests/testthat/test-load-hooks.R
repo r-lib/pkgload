@@ -25,6 +25,24 @@ test_that("hooks called in correct order", {
     c("pkg_load", "user_load", "pkg_attach", "user_attach")
   )
 
+  # Reloading runs the detach and unload hooks of the old namespace,
+  # in the same order as `unloadNamespace()` (#253)
+  reset_events()
+  load_all("testHooks")
+  expect_equal(
+    globalenv()$hooks$events,
+    c(
+      "user_detach",
+      "pkg_detach",
+      "user_unload",
+      "pkg_unload",
+      "pkg_load",
+      "user_load",
+      "pkg_attach",
+      "user_attach"
+    )
+  )
+
   reset_events()
   unload("testHooks")
   expect_equal(
@@ -135,6 +153,45 @@ test_that("onUnload", {
 
   # Clean up
   rm(".__testLoadHooks__", envir = .GlobalEnv)
+})
+
+test_that("load_all() runs .onUnload() when reloading (#253)", {
+  load_all("testLoadHooks")
+
+  .GlobalEnv$.__testLoadHooks__ <- 1
+  load_all("testLoadHooks")
+  expect_equal(.GlobalEnv$.__testLoadHooks__, 2)
+
+  # unload() runs the hook of the new namespace as usual
+  unload("testLoadHooks")
+  expect_equal(.GlobalEnv$.__testLoadHooks__, 3)
+
+  rm(".__testLoadHooks__", envir = .GlobalEnv)
+})
+
+test_that(".onUnload() receives the full path to the package (#253)", {
+  load_all("testLoadHooks")
+
+  path <- NULL
+  with_options(
+    "pkgload:::testLoadHooks::.onUnload" = function(libpath) path <<- libpath,
+    load_all("testLoadHooks")
+  )
+  expect_equal(normalizePath(path), normalizePath(test_path("testLoadHooks")))
+
+  unload("testLoadHooks")
+})
+
+test_that("a failing .onUnload() doesn't prevent reloading (#253)", {
+  load_all("testLoadHooks")
+
+  with_options(
+    "pkgload:::testLoadHooks::.onUnload" = function(libpath) stop("uh oh"),
+    expect_warning(load_all("testLoadHooks"), "onUnload")
+  )
+  expect_true(is_loaded("testLoadHooks"))
+
+  unload("testLoadHooks")
 })
 
 test_that("user onLoad hooks are properly run", {
