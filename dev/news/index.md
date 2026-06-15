@@ -2,6 +2,17 @@
 
 ## pkgload (development version)
 
+- When reloading a package,
+  [`load_all()`](https://pkgload.r-lib.org/dev/reference/load_all.md)
+  now runs the unload hooks of the previously loaded package
+  (`.onUnload()` and user hooks registered with
+  [`setHook()`](https://rdrr.io/r/base/userhooks.html)), whether it was
+  loaded with pkgload or regularly. The old namespace and its DLL are
+  still kept loaded so that dangling references continue to work, and
+  errors thrown from `.onUnload()` are demoted to warnings so that they
+  can’t prevent reloading
+  ([\#253](https://github.com/r-lib/pkgload/issues/253)).
+
 ## pkgload 1.5.2
 
 CRAN release: 2026-04-22
