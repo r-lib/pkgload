@@ -4,7 +4,9 @@ test_that("unload() unloads DLLs from packages loaded with library()", {
   # Make a temp lib directory to install test package into
   old_libpaths <- .libPaths()
   tmp_libpath = file.path(tempdir(), "devtools_test")
-  if (!dir.exists(tmp_libpath)) dir.create(tmp_libpath)
+  if (!dir.exists(tmp_libpath)) {
+    dir.create(tmp_libpath)
+  }
   .libPaths(c(tmp_libpath, .libPaths()))
 
   # Reset the libpath on exit

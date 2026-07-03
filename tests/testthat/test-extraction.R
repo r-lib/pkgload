@@ -35,7 +35,16 @@ test_that("extract_lang and comp_lang finds partial statements", {
 
 test_that("extract_lang and comp_lang finds partial statements from for conditionals", {
   expect_equal(
-    extract_lang(body(f), comp_lang, quote(for (i in seq_along(a)) NULL), 1:3),
+    extract_lang(
+      body(f),
+      comp_lang,
+      quote(
+        for (i in seq_along(a)) {
+          NULL
+        }
+      ),
+      1:3
+    ),
     quote(
       for (i in seq_along(a)) {
         print(i)

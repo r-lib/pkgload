@@ -91,7 +91,9 @@ test_that("Replacement system.file returns correct values when installed", {
   # Make a temp lib directory to install test package into
   old_libpaths <- .libPaths()
   tmp_libpath = file.path(tempdir(), "devtools_test")
-  if (!dir.exists(tmp_libpath)) dir.create(tmp_libpath)
+  if (!dir.exists(tmp_libpath)) {
+    dir.create(tmp_libpath)
+  }
   .libPaths(c(tmp_libpath, .libPaths()))
 
   install.packages(
