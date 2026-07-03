@@ -2,6 +2,10 @@
 
 ## pkgload (development version)
 
+- [`load_code()`](https://pkgload.r-lib.org/dev/reference/load_code.md)
+  can be called directly again
+  ([\#335](https://github.com/r-lib/pkgload/issues/335)).
+
 ## pkgload 1.5.3
 
 CRAN release: 2026-06-15
