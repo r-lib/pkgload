@@ -4,6 +4,8 @@
 
 ## pkgload 1.5.3
 
+CRAN release: 2026-06-15
+
 - When reloading a package,
   [`load_all()`](https://pkgload.r-lib.org/dev/reference/load_all.md)
   now runs the unload hooks of the previously loaded package
