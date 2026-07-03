@@ -30,11 +30,13 @@ dev_topic_parse <- function(topic, packages = NULL) {
   # Only treat `::`/`:::` as a namespace qualifier when preceded by a valid
   # package name at the start. Otherwise `::` may appear inside an S7 method
   # alias like `fn,pkg::Class-method`.
-  m <- regmatches(topic, regexec("^([a-zA-Z][a-zA-Z0-9.]*):::?(.+)$", topic))[[1]]
+  m <- regmatches(topic, regexec("^([a-zA-Z][a-zA-Z0-9.]*):::?(.+)$", topic))[[
+    1
+  ]]
   if (length(m) == 3) {
     pkgs <- m[[2]]
     topic <- m[[3]]
-  } else  {
+  } else {
     pkgs <- packages %||% dev_packages()
   }
 
