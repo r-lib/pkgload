@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `load_code()` can be called directly again (#335).
+
 # pkgload 1.5.3
 
 * When reloading a package, `load_all()` now runs the unload hooks of the

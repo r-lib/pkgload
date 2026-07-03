@@ -18,6 +18,11 @@ load_code <- function(path = ".", quiet = NULL) {
     encoding <- "ASCII"
   }
 
+  # `load_all()` creates the namespace before calling us, but `load_code()`
+  # is also called directly, in which case there is no namespace yet
+  if (!is_loaded(package)) {
+    create_ns_env(path)
+  }
   env <- ns_env(package)
 
   r_files <- find_code(path, quiet = quiet)
