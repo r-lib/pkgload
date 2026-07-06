@@ -19,7 +19,11 @@
 dev_example <- function(topic, quiet = FALSE) {
   topic <- dev_help(topic)
 
-  run_example(topic$path, quiet = quiet)
+  run_example(
+    topic$path,
+    quiet = quiet,
+    macros = rdtools::pkg_macros(topic$pkg)
+  )
 }
 
 #' @rdname dev_example

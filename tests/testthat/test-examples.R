@@ -31,6 +31,14 @@ test_that("can run example package", {
   expect_equal(env$a, 101)
 })
 
+test_that("dev_example() expands the package's custom Rd macros", {
+  load_all(test_path("testHelp"))
+  defer(unload(test_path("testHelp")))
+
+  env <- dev_example("testExampleMacro", quiet = TRUE)
+  expect_equal(env$a, 303)
+})
+
 test_that("can use system macros", {
   load_all(test_path("testHelp"))
   defer(unload(test_path("testHelp")))
