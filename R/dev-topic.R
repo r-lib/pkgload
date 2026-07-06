@@ -10,11 +10,6 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
   parsed <- rdtools::topic_parse(topic)
   topic <- parsed$topic
 
-  # Don't interpret the division operator as a path (#198)
-  if (is_string(topic, "/")) {
-    return(NULL)
-  }
-
   # Only search in-development packages, so that a qualified topic like
   # `stats::mean` falls through to `utils::help()`.
   packages <- parsed$package %||% dev_packages %||% dev_packages()
