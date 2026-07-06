@@ -20,6 +20,8 @@ Useful links:
 
 Authors:
 
+- Lionel Henry <lionel@posit.co>
+
 - Hadley Wickham
 
 - Winston Chang
