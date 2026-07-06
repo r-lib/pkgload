@@ -163,9 +163,3 @@ test_that("can use macros in other packages (#120)", {
   expect_match(text_lines, "foreign macro success", all = FALSE)
   expect_match(html_lines, "foreign macro.*success", all = FALSE)
 })
-
-test_that("httpdPort() is available", {
-  skip_on_cran()
-  # We're using this unexported function to open help pages in RStudio
-  expect_true(is.function(httpdPort))
-})

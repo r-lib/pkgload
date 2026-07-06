@@ -228,10 +228,6 @@ is_rstudio <- function() {
   is_string(.Platform$GUI, "RStudio")
 }
 
-rstudioapi_available <- function() {
-  is_installed("rstudioapi") && rstudioapi::isAvailable()
-}
-
 is_windows <- function() {
   .Platform$OS.type == "windows"
 }
