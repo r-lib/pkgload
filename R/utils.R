@@ -157,11 +157,6 @@ strip_internal_calls <- function(x, package) {
   }
 }
 
-sort_ci <- function(x) {
-  local_collate("C")
-  x[order(tolower(x), x)]
-}
-
 dev_packages <- function() {
   packages <- vapply(
     loadedNamespaces(),
@@ -203,8 +198,6 @@ delayed_assign <- function(
 ) {
   inject(delayedAssign(x, !!value, eval.env, assign.env))
 }
-
-last <- function(x) utils::tail(x, n = 1L)
 
 single_quote <- function(x) {
   encodeString(x, quote = "'")

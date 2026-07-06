@@ -1,5 +1,7 @@
 # pkgload (development version)
 
+* `dev_help()` and friends now use the rdtools package to build and look up the topic index, which is considerably faster. `dev_topic_index()` now returns a named character vector mapping alias to Rd file name (without extension), and an alias documented in multiple Rd files now triggers a warning.
+
 * `load_code()` can be called directly again (#335).
 
 # pkgload 1.5.3

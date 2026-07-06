@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Lionel Henry \email{lionel@posit.co}
   \item Hadley Wickham
   \item Winston Chang
   \item Jim Hester

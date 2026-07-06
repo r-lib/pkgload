@@ -1,10 +1,8 @@
 #' In-development help for package loaded with devtools
 #'
 #' `dev_help()` searches for source documentation provided in packages
-#' loaded by devtools. To improve performance, the `.Rd` files are
-#' parsed to create to index once, then cached. Use
-#' `dev_topic_index_reset()` to clear that index. You can manually
-#' retrieve the index for a local package with `dev_topic_index()`.
+#' loaded by devtools. The topic index is maintained by the rdtools
+#' package, which caches it per package.
 #'
 #' @param topic name of help to search for.
 #' @param dev_packages A character vector of package names to search within.
@@ -37,12 +35,6 @@ dev_help <- function(
   }
 
   loc <- dev_topic_find(topic, dev_packages)
-
-  if (!is.null(loc$path) && !fs::file_exists(loc$path)) {
-    # Documentation topic might have moved, so reset topic index and try again
-    dev_topic_index_reset(loc$pkg)
-    loc <- dev_topic_find(topic, dev_packages)
-  }
 
   if (is.null(loc$path) || !fs::file_exists(loc$path)) {
     cli::cli_abort("Can't find development topic {.arg {topic}}.")
