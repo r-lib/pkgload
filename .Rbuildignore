@@ -17,3 +17,5 @@
 ^\.git-blame-ignore-revs$
 ^dev-notes$
 ^\.claude$
+^[.]?air[.]toml$
+^\.vscode$
