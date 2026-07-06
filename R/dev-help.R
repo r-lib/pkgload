@@ -52,29 +52,6 @@ dev_help <- function(
   )
 }
 
-has_rd_macros <- function(dir) {
-  desc <- file.path(dir, "DESCRIPTION")
-  if (!file.exists(desc)) {
-    return(FALSE)
-  }
-
-  tryCatch(
-    expr = {
-      desc <- read.dcf(desc)
-      "RdMacros" %in% colnames(desc)
-    },
-    error = function(...) FALSE
-  )
-}
-
-load_rd_macros <- function(dir) {
-  macros <- tools::loadPkgRdMacros(dir)
-  tools::loadRdMacros(
-    file.path(R.home("share"), "Rd", "macros", "system.Rd"),
-    macros = macros
-  )
-}
-
 #' @export
 print.dev_topic <- function(x, ...) {
   cli::cli_inform(c(
@@ -85,12 +62,6 @@ print.dev_topic <- function(x, ...) {
 
   # Use rstudio's previewRd() if possible
   if (type == "html" && rstudioapi_available()) {
-    # If the package has Rd macros, this needs a version of rstudio
-    # that loads them, see rstudio/rstudio#12111
-    version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) {
-      "2022.12.0.256"
-    }
-
     if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
       return(rstudioapi::callFun("previewRd", x$path))
     }
@@ -130,7 +101,7 @@ on_load(
 )
 
 topic_write_text <- function(x, path) {
-  macros <- load_rd_macros(dirname(dirname(x$path)))
+  macros <- rdtools::pkg_macros(x$pkg)
 
   tools::Rd2txt(
     x$path,
@@ -142,7 +113,7 @@ topic_write_text <- function(x, path) {
 }
 
 topic_write_html <- function(x, path) {
-  macros <- load_rd_macros(dirname(dirname(x$path)))
+  macros <- rdtools::pkg_macros(x$pkg)
 
   tools::Rd2HTML(
     x$path,

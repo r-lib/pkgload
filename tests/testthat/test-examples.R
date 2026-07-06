@@ -44,7 +44,7 @@ test_that("can use system macros", {
 })
 
 test_that("can use extra Rd macros", {
-  macros <- load_rd_macros("testHelp")
+  macros <- rdtools::pkg_macros(test_path("testHelp"))
   expect_silent(
     run_example(
       test_path("testHelp", "man", "testCustomMacro.Rd"),
