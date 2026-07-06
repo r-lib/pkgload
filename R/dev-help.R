@@ -62,7 +62,7 @@ print.dev_topic <- function(x, ...) {
 
   # Use rstudio's previewRd() if possible
   if (type == "html" && rstudioapi_available()) {
-    if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
+    if (rstudioapi::hasFun("previewRd")) {
       return(rstudioapi::callFun("previewRd", x$path))
     }
   }
