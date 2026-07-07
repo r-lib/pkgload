@@ -96,10 +96,14 @@ test_that("shim_help and shim_questions works if topic moves", {
     fs::path(path_man, "foofoo.Rd"),
     fs::path(path_man, "barbar.Rd")
   )
-  defer(fs::file_move(
-    fs::path(path_man, "barbar.Rd"),
-    fs::path(path_man, "foofoo.Rd")
-  ))
+  defer({
+    fs::file_move(
+      fs::path(path_man, "barbar.Rd"),
+      fs::path(path_man, "foofoo.Rd")
+    )
+    dev_topic_index_reset("testHelp")
+  })
+  # would be run automatically by roxygen2
   dev_topic_index_reset("testHelp")
 
   expect_equal(base_rd_path(shim_help("foofoo")), "barbar.Rd")

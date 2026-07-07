@@ -7,7 +7,7 @@
 dev_topic_find <- function(topic, dev_packages = NULL) {
   stopifnot(is_string(topic))
 
-  parsed <- rdtools::topic_parse(topic)
+  parsed <- rdtools::topic_split(topic)
   topic <- parsed$topic
 
   # Only search in-development packages, so that a qualified topic like
