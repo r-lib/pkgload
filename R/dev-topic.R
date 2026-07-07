@@ -20,15 +20,7 @@ dev_topic_find <- function(topic, dev_packages = NULL) {
     return(NULL)
   }
 
-  # rdtools reports the Rd file without its extension; recover the path,
-  # trying both `.Rd` and `.rd`. The returned path might not exist if the
-  # cached index is stale (e.g. a topic moved to a different file); the caller
-  # is responsible for resetting the index and retrying in that case.
-  names <- paste0(found$file, c(".Rd", ".rd"))
-  paths <- package_file("man", names, path = ns_path(found$package))
-  existing <- paths[file.exists(paths)]
-  path <- if (length(existing) > 0) existing[[1]] else paths[[1]]
-
+  path <- rdtools::topic_rd_path(topic, found$package)
   list(path = path, pkg = found$package)
 }
 
