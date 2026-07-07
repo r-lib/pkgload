@@ -2,7 +2,6 @@
 % Please edit documentation in R/foofoo.r
 \docType{package}
 \name{testHelp-package}
-\alias{testHelp}
 \alias{testHelp-package}
 \title{testHelp: some title
 Some description}

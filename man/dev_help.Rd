@@ -39,10 +39,8 @@ your default documentation type.}
 }
 \description{
 \code{dev_help()} searches for source documentation provided in packages
-loaded by devtools. To improve performance, the \code{.Rd} files are
-parsed to create to index once, then cached. Use
-\code{dev_topic_index_reset()} to clear that index. You can manually
-retrieve the index for a local package with \code{dev_topic_index()}.
+loaded by devtools. The topic index is maintained by the rdtools
+package, which caches it per package.
 }
 \examples{
 \dontrun{

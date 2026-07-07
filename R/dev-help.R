@@ -1,10 +1,8 @@
 #' In-development help for package loaded with devtools
 #'
 #' `dev_help()` searches for source documentation provided in packages
-#' loaded by devtools. To improve performance, the `.Rd` files are
-#' parsed to create to index once, then cached. Use
-#' `dev_topic_index_reset()` to clear that index. You can manually
-#' retrieve the index for a local package with `dev_topic_index()`.
+#' loaded by devtools. The topic index is maintained by the rdtools
+#' package, which caches it per package.
 #'
 #' @param topic name of help to search for.
 #' @param dev_packages A character vector of package names to search within.
@@ -38,12 +36,6 @@ dev_help <- function(
 
   loc <- dev_topic_find(topic, dev_packages)
 
-  if (!is.null(loc$path) && !fs::file_exists(loc$path)) {
-    # Documentation topic might have moved, so reset topic index and try again
-    dev_topic_index_reset(loc$pkg)
-    loc <- dev_topic_find(topic, dev_packages)
-  }
-
   if (is.null(loc$path) || !fs::file_exists(loc$path)) {
     cli::cli_abort("Can't find development topic {.arg {topic}}.")
   }
@@ -60,29 +52,6 @@ dev_help <- function(
   )
 }
 
-has_rd_macros <- function(dir) {
-  desc <- file.path(dir, "DESCRIPTION")
-  if (!file.exists(desc)) {
-    return(FALSE)
-  }
-
-  tryCatch(
-    expr = {
-      desc <- read.dcf(desc)
-      "RdMacros" %in% colnames(desc)
-    },
-    error = function(...) FALSE
-  )
-}
-
-load_rd_macros <- function(dir) {
-  macros <- tools::loadPkgRdMacros(dir)
-  tools::loadRdMacros(
-    file.path(R.home("share"), "Rd", "macros", "system.Rd"),
-    macros = macros
-  )
-}
-
 #' @export
 print.dev_topic <- function(x, ...) {
   cli::cli_inform(c(
@@ -91,27 +60,18 @@ print.dev_topic <- function(x, ...) {
 
   type <- arg_match0(x$type %||% "text", c("text", "html"))
 
-  # Use rstudio's previewRd() if possible
-  if (type == "html" && rstudioapi_available()) {
-    # If the package has Rd macros, this needs a version of rstudio
-    # that loads them, see rstudio/rstudio#12111
-    version_needed <- if (has_rd_macros(dirname(dirname(x$path)))) {
-      "2022.12.0.256"
-    }
-
-    if (rstudioapi::hasFun("previewRd", version_needed = version_needed)) {
-      return(rstudioapi::callFun("previewRd", x$path))
-    }
+  # Use RStudio's previewRd() if possible
+  rstudio_preview <- type == "html" &&
+    is_installed("rstudioapi") &&
+    rstudioapi::isAvailable() &&
+    rstudioapi::hasFun("previewRd")
+  if (rstudio_preview) {
+    return(rstudioapi::callFun("previewRd", x$path))
   }
 
   # otherwise render and serve
   file <- fs::path_ext_set(fs::path_file(x$path), type)
-
-  # This directory structure is necessary for RStudio to open the
-  # .html file in the help pane (see rstudio/rstudio#11336)
-  doc_path <- fs::path("doc", "html", file)
-  path <- fs::path(tempdir(), ".R", doc_path)
-  fs::dir_create(fs::path_dir(path), recurse = TRUE)
+  path <- fs::path(tempdir(), file)
 
   if (type == "text") {
     topic_write_text(x, path)
@@ -119,26 +79,12 @@ print.dev_topic <- function(x, ...) {
     file.show(path, title = title)
   } else if (type == "html") {
     topic_write_html(x, path)
-
-    if (is_rstudio()) {
-      # This localhost URL is also part of getting RStudio to open in
-      # the help pane
-      port <- httpdPort()
-      url <- sprintf("http://localhost:%i/%s", port, doc_path)
-    } else {
-      url <- path
-    }
-
-    utils::browseURL(url)
+    utils::browseURL(path)
   }
 }
 
-on_load(
-  httpdPort %<~% env_get(rlang::ns_env("tools"), "httpdPort")
-)
-
 topic_write_text <- function(x, path) {
-  macros <- load_rd_macros(dirname(dirname(x$path)))
+  macros <- rdtools::pkg_macros(x$pkg)
 
   tools::Rd2txt(
     x$path,
@@ -150,7 +96,7 @@ topic_write_text <- function(x, path) {
 }
 
 topic_write_html <- function(x, path) {
-  macros <- load_rd_macros(dirname(dirname(x$path)))
+  macros <- rdtools::pkg_macros(x$pkg)
 
   tools::Rd2HTML(
     x$path,
