@@ -32,6 +32,7 @@ Imports:
     utils
 Suggests: 
     bitops,
+    callr,
     jsonlite,
     mathjaxr,
     pak,
